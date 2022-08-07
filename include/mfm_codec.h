@@ -5,6 +5,8 @@
 
 #include "bit_array.h"
 
+//#define DEBUG
+
 
 class mfm_codec {
 private:
@@ -16,10 +18,6 @@ private:
     const uint16_t m_missing_clock_c2 = 0x5224;       //  0101_0010_*010_0100
     const uint64_t m_pattern_ff = 0x5555555555555555; // for 4 bytes of sync data(unused)
     const uint64_t m_pattern_00 = 0xaaaaaaaaaaaaaaaa; // for 4 bytes of sync data
-
-    // Partial decode data (MFM bits)
-    //size_t m_decoded_bit_length = 0;
-    //uint8_t m_decoded_bits = 0;
 
     bool        m_wraparound;                         // Flag to indicate that the head position went over the index hole (buffer wrap arounded)
 
@@ -60,7 +58,6 @@ public:
     // 01234567
     // | WWWW |  <= In this case, bit cell size = 8, data window ofst = 2, data window size = 4
     //
-//#define DEBUG
     int read_bit_ds(void) {
         int bit_reading = 0;
         do {
@@ -78,9 +75,9 @@ public:
                     std::cout << '?';
 #endif
                 }
-                // adjust pulse position (imitate PLL operation)
+                // adjust pulse phase (imitate PLL operation)
                 size_t cell_center = m_data_window_ofst + m_data_window_ofst / 2;
-                if (m_rnd() % 4 == 0) {
+                if (m_rnd() % 4 == 0) {     // limit the PLL operation frequency and introduce fluctuation with the random generator (certain fluctuation is required to reproduce some copy protection)
                     if (m_distance_to_next_pulse < cell_center) {
                         m_distance_to_next_pulse++;
 #ifdef DEBUG
@@ -107,7 +104,7 @@ public:
 
 // ----------------------------------------------------------------
 
-    void mfm_read_byte(uint8_t& data, bool& missing_clock) {
+    void mfm_read_byte(uint8_t& data, bool& missing_clock, bool ignore_missing_clock=true, bool ignore_sync_field=true) {
         size_t decode_count = 0;
         missing_clock = false;
         do {
@@ -118,21 +115,25 @@ public:
             }
             m_bit_stream = (m_bit_stream << 1) | bit_data;
  
-            if ((m_bit_stream & 0x0ffffu) == m_missing_clock_a1) {      // Missing clock 0xA1 pattern
-                data = 0xa1;
-                missing_clock = true;
-                return;
+            if (ignore_missing_clock == false) {
+                if ((m_bit_stream & 0x0ffffu) == m_missing_clock_a1) {      // Missing clock 0xA1 pattern
+                    data = 0xa1;
+                    missing_clock = true;
+                    return;
+                }
+                if ((m_bit_stream & 0x0ffffu) == m_missing_clock_c2) {       // Missing clock 0xC2 pattern
+                    data = 0xc2;
+                    missing_clock = true;
+                    return;
+                }
             }
-            if ((m_bit_stream & 0x0ffffu) == m_missing_clock_c2) {       // Missing clock 0xC2 pattern
-                data = 0xc2;
-                missing_clock = true;
-                return;
-            }
-            if (m_bit_stream == m_pattern_00) {
-                m_sync_mode = true;
-            }
-            else {
-                m_sync_mode = false;
+            if (ignore_sync_field) {
+                if (m_bit_stream == m_pattern_00) {
+                    m_sync_mode = true;
+                }
+                else {
+                    m_sync_mode = false;
+                }
             }
         } while (++decode_count < 16);
         uint8_t read_data = 0;
@@ -146,7 +147,7 @@ public:
     }
 
 
-    // mode: false=normal, true=special(write track, etc)
+    // mode: false=normal, true=special(write track, etc. cares 'F5' and 'F6')
     uint16_t mfm_encoder(uint8_t data, bool mode = false) {
         // Data swap for special code
         uint8_t write_data = data;
@@ -193,14 +194,14 @@ public:
         for (uint16_t bit_pos = 0x8000; bit_pos != 0; bit_pos >>= 1) {
             int bit = bit_pattern & bit_pos ? 1 : 0;
             if (write_gate == true) {
-                m_track.write_stream(bit);
-                for (size_t i = 0; i < m_bit_width-1; i++) {
-                    m_track.write_stream(0);
+                for (size_t i = 0; i < m_bit_width; i++) {
+                    if(m_bit_width/2 == i)   m_track.write_stream(bit);    // write data pulse at the center of the bit cell
+                    else                     m_track.write_stream(0);
                 }
             }
             else {
                 for (size_t i = 0; i < m_bit_width; i++) {
-                    m_track.advance_stream_pos();   // advance stream pointer without actual data write (dummy write)
+                    m_track.advance_stream_pos();                          // advance stream pointer without actual data write (dummy write)
                 }
             }
         }
