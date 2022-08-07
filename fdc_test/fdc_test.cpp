@@ -63,7 +63,7 @@ std::vector<uint8_t> generate_format_data(std::vector<int> format_source_data) {
 
 #include "image_raw.h"
 #include "image_hfe.h"
-#include "../hfe2mfm/image_mfm.h"
+#include "image_mfm.h"
 
 
 
@@ -181,10 +181,10 @@ int main(void)
     } while (fdc1.is_wraparound() == false);
 #endif
 
-#if 0
+#if 1
     disk_image_mfm mfm_img;
     mfm_img.read("cdos7.mfm");
-    bit_array barray = mfm_img.get_track(2);
+    bit_array barray = mfm_img.get_track_data(2);
     fdc_bitstream fdc2;
     fdc2.set_raw_track_data(barray);
     fdc2.set_pos(0);

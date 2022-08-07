@@ -69,9 +69,7 @@ typedef struct pictrack_
 
 class disk_image_hfe : public disk_image {
 public:
-	disk_image_hfe(void) {
-		m_track_data.clear();
-	}
+	disk_image_hfe(void) {}
 
 	void read(std::string file_name) {
 		picfileformatheader header;
@@ -133,8 +131,8 @@ public:
 					}
 				}
 			}
-			m_track_data.push_back(side0);
-			m_track_data.push_back(side1);
+			m_track_data[track*2+0] = side0;
+			m_track_data[track*2+1] = side1;
 		}
 	}
 };
