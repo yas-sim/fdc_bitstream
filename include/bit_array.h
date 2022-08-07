@@ -11,12 +11,13 @@ private:
     std::vector<uint8_t>    m_array_data;
     size_t                  m_bit_length;
     size_t                  m_stream_pos;
+    bool                    m_wraparound;
 
     inline size_t to_byte_pos(size_t bit_pos) { return bit_pos >> 3; }
     inline uint8_t to_bit_pos(size_t bit_pos) { return 1 << (bit_pos & 0x07); }
 public:
 
-    bit_array() : m_bit_length(0), m_stream_pos(0) {
+    bit_array() : m_bit_length(0), m_stream_pos(0),m_wraparound(false) {
         m_array_data.clear();
     }
 
@@ -48,6 +49,9 @@ public:
     size_t size(void) {
         return m_bit_length;
     }
+
+    inline bool is_wraparound(void) { return m_wraparound; }
+    inline void clear_wraparound_flag(void) { m_wraparound = false; }
 
 
 
@@ -82,12 +86,15 @@ public:
     bool set_stream_pos(size_t position) {
         if (position >= m_bit_length) return false;
         m_stream_pos = position;
+        m_wraparound = false;
         return true;
     }
 
     size_t get_stream_pos(void) {
         return m_stream_pos;
     }
+
+
 
     // elastic: true=extend the bit array if m_stream_pos go beyond the current length. false=no bit array extend (lap around)
     void write_stream(uint8_t value, bool elastic=false) {
@@ -99,6 +106,7 @@ public:
             }
             else {
                 m_stream_pos = 0;
+                m_wraparound = true;
             }
         }
         set(m_stream_pos++, value);
@@ -107,6 +115,7 @@ public:
     void advance_stream_pos(void) {
         if (m_stream_pos >= m_bit_length) {     // lap around
             m_stream_pos = 0;
+            m_wraparound = true;
         }
         m_stream_pos++;
     }
@@ -114,6 +123,7 @@ public:
     uint8_t read_stream(void) {
         if (m_stream_pos >= m_bit_length) {     // lap around
             m_stream_pos = 0;
+            m_wraparound = true;
         }
         uint8_t val = get(m_stream_pos++);
         return val;

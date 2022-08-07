@@ -5,6 +5,7 @@
 #include "fdc_crc.h"
 #include "mfm_codec.h"
 
+//#define DEBUG
 
 class fdc_bitstream {
 private:
@@ -23,8 +24,12 @@ public:
         uint8_t read_data;
         bool missing_clock;
         std::vector<uint8_t> track_data;
-        while (m_codec.is_lap_around() == false) {
+        m_codec.clear_wraparound();
+        while (m_codec.is_wraparound() == false) {
             m_codec.mfm_read_byte(read_data, missing_clock);
+#ifdef DEBUG
+            std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(read_data) << " ";
+#endif
             track_data.push_back(read_data);
         }
         return track_data;
@@ -149,7 +154,7 @@ public:
 
     void set_pos(size_t bit_pos) {
         m_codec.set_pos(bit_pos);
-        clear_lap_around();
+        clear_wraparound();
     }
 
     size_t get_pos(void) {
@@ -160,8 +165,8 @@ public:
         m_codec.set_track_data(track_data);
     }
 
-    inline bool is_lap_around(void) { return m_codec.is_lap_around(); }
-    inline void clear_lap_around(void) { m_codec.clear_lap_around(); }
+    inline bool is_wraparound(void) { return m_codec.is_wraparound(); }
+    inline void clear_wraparound(void) { m_codec.clear_wraparound(); }
 
     void write_data(uint8_t data, bool mode=false, bool write_gate=true) {
         m_codec.mfm_write_byte(data, mode, write_gate);

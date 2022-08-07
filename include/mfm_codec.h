@@ -1,14 +1,15 @@
 #pragma once
 
 #include <vector>
+#include <random>
 
 #include "bit_array.h"
 
 
 class mfm_codec {
 private:
-    bool        m_sync_mode;
     bit_array   m_track;
+    bool        m_sync_mode;
     uint64_t    m_bit_stream;                         // decoded MFM bit stream from the raw track bit data
     size_t      m_bit_width = ((4e6 / 1e6) * 2);      // == 8  # 4MHz/1MHz * 2
     const uint16_t m_missing_clock_a1 = 0x4489;       //  0100_0100_10*0_1001
@@ -17,71 +18,106 @@ private:
     const uint64_t m_pattern_00 = 0xaaaaaaaaaaaaaaaa; // for 4 bytes of sync data
 
     // Partial decode data (MFM bits)
-    size_t m_decoded_bit_length = 0;
-    uint8_t m_decoded_bits = 0;
+    //size_t m_decoded_bit_length = 0;
+    //uint8_t m_decoded_bits = 0;
 
-    bool        m_lap_around;                         // Flag to indicate that the head position went over the index hole (buffer wrap arounded)
+    bool        m_wraparound;                         // Flag to indicate that the head position went over the index hole (buffer wrap arounded)
 
     size_t m_prev_write_bit;        // to preserve the status of previous write data bit for MFM encoding
 
-    inline void set_lap_around(void) { m_lap_around = true; }
-
-    // bit_width * 2 (1.5-2.5), 3 (2.5-3.5), 4 (3.5-4.5)
-    void decode_bits(uint8_t& data, size_t& length) {
-        size_t prev_pos = m_track.get_stream_pos();
-        size_t distance = m_track.distance_to_next_bit1();
-        if (m_track.get_stream_pos() < prev_pos) {
-            set_lap_around();                         // stream pointer returned to the top ( 1 rotation )
-        }
-        if (distance < m_bit_width * 1.5) {
-            length = 1;
-            data = 0b1;
-        }
-        else if (distance < m_bit_width * 2.5) {
-            data = 0b10;
-            length = 2;
-        }
-        else if (distance < m_bit_width * 3.5) {
-            data = 0b100;
-            length = 3;
-        }
-        else if (distance < m_bit_width * 4.5) {
-            data = 0b1000;
-            length = 4;
-        }
-        else {
-            data = 0b10000;
-            length = 5;
-        }
-    }
-
+    // for data separator
+    bit_array   m_track_bit_stream;
+    size_t      m_current_bit_pos = 0;           // current bit position to process
+    size_t      m_data_window_size = 5;          // data window size in [bits] unit
+    size_t      m_data_window_ofst = 2;          // data window start offset in the data cell (in [bits] unit)
+    size_t      m_bit_cell_size    = 8;          // bit cell size in [bits] unit   (4MHz sample, 500Kbps bit rate, MFM = 4.0e6/500e3 = 8)
+    size_t      m_distance_to_next_pulse = 0;
+    int         m_phase_adjuster = 0;            // data ceparator phase adjuster
+    std::random_device m_rnd;
 public:
     mfm_codec() : m_bit_stream(0),
-        m_decoded_bit_length(0), m_decoded_bits(0),
-        m_sync_mode(false), m_lap_around(false),
-        m_prev_write_bit(0) {};
+                  m_sync_mode(false), m_wraparound(false),
+                  m_prev_write_bit(0) {};
 
     void set_track_data(bit_array track) {
         m_track = track;
         m_track.set_stream_pos(0);
+        m_track.clear_wraparound_flag();
     }
 
-    inline bool is_lap_around(void) { return m_lap_around; }
-    inline void clear_lap_around(void) { m_lap_around = false; }
+    inline bool is_wraparound(void) { return m_wraparound; }
+    inline void clear_wraparound(void) { m_wraparound = false; }
     inline size_t get_track_length(void) { return m_track.get_length(); }       // unit = bit
+
+// ---------- Data separator
+
+    // How data separator work: 
+    // 
+    // | WWWW | WWWW | WWWW | WWWW | WWWW | WWWW | WWWW | WWWW |   <- Data window(W), Data cell boundary(|)
+    //     P           P           P         P         P           <- Data pulses
+    //     1     0      1      0       0      1      0      0      <- Data reading (only the data pulses within the data window will be considered) 
+    //
+    // 01234567
+    // | WWWW |  <= In this case, bit cell size = 8, data window ofst = 2, data window size = 4
+    //
+//#define DEBUG
+    int read_bit_ds(void) {
+        int bit_reading = 0;
+        do {
+            // check if the next bit is within the next data window
+            if (m_distance_to_next_pulse < m_bit_cell_size) {
+                // check pulse position
+                if (m_distance_to_next_pulse >= m_data_window_ofst &&
+                    // regular pulse (within the data window)
+                    m_distance_to_next_pulse <  m_data_window_ofst + m_data_window_size) {
+                    bit_reading = 1;
+                }
+                else {
+                    // irregular pulse
+#ifdef DEBUG
+                    std::cout << '?';
+#endif
+                }
+                // adjust pulse position (imitate PLL operation)
+                size_t cell_center = m_data_window_ofst + m_data_window_ofst / 2;
+                if (m_rnd() % 4 == 0) {
+                    if (m_distance_to_next_pulse < cell_center) {
+                        m_distance_to_next_pulse++;
+#ifdef DEBUG
+                        std::cout << '+';
+#endif
+                    }
+                    else if (m_distance_to_next_pulse > cell_center) {
+                        m_distance_to_next_pulse--;
+#ifdef DEBUG
+                        std::cout << '-';
+#endif
+                    }
+                }
+                size_t distance = m_track.distance_to_next_bit1();
+                m_distance_to_next_pulse += distance;
+            }
+        } while (m_distance_to_next_pulse < m_bit_cell_size);
+        // advance bit cell position
+        if (m_distance_to_next_pulse >= m_bit_cell_size) {
+            m_distance_to_next_pulse -= m_bit_cell_size;
+        }
+        return bit_reading;
+    }
+
+// ----------------------------------------------------------------
 
     void mfm_read_byte(uint8_t& data, bool& missing_clock) {
         size_t decode_count = 0;
         missing_clock = false;
         do {
-            while (m_decoded_bit_length == 0) {                // !!!! potential dead loop
-                decode_bits(m_decoded_bits, m_decoded_bit_length);
+            int bit_data = read_bit_ds();
+            if (m_track.is_wraparound()) {
+                m_track.clear_wraparound_flag();
+                m_wraparound = true;
             }
-
-            m_bit_stream = (m_bit_stream << 1) | (m_decoded_bits & 0x01);
-            m_decoded_bit_length--;
-            m_decoded_bits >>= 1;
-
+            m_bit_stream = (m_bit_stream << 1) | bit_data;
+ 
             if ((m_bit_stream & 0x0ffffu) == m_missing_clock_a1) {      // Missing clock 0xA1 pattern
                 data = 0xa1;
                 missing_clock = true;
@@ -100,10 +136,9 @@ public:
             }
         } while (++decode_count < 16);
         uint8_t read_data = 0;
-        uint16_t bit_pos = 0x4000;      // Extract only 'D' bits (exclude 'C' bits). MFM data is 'CDCDCDCD..CD'.
-        for (int i = 0; i < 8; i++) {
+        // Extract only 'D' bits (exclude 'C' bits). MFM data is 'CDCDCDCD..CD'.
+        for (uint16_t bit_pos = 0x4000; bit_pos > 0; bit_pos >>=2) {
             read_data = (read_data << 1) | (m_bit_stream & bit_pos ? 1 : 0);
-            bit_pos >>= 2;
         }
         data = read_data;
         missing_clock = false;

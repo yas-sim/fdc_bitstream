@@ -7,6 +7,8 @@
 #include <iomanip>
 #include <vector>
 
+#include <thread>
+
 #include "bit_array.h"
 #include "mfm_codec.h"
 #include "fdc_bitstream.h"
@@ -54,20 +56,12 @@ void bit_dump(uint64_t data, size_t bit_width, size_t spacing = 0, bool line_fee
 
 int main(void)
 {
-    disk_image_raw imgraw;
-    imgraw.read("taiyo0.raw");
-    fdc_bitstream fdc5;
-    bit_array tdata = imgraw.get_track_data(0);
-    fdc5.set_raw_track_data(tdata);
-    std::vector<uint8_t> tbuf;
-    tbuf = fdc5.read_track();
-    dump_buf(tbuf.data(), tbuf.size());
-    std::cout << std::endl;
-
-
-    return 0;
-
     //    read_raw_image("fb30.raw");
+    std::vector<uint8_t> tbuf;
+    bool crc_error = false;
+    std::vector<uint8_t> id_field;
+
+#if 0
     bit_array test1;
     test1.load("track.bin");
     //test1.dump(0, 256);
@@ -80,10 +74,8 @@ int main(void)
     dump_buf(tbuf.data(), 2048);
     std::cout << std::endl;
 
-    bool crc_error = false;
-    std::vector<uint8_t> id_field;
 
-    fdc.clear_lap_around();
+    fdc.clear_wraparound();
     fdc.set_pos(0);
     fdc.read_id(id_field, crc_error);
 
@@ -98,9 +90,10 @@ int main(void)
     fdc.set_pos(0);
     tbuf = fdc.read_track();
     dump_buf(tbuf.data(), 2048);
+#endif
 
-#if 1
-    fdc.clear_lap_around();
+#if 0
+    fdc.clear_wraparound();
     fdc.set_pos(0);
     do {
         fdc.read_id(id_field, crc_error);
@@ -129,8 +122,10 @@ int main(void)
             }
 #endif
         }
-    } while (fdc.is_lap_around() == false);
+    } while (fdc.is_wraparound() == false);
 #endif
+
+#if 0
     disk_image_hfe image;
     image.read("nandemo.hfe");
     std::vector<std::vector<uint8_t>> &disk = image.get_track_data();
@@ -151,7 +146,7 @@ int main(void)
     tbuf = fdc1.read_track();
     dump_buf(tbuf.data(), 2048);
 
-    fdc1.clear_lap_around();
+    fdc1.clear_wraparound();
     fdc1.set_pos(0);
     do {
         fdc1.read_id(id_field, crc_error);
@@ -180,8 +175,10 @@ int main(void)
             }
 #endif
         }
-    } while (fdc1.is_lap_around() == false);
+    } while (fdc1.is_wraparound() == false);
+#endif
 
+#if 0
     disk_image_mfm mfm_img;
     mfm_img.read("cdos7.mfm");
     bit_array barray = mfm_img.get_track(2);
@@ -190,6 +187,41 @@ int main(void)
     fdc2.set_pos(0);
     tbuf = fdc2.read_track();
     dump_buf(tbuf.data(), 2048);
+#endif
 
+
+    std::cout << std::endl << std::endl << "TAIYO" << std::endl;
+    disk_image_raw imgraw;
+    imgraw.read("taiyo0.raw");
+    fdc_bitstream fdc5;
+    bit_array tdata = imgraw.get_track_data(0);
+    fdc5.set_raw_track_data(tdata);
+    tbuf = fdc5.read_track();
+    //dump_buf(tbuf.data(), tbuf.size());
+    //std::cout << std::endl;
+
+    fdc5.clear_wraparound();
+    fdc5.set_pos(0);
+    for (int i = 0; i < 10; i++) {
+        do {
+            fdc5.read_id(id_field, crc_error);
+            if (id_field.size() > 0) {
+                size_t length = id_field[3];
+                std::vector<uint8_t> sect_data;
+                bool dam_type = false;
+                if (id_field[2] == 0xf7) {
+                    dump_buf(id_field.data(), id_field.size());
+                    std::cout << std::endl;
+                    fdc5.read_sector(length, sect_data, crc_error, dam_type);
+                    if (sect_data.size() > 0) {
+                        dump_buf(sect_data.data(), sect_data.size());
+                        std::cout << std::endl;
+                    }
+                }
+            }
+        } while (fdc5.is_wraparound() == false);
+        fdc5.clear_wraparound();
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    }
     return 0;
 }

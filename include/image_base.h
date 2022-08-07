@@ -4,8 +4,9 @@
 
 class disk_image {
 private:
-public:
+protected:
     std::vector<bit_array>  m_track_data;
+public:
 
     disk_image() {
         m_track_data.clear();
