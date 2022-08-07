@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 
+#include "image_base.h"
+
 typedef struct picfileformatheader_
 {
 	uint8_t HEADERSIGNATURE[8];		// "HXCPICFE"
@@ -65,9 +67,7 @@ typedef struct pictrack_
 
 
 
-class disk_image_hfe {
-private:
-	std::vector<std::vector<uint8_t>> m_track_data;
+class disk_image_hfe : public disk_image {
 public:
 	disk_image_hfe(void) {
 		m_track_data.clear();
@@ -87,34 +87,54 @@ public:
 		ifs.read(reinterpret_cast<char*>(track_offset_table), header.number_of_track * sizeof(pictrack));
 
 		for (size_t track = 0; track < header.number_of_track; track++) {
-			std::vector<uint8_t> side0;
-			std::vector<uint8_t> side1;
+			bit_array side0;
+			bit_array side1;
 			std::vector<uint8_t> buf;
 			size_t blocks   = track_offset_table[track].track_len / 0x0200;
 			size_t fraction = track_offset_table[track].track_len % 0x0200;
 			size_t read_blocks = blocks + (fraction > 0 ? 1 : 0);
+			size_t bit_cell_width = 8;
 			buf.resize(read_blocks * 0x0200);
 			ifs.seekg(track_offset_table[track].offset * 0x0200, std::ios_base::beg);
 			ifs.read(reinterpret_cast<char*>(buf.data()), read_blocks * 0x0200);
-			for (size_t blk_id = 0; blk_id < blocks; blk_id++) {
+			size_t blk_id;
+			for (blk_id = 0; blk_id < blocks; blk_id++) {
+				uint8_t dt;
 				for (size_t ofst = 0; ofst < 0x0100; ofst++) {
-					side0.push_back(buf[blk_id * 0x0200 + ofst         ]);
-					side1.push_back(buf[blk_id * 0x0200 + ofst + 0x0100]);
+					for (uint8_t bit_pos = 0x80; bit_pos > 0; bit_pos >>=1) {
+						int bit_data = (buf[blk_id * 0x0200 + ofst     ] & bit_pos) ? 1 : 0;
+						for (size_t j = 0; j < bit_cell_width; j++) {
+							if (j == bit_cell_width / 2) side0.write_stream(bit_data, true);
+							else                         side0.write_stream(0, true);
+						}
+
+						bit_data = (buf[blk_id * 0x0200 + ofst + 0x0100] & bit_pos) ? 1 : 0;
+						for (size_t j = 0; j < bit_cell_width; j++) {
+							if (j == bit_cell_width / 2) side1.write_stream(bit_data, true);
+							else                         side1.write_stream(0, true);
+						}
+					}
 				}
 			}
 			if (fraction > 0) {
 				for (size_t ofst = 0; ofst < fraction/2; ofst++) {
-					side0.push_back(buf[blocks * 0x0200 + ofst]);
-					side1.push_back(buf[blocks * 0x0200 + ofst + 0x0100]);
+					for (uint8_t bit_pos = 0x80; bit_pos > 0; bit_pos >>= 1) {
+						int bit_data = (buf[blk_id * 0x0200 + ofst] & bit_pos) ? 1 : 0;
+						for (size_t j = 0; j < bit_cell_width; j++) {
+							if (j == bit_cell_width / 2) side0.write_stream(bit_data, true);
+							else                         side0.write_stream(0, true);
+						}
+
+						bit_data = (buf[blk_id * 0x0200 + ofst + 0x0100] & bit_pos) ? 1 : 0;
+						for (size_t j = 0; j < bit_cell_width; j++) {
+							if (j == bit_cell_width / 2) side1.write_stream(bit_data, true);
+							else                         side1.write_stream(0, true);
+						}
+					}
 				}
 			}
 			m_track_data.push_back(side0);
 			m_track_data.push_back(side1);
 		}
 	}
-
-	std::vector<std::vector<uint8_t>> &get_track_data(void) {
-		return m_track_data;
-	}
-
 };

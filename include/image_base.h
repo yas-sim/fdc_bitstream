@@ -18,5 +18,8 @@ public:
     };
 
     virtual void read(std::string file_name) = 0;
-    virtual bit_array& get_track_data(size_t track_number) = 0;
+
+    virtual bit_array& get_track_data(size_t track_number) {
+        return m_track_data[track_number];
+    }
 };

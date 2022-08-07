@@ -1,6 +1,7 @@
 #pragma once
 
 #include "bit_array.h"
+#include "image_base.h"
 
 // Header (ofst(byte) = 0)
 typedef struct mfm_header_ {
@@ -22,7 +23,7 @@ typedef struct track_table_ {
 //   ofst(byte) = track_table[track#].offset
 //   size(byte) = track_table[track#].length_bit/8 + (track_table[track#].length%8)?1:0)
 
-class disk_image_mfm {
+class disk_image_mfm : public disk_image {
 private:
     mfm_header              m_header;
     mfm_track_table         m_track_table[84];
@@ -49,9 +50,6 @@ public:
             barray.set_array(tdata);
             m_track_data.push_back(barray);
         }
-    }
-    bit_array &get_track(size_t track_number) {
-        return m_track_data[track_number];
     }
 
     inline size_t get_number_of_tracks(void) { return m_header.number_of_tracks; }

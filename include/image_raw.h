@@ -2,7 +2,7 @@
 
 #include "image_base.h"
 
-class disk_image_raw : disk_image {
+class disk_image_raw : public disk_image {
 private:
 public:
     disk_image_raw() {};
@@ -62,9 +62,5 @@ public:
                 }
             }
         }
-    }
-
-    bit_array& get_track_data(size_t track_number) {
-        return m_track_data[track_number];
     }
 };

@@ -139,21 +139,10 @@ int main(void)
     } while (fdc.is_wraparound() == false);
 #endif
 
-#if 0
+#if 1
     disk_image_hfe image;
     image.read("nandemo.hfe");
-    std::vector<std::vector<uint8_t>> &disk = image.get_track_data();
-    std::vector<uint8_t> track = disk[0];
-    bit_array hfe_stream;
-    bit_array track_stream;
-
-    hfe_stream.set_array(track);
-    for (size_t bit = 0; bit < hfe_stream.get_length(); bit++) {
-        int bit_data = hfe_stream.read_stream();
-        for (size_t j = 0; j < 3; j++) track_stream.write_stream(0, true);
-        track_stream.write_stream(bit_data, true);
-        for (size_t j = 0; j < 4; j++) track_stream.write_stream(0, true);
-    }
+    bit_array track_stream = image.get_track_data(0);
     fdc_bitstream fdc1;
     fdc1.set_raw_track_data(track_stream);
     fdc1.set_pos(0);

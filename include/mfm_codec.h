@@ -56,7 +56,7 @@ public:
     //     1     0      1      0       0      1      0      0      <- Data reading (only the data pulses within the data window will be considered) 
     //
     // 01234567
-    // | WWWW |  <= In this case, bit cell size = 8, data window ofst = 2, data window size = 4
+    // | WWWW  |  <= In this case, bit cell size = 8, data window ofst = 2, data window size = 4
     //
     int read_bit_ds(void) {
         int bit_reading = 0;
