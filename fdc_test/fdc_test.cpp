@@ -84,14 +84,9 @@ void list_sector_ids(fdc_bitstream &fdc, bool sector_dump) {
             if (sector_dump) {
                 size_t length = id_field[3];
                 std::vector<uint8_t> sect_data;
-                bool dam_type;
+                bool dam_type = false;
                 fdc.read_sector(length, sect_data, crc_error, dam_type);
-                if (dam_type) {
-                    std::cout << "DDAM ";
-                }
-                else {
-                    std::cout << "DAM  ";
-                }
+                std::cout << (dam_type ? "DDAM " : "DAM  ") << (crc_error ? "CRC ERR" : "CRC OK ") << std::endl;
                 if (sect_data.size() > 0) {
                     dump_buf(sect_data.data(), sect_data.size());
                     std::cout << std::endl;
@@ -174,7 +169,7 @@ int main(void)
     std::cout << std::endl;
 
     std::cout << "ID" << std::endl;
-    list_sector_ids(fdc2, false);
+    list_sector_ids(fdc2, true);
 #endif
 
 
@@ -187,6 +182,8 @@ int main(void)
     tbuf = fdc5.read_track();
     //dump_buf(tbuf.data(), tbuf.size());
     //std::cout << std::endl;
+
+    list_sector_ids(fdc5, false);
 
     fdc5.clear_wraparound();
     fdc5.set_pos(0);
@@ -212,7 +209,7 @@ int main(void)
         //std::this_thread::sleep_for(std::chrono::milliseconds(500));
     }
 
-
+    std::cout << "\nWrite track / Write sector test" << std::endl;
     bit_array track_write_data;
     track_write_data.set(4e6 * 0.2, 0);     // extend track buffer
     fdc_bitstream fdc6;
@@ -237,7 +234,9 @@ int main(void)
         size_t length = id_field[3];
         std::vector<uint8_t> sect_data;
         bool dam_type = false;
+        // read sector
         fdc6.read_sector(length, sect_data, crc_error, dam_type);
+        std::cout << (crc_error ? "ERROR" : "OK") << std::endl;
         if (sect_data.size() > 0) {
             std::cout << std::endl << "SECTOR DATA" << std::endl;
             dump_buf(sect_data.data(), sect_data.size());
@@ -245,7 +244,7 @@ int main(void)
         }
     }
 
-
+    // write sector
     std::vector<uint8_t> sect_data;
     for (int i = 0; i < 256; i++) sect_data.push_back(i);
     fdc6.clear_wraparound();
@@ -268,7 +267,9 @@ int main(void)
         size_t length = id_field[3];
         std::vector<uint8_t> sect_data;
         bool dam_type = false;
+        // read sector after a write sector with incremental data
         fdc6.read_sector(length, sect_data, crc_error, dam_type);
+        std::cout << (crc_error ? "ERROR" : "OK") << std::endl;
         if (sect_data.size() > 0) {
             std::cout << std::endl << "SECTOR DATA" << std::endl;
             dump_buf(sect_data.data(), sect_data.size());

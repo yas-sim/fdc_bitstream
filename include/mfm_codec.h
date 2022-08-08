@@ -92,6 +92,16 @@ public:
                     }
                 }
                 size_t distance = m_track.distance_to_next_bit1();
+#if 0
+                // give timing fluctuation (intentionally - to immitate the spndle rotation fluctuation)
+                size_t rand_num = m_rnd() % 32;
+                if(rand_num == 0) {
+                    distance++;
+                }
+                else if (rand_num == 1) {
+                    distance--;
+                }
+#endif
                 m_distance_to_next_pulse += distance;
             }
         } while (m_distance_to_next_pulse < m_bit_cell_size);

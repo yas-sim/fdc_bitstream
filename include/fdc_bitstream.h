@@ -73,7 +73,7 @@ public:
         }
     }
 
-    void read_id(std::vector<uint8_t> &id_field, bool crc_error) {
+    void read_id(std::vector<uint8_t> &id_field, bool &crc_error) {
         uint8_t read_data, mc_byte = 0;
         bool missing_clock;
         size_t read_count = 0;
@@ -111,7 +111,7 @@ public:
                 id_field.push_back(read_data);
                 m_crcgen.data(read_data);
                 if (--read_count == 0) {
-                    crc_error = m_crcgen.get() == 0 ? false : true;
+                    crc_error = ((m_crcgen.get() == 0) ? false : true);
                     id_field.erase(id_field.begin());       // remove the ID mark on the top
                     m_state = fdc_state::IDLE;
                     return;
@@ -131,7 +131,7 @@ public:
     // DDAM = f8, f9
     // DAM = fa, fb
     // sect_length_code = 0~3 
-    void read_sector(size_t sect_length_code, std::vector<uint8_t> &sect_data, bool crc_error, bool dam_type) {
+    void read_sector(size_t sect_length_code, std::vector<uint8_t> &sect_data, bool &crc_error, bool &dam_type) {
         std::vector<size_t> sector_length_table{ 128, 256, 512, 1024 };
         uint8_t read_data, mc_byte = 0;
         bool missing_clock;
@@ -154,7 +154,7 @@ public:
                 if (missing_clock) {
                     mc_byte = read_data;
                 }
-                else if (mc_byte == 0xa1) {
+                else if (mc_byte == 0xa1 && (read_data == 0xfa || read_data==0xfb || read_data == 0xf8 || read_data == 0xf9)) {
                     if      (read_data == 0xfa || read_data == 0xfb) {     // Normal DAM
                         dam_type = false;
                     }
@@ -162,8 +162,9 @@ public:
                         dam_type = true;
                     }
                     sect_data.clear();
-                    sect_data.push_back(read_data);
-                    read_count = sector_length_table[sect_length_code & 0b0011] + 2;    // sector field+CRC
+                    m_crcgen.reset();
+                    m_crcgen.data(read_data);
+                    read_count = sector_length_table[sect_length_code & 0b0011u] + 2;    // sector size+CRC
                     m_state = fdc_state::READ_SECT;
                 }
                 else {
@@ -172,14 +173,12 @@ public:
                 break;
             case fdc_state::READ_SECT:
                 m_codec.mfm_read_byte(read_data, missing_clock, true, true);
+                m_crcgen.data(read_data);
                 sect_data.push_back(read_data);
                 if (--read_count == 0) {
-                    m_crcgen.reset();
-                    m_crcgen.data(sect_data);
-                    crc_error = m_crcgen.get() == 0 ? false : true;
-                    sect_data.erase(sect_data.begin());       // remove the ID mark on the top
-                    sect_data.pop_back();
-                    sect_data.pop_back();                    // remove CRC field
+                    crc_error = ((m_crcgen.get() == 0) ? false : true);
+                    sect_data.pop_back();                     // remove CRC field
+                    sect_data.pop_back();                     // remove CRC field
                     m_state = fdc_state::IDLE;
                     return;
                 }
