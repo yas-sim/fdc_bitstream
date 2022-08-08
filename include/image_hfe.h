@@ -97,36 +97,36 @@ public:
 			ifs.read(reinterpret_cast<char*>(buf.data()), read_blocks * 0x0200);
 			size_t blk_id;
 			for (blk_id = 0; blk_id < blocks; blk_id++) {
-				uint8_t dt;
 				for (size_t ofst = 0; ofst < 0x0100; ofst++) {
-					for (uint8_t bit_pos = 0x80; bit_pos > 0; bit_pos >>=1) {
-						int bit_data = (buf[blk_id * 0x0200 + ofst     ] & bit_pos) ? 1 : 0;
+					for (uint16_t bit_pos = 0x01; bit_pos < 0x100; bit_pos <<=1) {
+						int bit_data;
+						bit_data = (buf[blk_id * 0x0200 + ofst         ] & bit_pos) ? 1 : 0;
 						for (size_t j = 0; j < bit_cell_width; j++) {
 							if (j == bit_cell_width / 2) side0.write_stream(bit_data, true);
-							else                         side0.write_stream(0, true);
+							else                         side0.write_stream(       0, true);
 						}
-
 						bit_data = (buf[blk_id * 0x0200 + ofst + 0x0100] & bit_pos) ? 1 : 0;
 						for (size_t j = 0; j < bit_cell_width; j++) {
 							if (j == bit_cell_width / 2) side1.write_stream(bit_data, true);
-							else                         side1.write_stream(0, true);
+							else                         side1.write_stream(       0, true);
 						}
 					}
 				}
 			}
 			if (fraction > 0) {
 				for (size_t ofst = 0; ofst < fraction/2; ofst++) {
-					for (uint8_t bit_pos = 0x80; bit_pos > 0; bit_pos >>= 1) {
-						int bit_data = (buf[blk_id * 0x0200 + ofst] & bit_pos) ? 1 : 0;
+					for (uint16_t bit_pos = 0x01; bit_pos < 0x100; bit_pos <<= 1) {
+						int bit_data;
+						bit_data = (buf[blk_id * 0x0200 + ofst         ] & bit_pos) ? 1 : 0;
 						for (size_t j = 0; j < bit_cell_width; j++) {
 							if (j == bit_cell_width / 2) side0.write_stream(bit_data, true);
-							else                         side0.write_stream(0, true);
+							else                         side0.write_stream(       0, true);
 						}
 
 						bit_data = (buf[blk_id * 0x0200 + ofst + 0x0100] & bit_pos) ? 1 : 0;
 						for (size_t j = 0; j < bit_cell_width; j++) {
 							if (j == bit_cell_width / 2) side1.write_stream(bit_data, true);
-							else                         side1.write_stream(0, true);
+							else                         side1.write_stream(       0, true);
 						}
 					}
 				}

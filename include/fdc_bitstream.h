@@ -49,7 +49,7 @@ public:
                 write_data(data, true);
                 m_crcgen.data(0xc2);
                 break;
-            case 0xf7:      // write CRC
+            case 0xf7:      // write CRC (two bytes)
                 m_crcgen.data(0x00);
                 m_crcgen.data(0x00);
                 crc_val = m_crcgen.get();
@@ -97,6 +97,8 @@ public:
                 else if (mc_byte == 0xa1 && (read_data == 0xfc || read_data == 0xfd || read_data == 0xfe || read_data == 0xff /* IDAMs*/)) {
                     id_field.clear();
                     id_field.push_back(read_data);
+                    m_crcgen.reset();
+                    m_crcgen.data(read_data);
                     read_count = 4 + 2;    // ID+CRC
                     m_state = fdc_state::READ_IDAM;
                 }
@@ -107,9 +109,8 @@ public:
             case fdc_state::READ_IDAM:
                 m_codec.mfm_read_byte(read_data, missing_clock, true, true);
                 id_field.push_back(read_data);
+                m_crcgen.data(read_data);
                 if (--read_count == 0) {
-                    m_crcgen.reset();
-                    m_crcgen.data(id_field);
                     crc_error = m_crcgen.get() == 0 ? false : true;
                     id_field.erase(id_field.begin());       // remove the ID mark on the top
                     m_state = fdc_state::IDLE;

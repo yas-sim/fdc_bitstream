@@ -84,8 +84,11 @@ public:
 
 
     bool set_stream_pos(size_t position) {
-        if (position >= m_bit_length) return false;
-        m_stream_pos = position;
+        if (position < m_bit_length) {
+            m_stream_pos = position;
+        } else {
+            position = m_bit_length - 1;
+        }
         m_wraparound = false;
         return true;
     }
@@ -98,34 +101,27 @@ public:
 
     // elastic: true=extend the bit array if m_stream_pos go beyond the current length. false=no bit array extend (lap around)
     void write_stream(uint8_t value, bool elastic=false) {
-        if (m_stream_pos >= m_bit_length) {     // lap around
-            if (elastic == true) {
-                set(m_bit_length, value);       // set() extends the bit array
-                m_stream_pos++;
-                return;
-            }
-            else {
-                m_stream_pos = 0;
-                m_wraparound = true;
-            }
-        }
         set(m_stream_pos++, value);
+        if (m_stream_pos >= m_bit_length && elastic == false) {     // reached to the end of the bit array
+            m_stream_pos = 0;           // wrap around only when elastic==false
+            m_wraparound = true;
+        }
     }
 
     void advance_stream_pos(void) {
-        if (m_stream_pos >= m_bit_length) {     // lap around
+        m_stream_pos++;
+        if (m_stream_pos >= m_bit_length) {     // wrap around
             m_stream_pos = 0;
             m_wraparound = true;
         }
-        m_stream_pos++;
     }
 
     uint8_t read_stream(void) {
-        if (m_stream_pos >= m_bit_length) {     // lap around
+        uint8_t val = get(m_stream_pos++);
+        if (m_stream_pos >= m_bit_length) {     // wrap around
             m_stream_pos = 0;
             m_wraparound = true;
         }
-        uint8_t val = get(m_stream_pos++);
         return val;
     }
 
@@ -142,7 +138,7 @@ public:
         return distance;
     }
 
-    uint8_t fill_stream(uint8_t data, uint8_t length = 1) {
+    void fill_stream(uint8_t data, uint8_t length = 1) {
         for (size_t i = 0; i < length; i++) {
             write_stream(data);
         }
@@ -169,7 +165,8 @@ public:
 
 
     void save(std::string file_name) {
-        std::ofstream ofs(file_name, std::ios::out | std::ios::binary);
+        std::ofstream ofs;
+        ofs.open(file_name, std::ios::out | std::ios::binary);
         ofs.write(reinterpret_cast<char*>(&m_bit_length), sizeof(size_t));                  // bit length
         ofs.write(reinterpret_cast<char*>(m_array_data.data()), m_array_data.size());       // data
         std::cout << m_bit_length << std::endl;
@@ -177,7 +174,15 @@ public:
     }
 
     void load(std::string file_name) {
-        std::ifstream ifs(file_name, std::ios::in | std::ios::binary);
+        std::ifstream ifs;
+        ifs.open(file_name, std::ios::in | std::ios::binary);
+        if(ifs.is_open()==false) {
+#ifdef DEBUG
+            std::cerr << "Failed to open a file'" << file_name << "'." << std::endl;
+#endif
+            clear_array();
+            return;
+        }
         ifs.seekg(0, std::ios_base::end);
         size_t size = ifs.tellg();
         ifs.seekg(0, std::ios_base::beg);

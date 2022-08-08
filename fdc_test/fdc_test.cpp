@@ -66,14 +66,49 @@ std::vector<uint8_t> generate_format_data(std::vector<int> format_source_data) {
 #include "image_mfm.h"
 
 
+void list_sector_ids(fdc_bitstream &fdc, bool sector_dump) {
+    std::vector<uint8_t> id_field;
+    bool crc_error = false;
+    fdc.clear_wraparound();
+    fdc.set_pos(0);
+    do {
+        fdc.read_id(id_field, crc_error);
+        if (id_field.size() > 0) {
+            dump_buf(id_field.data(), id_field.size());
+            if (crc_error == true) {
+                std::cout << "CRC ERR" << std::endl;
+            }
+            else {
+                std::cout << "CRC OK" << std::endl;
+            }
+            if (sector_dump) {
+                size_t length = id_field[3];
+                std::vector<uint8_t> sect_data;
+                bool dam_type;
+                fdc.read_sector(length, sect_data, crc_error, dam_type);
+                if (dam_type) {
+                    std::cout << "DDAM ";
+                }
+                else {
+                    std::cout << "DAM  ";
+                }
+                if (sect_data.size() > 0) {
+                    dump_buf(sect_data.data(), sect_data.size());
+                    std::cout << std::endl;
+                }
+            }
+        }
+    } while (fdc.is_wraparound() == false);
+}
+
 
 
 int main(void)
 {
+    std::vector<uint8_t> id_field;
+    bool crc_error = false;
     //    read_raw_image("fb30.raw");
     std::vector<uint8_t> tbuf;
-    bool crc_error = false;
-    std::vector<uint8_t> id_field;
 
 #if 0
     bit_array test1;
@@ -104,42 +139,13 @@ int main(void)
     fdc.set_pos(0);
     tbuf = fdc.read_track();
     dump_buf(tbuf.data(), 2048);
-#endif
+    std::cout << std::endl;
 
-#if 0
-    fdc.clear_wraparound();
-    fdc.set_pos(0);
-    do {
-        fdc.read_id(id_field, crc_error);
-        if (id_field.size() > 0) {
-            dump_buf(id_field.data(), id_field.size());
-            if (crc_error == true) {
-                std::cout << "CRC ERR" << std::endl;
-            }
-            else {
-                std::cout << "CRC OK" << std::endl;
-            }
-#if 0
-            size_t length = id_field[3];
-            std::vector<uint8_t> sect_data;
-            bool dam_type;
-            fdc.read_sector(length, sect_data, crc_error, dam_type);
-            if (dam_type) {
-                std::cout << "DDAM ";
-            }
-            else {
-                std::cout << "DAM  ";
-            }
-            if (sect_data.size() > 0) {
-                dump_buf(sect_data.data(), sect_data.size());
-                std::cout << std::endl;
-            }
-#endif
-        }
-    } while (fdc.is_wraparound() == false);
+    list_sector_ids(fdc);
 #endif
 
 #if 1
+    std::cout << "*** NANDEMO" << std::endl;
     disk_image_hfe image;
     image.read("nandemo.hfe");
     bit_array track_stream = image.get_track_data(0);
@@ -148,40 +154,15 @@ int main(void)
     fdc1.set_pos(0);
     tbuf = fdc1.read_track();
     dump_buf(tbuf.data(), 2048);
+    std::cout << std::endl;
 
-    fdc1.clear_wraparound();
-    fdc1.set_pos(0);
-    do {
-        fdc1.read_id(id_field, crc_error);
-        if (id_field.size() > 0) {
-            dump_buf(id_field.data(), id_field.size());
-            if (crc_error == true) {
-                std::cout << "CRC ERR" << std::endl;
-            }
-            else {
-                std::cout << "CRC OK" << std::endl;
-            }
-#if 0
-            size_t length = id_field[3];
-            std::vector<uint8_t> sect_data;
-            bool dam_type;
-            fdc1.read_sector(length, sect_data, crc_error, dam_type);
-            if (dam_type) {
-                std::cout << "DDAM ";
-            }
-            else {
-                std::cout << "DAM  ";
-            }
-            if (sect_data.size() > 0) {
-                dump_buf(sect_data.data(), sect_data.size());
-                std::cout << std::endl;
-            }
+    std::cout << "ID" << std::endl;
+    list_sector_ids(fdc1, false);
 #endif
-        }
-    } while (fdc1.is_wraparound() == false);
-#endif
+
 
 #if 1
+    std::cout << "*** CDOS7" << std::endl;
     disk_image_mfm mfm_img;
     mfm_img.read("cdos7.mfm");
     bit_array barray = mfm_img.get_track_data(2);
@@ -190,10 +171,14 @@ int main(void)
     fdc2.set_pos(0);
     tbuf = fdc2.read_track();
     dump_buf(tbuf.data(), 2048);
+    std::cout << std::endl;
+
+    std::cout << "ID" << std::endl;
+    list_sector_ids(fdc2, false);
 #endif
 
 
-    std::cout << std::endl << std::endl << "TAIYO" << std::endl;
+    std::cout << std::endl << std::endl << "*** TAIYO - COROCORO test" << std::endl;
     disk_image_raw imgraw;
     imgraw.read("taiyo0.raw");
     fdc_bitstream fdc5;
