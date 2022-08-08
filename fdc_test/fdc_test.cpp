@@ -47,24 +47,12 @@ void bit_dump(uint64_t data, size_t bit_width, size_t spacing = 0, bool line_fee
 }
 
 
-std::vector<uint8_t> generate_format_data(std::vector<int> format_source_data) {
-    std::vector<uint8_t> result;
-    result.clear();
-    for (auto it = format_source_data.begin(); it != format_source_data.end(); ) {
-        int data = *it++;
-        int itr = *it++;
-        for (int i = 0; i < itr; i++) {
-            result.push_back(static_cast<uint8_t>(data));
-        }
-    }
-    return result;
-}
-
 
 #include "image_raw.h"
 #include "image_hfe.h"
 #include "image_mfm.h"
 
+#include "common.h"
 
 void list_sector_ids(fdc_bitstream &fdc, bool sector_dump) {
     std::vector<uint8_t> id_field;
@@ -209,15 +197,14 @@ int main(void)
         //std::this_thread::sleep_for(std::chrono::milliseconds(500));
     }
 
+
+
     std::cout << "\nWrite track / Write sector test" << std::endl;
     bit_array track_write_data;
     track_write_data.set(4e6 * 0.2, 0);     // extend track buffer
     fdc_bitstream fdc6;
     fdc6.set_raw_track_data(track_write_data);
-    std::vector<int> format_data{ 0x4e,80, 0x00,12, 0xf6,3, 0xfc,1, 0x4e,50, 
-        0x00,12, 0xf5,3, 0xfe,1, 0x01,1, 0x01,1, 0x03,1, 0x01,1, 0xf7,1, 0x4e,22, 0x00,12, 0xf5,3, 0xfb,1, 0xff,256, 0xf7,1, 0x4e,54
-    };
-    std::vector<uint8_t> write_data = generate_format_data(format_data);
+    std::vector<uint8_t> write_data = generate_format_data(0,0,1,1);
     fdc6.write_track(write_data);
     fdc6.set_pos(0);
     tbuf = fdc6.read_track();
@@ -276,6 +263,24 @@ int main(void)
             std::cout << std::endl;
         }
     }
+
+
+
+    std::cout << "\nWrite track - full format test" << std::endl;
+    //bit_array track_write_data;
+    track_write_data.clear_array();
+    track_write_data.set(4e6 * 0.2, 0);     // extend track buffer
+    fdc_bitstream fdc7;
+    fdc7.set_raw_track_data(track_write_data);
+    write_data = generate_format_data(0, 0, 16, 1, 3);
+    fdc7.write_track(write_data);
+    fdc7.set_pos(0);
+    tbuf = fdc7.read_track();
+    dump_buf(tbuf.data(), tbuf.size());
+    std::cout << std::endl;
+
+    std::cout << "ID" << std::endl;
+    list_sector_ids(fdc7, false);
 
     return 0;
 }
