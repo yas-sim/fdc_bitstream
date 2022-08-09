@@ -41,4 +41,5 @@ public:
     inline void clear_wraparound(void) { m_codec.clear_wraparound(); }
 
     void write_data(uint8_t data, bool mode = false, bool write_gate = true);
+    void fdc_bitstream::read_data(uint8_t& data, bool& missing_clock, bool ignore_missing_clock=true, bool ignore_sync_field=true);
 };

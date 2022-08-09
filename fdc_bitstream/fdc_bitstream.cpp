@@ -344,3 +344,7 @@ void fdc_bitstream::set_raw_track_data(bit_array track_data) {
 void fdc_bitstream::write_data(uint8_t data, bool mode, bool write_gate) {
     m_codec.mfm_write_byte(data, mode, write_gate);
 }
+
+void fdc_bitstream::read_data(uint8_t& data, bool& missing_clock, bool ignore_missing_clock, bool ignore_sync_field) {
+    m_codec.mfm_read_byte(data, missing_clock, ignore_missing_clock, ignore_sync_field);
+}
