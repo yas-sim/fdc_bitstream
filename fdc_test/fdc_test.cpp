@@ -13,45 +13,11 @@
 #include "mfm_codec.h"
 #include "fdc_bitstream.h"
 
-
-
-
-
-
-
-void dump_buf(uint8_t *ptr, size_t size) {
-    std::ios::fmtflags flags_saved = std::cout.flags();
-    for (size_t i = 0; i < size; i++) {
-        std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(ptr[i]) << " ";
-        if (i % 64 == 63) {
-            std::cout << std::endl;
-        }
-    }
-    std::cout.flags(flags_saved);
-}
-
-void bit_dump(uint64_t data, size_t bit_width, size_t spacing = 0, bool line_feed=false) {
-    size_t count = 0;
-    for (uint64_t bit_pos = 1 << (bit_width - 1); bit_pos != 0; bit_pos >>= 1) {
-        std::cout << ((data & bit_pos) ? 1 : 0);
-        count++;
-        if (spacing > 0) {
-            if (count % spacing == 0) {
-                std::cout << " ";
-            }
-        }
-    }
-    if (line_feed == true) {
-        std::cout << std::endl;
-    }
-}
-
-
-
 #include "image_raw.h"
 #include "image_hfe.h"
 #include "image_mfm.h"
 
+#include "fdc_misc.h"
 #include "common.h"
 
 void list_sector_ids(fdc_bitstream &fdc, bool sector_dump) {
@@ -62,7 +28,7 @@ void list_sector_ids(fdc_bitstream &fdc, bool sector_dump) {
     do {
         fdc.read_id(id_field, crc_error);
         if (id_field.size() > 0) {
-            dump_buf(id_field.data(), id_field.size());
+            dump_buf(id_field.data(), id_field.size(), false);
             if (crc_error == true) {
                 std::cout << "CRC ERR" << std::endl;
             }
@@ -77,7 +43,6 @@ void list_sector_ids(fdc_bitstream &fdc, bool sector_dump) {
                 std::cout << (dam_type ? "DDAM " : "DAM  ") << (crc_error ? "CRC ERR" : "CRC OK ") << std::endl;
                 if (sect_data.size() > 0) {
                     dump_buf(sect_data.data(), sect_data.size());
-                    std::cout << std::endl;
                 }
             }
         }
@@ -148,7 +113,7 @@ int main(void)
     std::cout << "*** CDOS7" << std::endl;
     disk_image_mfm mfm_img;
     mfm_img.read("cdos7.mfm");
-    bit_array barray = mfm_img.get_track_data(2);
+    bit_array barray = mfm_img.get_track_data(0);
     fdc_bitstream fdc2;
     fdc2.set_raw_track_data(barray);
     fdc2.set_pos(0);
