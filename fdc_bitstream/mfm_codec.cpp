@@ -14,15 +14,20 @@ void mfm_codec::set_track_data(bit_array track) {
 //inline size_t get_track_length(void) { return m_track.get_length(); }       // unit = bit
 
 mfm_codec::mfm_codec() : m_bit_stream(0),
-m_sync_mode(false), m_wraparound(false),
-m_prev_write_bit(0),
-m_sampling_rate(4e6), m_data_bit_rate(500e3) {
+    m_sync_mode(false), m_wraparound(false),
+    m_prev_write_bit(0),
+    m_sampling_rate(4e6), m_data_bit_rate(500e3),
+    m_fluctuation(false), m_fluctuator_numerator(1), m_fluctuator_denominator(1)
+{
     update_parameters();
 };
 
 void mfm_codec::update_parameters(void) {
     m_bit_cell_size = m_sampling_rate / m_data_bit_rate;
     m_data_window_size = m_bit_cell_size / 2;
+    if (m_data_window_size == 0) {          // Avoid m_data_window_size==0 situation
+        m_data_window_size = 1;
+    }
     m_data_window_ofst = m_bit_cell_size / 4;
 #ifdef DEBUG
     std::cout << "Bit cell size:" << m_bit_cell_size << std::endl;
@@ -72,7 +77,8 @@ int mfm_codec::read_bit_ds(void) {
             }
             // adjust pulse phase (imitate PLL operation)
             size_t cell_center = m_data_window_ofst + m_data_window_ofst / 2;
-            if (m_rnd() % 4 == 0) {     // limit the PLL operation frequency and introduce fluctuation with the random generator (certain fluctuation is required to reproduce some copy protection)
+            // limit the PLL operation frequency and introduce fluctuation with the random generator (certain fluctuation is required to reproduce some copy protection)
+            if (m_fluctuation == false || m_rnd() % m_fluctuator_denominator >= m_fluctuator_numerator) {
                 if (m_distance_to_next_pulse < cell_center) {
                     m_distance_to_next_pulse++;
 #ifdef DEBUG
@@ -222,4 +228,15 @@ void mfm_codec::set_pos(size_t bit_pos) {
 
 size_t mfm_codec::get_pos(void) {
     return m_track.get_stream_pos();
+}
+
+
+void mfm_codec::enable_fluctuator(size_t numerator, size_t denominator) {
+    m_fluctuation = true;
+    m_fluctuator_numerator = numerator;
+    m_fluctuator_denominator = denominator;
+}
+
+void mfm_codec::disable_fluctuator(void) {
+    m_fluctuation = false;
 }

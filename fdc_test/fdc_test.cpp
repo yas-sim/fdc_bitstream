@@ -132,6 +132,7 @@ int main(void)
     fdc_bitstream fdc5;
     bit_array tdata = imgraw.get_track_data(0);
     fdc5.set_raw_track_data(tdata);
+    fdc5.enable_fluctuator(2, 5);
     tbuf = fdc5.read_track();
     //dump_buf(tbuf.data(), tbuf.size());
     //std::cout << std::endl;

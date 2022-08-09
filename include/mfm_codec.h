@@ -34,6 +34,9 @@ private:
     size_t      m_bit_cell_size    = 0;          // bit cell size in [bits] unit   (4MHz sample, 500Kbps bit rate, MFM = 4.0e6/500e3 = 8)
     size_t      m_distance_to_next_pulse = 0;
     int         m_phase_adjuster = 0;            // data ceparator phase adjuster
+    bool        m_fluctuation = false;
+    size_t      m_fluctuator_numerator = 1;
+    size_t      m_fluctuator_denominator = 4;    // data separator fluctuation occur rate = numerator/denominator
     std::random_device m_rnd;
 public:
     mfm_codec();
@@ -53,4 +56,7 @@ public:
     void mfm_write_byte(uint8_t data, bool mode = false, bool write_gate = true);
     void set_pos(size_t bit_pos);
     size_t get_pos(void);
+
+    void enable_fluctuator(size_t numerator, size_t denominator);
+    void disable_fluctuator(void);
 };

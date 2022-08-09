@@ -23,8 +23,8 @@ private:
     mfm_codec m_codec;              /** MFM codec object */
     fdc_crc m_crcgen;               /** CRC generator object */
 
-    size_t m_sampling_rate;
-    size_t m_data_bit_rate;
+    size_t m_sampling_rate;         /** Track data sampling rate [Hz] (4MHz == 4e6) */
+    size_t m_data_bit_rate;         /** FDC bit data rate [bit/sec] (2D/MFM == 500Kbit/sec == 5e3 */
 public:
     fdc_bitstream();
     void set_fdc_params(size_t sampling_rate, size_t data_bit_rate);
@@ -42,4 +42,7 @@ public:
 
     void write_data(uint8_t data, bool mode = false, bool write_gate = true);
     void fdc_bitstream::read_data(uint8_t& data, bool& missing_clock, bool ignore_missing_clock=true, bool ignore_sync_field=true);
+
+    inline void enable_fluctuator(size_t numerator, size_t denominator) { m_codec.enable_fluctuator(numerator, denominator); }
+    inline void disable_fluctuator(void) { m_codec.disable_fluctuator(); }
 };

@@ -21,8 +21,7 @@
 */
 fdc_bitstream::fdc_bitstream() : m_state(fdc_state::IDLE), m_sampling_rate(4e6), m_data_bit_rate(500e3) {
     m_crcgen.reset();
-    m_codec.set_data_bit_rate(m_data_bit_rate);
-    m_codec.set_sampling_rate(m_sampling_rate);
+    set_fdc_params(m_sampling_rate, m_data_bit_rate);
 };
 
 
@@ -36,6 +35,8 @@ fdc_bitstream::fdc_bitstream() : m_state(fdc_state::IDLE), m_sampling_rate(4e6),
 void fdc_bitstream::set_fdc_params(size_t sampling_rate, size_t data_bit_rate) {
     m_sampling_rate = sampling_rate;
     m_data_bit_rate = data_bit_rate;
+    m_codec.set_data_bit_rate(m_data_bit_rate);
+    m_codec.set_sampling_rate(m_sampling_rate);
 }
 
 /**
@@ -345,6 +346,19 @@ void fdc_bitstream::write_data(uint8_t data, bool mode, bool write_gate) {
     m_codec.mfm_write_byte(data, mode, write_gate);
 }
 
+/**
+* Read a byte from the current position in the track buffer and advance the position for one byte.
+* When reading an ID field and a block of sector data body, ignore_missing_clock and ignore_sync_field must be set to 'true'. 
+* Otherwise, unexpected patten match to the missing-clock-pattern or sync-field-pattern may happen.
+* If this situation occurs, the data separator will perform forcible phase correction and this causes read data error.
+* Adversely, you must set ignore_missing_clock and ignore_sync_field to 'false' when you are searching for address markers (such as IDAM, A1* A1* A1* FE).
+* 
+* @param[out] data Read data
+* @param[out] missing_clock Missing clock status (true=the read data had missing clock).
+* @param[in] ignore_missing_clock Flag to ignore missing clock on reading a data (true=ignore missing clock pattern).
+* @param[in] ignore_sync_field Flag to ignore SYNC field on reading a data (true=ignore SYNC field pattern).
+* @return none
+*/
 void fdc_bitstream::read_data(uint8_t& data, bool& missing_clock, bool ignore_missing_clock, bool ignore_sync_field) {
     m_codec.mfm_read_byte(data, missing_clock, ignore_missing_clock, ignore_sync_field);
 }
