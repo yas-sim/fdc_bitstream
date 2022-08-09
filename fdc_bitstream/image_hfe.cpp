@@ -3,6 +3,7 @@
 #include "image_hfe.h"
 
 void disk_image_hfe::read(std::string file_name) {
+	m_track_data_is_set = false;
 	picfileformatheader header;
 	std::ifstream ifs;
 	ifs.open(file_name, std::ios::in | std::ios::binary);
@@ -65,4 +66,5 @@ void disk_image_hfe::read(std::string file_name) {
 		m_track_data[track * 2 + 0] = side0;
 		m_track_data[track * 2 + 1] = side1;
 	}
+	m_track_data_is_set = true;
 }

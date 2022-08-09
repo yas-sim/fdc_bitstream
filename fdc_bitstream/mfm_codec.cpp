@@ -2,6 +2,7 @@
 
 #include "mfm_codec.h"
 
+
 void mfm_codec::set_track_data(bit_array track) {
     m_track = track;
     m_track.set_stream_pos(0);
@@ -11,6 +12,35 @@ void mfm_codec::set_track_data(bit_array track) {
 //inline bool is_wraparound(void) { return m_wraparound; }
 //inline void clear_wraparound(void) { m_wraparound = false; }
 //inline size_t get_track_length(void) { return m_track.get_length(); }       // unit = bit
+
+mfm_codec::mfm_codec() : m_bit_stream(0),
+m_sync_mode(false), m_wraparound(false),
+m_prev_write_bit(0),
+m_sampling_rate(4e6), m_data_bit_rate(500e3) {
+    update_parameters();
+};
+
+void mfm_codec::update_parameters(void) {
+    m_bit_cell_size = m_sampling_rate / m_data_bit_rate;
+    m_data_window_size = m_bit_cell_size / 2;
+    m_data_window_ofst = m_bit_cell_size / 4;
+#ifdef DEBUG
+    std::cout << "Bit cell size:" << m_bit_cell_size << std::endl;
+    std::cout << "Data window size:" << m_data_window_size << std::endl;
+    std::cout << "Data window offset:" << m_data_window_ofst << std::endl;
+#endif
+}
+
+void mfm_codec::set_data_bit_rate(size_t data_bit_rate) {
+    m_data_bit_rate = data_bit_rate;
+    update_parameters();
+}
+
+void mfm_codec::set_sampling_rate(size_t sampling_rate) { 
+    m_sampling_rate = sampling_rate; 
+    update_parameters(); 
+}
+
 
 // ---------- Data separator
 

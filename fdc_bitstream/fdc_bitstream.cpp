@@ -17,6 +17,28 @@
 //#define DEBUG
 
 /**
+* Constructor
+*/
+fdc_bitstream::fdc_bitstream() : m_state(fdc_state::IDLE), m_sampling_rate(4e6), m_data_bit_rate(500e3) {
+    m_crcgen.reset();
+    m_codec.set_data_bit_rate(m_data_bit_rate);
+    m_codec.set_sampling_rate(m_sampling_rate);
+};
+
+
+/**
+* Set FDC parameters.
+* 
+* @param[in] sampling_rate The sampling rate of the floppy image (track data) in MHz unit. (e.g. 4e6 == 4MHz)
+* @param[in] data_bit_rate The FDC bit rate in bit/sec uint. (MFM/2D == 500e3 == 500HKz)
+* @return none
+*/
+void fdc_bitstream::set_fdc_params(size_t sampling_rate, size_t data_bit_rate) {
+    m_sampling_rate = sampling_rate;
+    m_data_bit_rate = data_bit_rate;
+}
+
+/**
 * Read track.
 * Reads track data from the current position until the pointer reaches to the end of the track (no wrap around).
 * 

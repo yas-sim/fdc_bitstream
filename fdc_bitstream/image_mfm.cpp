@@ -3,6 +3,7 @@
 #include "image_mfm.h"
 
 void disk_image_mfm::read(std::string file_name) {
+    m_track_data_is_set = false;
     std::ifstream ifs;
     ifs.open(file_name, std::ios::in | std::ios::binary);
     if (ifs.is_open() == false) {
@@ -23,4 +24,5 @@ void disk_image_mfm::read(std::string file_name) {
         barray.set_array(tdata);
         m_track_data[track_n] = barray;
     }
+    m_track_data_is_set = true;
 }

@@ -3,6 +3,7 @@
 #include "image_raw.h"
 
 void disk_image_raw::read(std::string raw_file_name) {
+    m_track_data_is_set = false;
     std::ifstream ifs(raw_file_name);
     if (ifs.is_open() == false) {
         std::cerr << "Failed to open " << raw_file_name << "." << std::endl;
@@ -58,4 +59,5 @@ void disk_image_raw::read(std::string raw_file_name) {
             }
         }
     }
+    m_track_data_is_set = true;
 }

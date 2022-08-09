@@ -31,7 +31,7 @@ typedef struct picfileformatheader_
 } picfileformatheader;
 
 // floppyinterfacemode
-enum floppyinterfacemode_t {
+enum class floppyinterfacemode_t {
 	IBMPC_DD_FLOPPYMODE				= 0x00,
 	IBMPC_HD_FLOPPYMODE				= 0x01,
 	ATARIST_DD_FLOPPYMODE			= 0x02,
@@ -50,7 +50,7 @@ enum floppyinterfacemode_t {
 };
 
 // track_encoding
-enum track_encoding_t {
+enum class track_encoding_t {
 	ISOIBM_MFM_ENCODING				= 0x00,
 	AMIGA_MFM_ENCODING				= 0x01,
 	ISOIBM_FM_ENCODING				= 0x02,

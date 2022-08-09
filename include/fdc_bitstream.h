@@ -13,21 +13,26 @@
 
 class fdc_bitstream {
 private:
-    mfm_codec m_codec;
-    enum fdc_state {
+    enum class fdc_state {
         IDLE = 0,
         CHECK_MARK,
         READ_IDAM,
         READ_SECT
     } m_state;
-    fdc_crc m_crcgen;
+
+    mfm_codec m_codec;              /** MFM codec object */
+    fdc_crc m_crcgen;               /** CRC generator object */
+
+    size_t m_sampling_rate;
+    size_t m_data_bit_rate;
 public:
-    fdc_bitstream() : m_state(fdc_state::IDLE) {};
+    fdc_bitstream();
+    void set_fdc_params(size_t sampling_rate, size_t data_bit_rate);
     std::vector<uint8_t> read_track(void);
     void write_track(const std::vector<uint8_t>& track_buf);
     void read_id(std::vector<uint8_t>& id_field, bool& crc_error);
     void read_sector(size_t sect_length_code, std::vector<uint8_t>& sect_data, bool& crc_error, bool& dam_type);
-    void write_sector(std::vector<uint8_t> write_data, bool dam_type, bool write_crc);
+    void write_sector(std::vector<uint8_t> write_data, bool dam_type, bool write_crc=true);
     void set_pos(size_t bit_pos);
     size_t get_pos(void);
     void set_raw_track_data(bit_array track_data);

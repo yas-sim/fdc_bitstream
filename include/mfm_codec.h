@@ -24,18 +24,22 @@ private:
     size_t m_prev_write_bit;        // to preserve the status of previous write data bit for MFM encoding
 
     // for data separator
+    size_t      m_sampling_rate;
+    size_t      m_data_bit_rate;
+
     bit_array   m_track_bit_stream;
-    size_t      m_current_bit_pos = 0;           // current bit position to process
-    size_t      m_data_window_size = 5;          // data window size in [bits] unit
-    size_t      m_data_window_ofst = 2;          // data window start offset in the data cell (in [bits] unit)
-    size_t      m_bit_cell_size    = 8;          // bit cell size in [bits] unit   (4MHz sample, 500Kbps bit rate, MFM = 4.0e6/500e3 = 8)
+    size_t      m_current_bit_pos  = 0;          // current bit position to process
+    size_t      m_data_window_size = 0;          // data window size in [bits] unit
+    size_t      m_data_window_ofst = 0;          // data window start offset in the data cell (in [bits] unit)
+    size_t      m_bit_cell_size    = 0;          // bit cell size in [bits] unit   (4MHz sample, 500Kbps bit rate, MFM = 4.0e6/500e3 = 8)
     size_t      m_distance_to_next_pulse = 0;
     int         m_phase_adjuster = 0;            // data ceparator phase adjuster
     std::random_device m_rnd;
 public:
-    mfm_codec() : m_bit_stream(0),
-                  m_sync_mode(false), m_wraparound(false),
-                  m_prev_write_bit(0) {};
+    mfm_codec();
+    void update_parameters(void);
+    void set_data_bit_rate(size_t data_bit_rate);
+    void set_sampling_rate(size_t sampling_rate);
 
     void set_track_data(bit_array track);
 
