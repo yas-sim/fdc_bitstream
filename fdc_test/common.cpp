@@ -4,7 +4,7 @@
 #include <iostream>
 #include <iomanip>
 
-#include "bit_array.h"
+#include "fdc_bitstream.h"
 
 
 void dump_buf(uint8_t* ptr, size_t size, bool line_feed = true) {
@@ -52,4 +52,17 @@ void bit_dump(bit_array &data, size_t bit_width = 0, size_t spacing = 0, bool li
     }
 }
 
-
+void display_id_list(std::vector<fdc_bitstream::id_field> id_fields) {
+    std::ios::fmtflags flags_saved = std::cout.flags();
+    std::cout << std::hex << std::setw(2) << std::setfill('0');
+    for (int i = 0; i < id_fields.size(); i++) {
+        std::cout << std::dec << std::setw(2) << std::setfill(' ') << i << " ";
+        std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(id_fields[i].C) << " ";
+        std::cout << std::setw(2) << std::setfill('0') << static_cast<int>(id_fields[i].H) << " ";
+        std::cout << std::setw(2) << std::setfill('0') << static_cast<int>(id_fields[i].R) << " ";
+        std::cout << std::setw(2) << std::setfill('0') << static_cast<int>(id_fields[i].N) << " ";
+        std::cout << std::setw(4) << std::setfill('0') << static_cast<int>(id_fields[i].crc_val) << " ";
+        std::cout << (id_fields[i].crc_sts ? "ERR" : "OK ") << std::endl;
+    }
+    std::cout.flags(flags_saved);
+}

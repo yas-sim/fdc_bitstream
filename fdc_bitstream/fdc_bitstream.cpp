@@ -115,15 +115,17 @@ void fdc_bitstream::write_track(const std::vector<uint8_t>& track_buf) {
 * @param[in] none
 * @param[out] id_field read sector ID data
 * @param[out] crc_error crc error status
-* @return none
+* @return size_t Track position of the read_id() started reading.
+
 */
-void fdc_bitstream::read_id(std::vector<uint8_t>& id_field, bool& crc_error) {
+size_t fdc_bitstream::read_id(std::vector<uint8_t>& id_field, bool& crc_error) {
     uint8_t read_data, mc_byte = 0;
     bool missing_clock;
     size_t read_count = 0;
     id_field.clear();
     crc_error = false;
     size_t total_read_count = 0;
+    size_t read_start_pos = 0;
     while (true) {
         switch (m_state) {
         case fdc_state::IDLE:
@@ -134,6 +136,7 @@ void fdc_bitstream::read_id(std::vector<uint8_t>& id_field, bool& crc_error) {
             }
             break;
         case fdc_state::CHECK_MARK:
+            read_start_pos = m_codec.get_pos();
             m_codec.mfm_read_byte(read_data, missing_clock, false, false);
             if (missing_clock) {
                 mc_byte = read_data;
@@ -157,20 +160,53 @@ void fdc_bitstream::read_id(std::vector<uint8_t>& id_field, bool& crc_error) {
             if (--read_count == 0) {
                 crc_error = ((m_crcgen.get() == 0) ? false : true);
                 id_field.erase(id_field.begin());       // remove the ID mark on the top
-                m_state = fdc_state::IDLE;
-                return;
+                m_state = fdc_state::OPERATION_COMPLETED;
             }
             break;
         default:
             m_state = fdc_state::IDLE;
             break;
         }
+
+        if (m_state == fdc_state::OPERATION_COMPLETED) {
+            break;
+        }
         total_read_count++;
         if (total_read_count > m_codec.get_track_length()) {
-            return;
+            break;
         }
     }
+    return read_start_pos;
 }
+
+
+std::vector<fdc_bitstream::id_field> fdc_bitstream::read_all_idam(void) {
+    std::vector<id_field> result;
+    id_field item;
+    memset(&item, 0, sizeof(id_field));
+    std::vector<uint8_t> sect_id;
+    bool crc_error = false;
+    clear_wraparound();
+    set_pos(0);
+    size_t pos;
+    do {
+        pos = read_id(sect_id, crc_error);
+        if (sect_id.size() > 0) {
+            item.C = sect_id[0];
+            item.H = sect_id[1];
+            item.R = sect_id[2];
+            item.N = sect_id[3];
+            item.crc_val = (sect_id[4] << 8) + sect_id[5];
+            item.crc_sts = crc_error;
+            item.pos = pos;
+            result.push_back(item);
+        }
+    } while (is_wraparound() == false);
+    return result;
+}
+
+
+
 
 /**
 * Read a sector.
@@ -178,12 +214,13 @@ void fdc_bitstream::read_id(std::vector<uint8_t>& id_field, bool& crc_error) {
 * This function doesn't care about the sector ID and simply reads the subsequent sector data.
 * Combine the read_id() function to find the desired sector ID and call this function to read the sector body data.
 * 
-*@param[in] sect_length Sector length code (0-3)
-*@param[out] sect_data Read sector data buffer
-*@param[out] crc_error CRC error flag (true=error)
-*@param[out] dam_type (true=DDAM/false=DAM)
+* @param[in] sect_length Sector length code (0-3)
+* @param[out] sect_data Read sector data buffer
+* @param[out] crc_error CRC error flag (true=error)
+* @param[out] dam_type (true=DDAM/false=DAM)
+* @return size_t Track position of the read_sector() started reading.
 */
-void fdc_bitstream::read_sector(size_t sect_length_code, std::vector<uint8_t>& sect_data, bool& crc_error, bool& dam_type) {
+size_t fdc_bitstream::read_sector_body(size_t sect_length_code, std::vector<uint8_t>& sect_data, bool& crc_error, bool& dam_type) {
     std::vector<size_t> sector_length_table{ 128, 256, 512, 1024 };
     uint8_t read_data, mc_byte = 0;
     bool missing_clock;
@@ -192,6 +229,7 @@ void fdc_bitstream::read_sector(size_t sect_length_code, std::vector<uint8_t>& s
     crc_error = false;
     dam_type = false;
     size_t total_read_count = 0;
+    size_t read_start_pos = 0;
     while (true) {
         switch (m_state) {
         case fdc_state::IDLE:
@@ -202,6 +240,7 @@ void fdc_bitstream::read_sector(size_t sect_length_code, std::vector<uint8_t>& s
             }
             break;
         case fdc_state::CHECK_MARK:
+            read_start_pos = m_codec.get_pos();
             m_codec.mfm_read_byte(read_data, missing_clock, false, false);
             if (missing_clock) {
                 mc_byte = read_data;
@@ -231,19 +270,23 @@ void fdc_bitstream::read_sector(size_t sect_length_code, std::vector<uint8_t>& s
                 crc_error = ((m_crcgen.get() == 0) ? false : true);
                 sect_data.pop_back();                     // remove CRC field
                 sect_data.pop_back();                     // remove CRC field
-                m_state = fdc_state::IDLE;
-                return;
+                m_state = fdc_state::OPERATION_COMPLETED;
             }
             break;
         default:
             m_state = fdc_state::IDLE;
             break;
         }
+
+        if (m_state == fdc_state::OPERATION_COMPLETED) {
+            break;
+        }
         total_read_count++;
         if (total_read_count > m_codec.get_track_length()) {
-            return;
+            break;
         }
     }
+    return read_start_pos;
 }
 
 /**
@@ -258,7 +301,7 @@ void fdc_bitstream::read_sector(size_t sect_length_code, std::vector<uint8_t>& s
 * @param[in] write_crc The flag to specify whether write the last CRC + $FF, or not.
 */
 // dam_type : false=DAM, true=DDAM
-void fdc_bitstream::write_sector(std::vector<uint8_t> write_data, bool dam_type, bool write_crc) {
+void fdc_bitstream::write_sector_body(std::vector<uint8_t> write_data, bool dam_type, bool write_crc) {
     for (int i = 0; i < 2; i++) m_codec.mfm_write_byte(0x00, false, false);     // WG==false == dummy write
     for (int i = 0; i < 8; i++) m_codec.mfm_write_byte(0x00, false, false);     // WG==false == dummy write
     for (int i = 0; i < 1; i++) m_codec.mfm_write_byte(0x00, false, false);     // WG==false == dummy write
@@ -297,6 +340,9 @@ void fdc_bitstream::write_sector(std::vector<uint8_t> write_data, bool dam_type,
         m_codec.mfm_write_byte(0xff);           // write 0xff (or 0x4f)
     }
 }
+
+
+
 
 /**
 * Set current bit position in the track buffer.
@@ -361,4 +407,78 @@ void fdc_bitstream::write_data(uint8_t data, bool mode, bool write_gate) {
 */
 void fdc_bitstream::read_data(uint8_t& data, bool& missing_clock, bool ignore_missing_clock, bool ignore_sync_field) {
     m_codec.mfm_read_byte(data, missing_clock, ignore_missing_clock, ignore_sync_field);
+}
+
+
+/**
+* FD189x/MB8876 compatible TYPE-II READ SECTOR operation
+*/
+fdc_bitstream::sector_data fdc_bitstream::read_sector(int trk, int sid, int sct) {
+    size_t index_hole_count = 0;
+    sector_data sect_data;
+    std::vector<uint8_t> sect_id;
+    std::vector<uint8_t> sect_body_data;
+    memset(&sect_data, 0, sizeof(sector_data));
+    bool crc_error = false;
+    bool dam_type = false;
+    size_t pos = 0;
+    if (trk > 43) trk = 43;
+    while (true) {
+        if (is_wraparound()) {
+            clear_wraparound();
+            if (++index_hole_count >= 4) {                   // FD179x/MB8876 needs to find the desired sector ID within 4 spins.
+                sect_data.record_not_found = true;
+                return sect_data;
+            }
+        }
+        pos = read_id(sect_id, crc_error);
+        sect_data.id_pos = pos;
+        if (sect_id[0] == trk && sect_id[2] == sct) {       // FD179x/MB8876 won'nt compare 'head' field
+            if (crc_error == false) {
+                pos = read_sector_body(sect_id[3], sect_body_data, crc_error, dam_type);
+                sect_data.data_pos = pos;
+                size_t distance;
+                if (sect_data.data_pos >= sect_data.id_pos) {
+                    distance = pos - sect_data.id_pos;
+                }
+                else {
+                    distance = pos - sect_data.id_pos + get_track_length();     // Compensation for wrap around
+                }
+                if (distance > (43 + 9) * (4e6 / 500e3) * 8 * 2) {       // DAM/DDAM must be found in 43 bytes (MFM, FDC179x/MB8876). +10 for IDAM field, *8 for 1 byte, *2 for (CLK+DATA).
+                    sect_data.record_not_found = true;
+                }
+                else {
+                    sect_data.data = sect_body_data;
+                    sect_data.record_not_found = false;
+                    return sect_data;
+                }
+            }
+        }
+    }
+}
+
+/**
+* FD189x/MB8876 compatible TYPE-II WRITE SECTOR operation
+* 
+* @return bool Record-not-found error flag. false==error
+*/
+bool fdc_bitstream::write_sector(int trk, int sid, int sct, bool dam_type, std::vector<uint8_t> &write_data) {
+    size_t index_hole_count = 0;
+    std::vector<uint8_t> sect_id;
+    bool crc_error = false;
+    if (trk > 43) trk = 43;
+    while (true) {
+        if (is_wraparound()) {
+            if (++index_hole_count >= 4) {              // FD179x/MB8876 needs to find the desired sector ID within 4 spins.
+                return false;                           // record not found error
+            }
+        }
+        read_id(sect_id, crc_error);
+        if (sect_id[0] == trk && sect_id[2] == sct) {       // FD179x/MB8876 won'nt compare 'head' field
+            if (crc_error == false) {
+                write_sector_body(write_data, dam_type);
+                return true;
+            }
+        }
+    }
 }

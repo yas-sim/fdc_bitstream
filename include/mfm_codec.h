@@ -48,7 +48,7 @@ public:
 
     inline bool is_wraparound(void) { return m_wraparound; }
     inline void clear_wraparound(void) { m_wraparound = false; }
-    inline size_t get_track_length(void) { return m_track.get_length(); }       // unit = bit
+    inline size_t get_track_length(void) { return m_track.get_length(); }       /** unit = bit */
 
     int read_bit_ds(void);
     void mfm_read_byte(uint8_t& data, bool& missing_clock, bool ignore_missing_clock = true, bool ignore_sync_field = true);

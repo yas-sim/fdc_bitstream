@@ -6,11 +6,10 @@
 #include <iostream>
 #include <iomanip>
 #include <vector>
+#include <map>
 
 #include <thread>
 
-#include "bit_array.h"
-#include "mfm_codec.h"
 #include "fdc_bitstream.h"
 
 #include "image_raw.h"
@@ -20,233 +19,143 @@
 #include "fdc_misc.h"
 #include "common.h"
 
-void list_sector_ids(fdc_bitstream &fdc, bool sector_dump) {
-    std::vector<uint8_t> id_field;
-    bool crc_error = false;
-    fdc.clear_wraparound();
-    fdc.set_pos(0);
-    do {
-        fdc.read_id(id_field, crc_error);
-        if (id_field.size() > 0) {
-            dump_buf(id_field.data(), id_field.size(), false);
-            if (crc_error == true) {
-                std::cout << "CRC ERR" << std::endl;
-            }
-            else {
-                std::cout << "CRC OK" << std::endl;
-            }
-            if (sector_dump) {
-                size_t length = id_field[3];
-                std::vector<uint8_t> sect_data;
-                bool dam_type = false;
-                fdc.read_sector(length, sect_data, crc_error, dam_type);
-                std::cout << (dam_type ? "DDAM " : "DAM  ") << (crc_error ? "CRC ERR" : "CRC OK ") << std::endl;
-                if (sect_data.size() > 0) {
-                    dump_buf(sect_data.data(), sect_data.size());
-                }
-            }
-        }
-    } while (fdc.is_wraparound() == false);
-}
-
-
 
 int main(void)
 {
-    std::vector<uint8_t> id_field;
-    bool crc_error = false;
-    //    read_raw_image("fb30.raw");
-    std::vector<uint8_t> tbuf;
-
-#if 0
-    bit_array test1;
-    test1.load("track.bin");
-    //test1.dump(0, 256);
-
-    //std::vector<uint8_t> tbuf;
-    fdc_bitstream fdc;
-    fdc.set_raw_track_data(test1);
-    tbuf = fdc.read_track();
-    //dump_buf(tbuf.data(), tbuf.size());
-    dump_buf(tbuf.data(), 2048);
-    std::cout << std::endl;
-
-
-    fdc.clear_wraparound();
-    fdc.set_pos(0);
-    fdc.read_id(id_field, crc_error);
-
-    std::vector<uint8_t> write_data = 
-    //{ 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11 };
-    { 0x00, 0x00, 0x00, 0x00, 0xf5, 0xf5, 0xf5, 0xfe, 0x12, 0x34, 0x56, 0x78, 0x12, 0x34 };
-    for (auto it = write_data.begin(); it != write_data.end(); ++it) {
-    //for(int i=0; i<256; i++) {
-        fdc.write_data(*it, true);
-    }
-
-    fdc.set_pos(0);
-    tbuf = fdc.read_track();
-    dump_buf(tbuf.data(), 2048);
-    std::cout << std::endl;
-
-    list_sector_ids(fdc);
-#endif
-
 #if 1
-    std::cout << "*** NANDEMO" << std::endl;
-    disk_image_hfe image;
-    image.read("nandemo.hfe");
-    bit_array track_stream = image.get_track_data(0);
+    std::cout << "*** HFE format read test - NANDEMO" << std::endl;
     fdc_bitstream fdc1;
+    disk_image_hfe image1;
+    image1.read("nandemo.hfe");
+    bit_array track_stream = image1.get_track_data(0);
     fdc1.set_raw_track_data(track_stream);
     fdc1.set_pos(0);
-    tbuf = fdc1.read_track();
-    dump_buf(tbuf.data(), 2048);
+    std::vector<uint8_t> track1 = fdc1.read_track();
+    dump_buf(track1.data(), 2048);
     std::cout << std::endl;
 
     std::cout << "ID" << std::endl;
-    list_sector_ids(fdc1, false);
+    std::vector<fdc_bitstream::id_field> id1;
+    id1 = fdc1.read_all_idam();
+    display_id_list(id1);
+    std::cout << std::endl;
 #endif
 
 
 #if 1
-    std::cout << "*** CDOS7" << std::endl;
-    disk_image_mfm mfm_img;
-    mfm_img.read("cdos7.mfm");
-    bit_array barray = mfm_img.get_track_data(0);
+    std::cout << "*** MFM format data read test - CDOS7" << std::endl;
     fdc_bitstream fdc2;
+    disk_image_mfm image2;
+    image2.read("cdos7.mfm");
+    bit_array barray = image2.get_track_data(0);
     fdc2.set_raw_track_data(barray);
     fdc2.set_pos(0);
-    tbuf = fdc2.read_track();
-    dump_buf(tbuf.data(), 2048);
+    std::vector<uint8_t> track2 = fdc2.read_track();
+    dump_buf(track2.data(), 2048);
     std::cout << std::endl;
 
     std::cout << "ID" << std::endl;
-    list_sector_ids(fdc2, true);
+    std::vector<fdc_bitstream::id_field> ids = fdc2.read_all_idam();
+    display_id_list(ids);
+    std::cout << std::endl;
 #endif
 
 
-    std::cout << std::endl << std::endl << "*** TAIYO - COROCORO test" << std::endl;
-    disk_image_raw imgraw;
-    imgraw.read("taiyo0.raw");
-    fdc_bitstream fdc5;
-    bit_array tdata = imgraw.get_track_data(0);
-    fdc5.set_raw_track_data(tdata);
-    fdc5.enable_fluctuator(2, 5);
-    tbuf = fdc5.read_track();
-    //dump_buf(tbuf.data(), tbuf.size());
-    //std::cout << std::endl;
+#if 1
+    std::cout << std::endl << std::endl << "*** TAIYO - COROCORO protect test" << std::endl;
+    fdc_bitstream fdc3;
+    disk_image_raw image3;
+    image3.read("taiyo0.raw");
+    bit_array tdata = image3.get_track_data(0);
 
-    list_sector_ids(fdc5, false);
+    // Set fluctuation parameters for COROCORO protect
+    fdc3.set_raw_track_data(tdata);
+    fdc3.enable_fluctuator(2, 5);
 
-    fdc5.clear_wraparound();
-    fdc5.set_pos(0);
-    for (int i = 0; i < 10; i++) {
-        do {
-            fdc5.read_id(id_field, crc_error);
-            if (id_field.size() > 0) {
-                size_t length = id_field[3];
-                std::vector<uint8_t> sect_data;
-                bool dam_type = false;
-                if (id_field[2] == 0xf7) {
-                    dump_buf(id_field.data(), id_field.size());
-                    std::cout << std::endl;
-                    fdc5.read_sector(length, sect_data, crc_error, dam_type);
-                    if (sect_data.size() > 0) {
-                        dump_buf(sect_data.data(), sect_data.size());
-                        std::cout << std::endl;
-                    }
-                }
-            }
-        } while (fdc5.is_wraparound() == false);
-        fdc5.clear_wraparound();
-        //std::this_thread::sleep_for(std::chrono::milliseconds(500));
-    }
-
-
-
-    std::cout << "\nWrite track / Write sector test" << std::endl;
-    bit_array track_write_data;
-    track_write_data.set(4e6 * 0.2, 0);     // extend track buffer
-    fdc_bitstream fdc6;
-    fdc6.set_raw_track_data(track_write_data);
-    std::vector<uint8_t> write_data = generate_format_data(0,0,1,1);
-    fdc6.write_track(write_data);
-    fdc6.set_pos(0);
-    tbuf = fdc6.read_track();
-    dump_buf(tbuf.data(), tbuf.size());
+    std::cout << "Track dump" << std::endl;
+    std::vector<uint8_t> track3 = fdc3.read_track();
+    dump_buf(track3.data(), track3.size());
     std::cout << std::endl;
 
-    fdc6.clear_wraparound();
-    fdc6.set_pos(0);
-    fdc6.read_id(id_field, crc_error);
-    if (id_field.size() > 0) {
-        std::cout << std::endl << "ID" << std::endl;
-        dump_buf(id_field.data(), id_field.size());
-        std::cout << std::endl;
-        size_t length = id_field[3];
-        std::vector<uint8_t> sect_data;
-        bool dam_type = false;
-        // read sector
-        fdc6.read_sector(length, sect_data, crc_error, dam_type);
-        std::cout << (crc_error ? "ERROR" : "OK") << std::endl;
-        if (sect_data.size() > 0) {
-            std::cout << std::endl << "SECTOR DATA" << std::endl;
-            dump_buf(sect_data.data(), sect_data.size());
-            std::cout << std::endl;
-        }
+    std::cout << "ID dump" << std::endl;
+    std::vector<fdc_bitstream::id_field> id3 = fdc3.read_all_idam();
+    display_id_list(id3);
+    std::cout << std::endl;
+
+    std::cout << "COROCORO Sector read test" << std::endl;
+    fdc_bitstream::sector_data sect_data3;
+    for (int i = 0; i < 10; i++) {
+        sect_data3 = fdc3.read_sector(0, 0, 0xf7);
+        dump_buf(sect_data3.data.data(), sect_data3.data.size(), true);
     }
+    std::cout << std::endl;
+#endif
+
+#if 1
+    std::cout << "\nWrite track, write sector, read sector test" << std::endl;
+    fdc_bitstream fdc4;
+    bit_array track_b4;
+    track_b4.resize(4e6 * 0.2);               // extend track buffer (spindle 1 spin == 0.2sec)
+    fdc4.set_raw_track_data(track_b4);        // Set unformatted track data
+    std::vector<uint8_t> write_data4 = generate_format_data(0,0,1,1);       // trk=0, sid=0, #sec=1, len=1
+    fdc4.write_track(write_data4);
+
+    std::cout << "Track dump - after formatting" << std::endl;
+    fdc4.set_pos(0);
+    std::vector<uint8_t> track4 = fdc4.read_track();
+    dump_buf(track4.data(), track4.size());
+    std::cout << std::endl;
+
+    fdc4.clear_wraparound();
+    fdc4.set_pos(0);
 
     // write sector
-    std::vector<uint8_t> sect_data;
-    for (int i = 0; i < 256; i++) sect_data.push_back(i);
-    fdc6.clear_wraparound();
-    fdc6.set_pos(0);
-    fdc6.read_id(id_field, crc_error);
-    fdc6.write_sector(sect_data, false);
+    std::vector<uint8_t> sect_data_w4;
+    for (int i = 0; i < 256; i++) sect_data_w4.push_back(i);
+    fdc4.clear_wraparound();
+    fdc4.set_pos(0);
+    fdc4.write_sector(0, 0, 1, false, sect_data_w4);
 
-    fdc6.set_pos(0);
-    tbuf = fdc6.read_track();
-    dump_buf(tbuf.data(), tbuf.size());
+    std::cout << "Track dump - after sector write" << std::endl;
+    fdc4.set_pos(0);
+    track4 = fdc4.read_track();
+    dump_buf(track4.data(), track4.size());
     std::cout << std::endl;
 
-    fdc6.clear_wraparound();
-    fdc6.set_pos(0);
-    fdc6.read_id(id_field, crc_error);
-    if (id_field.size() > 0) {
-        std::cout << std::endl << "ID" << std::endl;
-        dump_buf(id_field.data(), id_field.size());
-        std::cout << std::endl;
-        size_t length = id_field[3];
-        std::vector<uint8_t> sect_data;
-        bool dam_type = false;
-        // read sector after a write sector with incremental data
-        fdc6.read_sector(length, sect_data, crc_error, dam_type);
-        std::cout << (crc_error ? "ERROR" : "OK") << std::endl;
-        if (sect_data.size() > 0) {
-            std::cout << std::endl << "SECTOR DATA" << std::endl;
-            dump_buf(sect_data.data(), sect_data.size());
-            std::cout << std::endl;
-        }
-    }
+    // verify written data by reading the sector
+    std::cout << "Read sector data" << std::endl;
+    fdc_bitstream::sector_data sect_data_r4;
+    sect_data_r4 = fdc4.read_sector(0, 0, 1);
+    dump_buf(sect_data_r4.data.data(), sect_data_r4.data.size());
+    std::cout << std::endl;
+#endif
 
 
-
+#if 1
     std::cout << "\nWrite track - full format test" << std::endl;
-    //bit_array track_write_data;
-    track_write_data.clear_array();
-    track_write_data.set(4e6 * 0.2, 0);     // extend track buffer
-    fdc_bitstream fdc7;
-    fdc7.set_raw_track_data(track_write_data);
-    write_data = generate_format_data(0, 0, 16, 1, 3);
-    fdc7.write_track(write_data);
-    fdc7.set_pos(0);
-    tbuf = fdc7.read_track();
-    dump_buf(tbuf.data(), tbuf.size());
+    fdc_bitstream fdc5;
+    bit_array track_write_data5;
+    track_write_data5.clear_array();
+    track_write_data5.set(4e6 * 0.2, 0);     // extend track buffer
+    fdc5.set_raw_track_data(track_write_data5);
+    std::vector<uint8_t> write_data5 = generate_format_data(0, 0, 16, 1, 3);
+    fdc5.write_track(write_data5);
+    fdc5.set_pos(0);
+    std::vector<uint8_t> track5 = fdc5.read_track();
+    dump_buf(track5.data(), track5.size());
     std::cout << std::endl;
 
     std::cout << "ID" << std::endl;
-    list_sector_ids(fdc7, false);
+    ids = fdc5.read_all_idam();
+    display_id_list(ids);
+    std::cout << std::endl;
+
+    std::cout << "Read sector data" << std::endl;
+    fdc_bitstream::sector_data sdata;
+    sdata = fdc5.read_sector(0, 0, 1);
+    dump_buf(sdata.data.data(), sdata.data.size());
+    std::cout << std::endl;
+#endif
 
     return 0;
 }
