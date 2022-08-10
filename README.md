@@ -39,4 +39,4 @@ typedef struct track_table_ {
 //   ofst(byte) = track_table[track#].offset
 //   size(byte) = track_table[track#].length_bit/8 + (track_table[track#].length%8)?1:0)
 ```
-[test](https://github.com/yas-sim/fdc_bitstream/docs/html/index.html)
+[test](docs/html/index.html)
