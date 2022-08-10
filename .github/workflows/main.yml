@@ -54,5 +54,5 @@ jobs:
           author_email: yasu0710@gmail.com
           message: 'Update docs'
           branch: fdc_bitstream
-          add: ["docs/html"]
+          add: '["docs/html/*"]'
 
