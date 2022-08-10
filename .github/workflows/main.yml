@@ -40,8 +40,8 @@ jobs:
     needs: docgen
     steps:
       - uses: actions/checkout@v3
-        with:
-          ref: fdc_bitstream
+        #with:
+        #  ref: fdc_bitstream
       - name: Download output directory
         uses: actions/download-artifact@v2
         with:
