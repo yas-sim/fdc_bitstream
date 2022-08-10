@@ -7,7 +7,7 @@ void bit_array::set_array(std::vector<uint8_t>& buf) {
     m_bit_length = buf.size() * 8;
 }
 
-void bit_array::set_empty_array(size_t size) {
+void bit_array::set_array(size_t size) {
     m_array_data.resize(size);
     memset(m_array_data.data(), 0, size);
     m_bit_length = size * 8;
@@ -29,6 +29,17 @@ size_t bit_array::get_length(void) {
 
 size_t bit_array::size(void) {
     return m_bit_length;
+}
+
+void bit_array::resize(size_t bit_length) {
+    size_t new_size_in_bytes = to_byte_pos(bit_length) + 1;
+    m_array_data.resize(new_size_in_bytes);
+    m_bit_length = bit_length;
+}
+
+void bit_array::reserve(size_t bit_length) {
+    size_t new_size_in_bytes = to_byte_pos(bit_length) + 1;
+    m_array_data.reserve(new_size_in_bytes);
 }
 
 //inline bool is_wraparound(void) { return m_wraparound; }
@@ -169,7 +180,7 @@ void bit_array::load(std::string file_name) {
     ifs.read(reinterpret_cast<char*>(&m_bit_length), sizeof(size_t));
     std::cout << m_bit_length << std::endl;
     size -= sizeof(size_t);
-    set_empty_array(size);
+    set_array(size);
     ifs.read(reinterpret_cast<char*>(m_array_data.data()), size);
     m_stream_pos = 0;
 }

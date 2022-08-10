@@ -22,11 +22,13 @@ public:
     }
 
     void set_array(std::vector<uint8_t>& buf);
-    void set_empty_array(size_t size);
+    void set_array(size_t size);
     std::vector<uint8_t> get_array(void);
     void clear_array(void);
     size_t get_length(void);
     size_t size(void);
+    void bit_array::resize(size_t bit_length);
+    void bit_array::reserve(size_t bit_length);
     inline bool is_wraparound(void) { return m_wraparound; }
     inline void clear_wraparound_flag(void) { m_wraparound = false; }
 

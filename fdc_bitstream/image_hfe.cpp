@@ -19,6 +19,10 @@ void disk_image_hfe::read(std::string file_name) {
 	for (size_t track = 0; track < header.number_of_track; track++) {
 		bit_array side0;
 		bit_array side1;
+		side0.resize(4e6 * 0.2);		// reserve capacity in advance to speed up
+		side1.resize(4e6 * 0.2);
+		side0.set_stream_pos(0);
+		side1.set_stream_pos(0);
 		std::vector<uint8_t> buf;
 		size_t blocks = track_offset_table[track].track_len / 0x0200;
 		size_t fraction = track_offset_table[track].track_len % 0x0200;
