@@ -34,6 +34,7 @@ jobs:
           name: doc-files
           path: docs
           retention-days: 1
+
   copy:
     runs-on: ubuntu-latest
     needs: docgen
@@ -43,15 +44,15 @@ jobs:
             ref: fdc_bitstream
         - name: Download output directory
           uses: actions/download-artifact@v2
-            with:
-              name: doc-files
-              path: docs
+          with:
+            name: doc-files
+            path: docs
         - name: Commit changes
           uses: EndBug/add-and-commit@v7
-            with:
-              author_name: yas-sim
-              author_email: yasu0710@gmail.com
-              message: 'Update docs'
-              branch: fdc_bitstream
-              add: ["docs/html"]
+          with:
+            author_name: yas-sim
+            author_email: yasu0710@gmail.com
+            message: 'Update docs'
+            branch: fdc_bitstream
+            add: ["docs/html"]
 
