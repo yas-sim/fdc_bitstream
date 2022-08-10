@@ -60,6 +60,7 @@ void mfm_codec::set_sampling_rate(size_t sampling_rate) {
 //
 int mfm_codec::read_bit_ds(void) {
     int bit_reading = 0;
+    size_t cell_center = m_data_window_ofst + m_data_window_size / 2;
     do {
         // check if the next bit is within the next data window
         if (m_distance_to_next_pulse < m_bit_cell_size) {
@@ -76,7 +77,6 @@ int mfm_codec::read_bit_ds(void) {
 #endif
             }
             // adjust pulse phase (imitate PLL operation)
-            size_t cell_center = m_data_window_ofst + m_data_window_ofst / 2;
             // limit the PLL operation frequency and introduce fluctuation with the random generator (certain fluctuation is required to reproduce some copy protection)
             if (m_fluctuation == false || m_rnd() % m_fluctuator_denominator >= m_fluctuator_numerator) {
                 if (m_distance_to_next_pulse < cell_center) {

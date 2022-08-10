@@ -70,7 +70,7 @@ int main(void)
 
     // Set fluctuation parameters for COROCORO protect
     fdc3.set_raw_track_data(tdata);
-    fdc3.enable_fluctuator(2, 5);
+    fdc3.enable_fluctuator(3, 5);
 
     std::cout << "Track dump" << std::endl;
     std::vector<uint8_t> track3 = fdc3.read_track();
