@@ -140,6 +140,7 @@ int main(void)
     fdc5.set_raw_track_data(track_write_data5);
     std::vector<uint8_t> write_data5 = generate_format_data(0, 0, 16, 1, 3);
     fdc5.write_track(write_data5);
+    
     fdc5.set_pos(0);
     std::vector<uint8_t> track5 = fdc5.read_track();
     dump_buf(track5.data(), track5.size());
@@ -155,6 +156,33 @@ int main(void)
     sdata = fdc5.read_sector(0, 0, 1);
     dump_buf(sdata.data.data(), sdata.data.size());
     std::cout << std::endl;
+
+    std::cout << "Write to all sectors (0-16)" << std::endl;
+    std::vector<uint8_t> sect_data_w5;
+    for (int i = 1; i <= 16; i++) {
+        sect_data_w5.clear();
+        sect_data_w5.resize(256, ((i - 1) << 4 | (i - 1)));
+        bool sts = fdc5.write_sector(0, 0, i, false, sect_data_w5, true);  // enable fluctuator
+        if (sts == false) {
+            std::cout << i << "record-not-found error" << std::endl;
+        }
+    }
+
+    std::cout << "Track dump - after all sector write" << std::endl;
+    fdc5.set_pos(0);
+    track5 = fdc5.read_track();
+    dump_buf(track5.data(), track5.size());
+    std::cout << std::endl;
+
+    std::cout << "Read sector data" << std::endl;
+    for (int i = 1; i <= 16; i++) {
+        std::cout << "Sector " << i << std::endl;
+        fdc_bitstream::sector_data sdata;
+        sdata = fdc5.read_sector(0, 0, i);
+        dump_buf(sdata.data.data(), sdata.data.size());
+    }
+    std::cout << std::endl;
+
 #endif
 
     return 0;

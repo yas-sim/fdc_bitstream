@@ -5,6 +5,7 @@
 */
 
 #include <vector>
+#include <random>
 
 #include "fdc_crc.h"
 #include "mfm_codec.h"
@@ -29,6 +30,10 @@ private:
 
     size_t m_sampling_rate;         /** Track data sampling rate [Hz] (4MHz == 4e6) */
     size_t m_data_bit_rate;         /** FDC bit data rate [bit/sec] (2D/MFM == 500Kbit/sec == 5e3 */
+
+    std::default_random_engine m_rand_engine;
+    std::normal_distribution<> m_rand_dist;
+    inline int normal_distribution_random(void) { return static_cast<int>(m_rand_dist(m_rand_engine)); }  // around -3 ~ +3
 public:
     /**
     * Structure for ID field data.
@@ -78,5 +83,5 @@ public:
     void write_sector_body(std::vector<uint8_t> write_data, bool dam_type, bool write_crc=true);
 
     sector_data read_sector(int trk, int sid, int sct);
-    bool write_sector(int trk, int sid, int sct, bool dam_type, std::vector<uint8_t>& write_data);
+    bool write_sector(int trk, int sid, int sct, bool dam_type, std::vector<uint8_t>& write_data, bool fluctuate=false);
 };

@@ -22,6 +22,9 @@
 fdc_bitstream::fdc_bitstream() : m_state(fdc_state::IDLE), m_sampling_rate(4e6), m_data_bit_rate(500e3) {
     m_crcgen.reset();
     set_fdc_params(m_sampling_rate, m_data_bit_rate);
+
+    m_rand_engine = std::default_random_engine(std::default_random_engine());
+    m_rand_dist = std::normal_distribution<>(0.0, 0.5);
 };
 
 
@@ -462,13 +465,14 @@ fdc_bitstream::sector_data fdc_bitstream::read_sector(int trk, int sid, int sct)
 * 
 * @return bool Record-not-found error flag. false==error
 */
-bool fdc_bitstream::write_sector(int trk, int sid, int sct, bool dam_type, std::vector<uint8_t> &write_data) {
+bool fdc_bitstream::write_sector(int trk, int sid, int sct, bool dam_type, std::vector<uint8_t> &write_data, bool fluctuate) {
     size_t index_hole_count = 0;
     std::vector<uint8_t> sect_id;
     bool crc_error = false;
     if (trk > 43) trk = 43;
     while (true) {
         if (is_wraparound()) {
+            clear_wraparound();
             if (++index_hole_count >= 4) {              // FD179x/MB8876 needs to find the desired sector ID within 4 spins.
                 return false;                           // record not found error
             }
@@ -476,6 +480,14 @@ bool fdc_bitstream::write_sector(int trk, int sid, int sct, bool dam_type, std::
         read_id(sect_id, crc_error);
         if (sect_id[0] == trk && sect_id[2] == sct) {       // FD179x/MB8876 won'nt compare 'head' field
             if (crc_error == false) {
+                if (fluctuate) {
+                    // Fluctuate write start timing
+                    size_t pos = get_pos();
+                    pos += normal_distribution_random();   // +-3
+                    if (pos < 0) pos = 0;
+                    if (pos >= get_track_length()) pos = get_track_length() - 1;
+                    set_pos(pos);
+                }
                 write_sector_body(write_data, dam_type);
                 return true;
             }
