@@ -88,57 +88,57 @@ $(document).ready(function(){initNavTree('fdc__misc_8cpp_source.html',''); initR
 <div class="contents">
 <a href="fdc__misc_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &quot;<a class="code" href="fdc__misc_8h.html">fdc_misc.h</a>&quot;</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno"><a class="line" href="fdc__misc_8cpp.html#a89bc008db6cd085584268d55d4a880fe">    4</a></span>std::vector&lt;int&gt; <a class="code hl_function" href="fdc__misc_8cpp.html#a89bc008db6cd085584268d55d4a880fe">generate_interleaved_sector_list</a>(<span class="keywordtype">size_t</span> num_sector, <span class="keywordtype">int</span> interleave = 1) {</div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span>    std::vector&lt;int&gt; sector_list(num_sector, 0);</div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>    <span class="keywordtype">int</span> pos = 0;</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 1; i &lt;= num_sector; i++) {</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>        <span class="keywordflow">while</span> (sector_list[pos] != 0) {</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>            <span class="keywordflow">if</span> (++pos &gt;= num_sector) pos = 0;</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>        }</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>        sector_list[pos] = i;</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>        pos += interleave;</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>        <span class="keywordflow">if</span> (pos &gt;= num_sector) pos = 0;</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    }</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keywordflow">return</span> sector_list;</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>}</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="fdc__misc_8cpp.html#af208da537dc8ad25e4136ec22b7d5dc7">   29</a></span>std::vector&lt;uint8_t&gt; <a class="code hl_function" href="fdc__misc_8cpp.html#af208da537dc8ad25e4136ec22b7d5dc7">generate_format_data</a>(<span class="keywordtype">size_t</span> track_n, <span class="keywordtype">size_t</span> side_n, <span class="keywordtype">size_t</span> num_sector, <span class="keywordtype">size_t</span> sect_len_code, <span class="keywordtype">size_t</span> interleave) {</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    std::vector&lt;int&gt; sector_list = <a class="code hl_function" href="fdc__misc_8cpp.html#a89bc008db6cd085584268d55d4a880fe">generate_interleaved_sector_list</a>(num_sector, interleave);</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    std::vector&lt;uint8_t&gt; format_data;</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    std::vector&lt;size_t&gt; sector_length_table{ 128, 256, 512, 1024 };</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    std::vector&lt;size_t&gt; gap3_table{ 54,54,84,116 };</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    std::vector&lt;size_t&gt; gap4b_table{ 152,152,182,94 };</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; 80; i++) format_data.push_back(0x4e);     <span class="comment">//Gap4a</span></div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; 12; i++) format_data.push_back(0x00);     <span class="comment">//SYNC</span></div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; 3; i++) format_data.push_back(0xf6);      <span class="comment">// IAM, f6-&gt;c2</span></div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    format_data.push_back(0xfc);</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; 50; i++) format_data.push_back(0x4e);     <span class="comment">//Gap1</span></div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> n = 0; n &lt; num_sector; n++) {</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; 12; i++) format_data.push_back(0x00); <span class="comment">//SYNC</span></div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; 3; i++) format_data.push_back(0xf5);  <span class="comment">//IDAM f5-&gt;a1</span></div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        format_data.push_back(0xfe);</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        format_data.push_back(track_n);                 <span class="comment">//C</span></div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        format_data.push_back(side_n);                  <span class="comment">//H</span></div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        format_data.push_back(sector_list[n]);          <span class="comment">//R</span></div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        format_data.push_back(sect_len_code &amp; 0x03u);   <span class="comment">//N</span></div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        format_data.push_back(0xf7);                    <span class="comment">//CRC f7-&gt;crc</span></div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; 22; i++) format_data.push_back(0x4e);        <span class="comment">//Gap2</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; 12; i++) format_data.push_back(0x00);        <span class="comment">//SYNC</span></div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; 3; i++) format_data.push_back(0xf5);  <span class="comment">//DAM f5-&gt;a1</span></div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        format_data.push_back(0xfb);</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; sector_length_table[sect_len_code &amp; 0x03u]; i++) format_data.push_back(0x00);  <span class="comment">//Sector data</span></div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        format_data.push_back(0xf7);                    <span class="comment">//CRC f7-&gt;crc</span></div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; gap3_table[sect_len_code &amp; 0x03u]; i++) format_data.push_back(0x4e);        <span class="comment">//Gap3</span></div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    }</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; gap4b_table[sect_len_code &amp; 0x03u]; i++) format_data.push_back(0x4e);        <span class="comment">//Gap4b</span></div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keywordflow">return</span> format_data;</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>}</div>
-<div class="ttc" id="afdc__misc_8cpp_html_a89bc008db6cd085584268d55d4a880fe"><div class="ttname"><a href="fdc__misc_8cpp.html#a89bc008db6cd085584268d55d4a880fe">generate_interleaved_sector_list</a></div><div class="ttdeci">std::vector&lt; int &gt; generate_interleaved_sector_list(size_t num_sector, int interleave=1)</div><div class="ttdef"><b>Definition:</b> <a href="fdc__misc_8cpp_source.html#l00004">fdc_misc.cpp:4</a></div></div>
-<div class="ttc" id="afdc__misc_8cpp_html_af208da537dc8ad25e4136ec22b7d5dc7"><div class="ttname"><a href="fdc__misc_8cpp.html#af208da537dc8ad25e4136ec22b7d5dc7">generate_format_data</a></div><div class="ttdeci">std::vector&lt; uint8_t &gt; generate_format_data(size_t track_n, size_t side_n, size_t num_sector, size_t sect_len_code, size_t interleave)</div><div class="ttdef"><b>Definition:</b> <a href="fdc__misc_8cpp_source.html#l00029">fdc_misc.cpp:29</a></div></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="fdc__misc_8cpp.html#a89bc008db6cd085584268d55d4a880fe">   10</a></span>std::vector&lt;int&gt; <a class="code hl_function" href="fdc__misc_8cpp.html#a89bc008db6cd085584268d55d4a880fe">generate_interleaved_sector_list</a>(<span class="keywordtype">size_t</span> num_sector, <span class="keywordtype">int</span> interleave = 1) {</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    std::vector&lt;int&gt; sector_list(num_sector, 0);</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <span class="keywordtype">int</span> pos = 0;</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 1; i &lt;= num_sector; i++) {</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>        <span class="keywordflow">while</span> (sector_list[pos] != 0) {</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>            <span class="keywordflow">if</span> (++pos &gt;= num_sector) pos = 0;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        }</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        sector_list[pos] = i;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        pos += interleave;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        <span class="keywordflow">if</span> (pos &gt;= num_sector) pos = 0;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    }</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="keywordflow">return</span> sector_list;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>}</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="fdc__misc_8cpp.html#af208da537dc8ad25e4136ec22b7d5dc7">   34</a></span>std::vector&lt;uint8_t&gt; <a class="code hl_function" href="fdc__misc_8cpp.html#af208da537dc8ad25e4136ec22b7d5dc7">generate_format_data</a>(<span class="keywordtype">size_t</span> track_n, <span class="keywordtype">size_t</span> side_n, <span class="keywordtype">size_t</span> num_sector, <span class="keywordtype">size_t</span> sect_len_code, <span class="keywordtype">size_t</span> interleave) {</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    std::vector&lt;int&gt; sector_list = <a class="code hl_function" href="fdc__misc_8cpp.html#a89bc008db6cd085584268d55d4a880fe">generate_interleaved_sector_list</a>(num_sector, interleave);</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    std::vector&lt;uint8_t&gt; format_data;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    std::vector&lt;size_t&gt; sector_length_table{ 128, 256, 512, 1024 };</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    std::vector&lt;size_t&gt; gap3_table{ 54,54,84,116 };</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    std::vector&lt;size_t&gt; gap4b_table{ 152,152,182,94 };</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; 80; i++) format_data.push_back(0x4e);     <span class="comment">//Gap4a</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; 12; i++) format_data.push_back(0x00);     <span class="comment">//SYNC</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; 3; i++) format_data.push_back(0xf6);      <span class="comment">// IAM, f6-&gt;c2</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    format_data.push_back(0xfc);</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; 50; i++) format_data.push_back(0x4e);     <span class="comment">//Gap1</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> n = 0; n &lt; num_sector; n++) {</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; 12; i++) format_data.push_back(0x00); <span class="comment">//SYNC</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; 3; i++) format_data.push_back(0xf5);  <span class="comment">//IDAM f5-&gt;a1</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        format_data.push_back(0xfe);</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        format_data.push_back(track_n);                 <span class="comment">//C</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        format_data.push_back(side_n);                  <span class="comment">//H</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        format_data.push_back(sector_list[n]);          <span class="comment">//R</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        format_data.push_back(sect_len_code &amp; 0x03u);   <span class="comment">//N</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        format_data.push_back(0xf7);                    <span class="comment">//CRC f7-&gt;crc</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; 22; i++) format_data.push_back(0x4e);        <span class="comment">//Gap2</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; 12; i++) format_data.push_back(0x00);        <span class="comment">//SYNC</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; 3; i++) format_data.push_back(0xf5);  <span class="comment">//DAM f5-&gt;a1</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        format_data.push_back(0xfb);</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; sector_length_table[sect_len_code &amp; 0x03u]; i++) format_data.push_back(0x00);  <span class="comment">//Sector data</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        format_data.push_back(0xf7);                    <span class="comment">//CRC f7-&gt;crc</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; gap3_table[sect_len_code &amp; 0x03u]; i++) format_data.push_back(0x4e);        <span class="comment">//Gap3</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    }</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; gap4b_table[sect_len_code &amp; 0x03u]; i++) format_data.push_back(0x4e);        <span class="comment">//Gap4b</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="keywordflow">return</span> format_data;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>}</div>
+<div class="ttc" id="afdc__misc_8cpp_html_a89bc008db6cd085584268d55d4a880fe"><div class="ttname"><a href="fdc__misc_8cpp.html#a89bc008db6cd085584268d55d4a880fe">generate_interleaved_sector_list</a></div><div class="ttdeci">std::vector&lt; int &gt; generate_interleaved_sector_list(size_t num_sector, int interleave=1)</div><div class="ttdoc">Generate a list of interleaved sector numbers.</div><div class="ttdef"><b>Definition:</b> <a href="fdc__misc_8cpp_source.html#l00010">fdc_misc.cpp:10</a></div></div>
+<div class="ttc" id="afdc__misc_8cpp_html_af208da537dc8ad25e4136ec22b7d5dc7"><div class="ttname"><a href="fdc__misc_8cpp.html#af208da537dc8ad25e4136ec22b7d5dc7">generate_format_data</a></div><div class="ttdeci">std::vector&lt; uint8_t &gt; generate_format_data(size_t track_n, size_t side_n, size_t num_sector, size_t sect_len_code, size_t interleave)</div><div class="ttdoc">Format data generator. Generates format data from the given parameters.</div><div class="ttdef"><b>Definition:</b> <a href="fdc__misc_8cpp_source.html#l00034">fdc_misc.cpp:34</a></div></div>
 <div class="ttc" id="afdc__misc_8h_html"><div class="ttname"><a href="fdc__misc_8h.html">fdc_misc.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

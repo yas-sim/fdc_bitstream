@@ -95,8 +95,10 @@ $(document).ready(function(){initNavTree('fdc__misc_8cpp.html',''); initResizabl
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a89bc008db6cd085584268d55d4a880fe"><td class="memItemLeft" align="right" valign="top">std::vector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fdc__misc_8cpp.html#a89bc008db6cd085584268d55d4a880fe">generate_interleaved_sector_list</a> (size_t num_sector, int interleave=1)</td></tr>
+<tr class="memdesc:a89bc008db6cd085584268d55d4a880fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a list of interleaved sector numbers.  <a href="fdc__misc_8cpp.html#a89bc008db6cd085584268d55d4a880fe">More...</a><br /></td></tr>
 <tr class="separator:a89bc008db6cd085584268d55d4a880fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af208da537dc8ad25e4136ec22b7d5dc7"><td class="memItemLeft" align="right" valign="top">std::vector&lt; uint8_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fdc__misc_8cpp.html#af208da537dc8ad25e4136ec22b7d5dc7">generate_format_data</a> (size_t track_n, size_t side_n, size_t num_sector, size_t sect_len_code, size_t interleave)</td></tr>
+<tr class="memdesc:af208da537dc8ad25e4136ec22b7d5dc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Format data generator. Generates format data from the given parameters.  <a href="fdc__misc_8cpp.html#af208da537dc8ad25e4136ec22b7d5dc7">More...</a><br /></td></tr>
 <tr class="separator:af208da537dc8ad25e4136ec22b7d5dc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
@@ -143,7 +145,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Format data generator. Generates format data from the given parameters.</p>
+
+<p>Format data generator. Generates format data from the given parameters. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">track_n</td><td>Track number. </td></tr>
@@ -156,7 +159,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>std::vector&lt;uint8_t&gt; Generated format data. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__misc_8cpp_source.html#l00029">29</a> of file <a class="el" href="fdc__misc_8cpp_source.html">fdc_misc.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__misc_8cpp_source.html#l00034">34</a> of file <a class="el" href="fdc__misc_8cpp_source.html">fdc_misc.cpp</a>.</p>
 
 </div>
 </div>
@@ -185,9 +188,18 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Generate sector number list with interleave </p>
 
-<p class="definition">Definition at line <a class="el" href="fdc__misc_8cpp_source.html#l00004">4</a> of file <a class="el" href="fdc__misc_8cpp_source.html">fdc_misc.cpp</a>.</p>
+<p>Generate a list of interleaved sector numbers. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">num_sector</td><td>Number of sectors. </td></tr>
+    <tr><td class="paramname">interleave</td><td>Interleave distance to the next sector. Default=1. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>std::vector&lt;int&gt; Generated sector number. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="fdc__misc_8cpp_source.html#l00010">10</a> of file <a class="el" href="fdc__misc_8cpp_source.html">fdc_misc.cpp</a>.</p>
 
 </div>
 </div>

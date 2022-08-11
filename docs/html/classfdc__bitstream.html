@@ -103,16 +103,21 @@ Classes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:afbc1c3cb3ab7c90b3cdedaf255a0640e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#afbc1c3cb3ab7c90b3cdedaf255a0640e">fdc_bitstream</a> ()</td></tr>
+<tr class="memdesc:afbc1c3cb3ab7c90b3cdedaf255a0640e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new fdc bitstream::fdc bitstream object.  <a href="classfdc__bitstream.html#afbc1c3cb3ab7c90b3cdedaf255a0640e">More...</a><br /></td></tr>
 <tr class="separator:afbc1c3cb3ab7c90b3cdedaf255a0640e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0007d69b882edc1b3dfb3522328539c8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#a0007d69b882edc1b3dfb3522328539c8">set_fdc_params</a> (size_t sampling_rate, size_t data_bit_rate)</td></tr>
+<tr class="memdesc:a0007d69b882edc1b3dfb3522328539c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set FDC parameters.  <a href="classfdc__bitstream.html#a0007d69b882edc1b3dfb3522328539c8">More...</a><br /></td></tr>
 <tr class="separator:a0007d69b882edc1b3dfb3522328539c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a948703f45052ce4a5a1f73f4c126df43"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#a948703f45052ce4a5a1f73f4c126df43">get_track_length</a> (void)</td></tr>
 <tr class="separator:a948703f45052ce4a5a1f73f4c126df43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a046af10f7edf26a372da3009946a5810"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#a046af10f7edf26a372da3009946a5810">set_raw_track_data</a> (<a class="el" href="classbit__array.html">bit_array</a> track_data)</td></tr>
+<tr class="memdesc:a046af10f7edf26a372da3009946a5810"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a new track data. Set a new track data in new a <a class="el" href="classbit__array.html">bit_array</a>.  <a href="classfdc__bitstream.html#a046af10f7edf26a372da3009946a5810">More...</a><br /></td></tr>
 <tr class="separator:a046af10f7edf26a372da3009946a5810"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a028dd1120ce703253589a87186ec5ec3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#a028dd1120ce703253589a87186ec5ec3">set_pos</a> (size_t bit_pos)</td></tr>
+<tr class="memdesc:a028dd1120ce703253589a87186ec5ec3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set current bit position in the track buffer. The position is the bit position in the track buffer. When the sampling rate of the track buffer is 4MHz, one bit means 250ns (1/4MHz). When you set the position to 10 and the sampling rate is 4MHz, the new position will be 2.5us from the top of the track buffer. (1/4MHz * 10 = 2.5us)  <a href="classfdc__bitstream.html#a028dd1120ce703253589a87186ec5ec3">More...</a><br /></td></tr>
 <tr class="separator:a028dd1120ce703253589a87186ec5ec3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc397441b7777ca7271458d736199e09"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#afc397441b7777ca7271458d736199e09">get_pos</a> (void)</td></tr>
+<tr class="memdesc:afc397441b7777ca7271458d736199e09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current position in the track buffer.  <a href="classfdc__bitstream.html#afc397441b7777ca7271458d736199e09">More...</a><br /></td></tr>
 <tr class="separator:afc397441b7777ca7271458d736199e09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a91d0a24862c9cdf24aa1664b48f2f917"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#a91d0a24862c9cdf24aa1664b48f2f917">is_wraparound</a> (void)</td></tr>
 <tr class="separator:a91d0a24862c9cdf24aa1664b48f2f917"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -123,24 +128,34 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0b39dd619d4fdc04b89392a1a87c7589"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#a0b39dd619d4fdc04b89392a1a87c7589">disable_fluctuator</a> (void)</td></tr>
 <tr class="separator:a0b39dd619d4fdc04b89392a1a87c7589"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa56d06aee0676001c3b245c144f12a6b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#aa56d06aee0676001c3b245c144f12a6b">write_data</a> (uint8_t data, bool mode=false, bool write_gate=true)</td></tr>
+<tr class="memdesc:aa56d06aee0676001c3b245c144f12a6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a byte data to the track buffer at the current position and advance the position for one byte. This function writes a byte data to the track buffer. The data wil be written at the current position, and the pointer will advance for one byte. This function also supports FD179x/MB8877 special codes. When the 'mode' is set to 'true', the special codes are recognized and handled respectively. When the 'write_gate' is set to 'false', this function will not perform actual data writing but advance the pointer. You can use this feature for dummy data writing (or just skip certain bytes).  <a href="classfdc__bitstream.html#aa56d06aee0676001c3b245c144f12a6b">More...</a><br /></td></tr>
 <tr class="separator:aa56d06aee0676001c3b245c144f12a6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a19159752b4c24f253f7f44709e1bfd61"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#a19159752b4c24f253f7f44709e1bfd61">read_data</a> (uint8_t &amp;data, bool &amp;missing_clock, bool ignore_missing_clock=true, bool ignore_sync_field=true)</td></tr>
+<tr class="memdesc:a19159752b4c24f253f7f44709e1bfd61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a byte from the current position in the track buffer and advance the position for one byte. When reading an ID field and a block of sector data body, ignore_missing_clock and ignore_sync_field must be set to 'true'. Otherwise, unexpected patten match to the missing-clock-pattern or sync-field-pattern may happen. If this situation occurs, the data separator will perform forcible phase correction and this causes read data error. Adversely, you must set ignore_missing_clock and ignore_sync_field to 'false' when you are searching for address markers (such as IDAM, A1* A1* A1* FE).  <a href="classfdc__bitstream.html#a19159752b4c24f253f7f44709e1bfd61">More...</a><br /></td></tr>
 <tr class="separator:a19159752b4c24f253f7f44709e1bfd61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abea60a7ed3b79255840fac28a5a20c02"><td class="memItemLeft" align="right" valign="top">std::vector&lt; uint8_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#abea60a7ed3b79255840fac28a5a20c02">read_track</a> (void)</td></tr>
+<tr class="memdesc:abea60a7ed3b79255840fac28a5a20c02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read track. Reads track data from the current position until the pointer reaches to the end of the track (no wrap around).  <a href="classfdc__bitstream.html#abea60a7ed3b79255840fac28a5a20c02">More...</a><br /></td></tr>
 <tr class="separator:abea60a7ed3b79255840fac28a5a20c02"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aebcc3997b1a78dfe74a32dd0c5ae6bf8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#aebcc3997b1a78dfe74a32dd0c5ae6bf8">write_track</a> (const std::vector&lt; uint8_t &gt; &amp;track_buf)</td></tr>
+<tr class="memdesc:aebcc3997b1a78dfe74a32dd0c5ae6bf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write track. Start writing from the current position until all data is written. The track buffer is treated as a ring buffer, so the pointer will wrap around if the write data goes over the buffer's end. Write track recognizes MB8876/FDC179x compatible special codes such as $f5, $f6, $f7, $fb, $fe, and so on.  <a href="classfdc__bitstream.html#aebcc3997b1a78dfe74a32dd0c5ae6bf8">More...</a><br /></td></tr>
 <tr class="separator:aebcc3997b1a78dfe74a32dd0c5ae6bf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a285e12ca70b10ad1c3f9b65a2cb4e64d"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#a285e12ca70b10ad1c3f9b65a2cb4e64d">read_id</a> (std::vector&lt; uint8_t &gt; &amp;<a class="el" href="structfdc__bitstream_1_1id__field.html">id_field</a>, bool &amp;crc_error)</td></tr>
+<tr class="memdesc:a285e12ca70b10ad1c3f9b65a2cb4e64d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read an sector ID. Start reading from the current position and read the 1st found sector ID.  <a href="classfdc__bitstream.html#a285e12ca70b10ad1c3f9b65a2cb4e64d">More...</a><br /></td></tr>
 <tr class="separator:a285e12ca70b10ad1c3f9b65a2cb4e64d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0afb22e2181670e2b83134a690c4ea3d"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structfdc__bitstream_1_1id__field.html">id_field</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#a0afb22e2181670e2b83134a690c4ea3d">read_all_idam</a> (void)</td></tr>
+<tr class="memdesc:a0afb22e2181670e2b83134a690c4ea3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads all IDAM in the track buffer.  <a href="classfdc__bitstream.html#a0afb22e2181670e2b83134a690c4ea3d">More...</a><br /></td></tr>
 <tr class="separator:a0afb22e2181670e2b83134a690c4ea3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa7e9c1cafaf4dce21de04151fce96514"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#aa7e9c1cafaf4dce21de04151fce96514">read_sector_body</a> (size_t sect_length_code, std::vector&lt; uint8_t &gt; &amp;sect_data, bool &amp;crc_error, bool &amp;dam_type)</td></tr>
+<tr class="memdesc:aa7e9c1cafaf4dce21de04151fce96514"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a sector. Read sector data from the next nearest DAM/DDAM mark from the current position. This function doesn't care about the sector ID and simply reads the subsequent sector data. Combine the <a class="el" href="classfdc__bitstream.html#a285e12ca70b10ad1c3f9b65a2cb4e64d" title="Read an sector ID. Start reading from the current position and read the 1st found sector ID.">read_id()</a> function to find the desired sector ID and call this function to read the sector body data.  <a href="classfdc__bitstream.html#aa7e9c1cafaf4dce21de04151fce96514">More...</a><br /></td></tr>
 <tr class="separator:aa7e9c1cafaf4dce21de04151fce96514"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a71da61708327f7e3d2796daddec1b8b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#a71da61708327f7e3d2796daddec1b8b9">write_sector_body</a> (std::vector&lt; uint8_t &gt; <a class="el" href="classfdc__bitstream.html#aa56d06aee0676001c3b245c144f12a6b">write_data</a>, bool dam_type, bool write_crc=true)</td></tr>
+<tr class="memdesc:a71da61708327f7e3d2796daddec1b8b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a sector. Write sector data from the current position. Please be aware that this function follows and emulates the write sequence of the FD179x/MB8876 FDC device. This means this function will skip certain bytes from the start position and then start actual data writing that includes SYNC bytes and the data address marks. To allow the user program to emulate the 'force interrupt' command of FD179x/MB8876, this function has an option not to write the CRC bytes and the last 0xff byte.  <a href="classfdc__bitstream.html#a71da61708327f7e3d2796daddec1b8b9">More...</a><br /></td></tr>
 <tr class="separator:a71da61708327f7e3d2796daddec1b8b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6976607e1c1803150b21cd769f8582b4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structfdc__bitstream_1_1sector__data.html">sector_data</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#a6976607e1c1803150b21cd769f8582b4">read_sector</a> (int trk, int sid, int sct)</td></tr>
+<tr class="memdesc:a6976607e1c1803150b21cd769f8582b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">FD189x/MB8876 compatible TYPE-II READ SECTOR operation.  <a href="classfdc__bitstream.html#a6976607e1c1803150b21cd769f8582b4">More...</a><br /></td></tr>
 <tr class="separator:a6976607e1c1803150b21cd769f8582b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad0bdceff0d3161a201a24a2e73aabbb6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#ad0bdceff0d3161a201a24a2e73aabbb6">write_sector</a> (int trk, int sid, int sct, bool dam_type, std::vector&lt; uint8_t &gt; &amp;<a class="el" href="classfdc__bitstream.html#aa56d06aee0676001c3b245c144f12a6b">write_data</a>, bool fluctuate=false)</td></tr>
+<tr class="memdesc:ad0bdceff0d3161a201a24a2e73aabbb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">FD189x/MB8876 compatible TYPE-II WRITE SECTOR operation.  <a href="classfdc__bitstream.html#ad0bdceff0d3161a201a24a2e73aabbb6">More...</a><br /></td></tr>
 <tr class="separator:ad0bdceff0d3161a201a24a2e73aabbb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -161,9 +176,10 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Constructor </p>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00022">22</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p>Construct a new fdc bitstream::fdc bitstream object. </p>
+
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00021">21</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -278,7 +294,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Get current position in the track buffer.</p>
+
+<p>Get current position in the track buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">none</td><td></td></tr>
@@ -287,7 +304,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>size_t Current bit position in the track buffer. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00370">370</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00371">371</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -363,7 +380,10 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00187">187</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p>Reads all IDAM in the track buffer. </p>
+<dl class="section return"><dt>Returns</dt><dd>std::vector&lt;fdc_bitstream::id_field&gt; Read ID field data. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00188">188</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -404,7 +424,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Read a byte from the current position in the track buffer and advance the position for one byte. When reading an ID field and a block of sector data body, ignore_missing_clock and ignore_sync_field must be set to 'true'. Otherwise, unexpected patten match to the missing-clock-pattern or sync-field-pattern may happen. If this situation occurs, the data separator will perform forcible phase correction and this causes read data error. Adversely, you must set ignore_missing_clock and ignore_sync_field to 'false' when you are searching for address markers (such as IDAM, A1* A1* A1* FE).</p>
+
+<p>Read a byte from the current position in the track buffer and advance the position for one byte. When reading an ID field and a block of sector data body, ignore_missing_clock and ignore_sync_field must be set to 'true'. Otherwise, unexpected patten match to the missing-clock-pattern or sync-field-pattern may happen. If this situation occurs, the data separator will perform forcible phase correction and this causes read data error. Adversely, you must set ignore_missing_clock and ignore_sync_field to 'false' when you are searching for address markers (such as IDAM, A1* A1* A1* FE). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[out]</td><td class="paramname">data</td><td>Read data </td></tr>
@@ -416,7 +437,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00412">412</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00413">413</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -445,7 +466,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Read an sector ID. Start reading from the current position and read the 1st found sector ID</p>
+
+<p>Read an sector ID. Start reading from the current position and read the 1st found sector ID. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">none</td><td></td></tr>
@@ -454,9 +476,9 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>size_t Track position of the <a class="el" href="classfdc__bitstream.html#a285e12ca70b10ad1c3f9b65a2cb4e64d">read_id()</a> started reading. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>size_t Track position of the <a class="el" href="classfdc__bitstream.html#a285e12ca70b10ad1c3f9b65a2cb4e64d" title="Read an sector ID. Start reading from the current position and read the 1st found sector ID.">read_id()</a> started reading. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00125">125</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00122">122</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -491,9 +513,19 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >FD189x/MB8876 compatible TYPE-II READ SECTOR operation </p>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00420">420</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p>FD189x/MB8876 compatible TYPE-II READ SECTOR operation. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">trk</td><td>Track number. </td></tr>
+    <tr><td class="paramname">sid</td><td>Side number. </td></tr>
+    <tr><td class="paramname">sct</td><td>Sector number. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structfdc__bitstream_1_1sector__data.html">fdc_bitstream::sector_data</a> Read sector data. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00426">426</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -534,7 +566,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Read a sector. Read sector data from the next nearest DAM/DDAM mark from the current position. This function doesn't care about the sector ID and simply reads the subsequent sector data. Combine the <a class="el" href="classfdc__bitstream.html#a285e12ca70b10ad1c3f9b65a2cb4e64d">read_id()</a> function to find the desired sector ID and call this function to read the sector body data.</p>
+
+<p>Read a sector. Read sector data from the next nearest DAM/DDAM mark from the current position. This function doesn't care about the sector ID and simply reads the subsequent sector data. Combine the <a class="el" href="classfdc__bitstream.html#a285e12ca70b10ad1c3f9b65a2cb4e64d" title="Read an sector ID. Start reading from the current position and read the 1st found sector ID.">read_id()</a> function to find the desired sector ID and call this function to read the sector body data. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">sect_length</td><td>Sector length code (0-3) </td></tr>
@@ -544,9 +577,9 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>size_t Track position of the <a class="el" href="classfdc__bitstream.html#a6976607e1c1803150b21cd769f8582b4">read_sector()</a> started reading. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>size_t Track position of the <a class="el" href="classfdc__bitstream.html#a6976607e1c1803150b21cd769f8582b4" title="FD189x/MB8876 compatible TYPE-II READ SECTOR operation.">read_sector()</a> started reading. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00227">227</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00228">228</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -565,7 +598,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Read track. Reads track data from the current position until the pointer reaches to the end of the track (no wrap around).</p>
+
+<p>Read track. Reads track data from the current position until the pointer reaches to the end of the track (no wrap around). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">none</td><td></td></tr>
@@ -574,7 +608,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>std::vector&lt;uint8_t&gt; Read track data (Decoded MFM data) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00053">53</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00052">52</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -603,7 +637,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Set FDC parameters.</p>
+
+<p>Set FDC parameters. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">sampling_rate</td><td>The sampling rate of the floppy image (track data) in MHz unit. (e.g. 4e6 == 4MHz) </td></tr>
@@ -613,7 +648,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00039">39</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00038">38</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -632,7 +667,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Set current bit position in the track buffer. The position is the bit position in the track buffer. When the sampling rate of the track buffer is 4MHz, one bit means 250ns (1/4MHz). When you set the position to 10 and the sampling rate is 4MHz, the new position will be 2.5us from the top of the track buffer. (1/4MHz * 10 = 2.5us)</p>
+
+<p>Set current bit position in the track buffer. The position is the bit position in the track buffer. When the sampling rate of the track buffer is 4MHz, one bit means 250ns (1/4MHz). When you set the position to 10 and the sampling rate is 4MHz, the new position will be 2.5us from the top of the track buffer. (1/4MHz * 10 = 2.5us) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bit_pos</td><td>New position </td></tr>
@@ -640,7 +676,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00359">359</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00360">360</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -659,8 +695,9 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Set a new track data. Set a new track data in new a <a class="el" href="classbit__array.html">bit_array</a>. </p>
 <p >unit = bit</p>
-<p >Set a new track data. Set a new track data in new a <a class="el" href="classbit__array.html">bit_array</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">track_data</td><td>New track data. </td></tr>
@@ -669,7 +706,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00381">381</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00382">382</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -704,8 +741,9 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Write a byte data to the track buffer at the current position and advance the position for one byte. This function writes a byte data to the track buffer. The data wil be written at the current position, and the pointer will advance for one byte. This function also supports FD179x/MB8877 special codes. When the 'mode' is set to 'true', the special codes are recognized and handled respectively. When the 'write_gate' is set to 'false', this function will not perform actual data writing but advance the pointer. You can use this feature for dummy data writing (or just skip certain bytes). </p>
 <p >Disable FDC read operation fluctuator</p>
-<p >Write a byte data to the track buffer at the current position and advance the position for one byte. This function writes a byte data to the track buffer. The data wil be written at the current position, and the pointer will advance for one byte. This function also supports FD179x/MB8877 special codes. When the 'mode' is set to 'true', the special codes are recognized and handled respectively. When the 'write_gate' is set to 'false', this function will not perform actual data writing but advance the pointer. You can use this feature for dummy data writing (or just skip certain bytes).</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>A byte data to write. </td></tr>
@@ -715,7 +753,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00395">395</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00396">396</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -768,10 +806,24 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >FD189x/MB8876 compatible TYPE-II WRITE SECTOR operation</p>
-<dl class="section return"><dt>Returns</dt><dd>bool Record-not-found error flag. false==error </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00469">469</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p>FD189x/MB8876 compatible TYPE-II WRITE SECTOR operation. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">trk</td><td>Track number. </td></tr>
+    <tr><td class="paramname">sid</td><td>Side number. </td></tr>
+    <tr><td class="paramname">sct</td><td>Sector number. </td></tr>
+    <tr><td class="paramname">dam_type</td><td>Data address mark type (false=DAM, true=DDAM) </td></tr>
+    <tr><td class="paramname">write_data</td><td>Sector data. </td></tr>
+    <tr><td class="paramname">fluctuate</td><td>Flag to control write start timing (false=deterministic timing, true=write start timing will fluctuate) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true No error </dd>
+<dd>
+false Record-not-found error </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00483">483</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -806,7 +858,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Write a sector. Write sector data from the current position. Please be aware that this function follows and emulates the write sequence of the FD179x/MB8876 FDC device. This means this function will skip certain bytes from the start position and then start actual data writing that includes SYNC bytes and the data address marks. To allow the user program to emulate the 'force interrupt' command of FD179x/MB8876, this function has an option not to write the CRC bytes and the last 0xff byte.</p>
+
+<p>Write a sector. Write sector data from the current position. Please be aware that this function follows and emulates the write sequence of the FD179x/MB8876 FDC device. This means this function will skip certain bytes from the start position and then start actual data writing that includes SYNC bytes and the data address marks. To allow the user program to emulate the 'force interrupt' command of FD179x/MB8876, this function has an option not to write the CRC bytes and the last 0xff byte. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">write_data</td><td>The sector data to write. </td></tr>
@@ -816,7 +869,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00308">308</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00309">309</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -835,8 +888,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Write track. <br  />
- Start writing from the current position until all data is written. The track buffer is treated as a ring buffer, so the pointer will wrap around if the write data goes over the buffer's end. Write track recognizes MB8876/FDC179x compatible special codes such as $f5, $f6, $f7, $fb, $fe, and so on.</p>
+
+<p>Write track. Start writing from the current position until all data is written. The track buffer is treated as a ring buffer, so the pointer will wrap around if the write data goes over the buffer's end. Write track recognizes MB8876/FDC179x compatible special codes such as $f5, $f6, $f7, $fb, $fe, and so on. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">track_buf</td><td>Write track data </td></tr>
@@ -845,7 +898,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00077">77</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00075">75</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
