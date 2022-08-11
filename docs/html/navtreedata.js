@@ -32,7 +32,9 @@ var NAVTREE =
       ] ],
       [ "API Document", "md__r_e_a_d_m_e.html#autotoc_md4", null ],
       [ "HFE to MFM format converter", "md__r_e_a_d_m_e.html#autotoc_md5", null ],
-      [ "MFM image data format:", "md__r_e_a_d_m_e.html#autotoc_md6", null ]
+      [ "MFM image data format:", "md__r_e_a_d_m_e.html#autotoc_md6", null ],
+      [ "How to build the test program", "md__r_e_a_d_m_e.html#autotoc_md7", null ],
+      [ "Directory structure", "md__r_e_a_d_m_e.html#autotoc_md8", null ]
     ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
@@ -59,7 +61,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"structpicfileformatheader__.html#ad1372ac30d1b7744cf495ce59e370bb0"
+"structpicfileformatheader__.html#ac5a89ec543644ddcceb7b329459c7d20"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -147,7 +147,29 @@ MFM image data format:</h1>
 <div class="line">// Track data * 84</div>
 <div class="line">//   ofst(byte) = track_table[track#].offset</div>
 <div class="line">//   size(byte) = track_table[track#].length_bit/8 + (track_table[track#].length%8)?1:0)</div>
-</div><!-- fragment --> </div></div><!-- contents -->
+</div><!-- fragment --> <h1><a class="anchor" id="autotoc_md7"></a>
+How to build the test program</h1>
+<div class="fragment"><div class="line">mkdir build</div>
+<div class="line">cd build</div>
+<div class="line">cmake ..</div>
+<div class="line">cmake --build .</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md8"></a>
+Directory structure</h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Directory   </th><th class="markdownTableHeadNone">Description    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code><a class="el" href="classfdc__bitstream.html">fdc_bitstream</a></code>   </td><td class="markdownTableBodyNone">C++ FDC library source code    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>include</code>   </td><td class="markdownTableBodyNone">C++ header files for the FDC library    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>fdc_test</code>   </td><td class="markdownTableBodyNone">FDC lib test program source code    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>docs/html</code>   </td><td class="markdownTableBodyNone">FDC library API document (<code>index.html</code>)    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>hfe2mfm</code>   </td><td class="markdownTableBodyNone">HFE to MFM floppy disk image converter source code   </td></tr>
+</table>
+</div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->
