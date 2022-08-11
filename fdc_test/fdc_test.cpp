@@ -18,120 +18,123 @@
 #include "common.h"
 
 
-int main(void)
-{
-#if 1
+void test1(void) {
     std::cout << "*** MFM format data, and read test" << std::endl;
-    fdc_bitstream fdc1;
-    disk_image_mfm image1;
-    image1.read("test.mfm");
-    bit_array barray = image1.get_track_data(0);
-    fdc1.set_raw_track_data(barray);
-    fdc1.set_pos(0);
-    std::vector<uint8_t> track1 = fdc1.read_track();
-    dump_buf(track1.data(), 2048);
+    fdc_bitstream fdc;
+    disk_image_mfm image;
+    image.read("test.mfm");
+    bit_array barray = image.get_track_data(0);
+    fdc.set_raw_track_data(barray);
+    fdc.set_pos(0);
+    std::vector<uint8_t> track = fdc.read_track();
+    dump_buf(track.data(), 2048);
     std::cout << std::endl;
 
     std::cout << "ID" << std::endl;
-    std::vector<fdc_bitstream::id_field> ids = fdc1.read_all_idam();
+    std::vector<fdc_bitstream::id_field> ids = fdc.read_all_idam();
     display_id_list(ids);
     std::cout << std::endl;
-#endif
+}
 
-#if 1
+void test2() {
     std::cout << "\nWrite track, write sector, read sector test" << std::endl;
-    fdc_bitstream fdc2;
-    bit_array track_b2;
-    track_b2.resize(4e6 * 0.2);               // extend track buffer (spindle 1 spin == 0.2sec)
-    fdc2.set_raw_track_data(track_b2);        // Set unformatted track data
-    std::vector<uint8_t> write_data4 = generate_format_data(0,0,1,1);       // trk=0, sid=0, #sec=1, len=1
-    fdc2.write_track(write_data4);
+    fdc_bitstream fdc;
+    bit_array track_b;
+    track_b.resize(4e6 * 0.2);               // extend track buffer (spindle 1 spin == 0.2sec)
+    fdc.set_raw_track_data(track_b);        // Set unformatted track data
+    std::vector<uint8_t> write_data = generate_format_data(0, 0, 1, 1);       // trk=0, sid=0, #sec=1, len=1
+    fdc.write_track(write_data);
 
     std::cout << "Track dump - after formatting" << std::endl;
-    fdc2.set_pos(0);
-    std::vector<uint8_t> track2 = fdc2.read_track();
-    dump_buf(track2.data(), track2.size());
+    fdc.set_pos(0);
+    std::vector<uint8_t> track = fdc.read_track();
+    dump_buf(track.data(), track.size());
     std::cout << std::endl;
 
-    fdc2.clear_wraparound();
-    fdc2.set_pos(0);
+    fdc.clear_wraparound();
+    fdc.set_pos(0);
 
     // write sector
-    std::vector<uint8_t> sect_data_w2;
-    for (int i = 0; i < 256; i++) sect_data_w2.push_back(i);
-    fdc2.clear_wraparound();
-    fdc2.set_pos(0);
-    fdc2.write_sector(0, 0, 1, false, sect_data_w2);
+    std::vector<uint8_t> sect_data_w;
+    for (int i = 0; i < 256; i++) sect_data_w.push_back(i);
+    fdc.clear_wraparound();
+    fdc.set_pos(0);
+    fdc.write_sector(0, 0, 1, false, sect_data_w);
 
     std::cout << "Track dump - after sector write" << std::endl;
-    fdc2.set_pos(0);
-    track2 = fdc2.read_track();
-    dump_buf(track2.data(), track2.size());
+    fdc.set_pos(0);
+    track = fdc.read_track();
+    dump_buf(track.data(), track.size());
     std::cout << std::endl;
 
     // verify written data by reading the sector
     std::cout << "Read sector data" << std::endl;
-    fdc_bitstream::sector_data sect_data_r2;
-    sect_data_r2 = fdc2.read_sector(0, 0, 1);
-    dump_buf(sect_data_r2.data.data(), sect_data_r2.data.size());
+    fdc_bitstream::sector_data sect_data_r;
+    sect_data_r = fdc.read_sector(0, 0, 1);
+    dump_buf(sect_data_r.data.data(), sect_data_r.data.size());
     std::cout << std::endl;
-#endif
 
+}
 
-#if 1
+void test3(void) {
     std::cout << "\nFormat test - format (track write), write all sectors, and read all sectors" << std::endl;
-    fdc_bitstream fdc3;
-    bit_array track_write_data3;
-    track_write_data3.clear_array();
-    track_write_data3.set(4e6 * 0.2, 0);     // extend track buffer
-    fdc3.set_raw_track_data(track_write_data3);
-    std::vector<uint8_t> write_data3 = generate_format_data(0, 0, 16, 1, 3);
-    fdc3.write_track(write_data3);
-    
-    fdc3.set_pos(0);
-    std::vector<uint8_t> track3 = fdc3.read_track();
-    dump_buf(track3.data(), track3.size());
+    fdc_bitstream fdc;
+    bit_array track_write_data;
+    track_write_data.clear_array();
+    track_write_data.set(4e6 * 0.2, 0);     // extend track buffer
+    fdc.set_raw_track_data(track_write_data);
+    std::vector<uint8_t> write_data = generate_format_data(0, 0, 16, 1, 3);
+    fdc.write_track(write_data);
+
+    fdc.set_pos(0);
+    std::vector<uint8_t> track = fdc.read_track();
+    dump_buf(track.data(), track.size());
     std::cout << std::endl;
 
     std::cout << "ID" << std::endl;
-    ids = fdc3.read_all_idam();
+    std::vector<fdc_bitstream::id_field> ids = fdc.read_all_idam();
     display_id_list(ids);
     std::cout << std::endl;
 
     std::cout << "Read sector data" << std::endl;
-    fdc_bitstream::sector_data sect_data_r3;
-    sect_data_r3 = fdc3.read_sector(0, 0, 1);
-    dump_buf(sect_data_r3.data.data(), sect_data_r3.data.size());
+    fdc_bitstream::sector_data sect_data_r;
+    sect_data_r = fdc.read_sector(0, 0, 1);
+    dump_buf(sect_data_r.data.data(), sect_data_r.data.size());
     std::cout << std::endl;
 
     std::cout << "Write to all sectors (0-16)" << std::endl;
-    std::vector<uint8_t> sect_data_w3;
+    std::vector<uint8_t> sect_data_w;
     for (int i = 1; i <= 16; i++) {
-        sect_data_w3.clear();
-        sect_data_w3.resize(256, ((i - 1) << 4 | (i - 1)));
-        bool sts = fdc3.write_sector(0, 0, i, false, sect_data_w3, true);  // enable fluctuator
+        sect_data_w.clear();
+        sect_data_w.resize(256, ((i - 1) << 4 | (i - 1)));
+        bool sts = fdc.write_sector(0, 0, i, false, sect_data_w, true);  // enable fluctuator
         if (sts == false) {
             std::cout << i << "record-not-found error" << std::endl;
         }
     }
-#if 1
+
     std::cout << "Track dump - after all sector write" << std::endl;
-    fdc3.set_pos(0);
-    track3 = fdc3.read_track();
-    dump_buf(track3.data(), track3.size());
+    fdc.set_pos(0);
+    track = fdc.read_track();
+    dump_buf(track.data(), track.size());
     std::cout << std::endl;
 
     std::cout << "Read sector data" << std::endl;
     for (int i = 1; i <= 16; i++) {
         std::cout << "Sector " << i << std::endl;
-        fdc_bitstream::sector_data sect_data_r3;
-        sect_data_r3 = fdc3.read_sector(0, 0, i);
-        dump_buf(sect_data_r3.data.data(), sect_data_r3.data.size());
+        fdc_bitstream::sector_data sect_data_r;
+        sect_data_r = fdc.read_sector(0, 0, i);
+        dump_buf(sect_data_r.data.data(), sect_data_r.data.size());
     }
     std::cout << std::endl;
-#endif
 
-#endif
+}
+
+int main(void)
+{
+    test1();        // Read a HFM file / Read track / Dump sector IDs
+    test2();        // Format a track (1 sector) / Read track / Write sector / Read track / Read sector
+    test3();        // Format a track (16 sectors) / Dump sector IDs / Read sector / Write 16 sectors with data / Read Track / Read sector data 
 
     return 0;
 }
