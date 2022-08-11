@@ -34,6 +34,25 @@ hfe2mfm input_file.hfe
 ```
 Note: `hfe2mfm` swaps the file extension from `*.hfe` to `*.mfm` and generates the output file.  
   
+## Directory structure
+|Directory|Description|
+|---|---|
+|`fdc_bitstream`|C++ FDC library source code|
+|`include`|C++ header files for the FDC library|
+|`fdc_test`|FDC lib test program source code|
+|`docs/html`|FDC library API document (`index.html`)|
+|`hfe2mfm`|HFE to MFM floppy disk image converter source code|
+
+## How to build the test program and HFE to MFM image converter
+
+```sh
+mkdir build
+cd build
+cmake ..
+cmake --build .
+```
+
+----
 
 ## MFM image data format:
 The default sampling rate for the MFM format is 4MHz. The data rate of an orginary 2D/MFM format data is 500KHz. This means, one bit cell will be recorded with eight bits of data in the MFM format.  
@@ -61,21 +80,3 @@ typedef struct track_table_ {
 //   ofst(byte) = track_table[track#].offset
 //   size(byte) = track_table[track#].length_bit/8 + (track_table[track#].length%8)?1:0)
 ```
-## How to build the test program
-
-```sh
-mkdir build
-cd build
-cmake ..
-cmake --build .
-```
-
-## Directory structure
-|Directory|Description|
-|---|---|
-|`fdc_bitstream`|C++ FDC library source code|
-|`include`|C++ header files for the FDC library|
-|`fdc_test`|FDC lib test program source code|
-|`docs/html`|FDC library API document (`index.html`)|
-|`hfe2mfm`|HFE to MFM floppy disk image converter source code|
-
