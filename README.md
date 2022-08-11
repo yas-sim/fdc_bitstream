@@ -10,6 +10,8 @@ The FDC library is designed to be integrated with the old PC emulator programs.
 This FDC library can handle raw FDD output read data before the C/D separation is applied.  
 The FDC library includes a data separator and simple PLL(DLL) emulation features thus, the FDC can reproduce some copy protection data, which requires precise sub-bitrate data pulse timing.  
 
+**This library directly reads and writes the bit stream data, so the track bit stream data even after applying some write operations, is still compliant with actual floppy bit stream data.**  
+
 ### Supported functions:
 - Track read
 - Track write
