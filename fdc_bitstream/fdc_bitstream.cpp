@@ -1,5 +1,3 @@
-#pragma once
-
 /**
 * @file fdc_bitstream.cpp
 * @brief MFM Floppy FDC emulator
@@ -17,8 +15,9 @@
 //#define DEBUG
 
 /**
-* Constructor
-*/
+ * @brief Construct a new fdc bitstream::fdc bitstream object
+ * 
+ */
 fdc_bitstream::fdc_bitstream() : m_state(fdc_state::IDLE), m_sampling_rate(4e6), m_data_bit_rate(500e3) {
     m_crcgen.reset();
     m_codec.reset();
@@ -30,7 +29,7 @@ fdc_bitstream::fdc_bitstream() : m_state(fdc_state::IDLE), m_sampling_rate(4e6),
 
 
 /**
-* Set FDC parameters.
+* @brief Set FDC parameters.
 * 
 * @param[in] sampling_rate The sampling rate of the floppy image (track data) in MHz unit. (e.g. 4e6 == 4MHz)
 * @param[in] data_bit_rate The FDC bit rate in bit/sec uint. (MFM/2D == 500e3 == 500HKz)
@@ -44,7 +43,7 @@ void fdc_bitstream::set_fdc_params(size_t sampling_rate, size_t data_bit_rate) {
 }
 
 /**
-* Read track.
+* @brief Read track.
 * Reads track data from the current position until the pointer reaches to the end of the track (no wrap around).
 * 
 * @param[in] none
@@ -66,10 +65,9 @@ std::vector<uint8_t> fdc_bitstream::read_track(void) {
 }
 
 /**
-* Write track.  
-* Start writing from the current position until all data is written. 
-* The track buffer is treated as a ring buffer, so the pointer will wrap around if the write data goes over the buffer's end.
-* Write track recognizes MB8876/FDC179x compatible special codes such as $f5, $f6, $f7, $fb, $fe, and so on.
+* @brief Write track. Start writing from the current position until all data is written. 
+*        The track buffer is treated as a ring buffer, so the pointer will wrap around if the write data goes over the buffer's end. 
+*        Write track recognizes MB8876/FDC179x compatible special codes such as $f5, $f6, $f7, $fb, $fe, and so on.
 * 
 * @param[in] track_buf Write track data
 * @return none
@@ -113,8 +111,7 @@ void fdc_bitstream::write_track(const std::vector<uint8_t>& track_buf) {
 }
 
 /**
-* Read an sector ID.
-* Start reading from the current position and read the 1st found sector ID
+* @brief Read an sector ID. Start reading from the current position and read the 1st found sector ID
 *
 * @param[in] none
 * @param[out] id_field read sector ID data
@@ -183,7 +180,11 @@ size_t fdc_bitstream::read_id(std::vector<uint8_t>& id_field, bool& crc_error) {
     return read_start_pos;
 }
 
-
+/**
+ * @brief Reads all IDAM in the track buffer.
+ * 
+ * @return std::vector<fdc_bitstream::id_field> Read ID field data. 
+ */
 std::vector<fdc_bitstream::id_field> fdc_bitstream::read_all_idam(void) {
     std::vector<id_field> result;
     id_field item;
@@ -213,10 +214,10 @@ std::vector<fdc_bitstream::id_field> fdc_bitstream::read_all_idam(void) {
 
 
 /**
-* Read a sector.
-* Read sector data from the next nearest DAM/DDAM mark from the current position.
-* This function doesn't care about the sector ID and simply reads the subsequent sector data.
-* Combine the read_id() function to find the desired sector ID and call this function to read the sector body data.
+* @brief Read a sector. 
+*        Read sector data from the next nearest DAM/DDAM mark from the current position. 
+*        This function doesn't care about the sector ID and simply reads the subsequent sector data.
+*        Combine the read_id() function to find the desired sector ID and call this function to read the sector body data.
 * 
 * @param[in] sect_length Sector length code (0-3)
 * @param[out] sect_data Read sector data buffer
@@ -294,11 +295,11 @@ size_t fdc_bitstream::read_sector_body(size_t sect_length_code, std::vector<uint
 }
 
 /**
-* Write a sector.
-* Write sector data from the current position.
-* Please be aware that this function follows and emulates the write sequence of the FD179x/MB8876 FDC device.
-* This means this function will skip certain bytes from the start position and then start actual data writing that includes SYNC bytes and the data address marks.
-* To allow the user program to emulate the 'force interrupt' command of FD179x/MB8876, this function has an option not to write the CRC bytes and the last 0xff byte.
+* @brief Write a sector.
+*        Write sector data from the current position.
+*        Please be aware that this function follows and emulates the write sequence of the FD179x/MB8876 FDC device.
+*        This means this function will skip certain bytes from the start position and then start actual data writing that includes SYNC bytes and the data address marks.
+*        To allow the user program to emulate the 'force interrupt' command of FD179x/MB8876, this function has an option not to write the CRC bytes and the last 0xff byte.
 * 
 * @param[in] write_data The sector data to write.
 * @param[in] dam_type Specify the type of data address mark (true:DDAM, false:DAM(normal))
@@ -349,10 +350,10 @@ void fdc_bitstream::write_sector_body(std::vector<uint8_t> write_data, bool dam_
 
 
 /**
-* Set current bit position in the track buffer.
-* The position is the bit position in the track buffer.
-* When the sampling rate of the track buffer is 4MHz, one bit means 250ns (1/4MHz).
-* When you set the position to 10 and the sampling rate is 4MHz, the new position will be 2.5us from the top of the track buffer. (1/4MHz * 10 = 2.5us)
+* @brief Set current bit position in the track buffer.
+*        The position is the bit position in the track buffer.
+*        When the sampling rate of the track buffer is 4MHz, one bit means 250ns (1/4MHz).
+*        When you set the position to 10 and the sampling rate is 4MHz, the new position will be 2.5us from the top of the track buffer. (1/4MHz * 10 = 2.5us)
 *
 * @param[in] bit_pos New position
 */
@@ -362,7 +363,7 @@ void fdc_bitstream::set_pos(size_t bit_pos) {
 }
 
 /**
-* Get current position in the track buffer.
+* @brief Get current position in the track buffer.
 * 
 * @param[in] none
 * @return size_t Current bit position in the track buffer.
@@ -372,8 +373,8 @@ size_t fdc_bitstream::get_pos(void) {
 }
 
 /**
-* Set a new track data.
-* Set a new track data in new a bit_array.
+* @brief Set a new track data.
+*        Set a new track data in new a bit_array.
 * 
 * @param[in] track_data New track data.
 * @return none
@@ -383,10 +384,10 @@ void fdc_bitstream::set_raw_track_data(bit_array track_data) {
 }
 
 /**
-* Write a byte data to the track buffer at the current position and advance the position for one byte.
-* This function writes a byte data to the track buffer. The data wil be written at the current position, and the pointer will advance for one byte.
-* This function also supports FD179x/MB8877 special codes. When the 'mode' is set to 'true', the special codes are recognized and handled respectively.
-* When the 'write_gate' is set to 'false', this function will not perform actual data writing but advance the pointer. You can use this feature for dummy data writing (or just skip certain bytes).
+* @brief Write a byte data to the track buffer at the current position and advance the position for one byte.
+*        This function writes a byte data to the track buffer. The data wil be written at the current position, and the pointer will advance for one byte.
+*        This function also supports FD179x/MB8877 special codes. When the 'mode' is set to 'true', the special codes are recognized and handled respectively.
+*        When the 'write_gate' is set to 'false', this function will not perform actual data writing but advance the pointer. You can use this feature for dummy data writing (or just skip certain bytes).
 *
 * @param[in] data A byte data to write.
 * @param[in] mode Special code handling mode (true=special, false=normal)
@@ -397,11 +398,11 @@ void fdc_bitstream::write_data(uint8_t data, bool mode, bool write_gate) {
 }
 
 /**
-* Read a byte from the current position in the track buffer and advance the position for one byte.
-* When reading an ID field and a block of sector data body, ignore_missing_clock and ignore_sync_field must be set to 'true'. 
-* Otherwise, unexpected patten match to the missing-clock-pattern or sync-field-pattern may happen.
-* If this situation occurs, the data separator will perform forcible phase correction and this causes read data error.
-* Adversely, you must set ignore_missing_clock and ignore_sync_field to 'false' when you are searching for address markers (such as IDAM, A1* A1* A1* FE).
+* @brief Read a byte from the current position in the track buffer and advance the position for one byte.
+*        When reading an ID field and a block of sector data body, ignore_missing_clock and ignore_sync_field must be set to 'true'. 
+*        Otherwise, unexpected patten match to the missing-clock-pattern or sync-field-pattern may happen.
+*        If this situation occurs, the data separator will perform forcible phase correction and this causes read data error.
+*        Adversely, you must set ignore_missing_clock and ignore_sync_field to 'false' when you are searching for address markers (such as IDAM, A1* A1* A1* FE).
 * 
 * @param[out] data Read data
 * @param[out] missing_clock Missing clock status (true=the read data had missing clock).
@@ -415,8 +416,13 @@ void fdc_bitstream::read_data(uint8_t& data, bool& missing_clock, bool ignore_mi
 
 
 /**
-* FD189x/MB8876 compatible TYPE-II READ SECTOR operation
-*/
+* @brief FD189x/MB8876 compatible TYPE-II READ SECTOR operation
+ * 
+ * @param trk Track number.
+ * @param sid Side number.
+ * @param sct Sector number.
+ * @return fdc_bitstream::sector_data Read sector data.
+ */
 fdc_bitstream::sector_data fdc_bitstream::read_sector(int trk, int sid, int sct) {
     size_t index_hole_count = 0;
     sector_data sect_data;
@@ -461,11 +467,19 @@ fdc_bitstream::sector_data fdc_bitstream::read_sector(int trk, int sid, int sct)
     }
 }
 
+
 /**
-* FD189x/MB8876 compatible TYPE-II WRITE SECTOR operation
-* 
-* @return bool Record-not-found error flag. false==error
-*/
+ * @brief FD189x/MB8876 compatible TYPE-II WRITE SECTOR operation
+ * 
+ * @param trk Track number.
+ * @param sid Side number.
+ * @param sct Sector number.
+ * @param dam_type Data address mark type (false=DAM, true=DDAM)
+ * @param write_data Sector data.
+ * @param fluctuate Flag to control write start timing (false=deterministic timing, true=write start timing will fluctuate)
+ * @return true No error
+ * @return false Record-not-found error 
+ */
 bool fdc_bitstream::write_sector(int trk, int sid, int sct, bool dam_type, std::vector<uint8_t> &write_data, bool fluctuate) {
     size_t index_hole_count = 0;
     std::vector<uint8_t> sect_id;

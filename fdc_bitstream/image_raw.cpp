@@ -1,5 +1,3 @@
-#pragma once
-
 #include "image_raw.h"
 
 void disk_image_raw::read(std::string raw_file_name) {

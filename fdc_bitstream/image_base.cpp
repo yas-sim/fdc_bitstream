@@ -1,6 +1,5 @@
 #include "image_base.h"
 
-
 disk_image::disk_image() : m_track_data_is_set(false), m_max_track_number(0), m_sampling_frequency(0), m_fdc_data_rate(0) {
     m_track_data.clear();
     bit_array empty_bit_array;

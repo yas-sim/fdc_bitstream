@@ -1,5 +1,3 @@
-#pragma once
-
 #include "image_hfe.h"
 
 void disk_image_hfe::read(std::string file_name) {

@@ -1,6 +1,12 @@
 #include "fdc_misc.h"
 
-/** Generate sector number list with interleave */
+/**
+ * @brief Generate a list of interleaved sector numbers.
+ * 
+ * @param num_sector Number of sectors.
+ * @param interleave Interleave distance to the next sector. Default=1.
+ * @return std::vector<int> Generated sector number.
+ */
 std::vector<int> generate_interleaved_sector_list(size_t num_sector, int interleave = 1) {
     std::vector<int> sector_list(num_sector, 0);
     int pos = 0;
@@ -16,8 +22,7 @@ std::vector<int> generate_interleaved_sector_list(size_t num_sector, int interle
 }
 
 /**
-* Format data generator.
-* Generates format data from the given parameters.
+* @brief Format data generator. Generates format data from the given parameters.
 * 
 * @param[in] track_n Track number.
 * @param[in] side_n Side number.

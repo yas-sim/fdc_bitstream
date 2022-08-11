@@ -1,9 +1,17 @@
-#pragma once
+/**
+* @file mfm_codec.cpp
+* @brief MFM encoder/decoder
+* @author Yasunori Shimura
+* 
+* @details MFM codec provides encoding and decoding feature to read and write a raw floppy bit stream data. 
+*/
 
 #include "mfm_codec.h"
 
-
-
+/**
+ * @brief Construct a new mfm codec::mfm codec object
+ * 
+ */
 mfm_codec::mfm_codec() : m_bit_stream(0),
         m_sync_mode(false), m_wraparound(false),
         m_prev_write_bit(0),
@@ -15,6 +23,12 @@ mfm_codec::mfm_codec() : m_bit_stream(0),
     update_parameters();
 }
 
+/**
+ * @brief Reset MFM decoder parameters
+ * 
+ * @param[in] None
+ * @param[out] None
+ */
 void mfm_codec::reset(void) {
     m_sampling_rate = 4e6;
     m_data_bit_rate = 500e3;
@@ -30,6 +44,11 @@ void mfm_codec::reset(void) {
     m_pll_gain = 1.f;
 }
 
+/**
+ * @brief Set a new track data.
+ * 
+ * @param track Track bit array data.
+ */
 void mfm_codec::set_track_data(bit_array track) {
     m_track = track;
     m_track.set_stream_pos(0);
@@ -37,6 +56,10 @@ void mfm_codec::set_track_data(bit_array track) {
     m_track_ready = true;
 }
 
+/**
+ * @brief Unset track data. Track data will be marked as unavailable. You need to set another track bit array data before you performs read/write operations.
+ * 
+ */
 void mfm_codec::unset_track_data(void) {
     m_track.clear_wraparound_flag();
     m_track_ready = false;
@@ -47,12 +70,15 @@ void mfm_codec::unset_track_data(void) {
 //inline size_t get_track_length(void) { return m_track.get_length(); }       // unit = bit
 
 /**
+ * @brief Set new bit cell size.
 *   012345678
 *   | WWWW  |
 *     <-->    Window size
 *   <->       Window ofst
 *   <------>  Cell size
-*/
+ * 
+ * @param cell_size New bit cell size (unit=bits)
+ */
 void mfm_codec::set_cell_size(double cell_size) {
     m_bit_cell_size = cell_size;
     m_data_window_size = cell_size / 2.f;
@@ -69,19 +95,30 @@ void mfm_codec::set_cell_size(double cell_size) {
 
 
 /**
-* Update data cell parameters
-*/
+ * @brief Update data cell parameters
+ * 
+ */
 void mfm_codec::update_parameters(void) {
     double cell_size = m_sampling_rate / m_data_bit_rate;
     m_bit_cell_size_ref = cell_size;
     set_cell_size(cell_size);
 }
 
+/**
+ * @brief Set new data bit rate for the bit array buffer.
+ * 
+ * @param data_bit_rate New bit rate in bit/sec unit. (MFM/2D = 500KHz = 500e3)
+ */
 void mfm_codec::set_data_bit_rate(size_t data_bit_rate) {
     m_data_bit_rate = data_bit_rate;
     update_parameters();
 }
 
+/**
+ * @brief Set new sampling rate for the bit array buffer.
+ * 
+ * @param sampling_rate Sampling rate in Hz. (e.g. 4MHz = 4e6)
+ */
 void mfm_codec::set_sampling_rate(size_t sampling_rate) { 
     m_sampling_rate = sampling_rate; 
     update_parameters(); 
@@ -99,6 +136,13 @@ void mfm_codec::set_sampling_rate(size_t sampling_rate) {
 // 01234567
 // | WWWW  |  <= In this case, bit cell size = 8, data window ofst = 2, data window size = 4
 //
+
+/**
+ * @brief Read a bit from the bit array track data. 
+ *        This function includes data separator and PLL.
+ * 
+ * @return int Read bit data.
+ */
 int mfm_codec::read_bit_ds(void) {
     int bit_reading = 0;
     double cell_center;
@@ -160,10 +204,10 @@ int mfm_codec::read_bit_ds(void) {
 }
 
 /**
-* Set PLL gain in the data separator
-* Default = 1.0f.
-* @param[in] gain Gain value for the PLL (value in double type).
-*/
+ * @brief Set gain for the PLL in the data separator.
+ * 
+ * @param[in] gain Gain value for the PLL (value in double type).
+ */
 void mfm_codec::set_gain(double gain) {
     if (gain <= 0.f) gain = 0.01f;
     if (gain > 100.f) gain = 100.f;
@@ -175,9 +219,15 @@ void mfm_codec::set_gain(double gain) {
 
 
 /**
-* Read 1 byte from track buffer
-* @return bool Error status - true : track_data is not set.
-*/
+ * @brief Read 1 byte from track buffer
+ * 
+ * @param[out] data Read data of 1 byte. 
+ * @param[out] missing_clock Missing clock flag (true=missing clock). 
+ * @param ignore_missing_clock Flag to ignore missing clock pattern during decoding (true=ignore).
+ * @param ignore_sync_field Flag to ignore SYNC pattern during decoding (true=ignore).
+ * @return true: Result is valid.
+ * @return false: Track bit array data is not set. Returned values are invalid.
+ */
 bool mfm_codec::mfm_read_byte(uint8_t& data, bool& missing_clock, bool ignore_missing_clock, bool ignore_sync_field) {
     size_t decode_count = 0;
     missing_clock = false;
@@ -230,7 +280,13 @@ bool mfm_codec::mfm_read_byte(uint8_t& data, bool& missing_clock, bool ignore_mi
 }
 
 
-// mode: false=normal, true=special(write track, etc. cares 'F5' and 'F6')
+/**
+ * @brief Encode a byte with MFM. 
+ * 
+ * @param data Data to encode.
+ * @param mode Encoding mode (true: cares FD179x/MB8877 compatible special codes ($f5, $f6) and generates a data with missing-clock pattern)
+ * @return uint16_t Encoded bit pattern data.
+ */
 uint16_t mfm_codec::mfm_encoder(uint8_t data, bool mode) {
     // Data swap for special code
     uint8_t write_data = data;
@@ -270,8 +326,14 @@ uint16_t mfm_codec::mfm_encoder(uint8_t data, bool mode) {
     return mfm_bit_pattern;
 }
 
-// mode: false=normal, true=special(write track, etc)
-// write_gate: true=perform actual write false=dummy write (no actual write will be perfored)
+
+/**
+ * @brief Write a byte to the track bit array data with MFM encoding.
+ * 
+ * @param data Data to write to the track buffer.
+ * @param mode Encoding mode (true: cares FD179x/MB8877 compatible special codes ($f5, $f6) and generates a data with missing-clock pattern)
+ * @param write_gate Write gate (true:perform actual write, false:dummy write (no actual write will be perfored. buffer pointer will be increased))
+ */
 void mfm_codec::mfm_write_byte(uint8_t data, bool mode, bool write_gate) {
     if (is_track_ready() == false) {
         return;
@@ -293,6 +355,11 @@ void mfm_codec::mfm_write_byte(uint8_t data, bool mode, bool write_gate) {
     }
 }
 
+/**
+ * @brief Set stream read/write position
+ * 
+ * @param bit_pos New position (units=bits).
+ */
 void mfm_codec::set_pos(size_t bit_pos) {
     if (is_track_ready() == false) {
         return;
@@ -300,6 +367,11 @@ void mfm_codec::set_pos(size_t bit_pos) {
     m_track.set_stream_pos(bit_pos);
 }
 
+/**
+ * @brief Get current read/write position
+ * 
+ * @return size_t Current position (unit=bits).
+ */
 size_t mfm_codec::get_pos(void) {
     if (is_track_ready() == false) {
         return -1;
@@ -307,13 +379,24 @@ size_t mfm_codec::get_pos(void) {
     return m_track.get_stream_pos();
 }
 
-
+/**
+ * @brief Enable data separator fluctuator.
+ *        Data separator has feature to introduce a little uncertainty to reproduce time sensitive copy protect data which relies on the ambiguity of the bit pattern.
+ *        PLL will skip working at the rate of (numerator/denominator). If you set it 1/4, the PLL works at rate of 3/4 and stop at rate of 1/4.
+ * 
+ * @param numerator Numerator to define fluctuate rate.
+ * @param denominator Denominator to define fluctuate rate.
+ */
 void mfm_codec::enable_fluctuator(size_t numerator, size_t denominator) {
     m_fluctuation = true;
     m_fluctuator_numerator = numerator;
     m_fluctuator_denominator = denominator;
 }
 
+/**
+ * @brief Disable data separator fluctuator.
+ * 
+ */
 void mfm_codec::disable_fluctuator(void) {
     m_fluctuation = false;
 }
