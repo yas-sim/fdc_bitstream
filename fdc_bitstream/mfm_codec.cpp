@@ -22,18 +22,35 @@ mfm_codec::mfm_codec() : m_bit_stream(0),
     update_parameters();
 };
 
-void mfm_codec::update_parameters(void) {
-    m_bit_cell_size = m_sampling_rate / m_data_bit_rate;
-    m_data_window_size = m_bit_cell_size / 2;
-    if (m_data_window_size == 0) {          // Avoid m_data_window_size==0 situation
-        m_data_window_size = 1;
+/**
+*   012345678
+*   | WWWW  |
+*     <-->    Window size
+*   <->       Window ofst
+*   <------>  Cell size
+*/
+void mfm_codec::set_cell_size(double cell_size) {
+    m_bit_cell_size = cell_size;
+    m_data_window_size = cell_size / 2.f;
+    if (m_data_window_size < 0.5f) {          // Avoid too narrow m_data_window_size situation
+        m_data_window_size = 0.5f;
     }
-    m_data_window_ofst = m_bit_cell_size / 4;
+    m_data_window_ofst = cell_size / 4.f;
 #ifdef DEBUG
     std::cout << "Bit cell size:" << m_bit_cell_size << std::endl;
     std::cout << "Data window size:" << m_data_window_size << std::endl;
     std::cout << "Data window offset:" << m_data_window_ofst << std::endl;
 #endif
+}
+
+
+/**
+* Update data cell parameters
+*/
+void mfm_codec::update_parameters(void) {
+    double cell_size = m_sampling_rate / m_data_bit_rate;
+    m_bit_cell_size_ref = cell_size;
+    set_cell_size(cell_size);
 }
 
 void mfm_codec::set_data_bit_rate(size_t data_bit_rate) {
@@ -60,7 +77,7 @@ void mfm_codec::set_sampling_rate(size_t sampling_rate) {
 //
 int mfm_codec::read_bit_ds(void) {
     int bit_reading = 0;
-    size_t cell_center = m_data_window_ofst + m_data_window_size / 2;
+    double cell_center;
     do {
         // check if the next bit is within the next data window
         if (m_distance_to_next_pulse < m_bit_cell_size) {
@@ -79,18 +96,18 @@ int mfm_codec::read_bit_ds(void) {
             // adjust pulse phase (imitate PLL operation)
             // limit the PLL operation frequency and introduce fluctuation with the random generator (certain fluctuation is required to reproduce some copy protection)
             if (m_fluctuation == false || m_rnd() % m_fluctuator_denominator >= m_fluctuator_numerator) {
-                if (m_distance_to_next_pulse < cell_center) {
-                    m_distance_to_next_pulse++;
-#ifdef DEBUG
-                    std::cout << '+';
-#endif
-                }
-                else if (m_distance_to_next_pulse > cell_center) {
-                    m_distance_to_next_pulse--;
-#ifdef DEBUG
-                    std::cout << '-';
-#endif
-                }
+                cell_center = m_data_window_ofst + m_data_window_size / 2.f;
+                double error = m_distance_to_next_pulse - cell_center;
+
+                // data pulse position adjustment == phase correction
+                m_distance_to_next_pulse -= error * 0.5;
+
+                // cell size adjustment == frequency correction
+                double new_cell_size = m_bit_cell_size + error * 0.1f;
+                // limit the range of cell size fluctuation
+                if (new_cell_size < m_bit_cell_size_ref * 0.8) new_cell_size = m_bit_cell_size_ref * 0.8;
+                if (new_cell_size > m_bit_cell_size_ref * 1.2) new_cell_size = m_bit_cell_size_ref * 1.2;
+                set_cell_size(new_cell_size);
             }
             size_t distance = m_track.distance_to_next_bit1();
 #if 0

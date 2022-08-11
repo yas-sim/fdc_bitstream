@@ -70,7 +70,8 @@ int main(void)
 
     // Set fluctuation parameters for COROCORO protect
     fdc3.set_raw_track_data(tdata);
-    fdc3.enable_fluctuator(3, 5);
+    fdc3.enable_fluctuator(1, 5);
+    //fdc3.disable_fluctuator();
 
     std::cout << "Track dump" << std::endl;
     std::vector<uint8_t> track3 = fdc3.read_track();
@@ -91,7 +92,7 @@ int main(void)
     std::cout << std::endl;
 #endif
 
-#if 1
+#if 0
     std::cout << "\nWrite track, write sector, read sector test" << std::endl;
     fdc_bitstream fdc4;
     bit_array track_b4;
@@ -131,7 +132,7 @@ int main(void)
 #endif
 
 
-#if 1
+#if 0
     std::cout << "\nWrite track - full format test" << std::endl;
     fdc_bitstream fdc5;
     bit_array track_write_data5;
