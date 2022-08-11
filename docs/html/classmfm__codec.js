@@ -11,6 +11,7 @@ var classmfm__codec =
     [ "mfm_read_byte", "classmfm__codec.html#aeff11e279de2d4eeea8366d01facb41b", null ],
     [ "mfm_write_byte", "classmfm__codec.html#a6ac57dc1c37a2395d264659f805caf39", null ],
     [ "read_bit_ds", "classmfm__codec.html#a04e612265044876b9af9216696fdcb99", null ],
+    [ "set_cell_size", "classmfm__codec.html#a1109ffec6b08d54ea56c3d643e41293d", null ],
     [ "set_data_bit_rate", "classmfm__codec.html#a0ada66863916cc19444c518b1f02c830", null ],
     [ "set_pos", "classmfm__codec.html#a2e63b88fd758f365e1882b13a7839a9b", null ],
     [ "set_sampling_rate", "classmfm__codec.html#ae74cc02cf1995d77a4fb4239448ff548", null ],
