@@ -21,6 +21,7 @@
 */
 fdc_bitstream::fdc_bitstream() : m_state(fdc_state::IDLE), m_sampling_rate(4e6), m_data_bit_rate(500e3) {
     m_crcgen.reset();
+    m_codec.reset();
     set_fdc_params(m_sampling_rate, m_data_bit_rate);
 
     m_rand_engine = std::default_random_engine(std::default_random_engine());

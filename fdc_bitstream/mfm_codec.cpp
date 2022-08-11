@@ -3,24 +3,48 @@
 #include "mfm_codec.h"
 
 
+
+mfm_codec::mfm_codec() : m_bit_stream(0),
+        m_sync_mode(false), m_wraparound(false),
+        m_prev_write_bit(0),
+        m_sampling_rate(4e6), m_data_bit_rate(500e3),
+        m_fluctuation(false), m_fluctuator_numerator(1), m_fluctuator_denominator(1),
+        m_track_ready(false),
+        m_pll_gain(1.f)
+{
+    update_parameters();
+}
+
+void mfm_codec::reset(void) {
+    m_sampling_rate = 4e6;
+    m_data_bit_rate = 500e3;
+    update_parameters();
+    m_prev_write_bit = 0;
+    m_sync_mode = false;
+    clear_wraparound();
+    m_fluctuation = false;
+    m_fluctuator_numerator = 1;
+    m_fluctuator_denominator = 1;
+    m_track.clear_array();
+    m_track_ready = false;
+    m_pll_gain = 1.f;
+}
+
 void mfm_codec::set_track_data(bit_array track) {
     m_track = track;
     m_track.set_stream_pos(0);
     m_track.clear_wraparound_flag();
+    m_track_ready = true;
+}
+
+void mfm_codec::unset_track_data(void) {
+    m_track.clear_wraparound_flag();
+    m_track_ready = false;
 }
 
 //inline bool is_wraparound(void) { return m_wraparound; }
 //inline void clear_wraparound(void) { m_wraparound = false; }
 //inline size_t get_track_length(void) { return m_track.get_length(); }       // unit = bit
-
-mfm_codec::mfm_codec() : m_bit_stream(0),
-    m_sync_mode(false), m_wraparound(false),
-    m_prev_write_bit(0),
-    m_sampling_rate(4e6), m_data_bit_rate(500e3),
-    m_fluctuation(false), m_fluctuator_numerator(1), m_fluctuator_denominator(1)
-{
-    update_parameters();
-};
 
 /**
 *   012345678
@@ -78,6 +102,11 @@ void mfm_codec::set_sampling_rate(size_t sampling_rate) {
 int mfm_codec::read_bit_ds(void) {
     int bit_reading = 0;
     double cell_center;
+
+    if (is_track_ready() == false) {
+        return -1;
+    }
+
     do {
         // check if the next bit is within the next data window
         if (m_distance_to_next_pulse < m_bit_cell_size) {
@@ -93,18 +122,18 @@ int mfm_codec::read_bit_ds(void) {
                 std::cout << '?';
 #endif
             }
-            // adjust pulse phase (imitate PLL operation)
-            // limit the PLL operation frequency and introduce fluctuation with the random generator (certain fluctuation is required to reproduce some copy protection)
+            // Adjust pulse phase (imitate PLL operation)
+            // Limit the PLL operation frequency and introduce fluctuation with the random generator (certain fluctuation is required to reproduce some copy protection)
             if (m_fluctuation == false || m_rnd() % m_fluctuator_denominator >= m_fluctuator_numerator) {
                 cell_center = m_data_window_ofst + m_data_window_size / 2.f;
                 double error = m_distance_to_next_pulse - cell_center;
 
-                // data pulse position adjustment == phase correction
-                m_distance_to_next_pulse -= error * 0.5;
+                // Data pulse position adjustment == phase correction
+                m_distance_to_next_pulse -= error * 0.05f * m_pll_gain;
 
-                // cell size adjustment == frequency correction
-                double new_cell_size = m_bit_cell_size + error * 0.1f;
-                // limit the range of cell size fluctuation
+                // Cell size adjustment == frequency correction
+                double new_cell_size = m_bit_cell_size + error * 0.01f * m_pll_gain;
+                // Limit the range of cell size
                 if (new_cell_size < m_bit_cell_size_ref * 0.8) new_cell_size = m_bit_cell_size_ref * 0.8;
                 if (new_cell_size > m_bit_cell_size_ref * 1.2) new_cell_size = m_bit_cell_size_ref * 1.2;
                 set_cell_size(new_cell_size);
@@ -130,15 +159,35 @@ int mfm_codec::read_bit_ds(void) {
     return bit_reading;
 }
 
+/**
+* Set PLL gain in the data separator
+* Default = 1.0f.
+* @param[in] gain Gain value for the PLL (value in double type).
+*/
+void mfm_codec::set_gain(double gain) {
+    if (gain <= 0.f) gain = 0.01f;
+    if (gain > 100.f) gain = 100.f;
+    m_pll_gain = gain;
+}
 
 
 // ----------------------------------------------------------------
 
 
-
-void mfm_codec::mfm_read_byte(uint8_t& data, bool& missing_clock, bool ignore_missing_clock, bool ignore_sync_field) {
+/**
+* Read 1 byte from track buffer
+* @return bool Error status - true : track_data is not set.
+*/
+bool mfm_codec::mfm_read_byte(uint8_t& data, bool& missing_clock, bool ignore_missing_clock, bool ignore_sync_field) {
     size_t decode_count = 0;
     missing_clock = false;
+
+    if (is_track_ready() == false) {
+        data = 0;
+        missing_clock = false;
+        return false;
+    }
+
     do {
         int bit_data = read_bit_ds();
         if (m_track.is_wraparound()) {
@@ -151,31 +200,33 @@ void mfm_codec::mfm_read_byte(uint8_t& data, bool& missing_clock, bool ignore_mi
             if ((m_bit_stream & 0x0ffffu) == m_missing_clock_a1) {      // Missing clock 0xA1 pattern
                 data = 0xa1;
                 missing_clock = true;
-                return;
+                return true;
             }
             if ((m_bit_stream & 0x0ffffu) == m_missing_clock_c2) {       // Missing clock 0xC2 pattern
                 data = 0xc2;
                 missing_clock = true;
-                return;
+                return true;
             }
         }
-        if (ignore_sync_field) {
+        if (ignore_sync_field == false) {
             if (m_bit_stream == m_pattern_00) {
-                m_sync_mode = true;
+                decode_count &= ~0b01u;                                 // C/D synchronize
+                set_gain(10.f);
             }
             else {
-                m_sync_mode = false;
+                set_gain(1.f);
             }
         }
     } while (++decode_count < 16);
-    uint8_t read_data = 0;
+
     // Extract only 'D' bits (exclude 'C' bits). MFM data is 'CDCDCDCD..CD'.
+    uint8_t read_data = 0;
     for (uint16_t bit_pos = 0x4000; bit_pos > 0; bit_pos >>= 2) {
         read_data = (read_data << 1) | (m_bit_stream & bit_pos ? 1 : 0);
     }
     data = read_data;
     missing_clock = false;
-    return;
+    return true;
 }
 
 
@@ -222,6 +273,9 @@ uint16_t mfm_codec::mfm_encoder(uint8_t data, bool mode) {
 // mode: false=normal, true=special(write track, etc)
 // write_gate: true=perform actual write false=dummy write (no actual write will be perfored)
 void mfm_codec::mfm_write_byte(uint8_t data, bool mode, bool write_gate) {
+    if (is_track_ready() == false) {
+        return;
+    }
     uint16_t bit_pattern = mfm_encoder(data, mode);
     for (uint16_t bit_pos = 0x8000; bit_pos != 0; bit_pos >>= 1) {
         int bit = bit_pattern & bit_pos ? 1 : 0;
@@ -240,10 +294,16 @@ void mfm_codec::mfm_write_byte(uint8_t data, bool mode, bool write_gate) {
 }
 
 void mfm_codec::set_pos(size_t bit_pos) {
+    if (is_track_ready() == false) {
+        return;
+    }
     m_track.set_stream_pos(bit_pos);
 }
 
 size_t mfm_codec::get_pos(void) {
+    if (is_track_ready() == false) {
+        return -1;
+    }
     return m_track.get_stream_pos();
 }
 

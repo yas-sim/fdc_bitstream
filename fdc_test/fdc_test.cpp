@@ -92,7 +92,7 @@ int main(void)
     std::cout << std::endl;
 #endif
 
-#if 0
+#if 1
     std::cout << "\nWrite track, write sector, read sector test" << std::endl;
     fdc_bitstream fdc4;
     bit_array track_b4;
@@ -132,7 +132,7 @@ int main(void)
 #endif
 
 
-#if 0
+#if 1
     std::cout << "\nWrite track - full format test" << std::endl;
     fdc_bitstream fdc5;
     bit_array track_write_data5;
