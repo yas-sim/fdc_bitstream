@@ -240,6 +240,7 @@ bool mfm_codec::mfm_read_byte(uint8_t& data, bool& missing_clock, bool ignore_mi
 
     do {
         int bit_data = read_bit_ds();
+        decode_count++;
         if (m_track.is_wraparound()) {
             m_track.clear_wraparound_flag();
             m_wraparound = true;
@@ -267,7 +268,7 @@ bool mfm_codec::mfm_read_byte(uint8_t& data, bool& missing_clock, bool ignore_mi
                 set_gain(1.f);
             }
         }
-    } while (++decode_count < 16);
+    } while (decode_count < 16);
 
     // Extract only 'D' bits (exclude 'C' bits). MFM data is 'CDCDCDCD..CD'.
     uint8_t read_data = 0;

@@ -133,7 +133,7 @@ int main(void)
 
 
 #if 1
-    std::cout << "\nWrite track - full format test" << std::endl;
+    std::cout << "\nFormat test - format (track write), write all sectors, and read all sectors" << std::endl;
     fdc_bitstream fdc5;
     bit_array track_write_data5;
     track_write_data5.clear_array();
