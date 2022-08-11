@@ -30,9 +30,9 @@ var NAVTREE =
         [ "Supported functions:", "md__r_e_a_d_m_e.html#autotoc_md2", null ],
         [ "Supported floppy disk image formats:", "md__r_e_a_d_m_e.html#autotoc_md3", null ]
       ] ],
-      [ "API Document", "md__r_e_a_d_m_e.html#autotoc_md4", [
-        [ "MFM image data format:", "md__r_e_a_d_m_e.html#autotoc_md5", null ]
-      ] ]
+      [ "API Document", "md__r_e_a_d_m_e.html#autotoc_md4", null ],
+      [ "HFE to MFM format converter", "md__r_e_a_d_m_e.html#autotoc_md5", null ],
+      [ "MFM image data format:", "md__r_e_a_d_m_e.html#autotoc_md6", null ]
     ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
@@ -59,7 +59,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"structpictrack__.html"
+"structpicfileformatheader__.html#aff10abd83080f8136c77e2b0a5146a16"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
