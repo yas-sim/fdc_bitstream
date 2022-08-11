@@ -1,5 +1,8 @@
 var NAVTREEINDEX1 =
 {
+"structpicfileformatheader__.html#ad1372ac30d1b7744cf495ce59e370bb0":[1,0,9,9],
+"structpicfileformatheader__.html#af22d5c3d29006b1db5261f74308fad93":[1,0,9,8],
+"structpicfileformatheader__.html#afc596c1b379470682d21fa505bba2235":[1,0,9,0],
 "structpicfileformatheader__.html#aff10abd83080f8136c77e2b0a5146a16":[1,0,9,6],
 "structpictrack__.html":[1,0,10],
 "structpictrack__.html#a568b91983596d07addf3fe543a27765c":[1,0,10,0],
