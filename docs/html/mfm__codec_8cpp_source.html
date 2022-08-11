@@ -257,130 +257,131 @@ $(document).ready(function(){initNavTree('mfm__codec_8cpp_source.html',''); init
 <div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span> </div>
 <div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>    <span class="keywordflow">do</span> {</div>
 <div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>        <span class="keywordtype">int</span> bit_data = <a class="code hl_function" href="classmfm__codec.html#a04e612265044876b9af9216696fdcb99">read_bit_ds</a>();</div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>        <span class="keywordflow">if</span> (m_track.<a class="code hl_function" href="classbit__array.html#ac546e6382350c7885aedc0e710ef46ae">is_wraparound</a>()) {</div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>            m_track.<a class="code hl_function" href="classbit__array.html#a095ab4d72a708ca8016cdcb8d29fbdb2">clear_wraparound_flag</a>();</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>            m_wraparound = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>        }</div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>        m_bit_stream = (m_bit_stream &lt;&lt; 1) | bit_data;</div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span> </div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>        <span class="keywordflow">if</span> (ignore_missing_clock == <span class="keyword">false</span>) {</div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>            <span class="keywordflow">if</span> ((m_bit_stream &amp; 0x0ffffu) == m_missing_clock_a1) {      <span class="comment">// Missing clock 0xA1 pattern</span></div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>                data = 0xa1;</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>                missing_clock = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>            }</div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>            <span class="keywordflow">if</span> ((m_bit_stream &amp; 0x0ffffu) == m_missing_clock_c2) {       <span class="comment">// Missing clock 0xC2 pattern</span></div>
-<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>                data = 0xc2;</div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>                missing_clock = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>            }</div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>        }</div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>        <span class="keywordflow">if</span> (ignore_sync_field == <span class="keyword">false</span>) {</div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>            <span class="keywordflow">if</span> (m_bit_stream == m_pattern_00) {</div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>                decode_count &amp;= ~0b01u;                                 <span class="comment">// C/D synchronize</span></div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>                <a class="code hl_function" href="classmfm__codec.html#a9ed71c91fd40465e9e485ca856f714fd">set_gain</a>(10.f);</div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>            }</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>            <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>                <a class="code hl_function" href="classmfm__codec.html#a9ed71c91fd40465e9e485ca856f714fd">set_gain</a>(1.f);</div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>            }</div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>        }</div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>    } <span class="keywordflow">while</span> (++decode_count &lt; 16);</div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span> </div>
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>    <span class="comment">// Extract only &#39;D&#39; bits (exclude &#39;C&#39; bits). MFM data is &#39;CDCDCDCD..CD&#39;.</span></div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>    uint8_t read_data = 0;</div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>    <span class="keywordflow">for</span> (uint16_t bit_pos = 0x4000; bit_pos &gt; 0; bit_pos &gt;&gt;= 2) {</div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>        read_data = (read_data &lt;&lt; 1) | (m_bit_stream &amp; bit_pos ? 1 : 0);</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>    }</div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>    data = read_data;</div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>    missing_clock = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>}</div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span> </div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>        decode_count++;</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>        <span class="keywordflow">if</span> (m_track.<a class="code hl_function" href="classbit__array.html#ac546e6382350c7885aedc0e710ef46ae">is_wraparound</a>()) {</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>            m_track.<a class="code hl_function" href="classbit__array.html#a095ab4d72a708ca8016cdcb8d29fbdb2">clear_wraparound_flag</a>();</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>            m_wraparound = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>        }</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>        m_bit_stream = (m_bit_stream &lt;&lt; 1) | bit_data;</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span> </div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>        <span class="keywordflow">if</span> (ignore_missing_clock == <span class="keyword">false</span>) {</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>            <span class="keywordflow">if</span> ((m_bit_stream &amp; 0x0ffffu) == m_missing_clock_a1) {      <span class="comment">// Missing clock 0xA1 pattern</span></div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>                data = 0xa1;</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>                missing_clock = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>            }</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>            <span class="keywordflow">if</span> ((m_bit_stream &amp; 0x0ffffu) == m_missing_clock_c2) {       <span class="comment">// Missing clock 0xC2 pattern</span></div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>                data = 0xc2;</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>                missing_clock = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>            }</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>        }</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>        <span class="keywordflow">if</span> (ignore_sync_field == <span class="keyword">false</span>) {</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>            <span class="keywordflow">if</span> (m_bit_stream == m_pattern_00) {</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>                decode_count &amp;= ~0b01u;                                 <span class="comment">// C/D synchronize</span></div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>                <a class="code hl_function" href="classmfm__codec.html#a9ed71c91fd40465e9e485ca856f714fd">set_gain</a>(10.f);</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>            }</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>            <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>                <a class="code hl_function" href="classmfm__codec.html#a9ed71c91fd40465e9e485ca856f714fd">set_gain</a>(1.f);</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>            }</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>        }</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>    } <span class="keywordflow">while</span> (decode_count &lt; 16);</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span> </div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>    <span class="comment">// Extract only &#39;D&#39; bits (exclude &#39;C&#39; bits). MFM data is &#39;CDCDCDCD..CD&#39;.</span></div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>    uint8_t read_data = 0;</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>    <span class="keywordflow">for</span> (uint16_t bit_pos = 0x4000; bit_pos &gt; 0; bit_pos &gt;&gt;= 2) {</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>        read_data = (read_data &lt;&lt; 1) | (m_bit_stream &amp; bit_pos ? 1 : 0);</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>    }</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>    data = read_data;</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>    missing_clock = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>}</div>
 <div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span> </div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno"><a class="line" href="classmfm__codec.html#aa58bc9489d1fee68770f021dd4d4d4e6">  290</a></span>uint16_t <a class="code hl_function" href="classmfm__codec.html#aa58bc9489d1fee68770f021dd4d4d4e6">mfm_codec::mfm_encoder</a>(uint8_t data, <span class="keywordtype">bool</span> mode) {</div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>    <span class="comment">// Data swap for special code</span></div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>    uint8_t write_data = data;</div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>    <span class="keywordflow">if</span> (mode == <span class="keyword">true</span>) { <span class="comment">// special coding mode (F5 and F6 will be converted to A1* C2* with missing-clock pattern respectively)</span></div>
-<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>        <span class="keywordflow">switch</span> (data) {</div>
-<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>        <span class="keywordflow">case</span> 0xf5:</div>
-<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>            write_data = 0xa1;</div>
-<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>            <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>        <span class="keywordflow">case</span> 0xf6:</div>
-<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>            write_data = 0xc2;</div>
-<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>            <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>        }</div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>    }</div>
-<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>    <span class="comment">// MFM encoding</span></div>
-<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>    uint16_t bit_pattern = 0;</div>
-<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>    uint16_t mfm_bit_pattern = 0;</div>
-<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>    <span class="keywordtype">int</span> current_bit;</div>
-<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>    <span class="keywordtype">int</span> clock_bit;</div>
-<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> bit_pos = 0x80; bit_pos != 0; bit_pos &gt;&gt;= 1) {</div>
-<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>        current_bit = (write_data &amp; bit_pos) ? 1 : 0;</div>
-<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>        clock_bit = (m_prev_write_bit == 0 &amp;&amp; current_bit == 0) ? 1 : 0;</div>
-<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>        mfm_bit_pattern = (mfm_bit_pattern &lt;&lt; 1) | clock_bit;                 <span class="comment">// clock</span></div>
-<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>        mfm_bit_pattern = (mfm_bit_pattern &lt;&lt; 1) | current_bit;               <span class="comment">// data</span></div>
-<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>        m_prev_write_bit = current_bit;</div>
-<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>    }</div>
-<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>    <span class="comment">// Missing clock operation</span></div>
-<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>    <span class="keywordflow">if</span> (mode == <span class="keyword">true</span>) {</div>
-<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>        <span class="keywordflow">switch</span> (data) {</div>
-<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>        <span class="keywordflow">case</span> 0xf5:</div>
-<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>            mfm_bit_pattern &amp;= ~0b100000u;              <span class="comment">// remove a clock bit</span></div>
-<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>            <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>        <span class="keywordflow">case</span> 0xf6:</div>
-<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>            mfm_bit_pattern &amp;= ~0b10000000u;            <span class="comment">// remove a clock bit</span></div>
-<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>            <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>        }</div>
-<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>    }</div>
-<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>    <span class="keywordflow">return</span> mfm_bit_pattern;</div>
-<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>}</div>
-<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span> </div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span> </div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno"><a class="line" href="classmfm__codec.html#aa58bc9489d1fee68770f021dd4d4d4e6">  291</a></span>uint16_t <a class="code hl_function" href="classmfm__codec.html#aa58bc9489d1fee68770f021dd4d4d4e6">mfm_codec::mfm_encoder</a>(uint8_t data, <span class="keywordtype">bool</span> mode) {</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>    <span class="comment">// Data swap for special code</span></div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>    uint8_t write_data = data;</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>    <span class="keywordflow">if</span> (mode == <span class="keyword">true</span>) { <span class="comment">// special coding mode (F5 and F6 will be converted to A1* C2* with missing-clock pattern respectively)</span></div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>        <span class="keywordflow">switch</span> (data) {</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>        <span class="keywordflow">case</span> 0xf5:</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>            write_data = 0xa1;</div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>            <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>        <span class="keywordflow">case</span> 0xf6:</div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>            write_data = 0xc2;</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>            <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>        }</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>    }</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>    <span class="comment">// MFM encoding</span></div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>    uint16_t bit_pattern = 0;</div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>    uint16_t mfm_bit_pattern = 0;</div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>    <span class="keywordtype">int</span> current_bit;</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>    <span class="keywordtype">int</span> clock_bit;</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> bit_pos = 0x80; bit_pos != 0; bit_pos &gt;&gt;= 1) {</div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>        current_bit = (write_data &amp; bit_pos) ? 1 : 0;</div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>        clock_bit = (m_prev_write_bit == 0 &amp;&amp; current_bit == 0) ? 1 : 0;</div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>        mfm_bit_pattern = (mfm_bit_pattern &lt;&lt; 1) | clock_bit;                 <span class="comment">// clock</span></div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>        mfm_bit_pattern = (mfm_bit_pattern &lt;&lt; 1) | current_bit;               <span class="comment">// data</span></div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>        m_prev_write_bit = current_bit;</div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>    }</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>    <span class="comment">// Missing clock operation</span></div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>    <span class="keywordflow">if</span> (mode == <span class="keyword">true</span>) {</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>        <span class="keywordflow">switch</span> (data) {</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>        <span class="keywordflow">case</span> 0xf5:</div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>            mfm_bit_pattern &amp;= ~0b100000u;              <span class="comment">// remove a clock bit</span></div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>            <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>        <span class="keywordflow">case</span> 0xf6:</div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>            mfm_bit_pattern &amp;= ~0b10000000u;            <span class="comment">// remove a clock bit</span></div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>            <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>        }</div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>    }</div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>    <span class="keywordflow">return</span> mfm_bit_pattern;</div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>}</div>
 <div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span> </div>
-<div class="line"><a id="l00337" name="l00337"></a><span class="lineno"><a class="line" href="classmfm__codec.html#a6ac57dc1c37a2395d264659f805caf39">  337</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classmfm__codec.html#a6ac57dc1c37a2395d264659f805caf39">mfm_codec::mfm_write_byte</a>(uint8_t data, <span class="keywordtype">bool</span> mode, <span class="keywordtype">bool</span> write_gate) {</div>
-<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="classmfm__codec.html#a9909a5a02033c1a682e3170059ac2772">is_track_ready</a>() == <span class="keyword">false</span>) {</div>
-<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>        <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>    }</div>
-<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>    uint16_t bit_pattern = <a class="code hl_function" href="classmfm__codec.html#aa58bc9489d1fee68770f021dd4d4d4e6">mfm_encoder</a>(data, mode);</div>
-<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>    <span class="keywordflow">for</span> (uint16_t bit_pos = 0x8000; bit_pos != 0; bit_pos &gt;&gt;= 1) {</div>
-<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span>        <span class="keywordtype">int</span> bit = bit_pattern &amp; bit_pos ? 1 : 0;</div>
-<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span>        <span class="keywordflow">if</span> (write_gate == <span class="keyword">true</span>) {</div>
-<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; m_bit_width; i++) {</div>
-<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>                <span class="keywordflow">if</span> (m_bit_width / 2 == i)   m_track.<a class="code hl_function" href="classbit__array.html#a1577b2e386cc49de345d52c31e28b834">write_stream</a>(bit);    <span class="comment">// write data pulse at the center of the bit cell</span></div>
-<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>                <span class="keywordflow">else</span>                     m_track.<a class="code hl_function" href="classbit__array.html#a1577b2e386cc49de345d52c31e28b834">write_stream</a>(0);</div>
-<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>            }</div>
-<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>        }</div>
-<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>        <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; m_bit_width; i++) {</div>
-<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>                m_track.<a class="code hl_function" href="classbit__array.html#a4d9be589626877b42ac820f55796783b">advance_stream_pos</a>();                          <span class="comment">// advance stream pointer without actual data write (dummy write)</span></div>
-<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>            }</div>
-<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>        }</div>
-<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>    }</div>
-<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>}</div>
-<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span> </div>
-<div class="line"><a id="l00363" name="l00363"></a><span class="lineno"><a class="line" href="classmfm__codec.html#a2e63b88fd758f365e1882b13a7839a9b">  363</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classmfm__codec.html#a2e63b88fd758f365e1882b13a7839a9b">mfm_codec::set_pos</a>(<span class="keywordtype">size_t</span> bit_pos) {</div>
-<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="classmfm__codec.html#a9909a5a02033c1a682e3170059ac2772">is_track_ready</a>() == <span class="keyword">false</span>) {</div>
-<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span>        <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>    }</div>
-<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>    m_track.<a class="code hl_function" href="classbit__array.html#a3ad614e1d9ffc090c78be08b14373b2b">set_stream_pos</a>(bit_pos);</div>
-<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>}</div>
-<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span> </div>
-<div class="line"><a id="l00375" name="l00375"></a><span class="lineno"><a class="line" href="classmfm__codec.html#a20a1c5d9ae9c86c8d7c6d3a37def6b6c">  375</a></span><span class="keywordtype">size_t</span> <a class="code hl_function" href="classmfm__codec.html#a20a1c5d9ae9c86c8d7c6d3a37def6b6c">mfm_codec::get_pos</a>(<span class="keywordtype">void</span>) {</div>
-<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="classmfm__codec.html#a9909a5a02033c1a682e3170059ac2772">is_track_ready</a>() == <span class="keyword">false</span>) {</div>
-<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>        <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>    }</div>
-<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>    <span class="keywordflow">return</span> m_track.<a class="code hl_function" href="classbit__array.html#a1b837b6185d4a9f20b2643347c4a7233">get_stream_pos</a>();</div>
-<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>}</div>
-<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span> </div>
-<div class="line"><a id="l00390" name="l00390"></a><span class="lineno"><a class="line" href="classmfm__codec.html#aee9a740c5f3c16a9f4be58111cbd80c0">  390</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classmfm__codec.html#aee9a740c5f3c16a9f4be58111cbd80c0">mfm_codec::enable_fluctuator</a>(<span class="keywordtype">size_t</span> numerator, <span class="keywordtype">size_t</span> denominator) {</div>
-<div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span>    m_fluctuation = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span>    m_fluctuator_numerator = numerator;</div>
-<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span>    m_fluctuator_denominator = denominator;</div>
-<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span>}</div>
-<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span> </div>
-<div class="line"><a id="l00400" name="l00400"></a><span class="lineno"><a class="line" href="classmfm__codec.html#a6e8a09604245fb10c7ab0dd49dc1ffa1">  400</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classmfm__codec.html#a6e8a09604245fb10c7ab0dd49dc1ffa1">mfm_codec::disable_fluctuator</a>(<span class="keywordtype">void</span>) {</div>
-<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>    m_fluctuation = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>}</div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span> </div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno"><a class="line" href="classmfm__codec.html#a6ac57dc1c37a2395d264659f805caf39">  338</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classmfm__codec.html#a6ac57dc1c37a2395d264659f805caf39">mfm_codec::mfm_write_byte</a>(uint8_t data, <span class="keywordtype">bool</span> mode, <span class="keywordtype">bool</span> write_gate) {</div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="classmfm__codec.html#a9909a5a02033c1a682e3170059ac2772">is_track_ready</a>() == <span class="keyword">false</span>) {</div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>        <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>    }</div>
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>    uint16_t bit_pattern = <a class="code hl_function" href="classmfm__codec.html#aa58bc9489d1fee68770f021dd4d4d4e6">mfm_encoder</a>(data, mode);</div>
+<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span>    <span class="keywordflow">for</span> (uint16_t bit_pos = 0x8000; bit_pos != 0; bit_pos &gt;&gt;= 1) {</div>
+<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span>        <span class="keywordtype">int</span> bit = bit_pattern &amp; bit_pos ? 1 : 0;</div>
+<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>        <span class="keywordflow">if</span> (write_gate == <span class="keyword">true</span>) {</div>
+<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; m_bit_width; i++) {</div>
+<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>                <span class="keywordflow">if</span> (m_bit_width / 2 == i)   m_track.<a class="code hl_function" href="classbit__array.html#a1577b2e386cc49de345d52c31e28b834">write_stream</a>(bit);    <span class="comment">// write data pulse at the center of the bit cell</span></div>
+<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>                <span class="keywordflow">else</span>                     m_track.<a class="code hl_function" href="classbit__array.html#a1577b2e386cc49de345d52c31e28b834">write_stream</a>(0);</div>
+<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>            }</div>
+<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>        }</div>
+<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>        <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; m_bit_width; i++) {</div>
+<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>                m_track.<a class="code hl_function" href="classbit__array.html#a4d9be589626877b42ac820f55796783b">advance_stream_pos</a>();                          <span class="comment">// advance stream pointer without actual data write (dummy write)</span></div>
+<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>            }</div>
+<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>        }</div>
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>    }</div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>}</div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span> </div>
+<div class="line"><a id="l00364" name="l00364"></a><span class="lineno"><a class="line" href="classmfm__codec.html#a2e63b88fd758f365e1882b13a7839a9b">  364</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classmfm__codec.html#a2e63b88fd758f365e1882b13a7839a9b">mfm_codec::set_pos</a>(<span class="keywordtype">size_t</span> bit_pos) {</div>
+<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="classmfm__codec.html#a9909a5a02033c1a682e3170059ac2772">is_track_ready</a>() == <span class="keyword">false</span>) {</div>
+<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>        <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>    }</div>
+<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>    m_track.<a class="code hl_function" href="classbit__array.html#a3ad614e1d9ffc090c78be08b14373b2b">set_stream_pos</a>(bit_pos);</div>
+<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>}</div>
+<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span> </div>
+<div class="line"><a id="l00376" name="l00376"></a><span class="lineno"><a class="line" href="classmfm__codec.html#a20a1c5d9ae9c86c8d7c6d3a37def6b6c">  376</a></span><span class="keywordtype">size_t</span> <a class="code hl_function" href="classmfm__codec.html#a20a1c5d9ae9c86c8d7c6d3a37def6b6c">mfm_codec::get_pos</a>(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="classmfm__codec.html#a9909a5a02033c1a682e3170059ac2772">is_track_ready</a>() == <span class="keyword">false</span>) {</div>
+<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>        <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>    }</div>
+<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>    <span class="keywordflow">return</span> m_track.<a class="code hl_function" href="classbit__array.html#a1b837b6185d4a9f20b2643347c4a7233">get_stream_pos</a>();</div>
+<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>}</div>
+<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span> </div>
+<div class="line"><a id="l00391" name="l00391"></a><span class="lineno"><a class="line" href="classmfm__codec.html#aee9a740c5f3c16a9f4be58111cbd80c0">  391</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classmfm__codec.html#aee9a740c5f3c16a9f4be58111cbd80c0">mfm_codec::enable_fluctuator</a>(<span class="keywordtype">size_t</span> numerator, <span class="keywordtype">size_t</span> denominator) {</div>
+<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span>    m_fluctuation = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span>    m_fluctuator_numerator = numerator;</div>
+<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span>    m_fluctuator_denominator = denominator;</div>
+<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>}</div>
+<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span> </div>
+<div class="line"><a id="l00401" name="l00401"></a><span class="lineno"><a class="line" href="classmfm__codec.html#a6e8a09604245fb10c7ab0dd49dc1ffa1">  401</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classmfm__codec.html#a6e8a09604245fb10c7ab0dd49dc1ffa1">mfm_codec::disable_fluctuator</a>(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>    m_fluctuation = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span>}</div>
 <div class="ttc" id="aclassbit__array_html"><div class="ttname"><a href="classbit__array.html">bit_array</a></div><div class="ttdef"><b>Definition:</b> <a href="bit__array_8h_source.html#l00008">bit_array.h:9</a></div></div>
 <div class="ttc" id="aclassbit__array_html_a095ab4d72a708ca8016cdcb8d29fbdb2"><div class="ttname"><a href="classbit__array.html#a095ab4d72a708ca8016cdcb8d29fbdb2">bit_array::clear_wraparound_flag</a></div><div class="ttdeci">void clear_wraparound_flag(void)</div><div class="ttdef"><b>Definition:</b> <a href="bit__array_8h_source.html#l00030">bit_array.h:30</a></div></div>
 <div class="ttc" id="aclassbit__array_html_a1577b2e386cc49de345d52c31e28b834"><div class="ttname"><a href="classbit__array.html#a1577b2e386cc49de345d52c31e28b834">bit_array::write_stream</a></div><div class="ttdeci">void write_stream(uint8_t value, bool elastic=false)</div><div class="ttdoc">Write a bit data sequentially (stream mode)</div><div class="ttdef"><b>Definition:</b> <a href="bit__array_8cpp_source.html#l00164">bit_array.cpp:164</a></div></div>
@@ -395,19 +396,19 @@ $(document).ready(function(){initNavTree('mfm__codec_8cpp_source.html',''); init
 <div class="ttc" id="aclassmfm__codec_html_a1109ffec6b08d54ea56c3d643e41293d"><div class="ttname"><a href="classmfm__codec.html#a1109ffec6b08d54ea56c3d643e41293d">mfm_codec::set_cell_size</a></div><div class="ttdeci">void set_cell_size(double cell_size)</div><div class="ttdoc">Set new bit cell size. 012345678 | WWWW | &lt;--&gt; Window size &lt;-&gt; Window ofst &lt;---—&gt; Cell size.</div><div class="ttdef"><b>Definition:</b> <a href="mfm__codec_8cpp_source.html#l00082">mfm_codec.cpp:82</a></div></div>
 <div class="ttc" id="aclassmfm__codec_html_a18b20e6cc0489df636cc7118243570ec"><div class="ttname"><a href="classmfm__codec.html#a18b20e6cc0489df636cc7118243570ec">mfm_codec::mfm_codec</a></div><div class="ttdeci">mfm_codec()</div><div class="ttdoc">Construct a new mfm codec::mfm codec object.</div><div class="ttdef"><b>Definition:</b> <a href="mfm__codec_8cpp_source.html#l00015">mfm_codec.cpp:15</a></div></div>
 <div class="ttc" id="aclassmfm__codec_html_a1e71d92dfcbb6624e8a96847625f0755"><div class="ttname"><a href="classmfm__codec.html#a1e71d92dfcbb6624e8a96847625f0755">mfm_codec::unset_track_data</a></div><div class="ttdeci">void unset_track_data(void)</div><div class="ttdoc">Unset track data. Track data will be marked as unavailable. You need to set another track bit array d...</div><div class="ttdef"><b>Definition:</b> <a href="mfm__codec_8cpp_source.html#l00063">mfm_codec.cpp:63</a></div></div>
-<div class="ttc" id="aclassmfm__codec_html_a20a1c5d9ae9c86c8d7c6d3a37def6b6c"><div class="ttname"><a href="classmfm__codec.html#a20a1c5d9ae9c86c8d7c6d3a37def6b6c">mfm_codec::get_pos</a></div><div class="ttdeci">size_t get_pos(void)</div><div class="ttdoc">Get current read/write position.</div><div class="ttdef"><b>Definition:</b> <a href="mfm__codec_8cpp_source.html#l00375">mfm_codec.cpp:375</a></div></div>
-<div class="ttc" id="aclassmfm__codec_html_a2e63b88fd758f365e1882b13a7839a9b"><div class="ttname"><a href="classmfm__codec.html#a2e63b88fd758f365e1882b13a7839a9b">mfm_codec::set_pos</a></div><div class="ttdeci">void set_pos(size_t bit_pos)</div><div class="ttdoc">Set stream read/write position.</div><div class="ttdef"><b>Definition:</b> <a href="mfm__codec_8cpp_source.html#l00363">mfm_codec.cpp:363</a></div></div>
+<div class="ttc" id="aclassmfm__codec_html_a20a1c5d9ae9c86c8d7c6d3a37def6b6c"><div class="ttname"><a href="classmfm__codec.html#a20a1c5d9ae9c86c8d7c6d3a37def6b6c">mfm_codec::get_pos</a></div><div class="ttdeci">size_t get_pos(void)</div><div class="ttdoc">Get current read/write position.</div><div class="ttdef"><b>Definition:</b> <a href="mfm__codec_8cpp_source.html#l00376">mfm_codec.cpp:376</a></div></div>
+<div class="ttc" id="aclassmfm__codec_html_a2e63b88fd758f365e1882b13a7839a9b"><div class="ttname"><a href="classmfm__codec.html#a2e63b88fd758f365e1882b13a7839a9b">mfm_codec::set_pos</a></div><div class="ttdeci">void set_pos(size_t bit_pos)</div><div class="ttdoc">Set stream read/write position.</div><div class="ttdef"><b>Definition:</b> <a href="mfm__codec_8cpp_source.html#l00364">mfm_codec.cpp:364</a></div></div>
 <div class="ttc" id="aclassmfm__codec_html_a40e88ddbea86a9f619834f173c95755f"><div class="ttname"><a href="classmfm__codec.html#a40e88ddbea86a9f619834f173c95755f">mfm_codec::set_track_data</a></div><div class="ttdeci">void set_track_data(bit_array track)</div><div class="ttdoc">Set a new track data.</div><div class="ttdef"><b>Definition:</b> <a href="mfm__codec_8cpp_source.html#l00052">mfm_codec.cpp:52</a></div></div>
-<div class="ttc" id="aclassmfm__codec_html_a6ac57dc1c37a2395d264659f805caf39"><div class="ttname"><a href="classmfm__codec.html#a6ac57dc1c37a2395d264659f805caf39">mfm_codec::mfm_write_byte</a></div><div class="ttdeci">void mfm_write_byte(uint8_t data, bool mode=false, bool write_gate=true)</div><div class="ttdoc">Write a byte to the track bit array data with MFM encoding.</div><div class="ttdef"><b>Definition:</b> <a href="mfm__codec_8cpp_source.html#l00337">mfm_codec.cpp:337</a></div></div>
-<div class="ttc" id="aclassmfm__codec_html_a6e8a09604245fb10c7ab0dd49dc1ffa1"><div class="ttname"><a href="classmfm__codec.html#a6e8a09604245fb10c7ab0dd49dc1ffa1">mfm_codec::disable_fluctuator</a></div><div class="ttdeci">void disable_fluctuator(void)</div><div class="ttdoc">Disable data separator fluctuator.</div><div class="ttdef"><b>Definition:</b> <a href="mfm__codec_8cpp_source.html#l00400">mfm_codec.cpp:400</a></div></div>
+<div class="ttc" id="aclassmfm__codec_html_a6ac57dc1c37a2395d264659f805caf39"><div class="ttname"><a href="classmfm__codec.html#a6ac57dc1c37a2395d264659f805caf39">mfm_codec::mfm_write_byte</a></div><div class="ttdeci">void mfm_write_byte(uint8_t data, bool mode=false, bool write_gate=true)</div><div class="ttdoc">Write a byte to the track bit array data with MFM encoding.</div><div class="ttdef"><b>Definition:</b> <a href="mfm__codec_8cpp_source.html#l00338">mfm_codec.cpp:338</a></div></div>
+<div class="ttc" id="aclassmfm__codec_html_a6e8a09604245fb10c7ab0dd49dc1ffa1"><div class="ttname"><a href="classmfm__codec.html#a6e8a09604245fb10c7ab0dd49dc1ffa1">mfm_codec::disable_fluctuator</a></div><div class="ttdeci">void disable_fluctuator(void)</div><div class="ttdoc">Disable data separator fluctuator.</div><div class="ttdef"><b>Definition:</b> <a href="mfm__codec_8cpp_source.html#l00401">mfm_codec.cpp:401</a></div></div>
 <div class="ttc" id="aclassmfm__codec_html_a9909a5a02033c1a682e3170059ac2772"><div class="ttname"><a href="classmfm__codec.html#a9909a5a02033c1a682e3170059ac2772">mfm_codec::is_track_ready</a></div><div class="ttdeci">bool is_track_ready(void)</div><div class="ttdef"><b>Definition:</b> <a href="mfm__codec_8h_source.html#l00053">mfm_codec.h:53</a></div></div>
 <div class="ttc" id="aclassmfm__codec_html_a9ed71c91fd40465e9e485ca856f714fd"><div class="ttname"><a href="classmfm__codec.html#a9ed71c91fd40465e9e485ca856f714fd">mfm_codec::set_gain</a></div><div class="ttdeci">void set_gain(double gain)</div><div class="ttdoc">Set gain for the PLL in the data separator.</div><div class="ttdef"><b>Definition:</b> <a href="mfm__codec_8cpp_source.html#l00211">mfm_codec.cpp:211</a></div></div>
 <div class="ttc" id="aclassmfm__codec_html_aa4483dff3a6830326ee2214aeeea9286"><div class="ttname"><a href="classmfm__codec.html#aa4483dff3a6830326ee2214aeeea9286">mfm_codec::reset</a></div><div class="ttdeci">void reset(void)</div><div class="ttdoc">Reset MFM decoder parameters.</div><div class="ttdef"><b>Definition:</b> <a href="mfm__codec_8cpp_source.html#l00032">mfm_codec.cpp:32</a></div></div>
-<div class="ttc" id="aclassmfm__codec_html_aa58bc9489d1fee68770f021dd4d4d4e6"><div class="ttname"><a href="classmfm__codec.html#aa58bc9489d1fee68770f021dd4d4d4e6">mfm_codec::mfm_encoder</a></div><div class="ttdeci">uint16_t mfm_encoder(uint8_t data, bool mode=false)</div><div class="ttdoc">Encode a byte with MFM.</div><div class="ttdef"><b>Definition:</b> <a href="mfm__codec_8cpp_source.html#l00290">mfm_codec.cpp:290</a></div></div>
+<div class="ttc" id="aclassmfm__codec_html_aa58bc9489d1fee68770f021dd4d4d4e6"><div class="ttname"><a href="classmfm__codec.html#aa58bc9489d1fee68770f021dd4d4d4e6">mfm_codec::mfm_encoder</a></div><div class="ttdeci">uint16_t mfm_encoder(uint8_t data, bool mode=false)</div><div class="ttdoc">Encode a byte with MFM.</div><div class="ttdef"><b>Definition:</b> <a href="mfm__codec_8cpp_source.html#l00291">mfm_codec.cpp:291</a></div></div>
 <div class="ttc" id="aclassmfm__codec_html_ab9e990407f98e4f7fe1f13d814d1757d"><div class="ttname"><a href="classmfm__codec.html#ab9e990407f98e4f7fe1f13d814d1757d">mfm_codec::update_parameters</a></div><div class="ttdeci">void update_parameters(void)</div><div class="ttdoc">Update data cell parameters.</div><div class="ttdef"><b>Definition:</b> <a href="mfm__codec_8cpp_source.html#l00101">mfm_codec.cpp:101</a></div></div>
 <div class="ttc" id="aclassmfm__codec_html_ada5e869f03f20757a9d75c91c3eaa382"><div class="ttname"><a href="classmfm__codec.html#ada5e869f03f20757a9d75c91c3eaa382">mfm_codec::clear_wraparound</a></div><div class="ttdeci">void clear_wraparound(void)</div><div class="ttdef"><b>Definition:</b> <a href="mfm__codec_8h_source.html#l00056">mfm_codec.h:56</a></div></div>
 <div class="ttc" id="aclassmfm__codec_html_ae74cc02cf1995d77a4fb4239448ff548"><div class="ttname"><a href="classmfm__codec.html#ae74cc02cf1995d77a4fb4239448ff548">mfm_codec::set_sampling_rate</a></div><div class="ttdeci">void set_sampling_rate(size_t sampling_rate)</div><div class="ttdoc">Set new sampling rate for the bit array buffer.</div><div class="ttdef"><b>Definition:</b> <a href="mfm__codec_8cpp_source.html#l00122">mfm_codec.cpp:122</a></div></div>
-<div class="ttc" id="aclassmfm__codec_html_aee9a740c5f3c16a9f4be58111cbd80c0"><div class="ttname"><a href="classmfm__codec.html#aee9a740c5f3c16a9f4be58111cbd80c0">mfm_codec::enable_fluctuator</a></div><div class="ttdeci">void enable_fluctuator(size_t numerator, size_t denominator)</div><div class="ttdoc">Enable data separator fluctuator. Data separator has feature to introduce a little uncertainty to rep...</div><div class="ttdef"><b>Definition:</b> <a href="mfm__codec_8cpp_source.html#l00390">mfm_codec.cpp:390</a></div></div>
+<div class="ttc" id="aclassmfm__codec_html_aee9a740c5f3c16a9f4be58111cbd80c0"><div class="ttname"><a href="classmfm__codec.html#aee9a740c5f3c16a9f4be58111cbd80c0">mfm_codec::enable_fluctuator</a></div><div class="ttdeci">void enable_fluctuator(size_t numerator, size_t denominator)</div><div class="ttdoc">Enable data separator fluctuator. Data separator has feature to introduce a little uncertainty to rep...</div><div class="ttdef"><b>Definition:</b> <a href="mfm__codec_8cpp_source.html#l00391">mfm_codec.cpp:391</a></div></div>
 <div class="ttc" id="aclassmfm__codec_html_afb3614a444293ecf43de800cb2198a46"><div class="ttname"><a href="classmfm__codec.html#afb3614a444293ecf43de800cb2198a46">mfm_codec::mfm_read_byte</a></div><div class="ttdeci">bool mfm_read_byte(uint8_t &amp;data, bool &amp;missing_clock, bool ignore_missing_clock=true, bool ignore_sync_field=true)</div><div class="ttdoc">Read 1 byte from track buffer.</div><div class="ttdef"><b>Definition:</b> <a href="mfm__codec_8cpp_source.html#l00231">mfm_codec.cpp:231</a></div></div>
 <div class="ttc" id="amfm__codec_8h_html"><div class="ttname"><a href="mfm__codec_8h.html">mfm_codec.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
