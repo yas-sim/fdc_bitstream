@@ -6,10 +6,12 @@ var searchData=
   ['set_5fcell_5fsize_3',['set_cell_size',['../classmfm__codec.html#a1109ffec6b08d54ea56c3d643e41293d',1,'mfm_codec']]],
   ['set_5fdata_5fbit_5frate_4',['set_data_bit_rate',['../classmfm__codec.html#a0ada66863916cc19444c518b1f02c830',1,'mfm_codec']]],
   ['set_5ffdc_5fparams_5',['set_fdc_params',['../classfdc__bitstream.html#a0007d69b882edc1b3dfb3522328539c8',1,'fdc_bitstream']]],
-  ['set_5fpos_6',['set_pos',['../classfdc__bitstream.html#a028dd1120ce703253589a87186ec5ec3',1,'fdc_bitstream::set_pos()'],['../classmfm__codec.html#a2e63b88fd758f365e1882b13a7839a9b',1,'mfm_codec::set_pos()']]],
-  ['set_5fraw_5ftrack_5fdata_7',['set_raw_track_data',['../classfdc__bitstream.html#a046af10f7edf26a372da3009946a5810',1,'fdc_bitstream']]],
-  ['set_5fsampling_5frate_8',['set_sampling_rate',['../classmfm__codec.html#ae74cc02cf1995d77a4fb4239448ff548',1,'mfm_codec']]],
-  ['set_5fstream_5fpos_9',['set_stream_pos',['../classbit__array.html#a3ad614e1d9ffc090c78be08b14373b2b',1,'bit_array']]],
-  ['set_5ftrack_5fdata_10',['set_track_data',['../classmfm__codec.html#a40e88ddbea86a9f619834f173c95755f',1,'mfm_codec']]],
-  ['size_11',['size',['../classbit__array.html#a4dcea898e5a2ac7a36ac7bde6091f229',1,'bit_array']]]
+  ['set_5fgain_6',['set_gain',['../classmfm__codec.html#a9ed71c91fd40465e9e485ca856f714fd',1,'mfm_codec']]],
+  ['set_5fpos_7',['set_pos',['../classfdc__bitstream.html#a028dd1120ce703253589a87186ec5ec3',1,'fdc_bitstream::set_pos()'],['../classmfm__codec.html#a2e63b88fd758f365e1882b13a7839a9b',1,'mfm_codec::set_pos()']]],
+  ['set_5fraw_5ftrack_5fdata_8',['set_raw_track_data',['../classfdc__bitstream.html#a046af10f7edf26a372da3009946a5810',1,'fdc_bitstream']]],
+  ['set_5fsampling_5frate_9',['set_sampling_rate',['../classmfm__codec.html#ae74cc02cf1995d77a4fb4239448ff548',1,'mfm_codec']]],
+  ['set_5fstream_5fpos_10',['set_stream_pos',['../classbit__array.html#a3ad614e1d9ffc090c78be08b14373b2b',1,'bit_array']]],
+  ['set_5fsync_5fmode_11',['set_sync_mode',['../classmfm__codec.html#aaf6250f7080cbe158a4aea6a959f1f67',1,'mfm_codec']]],
+  ['set_5ftrack_5fdata_12',['set_track_data',['../classmfm__codec.html#a40e88ddbea86a9f619834f173c95755f',1,'mfm_codec']]],
+  ['size_13',['size',['../classbit__array.html#a4dcea898e5a2ac7a36ac7bde6091f229',1,'bit_array']]]
 ];

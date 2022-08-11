@@ -14,7 +14,7 @@ var searchData=
   ['mfm_5fencoder_11',['mfm_encoder',['../classmfm__codec.html#aa58bc9489d1fee68770f021dd4d4d4e6',1,'mfm_codec']]],
   ['mfm_5fheader_12',['mfm_header',['../image__mfm_8h.html#a90f2ec7a1a69ca8722734c45a6947cbf',1,'image_mfm.h']]],
   ['mfm_5fheader_5f_13',['mfm_header_',['../structmfm__header__.html',1,'']]],
-  ['mfm_5fread_5fbyte_14',['mfm_read_byte',['../classmfm__codec.html#aeff11e279de2d4eeea8366d01facb41b',1,'mfm_codec']]],
+  ['mfm_5fread_5fbyte_14',['mfm_read_byte',['../classmfm__codec.html#afb3614a444293ecf43de800cb2198a46',1,'mfm_codec']]],
   ['mfm_5ftrack_5ftable_15',['mfm_track_table',['../image__mfm_8h.html#afe0080f4421adf258cde0137128f8049',1,'image_mfm.h']]],
   ['mfm_5fwrite_5fbyte_16',['mfm_write_byte',['../classmfm__codec.html#a6ac57dc1c37a2395d264659f805caf39',1,'mfm_codec']]],
   ['msx2_5fdd_5ffloppymode_17',['MSX2_DD_FLOPPYMODE',['../image__hfe_8h.html#afda37dcef662538819b81c4ff563ae7fa05eb31694faa95d62b14f1aa23b6e95f',1,'image_hfe.h']]]

@@ -96,6 +96,8 @@ $(document).ready(function(){initNavTree('classmfm__codec.html',''); initResizab
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a18b20e6cc0489df636cc7118243570ec"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmfm__codec.html#a18b20e6cc0489df636cc7118243570ec">mfm_codec</a> ()</td></tr>
 <tr class="separator:a18b20e6cc0489df636cc7118243570ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4483dff3a6830326ee2214aeeea9286"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmfm__codec.html#aa4483dff3a6830326ee2214aeeea9286">reset</a> (void)</td></tr>
+<tr class="separator:aa4483dff3a6830326ee2214aeeea9286"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1109ffec6b08d54ea56c3d643e41293d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmfm__codec.html#a1109ffec6b08d54ea56c3d643e41293d">set_cell_size</a> (double cell_size)</td></tr>
 <tr class="separator:a1109ffec6b08d54ea56c3d643e41293d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab9e990407f98e4f7fe1f13d814d1757d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmfm__codec.html#ab9e990407f98e4f7fe1f13d814d1757d">update_parameters</a> (void)</td></tr>
@@ -106,6 +108,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae74cc02cf1995d77a4fb4239448ff548"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a40e88ddbea86a9f619834f173c95755f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmfm__codec.html#a40e88ddbea86a9f619834f173c95755f">set_track_data</a> (<a class="el" href="classbit__array.html">bit_array</a> track)</td></tr>
 <tr class="separator:a40e88ddbea86a9f619834f173c95755f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e71d92dfcbb6624e8a96847625f0755"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmfm__codec.html#a1e71d92dfcbb6624e8a96847625f0755">unset_track_data</a> (void)</td></tr>
+<tr class="separator:a1e71d92dfcbb6624e8a96847625f0755"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9909a5a02033c1a682e3170059ac2772"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmfm__codec.html#a9909a5a02033c1a682e3170059ac2772">is_track_ready</a> (void)</td></tr>
+<tr class="separator:a9909a5a02033c1a682e3170059ac2772"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ade7ff8918720b6269ece33c6f7807c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmfm__codec.html#a3ade7ff8918720b6269ece33c6f7807c">is_wraparound</a> (void)</td></tr>
 <tr class="separator:a3ade7ff8918720b6269ece33c6f7807c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada5e869f03f20757a9d75c91c3eaa382"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmfm__codec.html#ada5e869f03f20757a9d75c91c3eaa382">clear_wraparound</a> (void)</td></tr>
@@ -114,8 +120,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae6c1802f180e9db776c345ccc96a98ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a04e612265044876b9af9216696fdcb99"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmfm__codec.html#a04e612265044876b9af9216696fdcb99">read_bit_ds</a> (void)</td></tr>
 <tr class="separator:a04e612265044876b9af9216696fdcb99"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeff11e279de2d4eeea8366d01facb41b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmfm__codec.html#aeff11e279de2d4eeea8366d01facb41b">mfm_read_byte</a> (uint8_t &amp;data, bool &amp;missing_clock, bool ignore_missing_clock=true, bool ignore_sync_field=true)</td></tr>
-<tr class="separator:aeff11e279de2d4eeea8366d01facb41b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb3614a444293ecf43de800cb2198a46"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmfm__codec.html#afb3614a444293ecf43de800cb2198a46">mfm_read_byte</a> (uint8_t &amp;data, bool &amp;missing_clock, bool ignore_missing_clock=true, bool ignore_sync_field=true)</td></tr>
+<tr class="separator:afb3614a444293ecf43de800cb2198a46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ed71c91fd40465e9e485ca856f714fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmfm__codec.html#a9ed71c91fd40465e9e485ca856f714fd">set_gain</a> (double gain)</td></tr>
+<tr class="separator:a9ed71c91fd40465e9e485ca856f714fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa58bc9489d1fee68770f021dd4d4d4e6"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmfm__codec.html#aa58bc9489d1fee68770f021dd4d4d4e6">mfm_encoder</a> (uint8_t data, bool mode=false)</td></tr>
 <tr class="separator:aa58bc9489d1fee68770f021dd4d4d4e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6ac57dc1c37a2395d264659f805caf39"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmfm__codec.html#a6ac57dc1c37a2395d264659f805caf39">mfm_write_byte</a> (uint8_t data, bool mode=false, bool write_gate=true)</td></tr>
@@ -124,6 +132,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a2e63b88fd758f365e1882b13a7839a9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a20a1c5d9ae9c86c8d7c6d3a37def6b6c"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmfm__codec.html#a20a1c5d9ae9c86c8d7c6d3a37def6b6c">get_pos</a> (void)</td></tr>
 <tr class="separator:a20a1c5d9ae9c86c8d7c6d3a37def6b6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e4002d3d156c205177e4c880ab7cfbd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmfm__codec.html#a8e4002d3d156c205177e4c880ab7cfbd">reset_sync_mode</a> (void)</td></tr>
+<tr class="separator:a8e4002d3d156c205177e4c880ab7cfbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf6250f7080cbe158a4aea6a959f1f67"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmfm__codec.html#aaf6250f7080cbe158a4aea6a959f1f67">set_sync_mode</a> (bool sync_mode)</td></tr>
+<tr class="separator:aaf6250f7080cbe158a4aea6a959f1f67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee9a740c5f3c16a9f4be58111cbd80c0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmfm__codec.html#aee9a740c5f3c16a9f4be58111cbd80c0">enable_fluctuator</a> (size_t numerator, size_t denominator)</td></tr>
 <tr class="separator:aee9a740c5f3c16a9f4be58111cbd80c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e8a09604245fb10c7ab0dd49dc1ffa1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmfm__codec.html#a6e8a09604245fb10c7ab0dd49dc1ffa1">disable_fluctuator</a> (void)</td></tr>
@@ -148,7 +160,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00016">16</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00007">7</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
 
 </div>
 </div>
@@ -177,7 +189,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mfm__codec_8h_source.html#l00052">52</a> of file <a class="el" href="mfm__codec_8h_source.html">mfm_codec.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8h_source.html#l00056">56</a> of file <a class="el" href="mfm__codec_8h_source.html">mfm_codec.h</a>.</p>
 
 </div>
 </div>
@@ -197,7 +209,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00257">257</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00317">317</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
 
 </div>
 </div>
@@ -227,7 +239,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00251">251</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00311">311</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
 
 </div>
 </div>
@@ -247,7 +259,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00246">246</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00303">303</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
 
 </div>
 </div>
@@ -262,6 +274,34 @@ Public Member Functions</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">size_t mfm_codec::get_track_length </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8h_source.html#l00057">57</a> of file <a class="el" href="mfm__codec_8h_source.html">mfm_codec.h</a>.</p>
+
+</div>
+</div>
+<a id="a9909a5a02033c1a682e3170059ac2772" name="a9909a5a02033c1a682e3170059ac2772"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9909a5a02033c1a682e3170059ac2772">&#9670;&nbsp;</a></span>is_track_ready()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mfm_codec::is_track_ready </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -303,7 +343,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mfm__codec_8h_source.html#l00051">51</a> of file <a class="el" href="mfm__codec_8h_source.html">mfm_codec.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8h_source.html#l00055">55</a> of file <a class="el" href="mfm__codec_8h_source.html">mfm_codec.h</a>.</p>
 
 </div>
 </div>
@@ -333,18 +373,18 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00183">183</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00234">234</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
 
 </div>
 </div>
-<a id="aeff11e279de2d4eeea8366d01facb41b" name="aeff11e279de2d4eeea8366d01facb41b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeff11e279de2d4eeea8366d01facb41b">&#9670;&nbsp;</a></span>mfm_read_byte()</h2>
+<a id="afb3614a444293ecf43de800cb2198a46" name="afb3614a444293ecf43de800cb2198a46"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb3614a444293ecf43de800cb2198a46">&#9670;&nbsp;</a></span>mfm_read_byte()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void mfm_codec::mfm_read_byte </td>
+          <td class="memname">bool mfm_codec::mfm_read_byte </td>
           <td>(</td>
           <td class="paramtype">uint8_t &amp;&#160;</td>
           <td class="paramname"><em>data</em>, </td>
@@ -374,8 +414,9 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p >Read 1 byte from track buffer </p><dl class="section return"><dt>Returns</dt><dd>bool Error status - true : track_data is not set. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00139">139</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00181">181</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
 
 </div>
 </div>
@@ -411,7 +452,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00224">224</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00275">275</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
 
 </div>
 </div>
@@ -432,7 +473,55 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p >unit = bit </p>
 
-<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00078">78</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00102">102</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aa4483dff3a6830326ee2214aeeea9286" name="aa4483dff3a6830326ee2214aeeea9286"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4483dff3a6830326ee2214aeeea9286">&#9670;&nbsp;</a></span>reset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mfm_codec::reset </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00018">18</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a8e4002d3d156c205177e4c880ab7cfbd" name="a8e4002d3d156c205177e4c880ab7cfbd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e4002d3d156c205177e4c880ab7cfbd">&#9670;&nbsp;</a></span>reset_sync_mode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mfm_codec::reset_sync_mode </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8h_source.html#l00067">67</a> of file <a class="el" href="mfm__codec_8h_source.html">mfm_codec.h</a>.</p>
 
 </div>
 </div>
@@ -453,7 +542,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p >012345678 | WWWW | &lt;--&gt; Window size &lt;-&gt; Window ofst &lt;---&mdash;&gt; Cell size </p>
 
-<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00032">32</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00056">56</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
 
 </div>
 </div>
@@ -473,7 +562,33 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00056">56</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00080">80</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a9ed71c91fd40465e9e485ca856f714fd" name="a9ed71c91fd40465e9e485ca856f714fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ed71c91fd40465e9e485ca856f714fd">&#9670;&nbsp;</a></span>set_gain()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mfm_codec::set_gain </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>gain</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Set PLL gain in the data separator Default = 1.0f. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">gain</td><td>Gain value for the PLL (value in double type). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00167">167</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
 
 </div>
 </div>
@@ -493,7 +608,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00242">242</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00296">296</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
 
 </div>
 </div>
@@ -513,7 +628,35 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00061">61</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00085">85</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aaf6250f7080cbe158a4aea6a959f1f67" name="aaf6250f7080cbe158a4aea6a959f1f67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf6250f7080cbe158a4aea6a959f1f67">&#9670;&nbsp;</a></span>set_sync_mode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mfm_codec::set_sync_mode </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>sync_mode</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8h_source.html#l00068">68</a> of file <a class="el" href="mfm__codec_8h_source.html">mfm_codec.h</a>.</p>
 
 </div>
 </div>
@@ -533,7 +676,27 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00006">6</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00033">33</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a1e71d92dfcbb6624e8a96847625f0755" name="a1e71d92dfcbb6624e8a96847625f0755"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e71d92dfcbb6624e8a96847625f0755">&#9670;&nbsp;</a></span>unset_track_data()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mfm_codec::unset_track_data </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00040">40</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
 
 </div>
 </div>
@@ -554,7 +717,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p >Update data cell parameters </p>
 
-<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00050">50</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00074">74</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
 
 </div>
 </div>
