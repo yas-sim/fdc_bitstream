@@ -116,6 +116,28 @@ API Document</h1>
 </p>
 <h1><a class="anchor" id="autotoc_md5"></a>
 How to integrate the fdc_bitstream library with your program</h1>
+<ol type="1">
+<li>Required files <br  />
+</li>
+</ol>
+<ul>
+<li>Source codes: All C++ source codes are stored in the <code><a class="el" href="classfdc__bitstream.html">fdc_bitstream</a></code> directory. <br  />
+</li>
+<li>Header files: All C++ header files are stored in the <code>includes</code> directory.</li>
+</ul>
+<ol type="1">
+<li>Classes</li>
+</ol>
+<ul>
+<li>Use the <code><a class="el" href="classfdc__bitstream.html">fdc_bitstream</a></code> object to access to the track data.</li>
+<li>Track data is held in the <code><a class="el" href="classbit__array.html">bit_array</a></code> object. <br  />
+ &ndash; You can access the data with <em>bit address</em> with <code><a class="el" href="classbit__array.html">bit_array</a></code> object. &ndash; <code><a class="el" href="classbit__array.html">bit_array</a></code> object has an internal access pointer and provides streaming access. You can read and write bit data sequentially with the streaming functions. &ndash; You can choose two modes when you access by the streaming functions. One is ring-buffer mode, and the other one is elastic buffer mode. &ndash; In ring-buffer mode, you can access the bit data with the auto-increment pointer, and the pointer will go back to the top when it reaches the end of the buffer. <br  />
+ &ndash; In elastic buffer mode, the buffer will automatically extend as you write over the end of the buffer. <br  />
+<ul>
+<li>Use one of the <code>disk_image_???</code> function to read the disk image file. Supported formats are <code>HFE</code>, <code>MFM</code>, and <code>RAW</code> (<code>MFM</code> and <code>RAW</code> are my original format. It is not compatible any other existing disk formats which shares the same file extension).</li>
+</ul>
+</li>
+</ul>
 <h1><a class="anchor" id="autotoc_md6"></a>
 HFE to MFM format converter</h1>
 <p >This project also includes a <em>simple</em> disk image converter that takes an <code>*.HFE</code> disk image data and generates an <code>*.MFM</code> disk image data. <br  />
@@ -142,7 +164,8 @@ Directory structure</h1>
 </table>
 <h1><a class="anchor" id="autotoc_md8"></a>
 How to build the test program and HFE to MFM image converter</h1>
-<div class="fragment"><div class="line">mkdir build</div>
+<p >Build tested on Windows 11 (MSVC), and Linux (Ubuntu20, gcc). <br  />
+ </p><div class="fragment"><div class="line">mkdir build</div>
 <div class="line">cd build</div>
 <div class="line">cmake ..</div>
 <div class="line">cmake --build .</div>
