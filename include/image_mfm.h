@@ -10,6 +10,8 @@
 #define DLL_EXPORT
 #endif
 
+#include <string.h>
+
 #include "bit_array.h"
 #include "image_base.h"
 
