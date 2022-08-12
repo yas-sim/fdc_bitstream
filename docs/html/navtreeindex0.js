@@ -182,6 +182,7 @@ var NAVTREEINDEX0 =
 "hfe2mfm_8cpp.html":[3,0,2,0],
 "hfe2mfm_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97":[3,0,2,0,1],
 "hfe2mfm_8cpp.html#a4d0d0dda24e0e478a276b2bdf767cbb1":[3,0,2,0,0],
+"hfe2mfm_8cpp.html#a6a0e715c3ffeb178d7d8e0780da368f3":[3,0,2,0,2],
 "hfe2mfm_8cpp_source.html":[3,0,2,0],
 "hierarchy.html":[2,2],
 "image__base_8cpp.html":[3,0,0,3],
@@ -248,6 +249,5 @@ var NAVTREEINDEX0 =
 "mfm__codec_8cpp.html":[3,0,0,7],
 "mfm__codec_8cpp.html#ad5fba5f8a0abc32938852bcbf341340a":[3,0,0,7,0],
 "mfm__codec_8cpp_source.html":[3,0,0,7],
-"mfm__codec_8h.html":[3,0,3,9],
-"mfm__codec_8h.html#a1ca888bd091694c05472e1b91df1a97b":[3,0,3,9,1]
+"mfm__codec_8h.html":[3,0,3,9]
 };
