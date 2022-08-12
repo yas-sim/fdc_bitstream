@@ -12,6 +12,8 @@
 
 #include <vector>
 #include <random>
+#include <cstdint>
+#include <string.h>
 
 #include "fdc_crc.h"
 #include "mfm_codec.h"
@@ -86,7 +88,7 @@ public:
     inline void set_vfo_gain(double low, double high) { m_codec.set_vfo_gain(low, high); }
 
     void write_data(uint8_t data, bool mode = false, bool write_gate = true);
-    void fdc_bitstream::read_data(uint8_t& data, bool& missing_clock, bool ignore_missing_clock = true, bool ignore_sync_field = true);
+    void read_data(uint8_t& data, bool& missing_clock, bool ignore_missing_clock = true, bool ignore_sync_field = true);
 
     std::vector<uint8_t> read_track(void);
     void write_track(const std::vector<uint8_t>& track_buf);

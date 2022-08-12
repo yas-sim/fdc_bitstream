@@ -11,6 +11,8 @@
 #define DLL_BODY
 #include "bit_array.h"
 
+#include <string.h>
+
 /**
  * @brief Set a bit array data.
  * 

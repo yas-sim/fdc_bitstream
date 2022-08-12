@@ -10,6 +10,8 @@
 #define DLL_EXPORT
 #endif
 
+#include <cstdint>
+
 #include "fdc_defs.h"
 #include "bit_array.h"
 

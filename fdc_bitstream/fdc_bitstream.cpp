@@ -13,6 +13,8 @@
 #define DLL_BODY
 #include "fdc_bitstream.h"
 
+#include <string.h>
+
 //#define DEBUG
 
 /**
