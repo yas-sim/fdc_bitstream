@@ -25,6 +25,7 @@
 var NAVTREE =
 [
   [ "fdc_bitstream", "index.html", [
+    [ "LICENSE", "md__l_i_c_e_n_s_e.html", null ],
     [ "C++ FDC library to manipulate 2D/MFM bitstream image data", "md__r_e_a_d_m_e.html", [
       [ "Description:", "md__r_e_a_d_m_e.html#autotoc_md1", [
         [ "Supported functions:", "md__r_e_a_d_m_e.html#autotoc_md2", null ],
@@ -61,7 +62,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"structmfm__header__.html#a6d19b9bb46000bd8cd0213e5aa21a818"
+"structmfm__header__.html#a641f93ea8ca1bede95d1feb0c252c544"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
