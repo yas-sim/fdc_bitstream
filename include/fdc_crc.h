@@ -11,6 +11,7 @@
 #endif
 
 #include <vector>
+#include <cstdint>
 
 class DLL_EXPORT fdc_crc {
 private:
