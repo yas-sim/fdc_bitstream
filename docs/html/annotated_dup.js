@@ -2,6 +2,7 @@ var annotated_dup =
 [
     [ "bit_array", "classbit__array.html", "classbit__array" ],
     [ "disk_image", "classdisk__image.html", "classdisk__image" ],
+    [ "disk_image_exception", "classdisk__image__exception.html", "classdisk__image__exception" ],
     [ "disk_image_hfe", "classdisk__image__hfe.html", "classdisk__image__hfe" ],
     [ "disk_image_mfm", "classdisk__image__mfm.html", "classdisk__image__mfm" ],
     [ "disk_image_raw", "classdisk__image__raw.html", "classdisk__image__raw" ],

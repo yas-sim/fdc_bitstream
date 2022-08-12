@@ -7,7 +7,7 @@ var classbit__array =
     [ "distance_to_next_bit1", "classbit__array.html#af6253d04fc98807e18fa3035dbd4f44c", null ],
     [ "dump", "classbit__array.html#aa143fb112e7c08d70df3c8b541c6aa4c", null ],
     [ "fill_stream", "classbit__array.html#a36cdaff5e771ccbe45e63a691730ba12", null ],
-    [ "get", "classbit__array.html#ab3ca337f39213a0937dc83197c77bee3", null ],
+    [ "get", "classbit__array.html#ab0a6852f4343cbbde470f32ae3b782fa", null ],
     [ "get_array", "classbit__array.html#ad128443dccbe0421c00e56b9621913c9", null ],
     [ "get_length", "classbit__array.html#a776496ab38d2b76d33349868ce9557f2", null ],
     [ "get_stream_pos", "classbit__array.html#a1b837b6185d4a9f20b2643347c4a7233", null ],
