@@ -1,5 +1,15 @@
 #pragma once
 
+#ifdef _WIN32
+#ifdef DLL_BODY
+#define DLL_EXPORT  __declspec(dllexport)
+#else
+#define DLL_EXPORT  __declspec(dllimport)
+#endif
+#else
+#define DLL_EXPORT
+#endif
+
 #include <vector>
 #include <random>
 
@@ -8,7 +18,7 @@
 
 //#define DEBUG
 
-class fdc_bitstream {
+class DLL_EXPORT fdc_bitstream {
 private:
     /** 
      * FDC state machine status definition.

@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2022
  * 
  */
+#define DLL_BODY
 #include "image_hfe.h"
 
 void disk_image_hfe::read(std::string file_name) {

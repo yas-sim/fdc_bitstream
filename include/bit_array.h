@@ -1,11 +1,21 @@
 #pragma once
 
+#ifdef _WIN32
+#ifdef DLL_BODY
+#define DLL_EXPORT  __declspec(dllexport)
+#else
+#define DLL_EXPORT  __declspec(dllimport)
+#endif
+#else
+#define DLL_EXPORT
+#endif
+
 #include <vector>
 #include <string>
 #include <iostream>
 #include <fstream>
 
-class bit_array
+class DLL_EXPORT bit_array
 {
 private:
     std::vector<uint8_t>    m_array_data;

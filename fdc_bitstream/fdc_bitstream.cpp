@@ -10,9 +10,8 @@
 
 #include <vector>
 
+#define DLL_BODY
 #include "fdc_bitstream.h"
-//#include "fdc_crc.h"
-//#include "mfm_codec.h"
 
 //#define DEBUG
 

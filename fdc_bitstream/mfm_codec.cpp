@@ -8,6 +8,8 @@
  * @copyright Copyright (c) 2022
  */
 
+#define DLL_BODY
+
 #include "mfm_codec.h"
 
 /**

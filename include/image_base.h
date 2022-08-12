@@ -1,9 +1,19 @@
 #pragma once
 
+#ifdef _WIN32
+#ifdef DLL_BODY
+#define DLL_EXPORT  __declspec(dllexport)
+#else
+#define DLL_EXPORT  __declspec(dllimport)
+#endif
+#else
+#define DLL_EXPORT
+#endif
+
 #include "fdc_defs.h"
 #include "bit_array.h"
 
-class disk_image_exception {
+class DLL_EXPORT disk_image_exception {
 private:
     int m_error_code;
     std::string m_message;
@@ -13,7 +23,7 @@ public:
     std::string what(void) { return m_message; };
 };
 
-class disk_image {
+class DLL_EXPORT disk_image {
 private:
 protected:
     bool        m_track_data_is_set;            /** true=track data is set and ready */

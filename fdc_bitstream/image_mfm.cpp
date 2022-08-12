@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2022
  * 
  */
+#define DLL_BODY
 #include "image_mfm.h"
 
 void disk_image_mfm::read(std::string file_name) {

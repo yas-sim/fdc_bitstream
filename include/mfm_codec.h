@@ -1,5 +1,16 @@
 #pragma once
 
+#ifdef _WIN32
+
+#ifdef DLL_BODY
+#define DLL_EXPORT  __declspec(dllexport)
+#else
+#define DLL_EXPORT  __declspec(dllimport)
+#endif
+#else
+#define DLL_EXPORT
+#endif
+
 #include <vector>
 #include <random>
 
@@ -7,8 +18,7 @@
 
 //#define DEBUG
 
-
-class mfm_codec {
+class DLL_EXPORT mfm_codec {
 private:
     bit_array   m_track;
     bool        m_track_ready;

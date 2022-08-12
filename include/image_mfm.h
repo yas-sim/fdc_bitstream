@@ -1,5 +1,15 @@
 #pragma once
 
+#ifdef _WIN32
+#ifdef DLL_BODY
+#define DLL_EXPORT  __declspec(dllexport)
+#else
+#define DLL_EXPORT  __declspec(dllimport)
+#endif
+#else
+#define DLL_EXPORT
+#endif
+
 #include "bit_array.h"
 #include "image_base.h"
 
@@ -23,7 +33,7 @@ typedef struct track_table_ {
 //   ofst(byte) = track_table[track#].offset
 //   size(byte) = track_table[track#].length_bit/8 + (track_table[track#].length%8)?1:0)
 
-class disk_image_mfm : public disk_image {
+class DLL_EXPORT disk_image_mfm : public disk_image {
 private:
     mfm_header              m_header;
     mfm_track_table         m_track_table[84];
