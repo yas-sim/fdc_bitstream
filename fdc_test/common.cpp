@@ -75,3 +75,12 @@ void display_id_list(std::vector<fdc_bitstream::id_field> id_fields) {
     }
     std::cout.flags(flags_saved);
 }
+
+void repeat_data_generator(std::vector<std::pair<int, uint8_t>> inbuf, std::vector<uint8_t>& outbuf) {
+    for (auto it = inbuf.begin(); it != inbuf.end(); ++it) {
+        std::pair<int, uint8_t> dt = *it;
+        for (int i = 0; i < dt.first; i++) {
+            outbuf.push_back(dt.second);
+        }
+    }
+}

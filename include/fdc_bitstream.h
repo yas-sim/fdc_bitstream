@@ -1,9 +1,5 @@
 #pragma once
 
-/**
-* @file fdc_bitstream.h
-*/
-
 #include <vector>
 #include <random>
 
@@ -15,21 +11,21 @@
 class fdc_bitstream {
 private:
     /** 
-    * FDC state machine status definition.
-    */
+     * FDC state machine status definition.
+     */
     enum class fdc_state {
         IDLE = 0,
-        CHECK_MARK,                 /** Check special mark with missing clock pattern (A1/C2) */
-        READ_IDAM,                  /** Read ID address mark */
-        READ_SECT,                  /** Read Sector data */
-        OPERATION_COMPLETED         /** Read data completed  */
+        CHECK_MARK,                 // Check special mark with missing clock pattern (A1/C2)
+        READ_IDAM,                  // Read ID address mark
+        READ_SECT,                  // Read Sector data
+        OPERATION_COMPLETED         // Read data completed
     } m_state;
 
-    mfm_codec m_codec;              /** MFM codec object */
-    fdc_crc m_crcgen;               /** CRC generator object */
+    mfm_codec m_codec;              // MFM codec object
+    fdc_crc m_crcgen;               // CRC generator object
 
-    size_t m_sampling_rate;         /** Track data sampling rate [Hz] (4MHz == 4e6) */
-    size_t m_data_bit_rate;         /** FDC bit data rate [bit/sec] (2D/MFM == 500Kbit/sec == 5e3 */
+    size_t m_sampling_rate;         // Track data sampling rate [Hz] (4MHz == 4e6)
+    size_t m_data_bit_rate;         // FDC bit data rate [bit/sec] (2D/MFM == 500Kbit/sec == 5e3
 
     std::default_random_engine m_rand_engine;
     std::normal_distribution<> m_rand_dist;
@@ -49,8 +45,8 @@ public:
     };
 
     /** 
-    * Structure for sector data.
-    */
+     * Structure for sector data.
+     */
     struct sector_data {
         std::vector<uint8_t> data;
         bool        dam_type;      /** false:DAM, true : DDAM */
@@ -62,15 +58,22 @@ public:
 
     fdc_bitstream();
     void set_fdc_params(size_t sampling_rate, size_t data_bit_rate);
-    inline size_t get_track_length(void) { return m_codec.get_track_length(); }       /** unit = bit */
-    void set_raw_track_data(bit_array track_data);
+    /** unit = bit */
+    inline size_t get_track_length(void) { return m_codec.get_track_length(); }
+    void set_track_data(bit_array track_data);
+    bit_array get_track_data(void);
     void set_pos(size_t bit_pos);
     size_t get_pos(void);
     inline bool is_wraparound(void) { return m_codec.is_wraparound(); }
     inline void clear_wraparound(void) { m_codec.clear_wraparound(); }
 
-    inline void enable_fluctuator(size_t numerator, size_t denominator) { m_codec.enable_fluctuator(numerator, denominator); } /** Enable FDC read operation fluctuatior */
-    inline void disable_fluctuator(void) { m_codec.disable_fluctuator(); } /** Disable FDC read operation fluctuator */
+    /** Enable FDC read operation fluctuatior */
+    inline void enable_fluctuator(size_t numerator, size_t denominator) { m_codec.enable_fluctuator(numerator, denominator); }
+    /** Disable FDC read operation fluctuator */
+    inline void disable_fluctuator(void) { m_codec.disable_fluctuator(); }
+
+    /** Set VFO gain */
+    inline void set_vfo_gain(double low, double high) { m_codec.set_vfo_gain(low, high); }
 
     void write_data(uint8_t data, bool mode = false, bool write_gate = true);
     void fdc_bitstream::read_data(uint8_t& data, bool& missing_clock, bool ignore_missing_clock = true, bool ignore_sync_field = true);

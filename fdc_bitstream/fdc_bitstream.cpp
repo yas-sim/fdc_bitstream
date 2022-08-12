@@ -78,7 +78,6 @@ std::vector<uint8_t> fdc_bitstream::read_track(void) {
 */
 void fdc_bitstream::write_track(const std::vector<uint8_t>& track_buf) {
     uint16_t crc_val;
-    if (m_codec.is_track_ready() == false) return;
     for (auto it = track_buf.begin(); it != track_buf.end(); ++it) {
         uint8_t data = *it;
         switch (data) {
@@ -112,6 +111,7 @@ void fdc_bitstream::write_track(const std::vector<uint8_t>& track_buf) {
             break;
         }
     }
+    m_codec.set_track_status_forcibly(true);
 }
 
 /**
@@ -385,8 +385,17 @@ size_t fdc_bitstream::get_pos(void) {
 * @param[in] track_data New track data.
 * @return none
 */
-void fdc_bitstream::set_raw_track_data(bit_array track_data) {
+void fdc_bitstream::set_track_data(bit_array track_data) {
     m_codec.set_track_data(track_data);
+}
+
+/**
+* @brief Get the track data in bit_array.
+*
+* @return bit_array Track dta in bit_array.
+*/
+bit_array fdc_bitstream::get_track_data(void) {
+    return m_codec.get_track_data();
 }
 
 /**

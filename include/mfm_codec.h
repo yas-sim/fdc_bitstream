@@ -34,12 +34,15 @@ private:
     double      m_bit_cell_size     = 0.f;        // bit cell size in [bits] unit   (4MHz sample, 500Kbps bit rate, MFM = 4.0e6/500e3 = 8)
     double      m_bit_cell_size_ref = 0.f;
     double      m_distance_to_next_pulse = 0.f;
-    double      m_pll_gain          = 1.f;
+    double      m_vfo_gain_h        = 10.f;       // VFO gain for SYNC period
+    double      m_vfo_gain_l        = 1.f;        // VFO gain for period other than SYNC
+    double      m_vfo_gain          = 1.f;        // Current VFO gain
 
     bool        m_fluctuation = false;
     size_t      m_fluctuator_numerator = 1;
     size_t      m_fluctuator_denominator = 4;    // data separator fluctuation occur rate = numerator/denominator
     std::random_device m_rnd;
+
 public:
     mfm_codec();
     void reset(void);
@@ -49,8 +52,10 @@ public:
     void set_sampling_rate(size_t sampling_rate);
 
     void set_track_data(bit_array track);
+    bit_array get_track_data(void);
     void unset_track_data(void);
     inline bool is_track_ready(void) { return m_track_ready; }
+    inline void set_track_status_forcibly(bool status) { m_track_ready = status; };
 
     inline bool is_wraparound(void) { return m_wraparound; }
     inline void clear_wraparound(void) { m_wraparound = false; }
@@ -66,6 +71,7 @@ public:
 
     inline void reset_sync_mode(void) { m_sync_mode = false; }
     inline void set_sync_mode(bool sync_mode) { m_sync_mode = sync_mode; }
+    inline void set_vfo_gain(double low, double high) { m_vfo_gain_h = high; m_vfo_gain_l = low; }
 
     void enable_fluctuator(size_t numerator, size_t denominator);
     void disable_fluctuator(void);

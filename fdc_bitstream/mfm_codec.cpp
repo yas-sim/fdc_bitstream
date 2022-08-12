@@ -19,10 +19,11 @@ mfm_codec::mfm_codec() : m_bit_stream(0),
         m_prev_write_bit(0),
         m_sampling_rate(4e6), m_data_bit_rate(500e3),
         m_fluctuation(false), m_fluctuator_numerator(1), m_fluctuator_denominator(1),
-        m_track_ready(false),
-        m_pll_gain(1.f)
+        m_track_ready(false)
 {
     update_parameters();
+    set_vfo_gain(0.1f, 10.f);           // Set data separator VFO gain (low=non-SYNC and high=SYNC period)
+    set_gain(m_vfo_gain_l);
 }
 
 /**
@@ -43,7 +44,7 @@ void mfm_codec::reset(void) {
     m_fluctuator_denominator = 1;
     m_track.clear_array();
     m_track_ready = false;
-    m_pll_gain = 1.f;
+    set_vfo_gain(1.f, 10.f);
 }
 
 /**
@@ -61,6 +62,15 @@ void mfm_codec::set_track_data(bit_array track) {
     else {
         m_track_ready = false;
     }
+}
+
+/**
+ * @brief Get the track data.
+ *
+ * @return bit_array Return track data in bit_array.
+ */
+bit_array mfm_codec::get_track_data(void) {
+    return m_track;
 }
 
 /**
@@ -174,17 +184,17 @@ int mfm_codec::read_bit_ds(void) {
                 std::cout << '?';
 #endif
             }
-            // Adjust pulse phase (imitate PLL operation)
-            // Limit the PLL operation frequency and introduce fluctuation with the random generator (certain fluctuation is required to reproduce some copy protection)
+            // Adjust pulse phase (imitate PLL/VFO operation)
+            // Limit the PLL/VFO operation frequency and introduce fluctuation with the random generator (certain fluctuation is required to reproduce some copy protection)
             if (m_fluctuation == false || m_rnd() % m_fluctuator_denominator >= m_fluctuator_numerator) {
                 cell_center = m_data_window_ofst + m_data_window_size / 2.f;
                 double error = m_distance_to_next_pulse - cell_center;
 
                 // Data pulse position adjustment == phase correction
-                m_distance_to_next_pulse -= error * 0.05f * m_pll_gain;
+                m_distance_to_next_pulse -= error * 0.05f * m_vfo_gain;
 
                 // Cell size adjustment == frequency correction
-                double new_cell_size = m_bit_cell_size + error * 0.01f * m_pll_gain;
+                double new_cell_size = m_bit_cell_size + error * 0.01f * m_vfo_gain;
                 // Limit the range of cell size
                 if (new_cell_size < m_bit_cell_size_ref * 0.8) new_cell_size = m_bit_cell_size_ref * 0.8;
                 if (new_cell_size > m_bit_cell_size_ref * 1.2) new_cell_size = m_bit_cell_size_ref * 1.2;
@@ -193,7 +203,7 @@ int mfm_codec::read_bit_ds(void) {
             size_t distance = m_track.distance_to_next_bit1();
 #if 0
             // give timing fluctuation (intentionally - to immitate the spndle rotation fluctuation)
-            size_t rand_num = m_rnd() % 32;
+            size_t rand_num = m_rnd() % 128;
             if (rand_num == 0) {
                 distance++;
             }
@@ -223,7 +233,7 @@ int mfm_codec::read_bit_ds(void) {
 void mfm_codec::set_gain(double gain) {
     if (gain <= 0.f) gain = 0.01f;
     if (gain > 100.f) gain = 100.f;
-    m_pll_gain = gain;
+    m_vfo_gain = gain;
 }
 
 
@@ -279,10 +289,10 @@ bool mfm_codec::mfm_read_byte(uint8_t& data, bool& missing_clock, bool ignore_mi
         if (ignore_sync_field == false) {
             if (m_bit_stream == m_pattern_00) {
                 decode_count &= ~0b01u;                                 // C/D synchronize
-                set_gain(10.f);
+                set_gain(m_vfo_gain_h);
             }
             else {
-                set_gain(1.f);
+                set_gain(m_vfo_gain_l);
             }
         }
     } while (decode_count < 16);
@@ -353,9 +363,6 @@ uint16_t mfm_codec::mfm_encoder(uint8_t data, bool mode) {
  * @param write_gate Write gate (true:perform actual write, false:dummy write (no actual write will be perfored. buffer pointer will be increased))
  */
 void mfm_codec::mfm_write_byte(uint8_t data, bool mode, bool write_gate) {
-    if (is_track_ready() == false) {
-        return;
-    }
     uint16_t bit_pattern = mfm_encoder(data, mode);
     for (uint16_t bit_pos = 0x8000; bit_pos != 0; bit_pos >>= 1) {
         int bit = bit_pattern & bit_pos ? 1 : 0;
