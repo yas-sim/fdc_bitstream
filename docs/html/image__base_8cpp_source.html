@@ -86,41 +86,42 @@ $(document).ready(function(){initNavTree('image__base_8cpp_source.html',''); ini
   <div class="headertitle"><div class="title">image_base.cpp</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="image__base_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &quot;<a class="code" href="image__base_8h.html">image_base.h</a>&quot;</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno"><a class="line" href="classdisk__image.html#a0b4ff664c6e4bfc36cd2eb996d681068">    3</a></span><a class="code hl_function" href="classdisk__image.html#a0b4ff664c6e4bfc36cd2eb996d681068">disk_image::disk_image</a>() : m_track_data_is_set(false), m_max_track_number(0), m_sampling_frequency(0), m_fdc_data_rate(0) {</div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span>    <a class="code hl_variable" href="classdisk__image.html#aa303c751fbe4b9818f080e710a8178d3">m_track_data</a>.clear();</div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span>    <a class="code hl_class" href="classbit__array.html">bit_array</a> empty_bit_array;</div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>    empty_bit_array.<a class="code hl_function" href="classbit__array.html#a4e2e12feb739995bca487fa805baeedc">clear_array</a>();</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> track_number = 0; track_number &lt; 84; track_number++) {</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>        <a class="code hl_variable" href="classdisk__image.html#aa303c751fbe4b9818f080e710a8178d3">m_track_data</a>.push_back(empty_bit_array);</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    }</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>};</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="classdisk__image.html#ac9b4d7fba2912ba163b27b19f5b87dda">   12</a></span><span class="keywordtype">size_t</span> <a class="code hl_function" href="classdisk__image.html#ac9b4d7fba2912ba163b27b19f5b87dda">disk_image::media_max_track_number</a>(<a class="code hl_enumeration" href="fdc__defs_8h.html#a99c5ff7e5199a13ca4884062b413d68f">media_type</a> mtype) {</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keywordtype">size_t</span> max_track_number;</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="keywordflow">switch</span> (mtype) {</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="fdc__defs_8h.html#a99c5ff7e5199a13ca4884062b413d68fa048b9b8231a2e07d36aed7acd46a0cd0">media_type::FLOPPY_2D</a>:</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        max_track_number = 84;</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="fdc__defs_8h.html#a99c5ff7e5199a13ca4884062b413d68fa3a51151130f155d99f8482dccae69e7a">media_type::FLOPPY_2DD</a>:</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        max_track_number = 164;</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="fdc__defs_8h.html#a99c5ff7e5199a13ca4884062b413d68faadc6bc39a38b1133be70a07ec60b6faf">media_type::FLOPPY_2HD</a>:</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        max_track_number = 164;</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="keywordflow">default</span>:</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        max_track_number = 0;</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    }</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keywordflow">return</span> max_track_number;</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>}</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<a href="image__base_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;<a class="code" href="image__base_8h.html">image_base.h</a>&quot;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="classdisk__image.html#a0b4ff664c6e4bfc36cd2eb996d681068">   13</a></span><a class="code hl_function" href="classdisk__image.html#a0b4ff664c6e4bfc36cd2eb996d681068">disk_image::disk_image</a>() : m_track_data_is_set(false), m_max_track_number(0), m_sampling_frequency(0), m_fdc_data_rate(0) {</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <a class="code hl_variable" href="classdisk__image.html#aa303c751fbe4b9818f080e710a8178d3">m_track_data</a>.clear();</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <a class="code hl_class" href="classbit__array.html">bit_array</a> empty_bit_array;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    empty_bit_array.<a class="code hl_function" href="classbit__array.html#a4e2e12feb739995bca487fa805baeedc">clear_array</a>();</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> track_number = 0; track_number &lt; 84; track_number++) {</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        <a class="code hl_variable" href="classdisk__image.html#aa303c751fbe4b9818f080e710a8178d3">m_track_data</a>.push_back(empty_bit_array);</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    }</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>};</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="classdisk__image.html#ac9b4d7fba2912ba163b27b19f5b87dda">   22</a></span><span class="keywordtype">size_t</span> <a class="code hl_function" href="classdisk__image.html#ac9b4d7fba2912ba163b27b19f5b87dda">disk_image::media_max_track_number</a>(<a class="code hl_enumeration" href="fdc__defs_8h.html#a99c5ff7e5199a13ca4884062b413d68f">media_type</a> mtype) {</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keywordtype">size_t</span> max_track_number;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="keywordflow">switch</span> (mtype) {</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="fdc__defs_8h.html#a99c5ff7e5199a13ca4884062b413d68fa048b9b8231a2e07d36aed7acd46a0cd0">media_type::FLOPPY_2D</a>:</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        max_track_number = 84;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="fdc__defs_8h.html#a99c5ff7e5199a13ca4884062b413d68fa3a51151130f155d99f8482dccae69e7a">media_type::FLOPPY_2DD</a>:</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        max_track_number = 164;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="fdc__defs_8h.html#a99c5ff7e5199a13ca4884062b413d68faadc6bc39a38b1133be70a07ec60b6faf">media_type::FLOPPY_2HD</a>:</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        max_track_number = 164;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keywordflow">default</span>:</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        max_track_number = 0;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    }</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="keywordflow">return</span> max_track_number;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>}</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
 <div class="ttc" id="aclassbit__array_html"><div class="ttname"><a href="classbit__array.html">bit_array</a></div><div class="ttdef"><b>Definition:</b> <a href="bit__array_8h_source.html#l00008">bit_array.h:9</a></div></div>
-<div class="ttc" id="aclassbit__array_html_a4e2e12feb739995bca487fa805baeedc"><div class="ttname"><a href="classbit__array.html#a4e2e12feb739995bca487fa805baeedc">bit_array::clear_array</a></div><div class="ttdeci">void clear_array(void)</div><div class="ttdoc">Clear bit array data. The length of the array will be 0.</div><div class="ttdef"><b>Definition:</b> <a href="bit__array_8cpp_source.html#l00061">bit_array.cpp:61</a></div></div>
-<div class="ttc" id="aclassdisk__image_html_a0b4ff664c6e4bfc36cd2eb996d681068"><div class="ttname"><a href="classdisk__image.html#a0b4ff664c6e4bfc36cd2eb996d681068">disk_image::disk_image</a></div><div class="ttdeci">disk_image()</div><div class="ttdef"><b>Definition:</b> <a href="image__base_8cpp_source.html#l00003">image_base.cpp:3</a></div></div>
+<div class="ttc" id="aclassbit__array_html_a4e2e12feb739995bca487fa805baeedc"><div class="ttname"><a href="classbit__array.html#a4e2e12feb739995bca487fa805baeedc">bit_array::clear_array</a></div><div class="ttdeci">void clear_array(void)</div><div class="ttdoc">Clear bit array data. The length of the array will be 0.</div><div class="ttdef"><b>Definition:</b> <a href="bit__array_8cpp_source.html#l00071">bit_array.cpp:71</a></div></div>
+<div class="ttc" id="aclassdisk__image_html_a0b4ff664c6e4bfc36cd2eb996d681068"><div class="ttname"><a href="classdisk__image.html#a0b4ff664c6e4bfc36cd2eb996d681068">disk_image::disk_image</a></div><div class="ttdeci">disk_image()</div><div class="ttdef"><b>Definition:</b> <a href="image__base_8cpp_source.html#l00013">image_base.cpp:13</a></div></div>
 <div class="ttc" id="aclassdisk__image_html_aa303c751fbe4b9818f080e710a8178d3"><div class="ttname"><a href="classdisk__image.html#aa303c751fbe4b9818f080e710a8178d3">disk_image::m_track_data</a></div><div class="ttdeci">std::vector&lt; bit_array &gt; m_track_data</div><div class="ttdef"><b>Definition:</b> <a href="image__base_8h_source.html#l00014">image_base.h:14</a></div></div>
-<div class="ttc" id="aclassdisk__image_html_ac9b4d7fba2912ba163b27b19f5b87dda"><div class="ttname"><a href="classdisk__image.html#ac9b4d7fba2912ba163b27b19f5b87dda">disk_image::media_max_track_number</a></div><div class="ttdeci">size_t media_max_track_number(media_type mtype)</div><div class="ttdef"><b>Definition:</b> <a href="image__base_8cpp_source.html#l00012">image_base.cpp:12</a></div></div>
+<div class="ttc" id="aclassdisk__image_html_ac9b4d7fba2912ba163b27b19f5b87dda"><div class="ttname"><a href="classdisk__image.html#ac9b4d7fba2912ba163b27b19f5b87dda">disk_image::media_max_track_number</a></div><div class="ttdeci">size_t media_max_track_number(media_type mtype)</div><div class="ttdef"><b>Definition:</b> <a href="image__base_8cpp_source.html#l00022">image_base.cpp:22</a></div></div>
 <div class="ttc" id="afdc__defs_8h_html_a99c5ff7e5199a13ca4884062b413d68f"><div class="ttname"><a href="fdc__defs_8h.html#a99c5ff7e5199a13ca4884062b413d68f">media_type</a></div><div class="ttdeci">media_type</div><div class="ttdef"><b>Definition:</b> <a href="fdc__defs_8h_source.html#l00003">fdc_defs.h:3</a></div></div>
 <div class="ttc" id="afdc__defs_8h_html_a99c5ff7e5199a13ca4884062b413d68fa048b9b8231a2e07d36aed7acd46a0cd0"><div class="ttname"><a href="fdc__defs_8h.html#a99c5ff7e5199a13ca4884062b413d68fa048b9b8231a2e07d36aed7acd46a0cd0">media_type::FLOPPY_2D</a></div><div class="ttdeci">@ FLOPPY_2D</div></div>
 <div class="ttc" id="afdc__defs_8h_html_a99c5ff7e5199a13ca4884062b413d68fa3a51151130f155d99f8482dccae69e7a"><div class="ttname"><a href="fdc__defs_8h.html#a99c5ff7e5199a13ca4884062b413d68fa3a51151130f155d99f8482dccae69e7a">media_type::FLOPPY_2DD</a></div><div class="ttdeci">@ FLOPPY_2DD</div></div>
