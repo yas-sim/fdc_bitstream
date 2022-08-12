@@ -15,6 +15,7 @@
 #include <sstream>
 #include <iostream>
 #include <iomanip>
+#include <fstream>
 #include <vector>
 #include <map>
 
@@ -32,18 +33,24 @@ void test1(void) {
     std::cout << "*** MFM format data, and read test" << std::endl;
     fdc_bitstream fdc;
     disk_image_mfm image;
-    image.read("test.mfm");
-    bit_array barray = image.get_track_data(0);
-    fdc.set_raw_track_data(barray);
-    fdc.set_pos(0);
-    std::vector<uint8_t> track = fdc.read_track();
-    dump_buf(track.data(), 2048);
-    std::cout << std::endl;
+    try {
+        image.read("test.mfm");
+        bit_array barray = image.get_track_data(0);
+        fdc.set_raw_track_data(barray);
+        fdc.set_pos(0);
+        std::vector<uint8_t> track = fdc.read_track();
+        dump_buf(track.data(), track.size() > 2048 ? 2048 : track.size());
+        std::cout << std::endl;
 
-    std::cout << "ID" << std::endl;
-    std::vector<fdc_bitstream::id_field> ids = fdc.read_all_idam();
-    display_id_list(ids);
-    std::cout << std::endl;
+        std::cout << "ID" << std::endl;
+        std::vector<fdc_bitstream::id_field> ids = fdc.read_all_idam();
+        display_id_list(ids);
+        std::cout << std::endl;
+    } catch(disk_image_exception cause) {
+        std::cout << cause.what() << std::endl;
+        std::cout << "error code:" << cause.get_error_code() << std::endl;
+        return;
+    }
 }
 
 void test2() {

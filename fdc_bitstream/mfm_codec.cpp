@@ -55,7 +55,12 @@ void mfm_codec::set_track_data(bit_array track) {
     m_track = track;
     m_track.set_stream_pos(0);
     m_track.clear_wraparound_flag();
-    m_track_ready = true;
+    if (track.size() > 0) {
+        m_track_ready = true;
+    }
+    else {
+        m_track_ready = false;
+    }
 }
 
 /**
@@ -148,6 +153,7 @@ void mfm_codec::set_sampling_rate(size_t sampling_rate) {
 int mfm_codec::read_bit_ds(void) {
     int bit_reading = 0;
     double cell_center;
+    size_t loop_count = 0;      // for timeout check
 
     if (is_track_ready() == false) {
         return -1;
@@ -196,6 +202,10 @@ int mfm_codec::read_bit_ds(void) {
             }
 #endif
             m_distance_to_next_pulse += distance;
+
+            if (loop_count++ > m_bit_cell_size) {       // time out
+                return -1;
+            }
         }
     } while (m_distance_to_next_pulse < m_bit_cell_size);
     // advance bit cell position
@@ -242,6 +252,11 @@ bool mfm_codec::mfm_read_byte(uint8_t& data, bool& missing_clock, bool ignore_mi
 
     do {
         int bit_data = read_bit_ds();
+        if (bit_data == -1) {
+             data = 0;
+             missing_clock = false;
+             return false;
+        }
         decode_count++;
         if (m_track.is_wraparound()) {
             m_track.clear_wraparound_flag();

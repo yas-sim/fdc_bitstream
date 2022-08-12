@@ -30,7 +30,7 @@ public:
     inline void clear_wraparound_flag(void) { m_wraparound = false; }
 
     void set(size_t index, uint8_t value);
-    bool get(size_t index);
+    uint8_t get(size_t index);
 
     bool set_stream_pos(size_t position);
     size_t get_stream_pos(void);

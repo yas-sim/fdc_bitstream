@@ -12,13 +12,13 @@
 
 void disk_image_mfm::read(std::string file_name) {
     m_track_data_is_set = false;
-    std::ifstream ifs;
-    ifs.open(file_name, std::ios::in | std::ios::binary);
-    if (ifs.is_open() == false) {
-        std::cerr << "Failed to open file '" << file_name << "'." << std::endl;
-        m_track_data.clear();
-        return;
-    }
+    std::ifstream ifs = open_binary_file(file_name);
+    //ifs.open(file_name, std::ios::in | std::ios::binary);
+    //if (ifs.is_open() == false) {
+    //    std::cerr << "Failed to open file '" << file_name << "'." << std::endl;
+    //    m_track_data.clear();
+    //    return;
+    //}
     ifs.read(reinterpret_cast<char*>(&m_header), sizeof(mfm_header));
     ifs.seekg(m_header.track_table_offset);
     ifs.read(reinterpret_cast<char*>(&m_track_table), sizeof(mfm_track_table) * 84);

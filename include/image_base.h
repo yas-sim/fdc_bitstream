@@ -3,6 +3,16 @@
 #include "fdc_defs.h"
 #include "bit_array.h"
 
+class disk_image_exception {
+private:
+    int m_error_code;
+    std::string m_message;
+public:
+    disk_image_exception(int error_code, std::string message) : m_error_code(error_code), m_message(message) {};
+    int get_error_code(void) { return m_error_code; };
+    std::string what(void) { return m_message; };
+};
+
 class disk_image {
 private:
 protected:
@@ -16,12 +26,13 @@ protected:
 public:
 
     disk_image();
+    void clear_track_data(void);                            // Clear track buffer
+    void create_empty_track_data(size_t num_tracks);        // Create empty track buffers with length of 0.
 
+    std::ifstream open_binary_file(std::string file_name);
     virtual void read(std::string file_name) = 0;
 
-    virtual bit_array& get_track_data(size_t track_number) {
-        return m_track_data[track_number];
-    }
+    virtual bit_array get_track_data(size_t track_number);
 
     size_t media_max_track_number(media_type mtype);
 

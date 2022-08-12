@@ -55,6 +55,8 @@ std::vector<uint8_t> fdc_bitstream::read_track(void) {
     uint8_t read_data;
     bool missing_clock;
     std::vector<uint8_t> track_data;
+    if (m_codec.is_track_ready() == false) return track_data;
+
     m_codec.clear_wraparound();
     while (m_codec.is_wraparound() == false) {
         m_codec.mfm_read_byte(read_data, missing_clock, false, false);
@@ -76,7 +78,7 @@ std::vector<uint8_t> fdc_bitstream::read_track(void) {
 */
 void fdc_bitstream::write_track(const std::vector<uint8_t>& track_buf) {
     uint16_t crc_val;
-    if (track_buf.size() == 0) return;
+    if (m_codec.is_track_ready() == false) return;
     for (auto it = track_buf.begin(); it != track_buf.end(); ++it) {
         uint8_t data = *it;
         switch (data) {
@@ -124,9 +126,10 @@ void fdc_bitstream::write_track(const std::vector<uint8_t>& track_buf) {
 size_t fdc_bitstream::read_id(std::vector<uint8_t>& id_field, bool& crc_error) {
     uint8_t read_data, mc_byte = 0;
     bool missing_clock;
+    crc_error = false;
     size_t read_count = 0;
     id_field.clear();
-    crc_error = false;
+    if (m_codec.is_track_ready() == false) return 0;
     size_t total_read_count = 0;
     size_t read_start_pos = 0;
     while (true) {
@@ -193,6 +196,7 @@ std::vector<fdc_bitstream::id_field> fdc_bitstream::read_all_idam(void) {
     memset(&item, 0, sizeof(id_field));
     std::vector<uint8_t> sect_id;
     bool crc_error = false;
+    if (m_codec.is_track_ready() == false) return result;
     clear_wraparound();
     set_pos(0);
     size_t pos;

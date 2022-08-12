@@ -11,13 +11,39 @@
 #include "image_base.h"
 
 disk_image::disk_image() : m_track_data_is_set(false), m_max_track_number(0), m_sampling_frequency(0), m_fdc_data_rate(0) {
-    m_track_data.clear();
-    bit_array empty_bit_array;
-    empty_bit_array.clear_array();
-    for (size_t track_number = 0; track_number < 84; track_number++) {
-        m_track_data.push_back(empty_bit_array);
-    }
+    create_empty_track_data(84);
 };
+
+void disk_image::clear_track_data(void) {
+    m_track_data.clear();
+}
+
+void disk_image::create_empty_track_data(size_t num_tracks) {
+    clear_track_data();
+    for (size_t track_number = 0; track_number < num_tracks; track_number++) {
+        m_track_data.push_back(bit_array());
+    }
+}
+
+
+std::ifstream disk_image::open_binary_file(std::string file_name) {
+    std::ifstream ifs;
+    ifs.open(file_name);
+    if (!ifs) {
+        throw disk_image_exception(-1, "Failed to open '" + file_name + "'." );
+    }
+    return ifs;
+}
+
+bit_array disk_image::get_track_data(size_t track_number) {
+    if (track_number < m_track_data.size() && track_number <= m_max_track_number) {
+        return m_track_data[track_number];
+    }
+    else {
+        return bit_array();
+    }
+}
+
 
 size_t disk_image::media_max_track_number(media_type mtype) {
     size_t max_track_number;

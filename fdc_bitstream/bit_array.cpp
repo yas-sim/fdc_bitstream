@@ -130,8 +130,11 @@ void bit_array::set(size_t index, uint8_t value) {
  * @param index Bit position to read.
  * @return bool Read data.
  */
-bool bit_array::get(size_t index) {
-    bool res = m_array_data[index];
+uint8_t bit_array::get(size_t index) {
+    if (m_array_data.size() == 0) {
+        return 0;
+    }
+    uint8_t res = m_array_data[index];
     return res;
 }
 
@@ -144,13 +147,18 @@ bool bit_array::get(size_t index) {
  * @return false 
  */
 bool bit_array::set_stream_pos(size_t position) {
-    if (position < m_array_data.size()) {
-        m_stream_pos = position;
+    if (m_array_data.size() > 0) {
+        if (position < m_array_data.size()) {
+            m_stream_pos = position;
+        }
+        else {
+            m_stream_pos = m_array_data.size() - 1;
+        }
+        m_wraparound = false;
     }
     else {
-        m_stream_pos = m_array_data.size() - 1;
+        m_stream_pos = 0;
     }
-    m_wraparound = false;
     return true;
 }
 
@@ -213,6 +221,7 @@ uint8_t bit_array::read_stream(void) {
 size_t bit_array::distance_to_next_bit1(void) {
     size_t distance = 0;
     uint8_t val;
+    if (m_array_data.size() == 0) return 0;
     do {
         val = read_stream();
         if (distance++ >= m_array_data.size()) {       // distance exceeded the entire bit array length
