@@ -32,10 +32,11 @@ var NAVTREE =
         [ "Supported floppy disk image formats:", "md__r_e_a_d_m_e.html#autotoc_md3", null ]
       ] ],
       [ "API Document", "md__r_e_a_d_m_e.html#autotoc_md4", null ],
-      [ "HFE to MFM format converter", "md__r_e_a_d_m_e.html#autotoc_md5", null ],
-      [ "Directory structure", "md__r_e_a_d_m_e.html#autotoc_md6", null ],
-      [ "How to build the test program and HFE to MFM image converter", "md__r_e_a_d_m_e.html#autotoc_md7", null ],
-      [ "MFM image data format:", "md__r_e_a_d_m_e.html#autotoc_md9", null ]
+      [ "How to integrate the fdc_bitstream library with your program", "md__r_e_a_d_m_e.html#autotoc_md5", null ],
+      [ "HFE to MFM format converter", "md__r_e_a_d_m_e.html#autotoc_md6", null ],
+      [ "Directory structure", "md__r_e_a_d_m_e.html#autotoc_md7", null ],
+      [ "How to build the test program and HFE to MFM image converter", "md__r_e_a_d_m_e.html#autotoc_md8", null ],
+      [ "MFM image data format:", "md__r_e_a_d_m_e.html#autotoc_md10", null ]
     ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
@@ -52,8 +53,10 @@ var NAVTREE =
       [ "File Members", "globals.html", [
         [ "All", "globals.html", null ],
         [ "Functions", "globals_func.html", null ],
+        [ "Variables", "globals_vars.html", null ],
         [ "Typedefs", "globals_type.html", null ],
-        [ "Enumerations", "globals_enum.html", null ]
+        [ "Enumerations", "globals_enum.html", null ],
+        [ "Macros", "globals_defs.html", null ]
       ] ]
     ] ]
   ] ]
@@ -62,7 +65,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"structmfm__header__.html#a641f93ea8ca1bede95d1feb0c252c544"
+"mfm__codec_8h_source.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

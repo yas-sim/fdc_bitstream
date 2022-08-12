@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['h_0',['H',['../structfdc__bitstream_1_1id__field.html#ac2066c0a692751c81773d71fc25ab8aa',1,'fdc_bitstream::id_field']]],
-  ['headersignature_1',['HEADERSIGNATURE',['../structpicfileformatheader__.html#aafe7274d95f75ee61641d8b6267017e8',1,'picfileformatheader_']]]
+  ['emu_5fshugart_5ffloppymode_0',['EMU_SHUGART_FLOPPYMODE',['../image__hfe_8h.html#abd2b878e15b58e40535a2c254bdea9b2',1,'image_hfe.h']]]
 ];

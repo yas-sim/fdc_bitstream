@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['sampling_5frate_0',['sampling_rate',['../structmfm__header__.html#aa4730a859aeb428f92f90490b476df42',1,'mfm_header_']]],
-  ['single_5fstep_1',['single_step',['../structpicfileformatheader__.html#af22d5c3d29006b1db5261f74308fad93',1,'picfileformatheader_']]],
-  ['spindle_5ftime_5fns_2',['spindle_time_ns',['../structmfm__header__.html#a6d19b9bb46000bd8cd0213e5aa21a818',1,'mfm_header_']]]
+  ['offset_0',['offset',['../structpictrack__.html#a568b91983596d07addf3fe543a27765c',1,'pictrack_::offset()'],['../structtrack__table__.html#a72e86cb27f462ddf0880fa65fc5a9131',1,'track_table_::offset()']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['length_5fbit_0',['length_bit',['../structtrack__table__.html#a3413d83496b1a91bda45587c900722c0',1,'track_table_']]]
+  ['generic_5fshuggart_5fdd_5ffloppymode_0',['GENERIC_SHUGGART_DD_FLOPPYMODE',['../image__hfe_8h.html#a7e4733559c595f73d13d3adebb3b4b90',1,'image_hfe.h']]]
 ];

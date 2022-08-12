@@ -1,5 +1,6 @@
 var fdc__misc_8h =
 [
-    [ "generate_format_data", "fdc__misc_8h.html#a71ad33aab44d02baeb10b07a95a0b47e", null ],
-    [ "generate_interleaved_sector_list", "fdc__misc_8h.html#a17b532a28c94422bce3a284d2a0e4932", null ]
+    [ "DLL_EXPORT", "fdc__misc_8h.html#a1ca888bd091694c05472e1b91df1a97b", null ],
+    [ "generate_format_data", "fdc__misc_8h.html#ab999cf918b583a2a8be6153f490b2a34", null ],
+    [ "generate_interleaved_sector_list", "fdc__misc_8h.html#a49ae1efddd3659ee5ab0800672b4710c", null ]
 ];
