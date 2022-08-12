@@ -1,3 +1,14 @@
+/**
+ * @file fdc_misc.cpp
+ * @author your name (you@domain.com)
+ * @brief Miscellaneous functions for FDC lib (format data generator)
+ * @version 0.1
+ * @date 2022-08-12
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
+
 #include "fdc_misc.h"
 
 /**

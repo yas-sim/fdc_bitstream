@@ -1,3 +1,13 @@
+/**
+ * @file image_mfm.cpp
+ * @author Yasunori Shimura (yasu0710@gmail.com)
+ * @brief `MFM` floppy image reader
+ * @version 
+ * @date 2022-08-12
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #include "image_mfm.h"
 
 void disk_image_mfm::read(std::string file_name) {

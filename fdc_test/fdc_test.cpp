@@ -1,3 +1,13 @@
+/**
+ * @file fdc_test.cpp
+ * @author Yasunori Shimura (yasu0710@gmail.com)
+ * @brief FDC-bitstream library test program
+ * @version 0.1
+ * @date 2022-08-12
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #include <stdio.h>
 
 #include <string>

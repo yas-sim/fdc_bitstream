@@ -1,3 +1,13 @@
+/**
+ * @file image_hfe.cpp
+ * @author Yasunori Shimura (yasu0710@gmail.com)
+ * @brief `HFE` floppy image reader (HxC floppy emulator format)
+ * @version 
+ * @date 2022-08-12
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #include "image_hfe.h"
 
 void disk_image_hfe::read(std::string file_name) {

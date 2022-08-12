@@ -1,3 +1,13 @@
+/**
+ * @file image_raw.cpp
+ * @author Yasunori Shimura (yasu0710@gmail.com)
+ * @brief `RAW` floppy image reader
+ * @version 
+ * @date 2022-08-12
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #include "image_raw.h"
 
 void disk_image_raw::read(std::string raw_file_name) {

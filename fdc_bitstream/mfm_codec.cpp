@@ -1,10 +1,12 @@
 /**
-* @file mfm_codec.cpp
-* @brief MFM encoder/decoder
-* @author Yasunori Shimura
-* 
-* @details MFM codec provides encoding and decoding feature to read and write a raw floppy bit stream data. 
-*/
+ * @file mfm_codec.cpp
+ * @brief MFM encoder/decoder
+ * @author Yasunori Shimura
+ * 
+ * @details MFM codec provides encoding and decoding feature to read and write a raw floppy bit stream data. 
+ *
+ * @copyright Copyright (c) 2022
+ */
 
 #include "mfm_codec.h"
 
@@ -71,11 +73,11 @@ void mfm_codec::unset_track_data(void) {
 
 /**
  * @brief Set new bit cell size.
-*   012345678
-*   | WWWW  |
-*     <-->    Window size
-*   <->       Window ofst
-*   <------>  Cell size
+ *   012345678
+ *   | WWWW  |
+ *     <-->    Window size (4)
+ *   <->       Window ofst (2)
+ *   <------>  Cell size   (8)
  * 
  * @param cell_size New bit cell size (unit=bits)
  */

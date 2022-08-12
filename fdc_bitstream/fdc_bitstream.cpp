@@ -1,10 +1,12 @@
 /**
-* @file fdc_bitstream.cpp
-* @brief MFM Floppy FDC emulator
-* @author Yasunori Shimura
-* 
-* @details A FDC emulator that handles 'raw' (uncooked) MFM/IBM-PC format floppy disk bit stream data as a track data.
-*/
+ * @file fdc_bitstream.cpp
+ * @brief MFM Floppy FDC emulator
+ * @author Yasunori Shimura
+ * 
+ * @details A FDC emulator that handles 'raw' (uncooked) MFM/IBM-PC format floppy disk bit stream data as a track data.
+ *
+ * @copyright Copyright (c) 2022
+ */
 
 #include <vector>
 

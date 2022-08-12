@@ -1,4 +1,13 @@
-// Utility functions
+/**
+ * @file common.cpp
+ * @author Yasunori Shimura (yasu0710@gmail.com)
+ * @brief Utility functions for the FDC test program
+ * @version 0.1
+ * @date 2022-08-12
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 
 #include <vector>
 #include <iostream>

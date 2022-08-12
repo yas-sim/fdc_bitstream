@@ -1,3 +1,13 @@
+/**
+ * @file image_base.cpp
+ * @author Yasunori Shimura (yasu0710@gmail.com)
+ * @brief Base class for floppy image reader classes
+ * @version 
+ * @date 2022-08-12
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #include "image_base.h"
 
 disk_image::disk_image() : m_track_data_is_set(false), m_max_track_number(0), m_sampling_frequency(0), m_fdc_data_rate(0) {

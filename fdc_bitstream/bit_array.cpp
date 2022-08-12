@@ -1,3 +1,13 @@
+/**
+ * @file bit_array.cpp
+ * @author Yasunori Shimura (yasu0710@gmail.com)
+ * @brief Bit array class to support bit granularity data access for FDC. The bit array supports the ring-buffer and elastic buffer modes.
+ * @version 0.1
+ * @date 2022-08-12
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #include "bit_array.h"
 
 /**
