@@ -32,9 +32,9 @@ var NAVTREE =
       ] ],
       [ "API Document", "md__r_e_a_d_m_e.html#autotoc_md4", null ],
       [ "HFE to MFM format converter", "md__r_e_a_d_m_e.html#autotoc_md5", null ],
-      [ "MFM image data format:", "md__r_e_a_d_m_e.html#autotoc_md6", null ],
-      [ "How to build the test program", "md__r_e_a_d_m_e.html#autotoc_md7", null ],
-      [ "Directory structure", "md__r_e_a_d_m_e.html#autotoc_md8", null ]
+      [ "Directory structure", "md__r_e_a_d_m_e.html#autotoc_md6", null ],
+      [ "How to build the test program and HFE to MFM image converter", "md__r_e_a_d_m_e.html#autotoc_md7", null ],
+      [ "MFM image data format:", "md__r_e_a_d_m_e.html#autotoc_md9", null ]
     ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
