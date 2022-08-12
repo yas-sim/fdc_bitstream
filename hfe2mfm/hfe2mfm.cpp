@@ -13,15 +13,33 @@ size_t align(size_t pos, size_t grain_size = 0x400)
     return ((pos / grain_size) + ((pos % grain_size) ? 1 : 0)) * grain_size;
 }
 
+void usage(std::string cmd_name) {
+    std::cout << cmd_name << " input_file.hfm" << std::endl;
+}
 
 int main(int argc, char* argv[]) {
 
+    if (argc < 2) {
+        usage(argv[0]);
+        return -1;
+    }
     const std::string input_file_name = argv[1];
+    if (input_file_name.length() == 0) {
+        usage(argv[0]);
+        return -1;
+    }
+    int period_pos = input_file_name.find_last_of(".");
+    const std::string extension = input_file_name.substr(period_pos + 1, input_file_name.length());
+    if (extension != "hfe") {
+        usage(argv[0]);
+        std::cout << "A file with wrong extension is given (" << extension << ")." << std::endl;
+        return -1;
+    }
     const std::string base_file_name = input_file_name.substr(0, input_file_name.find_last_of("."));
     const std::string output_file_name = base_file_name + ".mfm";
 
     disk_image_hfe image;
-    image.read(argv[1]);
+    image.read(input_file_name);
 
     // Create header
     mfm_header header;
@@ -41,7 +59,9 @@ int main(int argc, char* argv[]) {
     ofs.seekp(header.track_table_offset);
     size_t write_ptr = 0x1000;
     size_t track_pos;
+    std::cout << "TRACK:";
     for (size_t track_n = 0; track_n < header.number_of_tracks; track_n++) {
+        std::cout << track_n << " ";
         bit_array track_stream = image.get_track_data(track_n);
         track_pos = align(write_ptr, 0x100);
         track_table[track_n].offset     = track_pos;
@@ -55,6 +75,7 @@ int main(int argc, char* argv[]) {
     ofs.seekp(header.track_table_offset);
     ofs.write(reinterpret_cast<char*>(track_table), sizeof(mfm_track_table) * 84);
     ofs.close();
+    std::cout << std::endl;
 
     std::cout << input_file_name << " -> " << output_file_name << std::endl;
 }

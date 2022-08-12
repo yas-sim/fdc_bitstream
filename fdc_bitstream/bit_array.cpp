@@ -52,14 +52,14 @@ std::vector<uint8_t> bit_array::get_array(void) {
     uint8_t dt = 0;
     size_t pos = 0;
     for (auto it = m_array_data.begin(); it != m_array_data.end(); ++it) {
-        if (bit_ptn == 0) {
-            bit_ptn = 0x80;
-        }
         dt |= *it ? bit_ptn : 0;
         bit_ptn >>= 1;
-        result[pos++] = dt;
+        if (bit_ptn == 0) {
+            bit_ptn = 0x80;
+            result[pos++] = dt;
+        }
     }
-    if (bit_ptn) {
+    if (bit_ptn != 0x80) {
         result[pos++] = dt;
     }
     return result;
