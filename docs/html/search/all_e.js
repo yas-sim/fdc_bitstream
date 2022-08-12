@@ -12,8 +12,9 @@ var searchData=
   ['read_5ftrack_9',['read_track',['../classfdc__bitstream.html#abea60a7ed3b79255840fac28a5a20c02',1,'fdc_bitstream']]],
   ['readme_2emd_10',['README.md',['../_r_e_a_d_m_e_8md.html',1,'']]],
   ['record_5fnot_5ffound_11',['record_not_found',['../structfdc__bitstream_1_1sector__data.html#a913d1ff37fec4e46f9fdb0cda76fd18a',1,'fdc_bitstream::sector_data']]],
-  ['reserve_12',['reserve',['../classbit__array.html#a61f18a66af6239b2faff8e42b5828613',1,'bit_array']]],
-  ['reset_13',['reset',['../classfdc__crc.html#a19583ac432fbb317b4e8ddbc676a4e1f',1,'fdc_crc::reset()'],['../classmfm__codec.html#aa4483dff3a6830326ee2214aeeea9286',1,'mfm_codec::reset(void)']]],
-  ['reset_5fsync_5fmode_14',['reset_sync_mode',['../classmfm__codec.html#a8e4002d3d156c205177e4c880ab7cfbd',1,'mfm_codec']]],
-  ['resize_15',['resize',['../classbit__array.html#a4717da9efaf23b2bcb74e17a0560c53b',1,'bit_array']]]
+  ['repeat_5fdata_5fgenerator_12',['repeat_data_generator',['../common_8cpp.html#a33f86291483c13d96e33220cf589e617',1,'repeat_data_generator(std::vector&lt; std::pair&lt; int, uint8_t &gt; &gt; inbuf, std::vector&lt; uint8_t &gt; &amp;outbuf):&#160;common.cpp'],['../common_8h.html#a33f86291483c13d96e33220cf589e617',1,'repeat_data_generator(std::vector&lt; std::pair&lt; int, uint8_t &gt; &gt; inbuf, std::vector&lt; uint8_t &gt; &amp;outbuf):&#160;common.cpp']]],
+  ['reserve_13',['reserve',['../classbit__array.html#a61f18a66af6239b2faff8e42b5828613',1,'bit_array']]],
+  ['reset_14',['reset',['../classfdc__crc.html#a19583ac432fbb317b4e8ddbc676a4e1f',1,'fdc_crc::reset()'],['../classmfm__codec.html#aa4483dff3a6830326ee2214aeeea9286',1,'mfm_codec::reset(void)']]],
+  ['reset_5fsync_5fmode_15',['reset_sync_mode',['../classmfm__codec.html#a8e4002d3d156c205177e4c880ab7cfbd',1,'mfm_codec']]],
+  ['resize_16',['resize',['../classbit__array.html#a4717da9efaf23b2bcb74e17a0560c53b',1,'bit_array']]]
 ];

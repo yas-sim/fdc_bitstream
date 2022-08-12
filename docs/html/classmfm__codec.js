@@ -5,6 +5,7 @@ var classmfm__codec =
     [ "disable_fluctuator", "classmfm__codec.html#a6e8a09604245fb10c7ab0dd49dc1ffa1", null ],
     [ "enable_fluctuator", "classmfm__codec.html#aee9a740c5f3c16a9f4be58111cbd80c0", null ],
     [ "get_pos", "classmfm__codec.html#a20a1c5d9ae9c86c8d7c6d3a37def6b6c", null ],
+    [ "get_track_data", "classmfm__codec.html#ae4f39188f6e869a13298ca04648b604d", null ],
     [ "get_track_length", "classmfm__codec.html#ae6c1802f180e9db776c345ccc96a98ba", null ],
     [ "is_track_ready", "classmfm__codec.html#a9909a5a02033c1a682e3170059ac2772", null ],
     [ "is_wraparound", "classmfm__codec.html#a3ade7ff8918720b6269ece33c6f7807c", null ],
@@ -21,6 +22,8 @@ var classmfm__codec =
     [ "set_sampling_rate", "classmfm__codec.html#ae74cc02cf1995d77a4fb4239448ff548", null ],
     [ "set_sync_mode", "classmfm__codec.html#aaf6250f7080cbe158a4aea6a959f1f67", null ],
     [ "set_track_data", "classmfm__codec.html#a40e88ddbea86a9f619834f173c95755f", null ],
+    [ "set_track_status_forcibly", "classmfm__codec.html#a58bc2c2042b51353bfe7243631ed1ffa", null ],
+    [ "set_vfo_gain", "classmfm__codec.html#a64ba742d82d8d5f6b9e86007fcbdc27c", null ],
     [ "unset_track_data", "classmfm__codec.html#a1e71d92dfcbb6624e8a96847625f0755", null ],
     [ "update_parameters", "classmfm__codec.html#ab9e990407f98e4f7fe1f13d814d1757d", null ]
 ];
