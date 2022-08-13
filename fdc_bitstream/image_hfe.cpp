@@ -14,14 +14,22 @@
 void disk_image_hfe::read(std::string file_name) {
 	m_track_data_is_set = false;
 	picfileformatheader header;
-	//std::ifstream ifs;
-	//ifs.open(file_name, std::ios::in | std::ios::binary);
 	std::ifstream ifs = open_binary_file(file_name);
 	ifs.read(reinterpret_cast<char*>(&header), sizeof(header));
 
 	if (header.number_of_track > 84) {
 		header.number_of_track = 84;
 	}
+	m_max_track_number = header.number_of_track * header.number_of_side;		// HFE(MFM,2D) = 42, 2
+	if (header.floppyRPM == 0) {
+		m_spindle_time_ns = 0.2 * 1e9;
+	}
+	else {
+		m_spindle_time_ns = (60 * 1e9) / header.floppyRPM;
+	}
+	m_data_bit_rate = header.bitRate * 2e3;			// HFE(MFM,2D) == 250??
+	m_sampling_rate = header.bitRate * 2e3;
+
 	pictrack track_offset_table[84];
 	ifs.seekg(header.track_list_offset * 0x0200, std::ios_base::beg);
 	ifs.read(reinterpret_cast<char*>(track_offset_table), header.number_of_track * sizeof(pictrack));

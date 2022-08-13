@@ -11,7 +11,7 @@
 #define DLL_BODY
 #include "image_base.h"
 
-disk_image::disk_image() : m_track_data_is_set(false), m_max_track_number(0), m_sampling_frequency(0), m_fdc_data_rate(0) {
+disk_image::disk_image() : m_track_data_is_set(false), m_max_track_number(0), m_sampling_rate(0), m_data_bit_rate(0), m_spindle_time_ns(0) {
     create_empty_track_data(84);
 };
 
@@ -29,7 +29,7 @@ void disk_image::create_empty_track_data(size_t num_tracks) {
 
 std::ifstream disk_image::open_binary_file(std::string file_name) {
     std::ifstream ifs;
-    ifs.open(file_name);
+    ifs.open(file_name, std::ios::in | std::ios::binary);
     if (!ifs) {
         throw disk_image_exception(-1, "Failed to open '" + file_name + "'." );
     }

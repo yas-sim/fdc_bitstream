@@ -24,6 +24,7 @@
 #include "fdc_bitstream.h"
 
 #include "image_mfm.h"
+#include "image_hfe.h"
 
 #include "fdc_misc.h"
 #include "common.h"
@@ -51,6 +52,8 @@ void test1(void) {
         std::cout << "error code:" << cause.get_error_code() << std::endl;
         return;
     }
+    std::cout << "Writing 'test_write.mfm'." << std::endl;
+    image.write("test_write.mfm");
 }
 
 void test2() {

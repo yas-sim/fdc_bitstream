@@ -11,13 +11,10 @@
 #define DLL_BODY
 #include "image_raw.h"
 
-void disk_image_raw::read(std::string raw_file_name) {
+void disk_image_raw::read(std::string file_name) {
     m_track_data_is_set = false;
-    std::ifstream ifs(raw_file_name);
-    if (ifs.is_open() == false) {
-        std::cerr << "Failed to open " << raw_file_name << "." << std::endl;
-        return;
-    }
+    std::ifstream ifs = open_binary_file(file_name);
+
     std::string  buf;
     bool read_track_mode = false;
     size_t cylinder = 0, side = 0;

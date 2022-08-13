@@ -59,6 +59,7 @@ std::vector<uint8_t> bit_array::get_array(void) {
         if (bit_ptn == 0) {
             bit_ptn = 0x80;
             result[pos++] = dt;
+            dt = 0;
         }
     }
     if (bit_ptn != 0x80) {

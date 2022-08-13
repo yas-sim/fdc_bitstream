@@ -37,18 +37,15 @@ typedef struct track_table_ {
 
 class DLL_EXPORT disk_image_mfm : public disk_image {
 private:
-    mfm_header              m_header;
-    mfm_track_table         m_track_table[84];
 public:
     disk_image_mfm() : disk_image(){
-        memset(&m_header, 0, sizeof(mfm_header));
-        memset(&m_track_table, 0, sizeof(mfm_track_table));
     };
 
     void read(std::string file_name);
+    void write(std::string file_name);
 
-    inline size_t get_number_of_tracks(void) { return m_header.number_of_tracks; }
-    inline size_t get_spindle_time_ns(void) { return m_header.spindle_time_ns; }
-    inline size_t get_data_bit_rate(void) { return m_header.data_bit_rate; }
-    inline size_t get_sampling_rate(void) { return m_header.sampling_rate; }
+    inline size_t get_number_of_tracks(void) { return m_max_track_number; }
+    inline size_t get_spindle_time_ns(void) { return m_spindle_time_ns; }
+    inline size_t get_data_bit_rate(void) { return  m_data_bit_rate; }
+    inline size_t get_sampling_rate(void) { return m_sampling_rate; }
 };

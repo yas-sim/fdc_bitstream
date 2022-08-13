@@ -12,26 +12,61 @@
 #include "image_mfm.h"
 
 void disk_image_mfm::read(std::string file_name) {
+    mfm_header              header;
+    mfm_track_table         track_table[84];
     m_track_data_is_set = false;
+
     std::ifstream ifs = open_binary_file(file_name);
-    //ifs.open(file_name, std::ios::in | std::ios::binary);
-    //if (ifs.is_open() == false) {
-    //    std::cerr << "Failed to open file '" << file_name << "'." << std::endl;
-    //    m_track_data.clear();
-    //    return;
-    //}
-    ifs.read(reinterpret_cast<char*>(&m_header), sizeof(mfm_header));
-    ifs.seekg(m_header.track_table_offset);
-    ifs.read(reinterpret_cast<char*>(&m_track_table), sizeof(mfm_track_table) * 84);
-    for (size_t track_n = 0; track_n < m_header.number_of_tracks; track_n++) {
+    ifs.read(reinterpret_cast<char*>(&header), sizeof(mfm_header));
+    m_max_track_number = header.number_of_tracks;
+    m_spindle_time_ns = header.spindle_time_ns;
+    m_sampling_rate = header.sampling_rate;
+    m_data_bit_rate = header.data_bit_rate;
+
+    size_t a = sizeof(mfm_track_table);
+    ifs.seekg(header.track_table_offset);
+    ifs.read(reinterpret_cast<char*>(track_table), header.number_of_tracks * sizeof(mfm_track_table));
+    for (size_t track_n = 0; track_n < header.number_of_tracks; track_n++) {
         bit_array barray;
         std::vector<uint8_t> tdata;
-        ifs.seekg(m_track_table[track_n].offset);
-        size_t read_length = m_track_table[track_n].length_bit / 8 + ((m_track_table[track_n].length_bit % 8) ? 1 : 0);
+        ifs.seekg(track_table[track_n].offset);
+        size_t read_length = track_table[track_n].length_bit / 8 + ((track_table[track_n].length_bit % 8) ? 1 : 0);
         tdata.resize(read_length);
         ifs.read(reinterpret_cast<char*>(tdata.data()), read_length);
         barray.set_array(tdata);
         m_track_data[track_n] = barray;
     }
     m_track_data_is_set = true;
+}
+
+void disk_image_mfm::write(std::string file_name) {
+    mfm_header header;
+    std::vector<mfm_track_table> track_table;
+
+    std::ofstream ofs;
+    ofs.open(file_name, std::ios::out | std::ios::binary);
+
+    memcpy(reinterpret_cast<char*>(header.id_str), "MFM_IMG ", 8);
+    header.track_table_offset = 0x100;
+    header.number_of_tracks = m_max_track_number;
+    header.spindle_time_ns = m_spindle_time_ns;
+    header.data_bit_rate = m_data_bit_rate;
+    header.sampling_rate = m_sampling_rate;
+    ofs.write(reinterpret_cast<char*>(&header), sizeof(mfm_header));
+
+    track_table.resize(header.number_of_tracks);
+
+    size_t track_data_offset = align(header.track_table_offset + header.number_of_tracks * sizeof(mfm_track_table), 0x400);
+    for (size_t track_n = 0; track_n < m_max_track_number; track_n++) {
+        std::vector<uint8_t> track = m_track_data[track_n].get_array();
+        ofs.seekp(track_data_offset);
+        ofs.write(reinterpret_cast<char*>(track.data()), track.size());
+        track_table[track_n].length_bit = m_track_data[track_n].get_length();
+        track_table[track_n].offset = track_data_offset;
+
+        track_data_offset = align(track_data_offset + track.size(), 0x100);
+    }
+    ofs.seekp(header.track_table_offset);
+    ofs.write(reinterpret_cast<char*>(track_table.data()), sizeof(mfm_track_table) * header.number_of_tracks);
+    ofs.close();
 }

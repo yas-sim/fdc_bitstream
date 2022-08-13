@@ -11,6 +11,7 @@
 #endif
 
 #include <cstdint>
+#include <cassert>
 
 #include "fdc_defs.h"
 #include "bit_array.h"
@@ -30,11 +31,14 @@ private:
 protected:
     bool        m_track_data_is_set;            /** true=track data is set and ready */
     size_t      m_max_track_number;
-    uint64_t    m_sampling_frequency;           /** Disk image sampling frequency [Hz] */
-    uint64_t    m_fdc_data_rate;                /** FDC bit data rate [bit/sec] */
+    size_t      m_spindle_time_ns;              /** Spindle rotation time [ns] */
+    size_t      m_sampling_rate;           /** Disk image sampling frequency [Hz] */
+    size_t      m_data_bit_rate;                /** FDC bit data rate [bit/sec] */
 
     std::vector<bit_array>  m_track_data;
 
+    /** align a number with specified boundary */
+    inline size_t align(size_t pos, size_t grain_size = 0x400) { return ((pos / grain_size) + ((pos % grain_size) ? 1 : 0)) * grain_size; }
 public:
 
     disk_image();
@@ -43,6 +47,7 @@ public:
 
     std::ifstream open_binary_file(std::string file_name);
     virtual void read(std::string file_name) = 0;
+    virtual void write(std::string file_name) { assert(false); }
 
     virtual bit_array get_track_data(size_t track_number);
 

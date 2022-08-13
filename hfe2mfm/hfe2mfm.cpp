@@ -8,7 +8,7 @@
 
 #include "image_mfm.h"
 
-size_t align(size_t pos, size_t grain_size = 0x400)
+inline size_t align(size_t pos, size_t grain_size = 0x400)
 {
     return ((pos / grain_size) + ((pos % grain_size) ? 1 : 0)) * grain_size;
 }
@@ -57,12 +57,12 @@ int main(int argc, char* argv[]) {
     ofs.open(output_file_name, std::ios::out | std::ios::binary);
     ofs.write(reinterpret_cast<char*>(&header), sizeof(mfm_header));
     ofs.seekp(header.track_table_offset);
-    size_t write_ptr = 0x1000;
+
+    size_t write_ptr = align(header.track_table_offset + header.number_of_tracks * sizeof(mfm_track_table), 0x400);
     size_t track_pos;
-    std::cout << "TRACK:";
     for (size_t track_n = 0; track_n < header.number_of_tracks; track_n++) {
-        std::cout << track_n << " ";
         bit_array track_stream = image.get_track_data(track_n);
+        std::cout << "TRACK : " << track_n << ", " << write_ptr << ", " << track_stream.get_length() << std::endl;
         track_pos = align(write_ptr, 0x100);
         track_table[track_n].offset     = track_pos;
         track_table[track_n].length_bit = track_stream.get_length();
@@ -75,7 +75,6 @@ int main(int argc, char* argv[]) {
     ofs.seekp(header.track_table_offset);
     ofs.write(reinterpret_cast<char*>(track_table), sizeof(mfm_track_table) * 84);
     ofs.close();
-    std::cout << std::endl;
 
     std::cout << input_file_name << " -> " << output_file_name << std::endl;
 }
