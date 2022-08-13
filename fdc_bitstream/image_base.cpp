@@ -11,9 +11,9 @@
 #define DLL_BODY
 #include "image_base.h"
 
-disk_image::disk_image() : m_track_data_is_set(false), m_max_track_number(0), m_sampling_rate(0), m_data_bit_rate(0), m_spindle_time_ns(0) {
+disk_image::disk_image() : m_track_data_is_set(false) {
     create_empty_track_data(84);
-};
+}
 
 void disk_image::clear_track_data(void) {
     m_track_data.clear();
@@ -37,11 +37,21 @@ std::ifstream disk_image::open_binary_file(std::string file_name) {
 }
 
 bit_array disk_image::get_track_data(size_t track_number) {
-    if (track_number < m_track_data.size() && track_number <= m_max_track_number) {
+    if (track_number < m_track_data.size() && track_number <= m_base_prop.m_max_track_number) {
         return m_track_data[track_number];
     }
     else {
         return bit_array();
+    }
+}
+
+void disk_image::set_track_data(size_t track_number, bit_array track_data) {
+    if (track_number < m_track_data.size() && track_number <= m_base_prop.m_max_track_number) {
+        m_track_data[track_number] = track_data;
+    }
+    else if (track_number < 164) {
+        m_track_data.resize(track_number+1);
+        m_track_data[track_number] = track_data;
     }
 }
 
@@ -64,4 +74,3 @@ size_t disk_image::media_max_track_number(media_type mtype) {
     }
     return max_track_number;
 }
-

@@ -20,15 +20,15 @@ void disk_image_hfe::read(std::string file_name) {
 	if (header.number_of_track > 84) {
 		header.number_of_track = 84;
 	}
-	m_max_track_number = header.number_of_track * header.number_of_side;		// HFE(MFM,2D) = 42, 2
+	m_base_prop.m_max_track_number = header.number_of_track * header.number_of_side;		// HFE(MFM,2D) = 42, 2
 	if (header.floppyRPM == 0) {
-		m_spindle_time_ns = 0.2 * 1e9;
+		m_base_prop.m_spindle_time_ns = 0.2 * 1e9;
 	}
 	else {
-		m_spindle_time_ns = (60 * 1e9) / header.floppyRPM;
+		m_base_prop.m_spindle_time_ns = (60 * 1e9) / header.floppyRPM;
 	}
-	m_data_bit_rate = header.bitRate * 2e3;			// HFE(MFM,2D) == 250??
-	m_sampling_rate = header.bitRate * 2e3;
+	m_base_prop.m_data_bit_rate = header.bitRate * 2e3;			// HFE(MFM,2D) == 250??
+	m_base_prop.m_sampling_rate = header.bitRate * 2e3;
 
 	pictrack track_offset_table[84];
 	ifs.seekg(header.track_list_offset * 0x0200, std::ios_base::beg);

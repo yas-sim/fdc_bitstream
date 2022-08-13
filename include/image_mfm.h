@@ -25,11 +25,13 @@ typedef struct mfm_header_ {
     uint64_t    sampling_rate;              //  Sampling rate of the bit stream data     4MHz = 4,000,000
 } mfm_header;
 
+
 // Track offset table (ofst(byte) = header.track_table_offset)
 typedef struct track_table_ {
     uint64_t    offset;                     // Offset to the track data (unit=byte, from the top of the file == absolute offset)
     uint64_t    length_bit;                 // Track data length (uint=bits, not bytes)
 } mfm_track_table;
+
 
 // Track data * 84
 //   ofst(byte) = track_table[track#].offset
@@ -38,14 +40,13 @@ typedef struct track_table_ {
 class DLL_EXPORT disk_image_mfm : public disk_image {
 private:
 public:
-    disk_image_mfm() : disk_image(){
-    };
+    disk_image_mfm(void) : disk_image() {};
 
     void read(std::string file_name);
     void write(std::string file_name);
 
-    inline size_t get_number_of_tracks(void) { return m_max_track_number; }
-    inline size_t get_spindle_time_ns(void) { return m_spindle_time_ns; }
-    inline size_t get_data_bit_rate(void) { return  m_data_bit_rate; }
-    inline size_t get_sampling_rate(void) { return m_sampling_rate; }
+    inline size_t get_number_of_tracks(void) { return m_base_prop.m_max_track_number; }
+    inline size_t get_spindle_time_ns(void)  { return m_base_prop.m_spindle_time_ns; }
+    inline size_t get_data_bit_rate(void)    { return m_base_prop.m_data_bit_rate; }
+    inline size_t get_sampling_rate(void)    { return m_base_prop.m_sampling_rate; }
 };

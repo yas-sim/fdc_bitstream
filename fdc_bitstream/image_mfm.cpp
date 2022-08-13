@@ -13,15 +13,15 @@
 
 void disk_image_mfm::read(std::string file_name) {
     mfm_header              header;
-    mfm_track_table         track_table[84];
+    mfm_track_table         track_table[164];
     m_track_data_is_set = false;
 
     std::ifstream ifs = open_binary_file(file_name);
     ifs.read(reinterpret_cast<char*>(&header), sizeof(mfm_header));
-    m_max_track_number = header.number_of_tracks;
-    m_spindle_time_ns = header.spindle_time_ns;
-    m_sampling_rate = header.sampling_rate;
-    m_data_bit_rate = header.data_bit_rate;
+    m_base_prop.m_max_track_number = header.number_of_tracks;
+    m_base_prop.m_spindle_time_ns = header.spindle_time_ns;
+    m_base_prop.m_sampling_rate = header.sampling_rate;
+    m_base_prop.m_data_bit_rate = header.data_bit_rate;
 
     size_t a = sizeof(mfm_track_table);
     ifs.seekg(header.track_table_offset);
@@ -39,6 +39,7 @@ void disk_image_mfm::read(std::string file_name) {
     m_track_data_is_set = true;
 }
 
+
 void disk_image_mfm::write(std::string file_name) {
     mfm_header header;
     std::vector<mfm_track_table> track_table;
@@ -48,16 +49,16 @@ void disk_image_mfm::write(std::string file_name) {
 
     memcpy(reinterpret_cast<char*>(header.id_str), "MFM_IMG ", 8);
     header.track_table_offset = 0x100;
-    header.number_of_tracks = m_max_track_number;
-    header.spindle_time_ns = m_spindle_time_ns;
-    header.data_bit_rate = m_data_bit_rate;
-    header.sampling_rate = m_sampling_rate;
+    header.number_of_tracks = m_base_prop.m_max_track_number;
+    header.spindle_time_ns = m_base_prop.m_spindle_time_ns;
+    header.data_bit_rate = m_base_prop.m_data_bit_rate;
+    header.sampling_rate = m_base_prop.m_sampling_rate;
     ofs.write(reinterpret_cast<char*>(&header), sizeof(mfm_header));
 
     track_table.resize(header.number_of_tracks);
 
     size_t track_data_offset = align(header.track_table_offset + header.number_of_tracks * sizeof(mfm_track_table), 0x400);
-    for (size_t track_n = 0; track_n < m_max_track_number; track_n++) {
+    for (size_t track_n = 0; track_n < m_base_prop.m_max_track_number; track_n++) {
         std::vector<uint8_t> track = m_track_data[track_n].get_array();
         ofs.seekp(track_data_offset);
         ofs.write(reinterpret_cast<char*>(track.data()), track.size());
