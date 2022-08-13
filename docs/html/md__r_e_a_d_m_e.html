@@ -178,7 +178,20 @@ How to build the test program and HFE to MFM image converter</h1>
 <div class="line">cmake ..</div>
 <div class="line">cmake --build .</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md10"></a>
+ <h1><a class="anchor" id="autotoc_md10"></a>
+Test program and Sample programs</h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Program Name   </th><th class="markdownTableHeadNone">Description    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>fdc_test</code>   </td><td class="markdownTableBodyNone"><code>fdc_bistream</code> sample code. You can learn how to use <code>bit_stream</code> and <code>image_???</code> classes.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>create_mfm_image</code>   </td><td class="markdownTableBodyNone">Sample program to create a 2D/MFM formatted <code>.mfm</code> disk image. The program will create <code>new_image.mfm</code>.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>check_mfm_imge</code>   </td><td class="markdownTableBodyNone">Read <code>image.mfm</code> file and perform read track and sector ID read for all tracks. The result of track read and ID read operations will be displayed on the console.   </td></tr>
+</table>
+<hr  />
+<h1><a class="anchor" id="autotoc_md12"></a>
 MFM image data format:</h1>
 <p >The default sampling rate for the MFM format is 4MHz. The data rate of an orginary 2D/MFM format data is 500KHz. This means, one bit cell will be recorded with eight bits of data in the MFM format. <br  />
 </p>
