@@ -11,12 +11,16 @@
 #define DLL_BODY
 #include "image_hfe.h"
 
+
 void disk_image_hfe::read(std::string file_name) {
 	m_track_data_is_set = false;
 	picfileformatheader header;
 	std::ifstream ifs = open_binary_file(file_name);
 	ifs.read(reinterpret_cast<char*>(&header), sizeof(header));
 
+	if (memcmp(header.HEADERSIGNATURE, "HXCPICFE", 8) != 0) {								// Header signature mismatch
+		return;
+	}
 	if (header.number_of_track > 84) {
 		header.number_of_track = 84;
 	}

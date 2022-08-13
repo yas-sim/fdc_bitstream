@@ -36,6 +36,10 @@ int main(int argc, char* argv[]) {
 
     disk_image_hfe in_image;
     in_image.read(input_file_name);
+    if(!in_image.is_ready()) {
+        std::cout << "Failed to read the input file. (Possibly wrong file format)" << std::endl;
+        return -1;
+    }
 
     disk_image_mfm out_image;
     disk_image_base_properties prop = in_image.get_property();

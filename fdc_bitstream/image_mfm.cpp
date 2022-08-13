@@ -18,6 +18,9 @@ void disk_image_mfm::read(std::string file_name) {
 
     std::ifstream ifs = open_binary_file(file_name);
     ifs.read(reinterpret_cast<char*>(&header), sizeof(mfm_header));
+    if (memcmp(header.id_str, "MFM_IMG ", 8) != 0) {               // Header signature mismatch
+        return;
+    }
     m_base_prop.m_max_track_number = header.number_of_tracks;
     m_base_prop.m_spindle_time_ns = header.spindle_time_ns;
     m_base_prop.m_sampling_rate = header.sampling_rate;

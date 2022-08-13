@@ -15,6 +15,8 @@
 #include <string>
 #include <vector>
 
+#include <string.h>
+
 #include "image_base.h"
 
 typedef struct DLL_EXPORT picfileformatheader_

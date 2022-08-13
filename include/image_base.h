@@ -56,7 +56,7 @@ public:
     void create_empty_track_data(size_t num_tracks);        // Create empty track buffers with length of 0.
 
     std::ifstream open_binary_file(std::string file_name);
-    virtual void read(std::string file_name) { assert(false); };
+    virtual void read(std::string file_name) { assert(false); }
     virtual void write(std::string file_name) { assert(false); }
 
     bit_array get_track_data(size_t track_number);
@@ -64,7 +64,7 @@ public:
 
     size_t media_max_track_number(media_type mtype);
 
-    inline bool is_ready(void) { return m_track_data_is_set; }
+    inline bool is_ready(void) { return m_track_data_is_set; };
 
     disk_image_base_properties get_property(void) { return m_base_prop; }
     void set_property(disk_image_base_properties prop) { m_base_prop = prop; }
