@@ -6,6 +6,7 @@ var hierarchy =
       [ "disk_image_mfm", "classdisk__image__mfm.html", null ],
       [ "disk_image_raw", "classdisk__image__raw.html", null ]
     ] ],
+    [ "disk_image_base_properties", "classdisk__image__base__properties.html", null ],
     [ "disk_image_exception", "classdisk__image__exception.html", null ],
     [ "fdc_bitstream", "classfdc__bitstream.html", null ],
     [ "fdc_crc", "classfdc__crc.html", null ],
