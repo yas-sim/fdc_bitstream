@@ -37,7 +37,8 @@ var NAVTREE =
       [ "Directory structure", "md__r_e_a_d_m_e.html#autotoc_md7", null ],
       [ "How to build the test program and HFE to MFM image converter", "md__r_e_a_d_m_e.html#autotoc_md8", null ],
       [ "Test program and Sample programs", "md__r_e_a_d_m_e.html#autotoc_md10", null ],
-      [ "MFM image data format:", "md__r_e_a_d_m_e.html#autotoc_md12", null ]
+      [ "<em>Intentional</em> fluctuation mechanism - for timing sensitive copy-protection data reproduction", "md__r_e_a_d_m_e.html#autotoc_md12", null ],
+      [ "MFM image data format:", "md__r_e_a_d_m_e.html#autotoc_md14", null ]
     ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
