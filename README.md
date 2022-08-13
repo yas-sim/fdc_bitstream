@@ -72,6 +72,14 @@ cmake --build .
 ```
 
 ----
+## Test program and Sample programs  
+|Program Name|Description|
+|----|----|
+|`fdc_test`|`fdc_bistream` sample code. You can learn how to use `bit_stream` and `image_???` classes.|
+|`create_mfm_image`|Sample program to create a 2D/MFM formatted `.mfm` disk image. The program will create `new_image.mfm`.|
+|`check_mfm_imge`|Read `image.mfm` file and perform read track and sector ID read for all tracks. The result of track read and ID read operations will be displayed on the console.|  
+  
+----
 
 ## MFM image data format:
 The default sampling rate for the MFM format is 4MHz. The data rate of an orginary 2D/MFM format data is 500KHz. This means, one bit cell will be recorded with eight bits of data in the MFM format.  
