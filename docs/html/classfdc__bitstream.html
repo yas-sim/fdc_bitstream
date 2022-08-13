@@ -242,7 +242,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p >Disable FDC read operation fluctuator </p>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8h_source.html#l00085">85</a> of file <a class="el" href="fdc__bitstream_8h_source.html">fdc_bitstream.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8h_source.html#l00089">89</a> of file <a class="el" href="fdc__bitstream_8h_source.html">fdc_bitstream.h</a>.</p>
 
 </div>
 </div>
@@ -279,9 +279,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >Enable FDC read operation fluctuatior </p>
+<p >Enable FDC read operation fluctuatior If you set the fluctuator with enable_fluctuator(1,4), the VFO in the data separator will operate at rate of 3/4 and stop operation at the rate of 1/4. The operation will be determined by a random generator, so the VFO operation will be stochastic, and this introduces some uncertainty in the read data. </p>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8h_source.html#l00083">83</a> of file <a class="el" href="fdc__bitstream_8h_source.html">fdc_bitstream.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8h_source.html#l00087">87</a> of file <a class="el" href="fdc__bitstream_8h_source.html">fdc_bitstream.h</a>.</p>
 
 </div>
 </div>
@@ -772,9 +772,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >Set VFO gain </p>
+<p >Set VFO gain Recommended setting : High gain (high speed) mode(10.0f). Low gain (1.0f) for data reading. FDC needs to synchronized with the data stream quickly in the SYNC field before start reading the actual data (sector ID or sector body). High speed (high gain) setting will be used during the SYNC field to lock-in the read timing quickly. Low speed (low gain) setting will be used during reading data (other than SYNC field) to cancel slow spindle speed fluctuation but not follow the quick timing change such as irregular pulses in the bit stream and keep the same reading pace. </p>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8h_source.html#l00088">88</a> of file <a class="el" href="fdc__bitstream_8h_source.html">fdc_bitstream.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8h_source.html#l00098">98</a> of file <a class="el" href="fdc__bitstream_8h_source.html">fdc_bitstream.h</a>.</p>
 
 </div>
 </div>
