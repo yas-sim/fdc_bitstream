@@ -81,6 +81,17 @@ cmake --build .
   
 ----
 
+## *Intentional* fluctuation mechanism - for timing sensitive copy-protection data reproduction
+
+The actual floppy drive has a lot of elements that may introduce read data instability, such as spindle motor speed fluctuation, and bit pulse discontinuity by writing new data. Some copy-protect techniques intentionally cause those unstable read data at the desired point, and check whether the floppy disk is a genuine one or not by reading the unstable points several times. Most floppy image format preserves decoded MFM data, and it is impossible to reproduce this kind of copy-protect data because the data in the image is deterministic, and no timing variation happens. To reproduce such timing-dependent copy-protection data, the MFM and RAW disk image format capture the floppy drive read data at the x8 sampling rate (4MHz) of the 2D/MFM FDC bit rate (500KHz). The MFM and RAW format can preserve even irregular pulses, and therefore it can reproduce timing-sensitive copy-protection data.  
+**To reproduce this kind of non-deterministic result, the FDC, `fdc_bitstream` should have some uncertainty in its operation.**  
+If `fdc_bitstream` operates exactly the same everytime, the read result will be deterministic even if the floppy image contains some irregular pulses. `fdc_bitstream` has a `fluctuator` in the VFO in the data-separator.   
+In the actual floppy drive, the VFO will automatically adjust the read timing to read the data accurately. Thanks to the VFO, the floppy drives can read the data accurately even if the bit pulse speed fluctuates. However, the tracking speed of the VFO is limited. It may get unsynchronized when the bit stream has timing discontinuity, or there are irregular pulses. Once the VFO gets unsynchronized, it requires a certain time to get synchronized again, and the read data will be indeterministic during this period.
+You can set the VFO fluctuation rate by using `fdc_bitstream::enable_fluctuator()` function. If you set `enable_fluctuator(1,4)`, the VFO operates at 3/4 and stops operation at the rate of 1/4. The operation is determined by a random generator, so the operation of the VFO will be stochastic, and the read data might be indeterministic if there are some irregular bits exiting in the bit stream.  Even if you apply the fluctuator, the read data will be deterministic unless there are irregular pulses.   
+The `test4()` in the `fdc_test` generates random irregular pulses at a specific region in the track data and reads the sector data multiple times with the fluctuator enabled to check whether the stochastic fluctuator works as intended.  
+
+----
+
 ## MFM image data format:
 The default sampling rate for the MFM format is 4MHz. The data rate of an orginary 2D/MFM format data is 500KHz. This means, one bit cell will be recorded with eight bits of data in the MFM format.  
 
