@@ -28,6 +28,8 @@ public:
 
 class DLL_EXPORT disk_image_base_properties {
 public:
+    disk_image_base_properties() : m_max_track_number(0), m_spindle_time_ns(0), m_sampling_rate(0), m_data_bit_rate(0) {};
+
     size_t      m_max_track_number;
     /** Spindle rotation time [ns] */
     size_t      m_spindle_time_ns;

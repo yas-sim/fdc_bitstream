@@ -12,6 +12,10 @@
 #include "image_base.h"
 
 disk_image::disk_image() : m_track_data_is_set(false) {
+    m_base_prop.m_data_bit_rate = 500e3;
+    m_base_prop.m_max_track_number = 0;
+    m_base_prop.m_sampling_rate = 4e6;
+    m_base_prop.m_spindle_time_ns = 0.2 * 1e9;
     create_empty_track_data(84);
 }
 
@@ -52,6 +56,7 @@ void disk_image::set_track_data(size_t track_number, bit_array track_data) {
     else if (track_number < 164) {
         m_track_data.resize(track_number+1);
         m_track_data[track_number] = track_data;
+        m_base_prop.m_max_track_number = track_number;
     }
 }
 
