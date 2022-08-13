@@ -48,6 +48,7 @@ int main(void) {
 		bit_array track;
 
 		for (int track_n = 0; track_n < 84; track_n++) {
+			std::cout << std::endl << "=== " << track_n << std::endl;
 			track = disk_image.get_track_data(track_n);
 			fdc.set_track_data(track);
 

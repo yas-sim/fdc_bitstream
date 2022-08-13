@@ -13,7 +13,7 @@ int main(void) {
 	bit_array track;
 	
 	for (int track_n = 0; track_n < 84; track_n++) {
-		std::cout << std::endl <<  "=== " << track_n << std::endl;
+		std::cout << "=== " << track_n << std::endl;
 		std::vector<uint8_t> format_data = generate_format_data(track_n / 2, track_n % 2, 16, 1, 1, 0);
 		track.clear_array();
 		track.resize(0.2 * 4e6);		// Create an empty track data (4e6 (sampling rate) * 0.2 (sipndle time))
