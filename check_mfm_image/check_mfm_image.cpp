@@ -47,23 +47,43 @@ int main(void) {
 		fdc_bitstream fdc;
 		bit_array track;
 
-		for (int track_n = 0; track_n < 84; track_n++) {
+		fdc.set_vfo_gain(8.f, 12.f);
+
+		for (int track_n = 0; track_n < 69; track_n++) {
 			std::cout << std::endl << "=== " << track_n << std::endl;
 			track = disk_image.get_track_data(track_n);
 			fdc.set_track_data(track);
 
+#if 0
 			fdc.set_pos(0);
 			std::vector<uint8_t> track_data = fdc.read_track();
 			dump_buf(track_data.data(), track_data.size());
-
+#endif
+#if 1
 			fdc.set_pos(0);
 			std::vector<fdc_bitstream::id_field> id_data = fdc.read_all_idam();
 			display_id_list(id_data);
+			double err = 0.f;
+			double cnt = 0.f;
+			for (auto it = id_data.begin(); it != id_data.end(); ++it) {
+				if ((*it).crc_sts) {
+					err++;
+				}
+				cnt++;
+			}
+			double rate;
+			if (cnt == 0) {
+				rate = 1.f;
+			}
+			else {
+				rate = err / cnt;
+			}
+			std::cout << "Error rate: " << rate;
+#endif
 		}
 	}
 	catch (disk_image_exception e) {
 		std::cout << e.what() << std::endl;
 	}
-
 	return 0;
 }

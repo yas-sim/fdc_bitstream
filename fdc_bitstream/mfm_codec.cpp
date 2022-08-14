@@ -24,7 +24,7 @@ mfm_codec::mfm_codec() : m_bit_stream(0),
         m_track_ready(false)
 {
     update_parameters();
-    set_vfo_gain(0.1f, 10.f);           // Set data separator VFO gain (low=non-SYNC and high=SYNC period)
+    set_vfo_gain(8.f, 12.f);           // Set data separator VFO gain (low=non-SYNC and high=SYNC period)
     set_gain(m_vfo_gain_l);
 }
 
