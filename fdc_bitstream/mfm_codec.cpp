@@ -302,7 +302,7 @@ bool mfm_codec::mfm_read_byte(uint8_t& data, bool& missing_clock, bool ignore_mi
     // Extract only 'D' bits (exclude 'C' bits). MFM data is 'CDCDCDCD..CD'.
     uint8_t read_data = 0;
     for (uint16_t bit_pos = 0x4000; bit_pos > 0; bit_pos >>= 2) {
-        read_data = (read_data << 1) | (m_bit_stream & bit_pos ? 1 : 0);
+        read_data = (read_data << 1) | ((m_bit_stream & bit_pos) ? 1 : 0);
     }
     data = read_data;
     missing_clock = false;
@@ -331,13 +331,10 @@ uint16_t mfm_codec::mfm_encoder(uint8_t data, bool mode) {
         }
     }
     // MFM encoding
-    uint16_t bit_pattern = 0;
     uint16_t mfm_bit_pattern = 0;
-    int current_bit;
-    int clock_bit;
     for (size_t bit_pos = 0x80; bit_pos != 0; bit_pos >>= 1) {
-        current_bit = (write_data & bit_pos) ? 1 : 0;
-        clock_bit = (m_prev_write_bit == 0 && current_bit == 0) ? 1 : 0;
+        int current_bit = (write_data & bit_pos) ? 1 : 0;
+        int clock_bit = (m_prev_write_bit == 0 && current_bit == 0) ? 1 : 0;
         mfm_bit_pattern = (mfm_bit_pattern << 1) | clock_bit;                 // clock
         mfm_bit_pattern = (mfm_bit_pattern << 1) | current_bit;               // data
         m_prev_write_bit = current_bit;
@@ -367,11 +364,11 @@ uint16_t mfm_codec::mfm_encoder(uint8_t data, bool mode) {
 void mfm_codec::mfm_write_byte(uint8_t data, bool mode, bool write_gate) {
     uint16_t bit_pattern = mfm_encoder(data, mode);
     for (uint16_t bit_pos = 0x8000; bit_pos != 0; bit_pos >>= 1) {
-        int bit = bit_pattern & bit_pos ? 1 : 0;
+        int bit = (bit_pattern & bit_pos) ? 1 : 0;
         if (write_gate == true) {
             for (size_t i = 0; i < m_bit_width; i++) {
                 if (m_bit_width / 2 == i)   m_track.write_stream(bit);    // write data pulse at the center of the bit cell
-                else                     m_track.write_stream(0);
+                else                        m_track.write_stream(0);
             }
         }
         else {

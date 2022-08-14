@@ -42,8 +42,8 @@ private:
 public:
     disk_image_mfm(void) : disk_image() {};
 
-    void read(std::string file_name);
-    void write(std::string file_name);
+    void read(const std::string file_name) override;
+    void write(const std::string file_name) override;
 
     inline size_t get_number_of_tracks(void) { return m_base_prop.m_max_track_number; }
     inline size_t get_spindle_time_ns(void)  { return m_base_prop.m_spindle_time_ns; }

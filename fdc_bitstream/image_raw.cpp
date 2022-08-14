@@ -11,7 +11,7 @@
 #define DLL_BODY
 #include "image_raw.h"
 
-void disk_image_raw::read(std::string file_name) {
+void disk_image_raw::read(const std::string file_name) {
     m_track_data_is_set = false;
     std::ifstream ifs = open_binary_file(file_name);
 

@@ -11,7 +11,7 @@
 #define DLL_BODY
 #include "image_mfm.h"
 
-void disk_image_mfm::read(std::string file_name) {
+void disk_image_mfm::read(const std::string file_name) {
     mfm_header              header;
     mfm_track_table         track_table[164];
     m_track_data_is_set = false;
@@ -26,7 +26,6 @@ void disk_image_mfm::read(std::string file_name) {
     m_base_prop.m_sampling_rate = header.sampling_rate;
     m_base_prop.m_data_bit_rate = header.data_bit_rate;
 
-    size_t a = sizeof(mfm_track_table);
     ifs.seekg(header.track_table_offset);
     ifs.read(reinterpret_cast<char*>(track_table), header.number_of_tracks * sizeof(mfm_track_table));
     for (size_t track_n = 0; track_n < header.number_of_tracks; track_n++) {
@@ -43,7 +42,7 @@ void disk_image_mfm::read(std::string file_name) {
 }
 
 
-void disk_image_mfm::write(std::string file_name) {
+void disk_image_mfm::write(const std::string file_name) {
     mfm_header header;
     std::vector<mfm_track_table> track_table;
 

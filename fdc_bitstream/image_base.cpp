@@ -31,7 +31,7 @@ void disk_image::create_empty_track_data(size_t num_tracks) {
 }
 
 
-std::ifstream disk_image::open_binary_file(std::string file_name) {
+std::ifstream disk_image::open_binary_file(const std::string file_name) {
     std::ifstream ifs;
     ifs.open(file_name, std::ios::in | std::ios::binary);
     if (!ifs) {
@@ -40,7 +40,7 @@ std::ifstream disk_image::open_binary_file(std::string file_name) {
     return ifs;
 }
 
-bit_array disk_image::get_track_data(size_t track_number) {
+bit_array disk_image::get_track_data(const size_t track_number) {
     if (track_number < m_track_data.size() && track_number <= m_base_prop.m_max_track_number) {
         return m_track_data[track_number];
     }
@@ -49,7 +49,7 @@ bit_array disk_image::get_track_data(size_t track_number) {
     }
 }
 
-void disk_image::set_track_data(size_t track_number, bit_array track_data) {
+void disk_image::set_track_data(const size_t track_number, const bit_array track_data) {
     if (track_number < m_track_data.size() && track_number <= m_base_prop.m_max_track_number) {
         m_track_data[track_number] = track_data;
     }
@@ -61,7 +61,7 @@ void disk_image::set_track_data(size_t track_number, bit_array track_data) {
 }
 
 
-size_t disk_image::media_max_track_number(media_type mtype) {
+size_t disk_image::media_max_track_number(const media_type mtype) {
     size_t max_track_number;
     switch (mtype) {
     case media_type::FLOPPY_2D:

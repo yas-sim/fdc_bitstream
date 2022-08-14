@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cassertgit >
 
 #ifdef _WIN32
 #ifdef DLL_BODY
@@ -22,5 +23,6 @@ private:
 public:
     disk_image_raw() : disk_image() {};
 
-    void read(std::string raw_file_name);
+    void read(const std::string raw_file_name) override;
+    void write(const std::string raw_file_name) override { assert(false); }
 };

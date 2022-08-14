@@ -200,10 +200,9 @@ std::vector<fdc_bitstream::id_field> fdc_bitstream::read_all_idam(void) {
     if (m_codec.is_track_ready() == false) return result;
     clear_wraparound();
     set_pos(0);
-    size_t pos;
     do {
-        pos = read_id(sect_id, crc_error);
-        if (sect_id.size() > 0) {
+        size_t pos = read_id(sect_id, crc_error);
+        if (sect_id.size() ==6) {
             item.C = sect_id[0];
             item.H = sect_id[1];
             item.R = sect_id[2];
@@ -447,7 +446,6 @@ fdc_bitstream::sector_data fdc_bitstream::read_sector(int trk, int sid, int sct)
     memset(&sect_data, 0, sizeof(sector_data));
     bool crc_error = false;
     bool dam_type = false;
-    size_t pos = 0;
     if (trk > 43) trk = 43;
     while (true) {
         if (is_wraparound()) {
@@ -457,7 +455,7 @@ fdc_bitstream::sector_data fdc_bitstream::read_sector(int trk, int sid, int sct)
                 return sect_data;
             }
         }
-        pos = read_id(sect_id, crc_error);
+        size_t pos = read_id(sect_id, crc_error);
         sect_data.id_pos = pos;
         if (sect_id[0] == trk && sect_id[2] == sct) {       // FD179x/MB8876 won'nt compare 'head' field
             if (crc_error == false) {
@@ -513,11 +511,11 @@ bool fdc_bitstream::write_sector(int trk, int sid, int sct, bool dam_type, std::
             if (crc_error == false) {
                 if (fluctuate) {
                     // Fluctuate write start timing
-                    size_t pos = get_pos();
+                    int64_t pos = static_cast<int64_t>(get_pos());
                     pos += normal_distribution_random();   // +-3
                     if (pos < 0) pos = 0;
-                    if (pos >= get_track_length()) pos = get_track_length() - 1;
-                    set_pos(pos);
+                    if (pos >= get_track_length()) pos = static_cast<int64_t>(get_track_length()) - 1;
+                    set_pos(static_cast<size_t>(pos));
                 }
                 write_sector_body(write_data, dam_type);
                 return true;

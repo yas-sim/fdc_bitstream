@@ -14,6 +14,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <cassert>
 
 #include <string.h>
 
@@ -80,5 +81,6 @@ class DLL_EXPORT disk_image_hfe : public disk_image {
 public:
 	disk_image_hfe(void) : disk_image() {}
 
-	void read(std::string file_name);
+	void read(const std::string file_name) override;
+	void write(const std::string file_name) override { assert(false); }
 };
