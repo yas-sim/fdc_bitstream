@@ -1,21 +1,8 @@
 var searchData=
 [
-  ['fdc_5fbitstream_0',['fdc_bitstream',['../classfdc__bitstream.html',1,'fdc_bitstream'],['../classfdc__bitstream.html#afbc1c3cb3ab7c90b3cdedaf255a0640e',1,'fdc_bitstream::fdc_bitstream()']]],
-  ['fdc_5fbitstream_2ecpp_1',['fdc_bitstream.cpp',['../fdc__bitstream_8cpp.html',1,'']]],
-  ['fdc_5fbitstream_2eh_2',['fdc_bitstream.h',['../fdc__bitstream_8h.html',1,'']]],
-  ['fdc_5fcrc_3',['fdc_crc',['../classfdc__crc.html',1,'fdc_crc'],['../classfdc__crc.html#a131ac02efdd134bf60a41e638af182df',1,'fdc_crc::fdc_crc()']]],
-  ['fdc_5fcrc_2ecpp_4',['fdc_crc.cpp',['../fdc__crc_8cpp.html',1,'']]],
-  ['fdc_5fcrc_2eh_5',['fdc_crc.h',['../fdc__crc_8h.html',1,'']]],
-  ['fdc_5fdefs_2eh_6',['fdc_defs.h',['../fdc__defs_8h.html',1,'']]],
-  ['fdc_5fmisc_2ecpp_7',['fdc_misc.cpp',['../fdc__misc_8cpp.html',1,'']]],
-  ['fdc_5fmisc_2eh_8',['fdc_misc.h',['../fdc__misc_8h.html',1,'']]],
-  ['fdc_5ftest_2ecpp_9',['fdc_test.cpp',['../fdc__test_8cpp.html',1,'']]],
-  ['fill_5fstream_10',['fill_stream',['../classbit__array.html#a36cdaff5e771ccbe45e63a691730ba12',1,'bit_array']]],
-  ['floppy_5f2d_11',['FLOPPY_2D',['../fdc__defs_8h.html#a99c5ff7e5199a13ca4884062b413d68fa048b9b8231a2e07d36aed7acd46a0cd0',1,'fdc_defs.h']]],
-  ['floppy_5f2dd_12',['FLOPPY_2DD',['../fdc__defs_8h.html#a99c5ff7e5199a13ca4884062b413d68fa3a51151130f155d99f8482dccae69e7a',1,'fdc_defs.h']]],
-  ['floppy_5f2hd_13',['FLOPPY_2HD',['../fdc__defs_8h.html#a99c5ff7e5199a13ca4884062b413d68faadc6bc39a38b1133be70a07ec60b6faf',1,'fdc_defs.h']]],
-  ['floppyinterfacemode_14',['floppyinterfacemode',['../structpicfileformatheader__.html#ac5a89ec543644ddcceb7b329459c7d20',1,'picfileformatheader_']]],
-  ['floppyinterfacemode_5ft_15',['floppyinterfacemode_t',['../image__hfe_8h.html#a18093199b529fa24559846bd4e561fdf',1,'image_hfe.h']]],
-  ['floppyrpm_16',['floppyRPM',['../structpicfileformatheader__.html#aca6a30f39b4723fadbb8d114b9f3feee',1,'picfileformatheader_']]],
-  ['formatrevision_17',['formatrevision',['../structpicfileformatheader__.html#a6553abb8999b3fbe770a74ae9d7dfbfb',1,'picfileformatheader_']]]
+  ['e6_0',['e6',['../namespacekfx2mfm.html#a7d64e8e2925838f1ca33a6b1788b0d2e',1,'kfx2mfm']]],
+  ['emu_5ffm_5fencoding_1',['EMU_FM_ENCODING',['../image__hfe_8h.html#a7a34c5b2fe88219aca41cd3e71bf2e9ea67b83ed377c8f3df72652a44aa516bfa',1,'image_hfe.h']]],
+  ['emu_5fshugart_5ffloppymode_2',['EMU_SHUGART_FLOPPYMODE',['../image__hfe_8h.html#abd2b878e15b58e40535a2c254bdea9b2',1,'image_hfe.h']]],
+  ['enable_5ffluctuator_3',['enable_fluctuator',['../classfdc__bitstream.html#ab37c5cb738437d0a0fad5feeaf49ae90',1,'fdc_bitstream::enable_fluctuator()'],['../classmfm__codec.html#aee9a740c5f3c16a9f4be58111cbd80c0',1,'mfm_codec::enable_fluctuator()']]],
+  ['encode_4',['encode',['../namespacekfx2mfm.html#a713ead8e4c7f3876913f1a7d4673d669',1,'kfx2mfm']]]
 ];

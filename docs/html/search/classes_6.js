@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['sector_5fdata_0',['sector_data',['../structfdc__bitstream_1_1sector__data.html',1,'fdc_bitstream']]]
+  ['picfileformatheader_5f_0',['picfileformatheader_',['../structpicfileformatheader__.html',1,'']]],
+  ['pictrack_5f_1',['pictrack_',['../structpictrack__.html',1,'']]]
 ];

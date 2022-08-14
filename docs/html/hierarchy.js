@@ -11,6 +11,7 @@ var hierarchy =
     [ "fdc_bitstream", "classfdc__bitstream.html", null ],
     [ "fdc_crc", "classfdc__crc.html", null ],
     [ "fdc_bitstream::id_field", "structfdc__bitstream_1_1id__field.html", null ],
+    [ "kfx2mfm.KFX_stream", "classkfx2mfm_1_1_k_f_x__stream.html", null ],
     [ "mfm_codec", "classmfm__codec.html", null ],
     [ "mfm_header_", "structmfm__header__.html", null ],
     [ "picfileformatheader_", "structpicfileformatheader__.html", null ],

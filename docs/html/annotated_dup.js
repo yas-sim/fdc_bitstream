@@ -1,5 +1,8 @@
 var annotated_dup =
 [
+    [ "kfx2mfm", "namespacekfx2mfm.html", [
+      [ "KFX_stream", "classkfx2mfm_1_1_k_f_x__stream.html", "classkfx2mfm_1_1_k_f_x__stream" ]
+    ] ],
     [ "bit_array", "classbit__array.html", "classbit__array" ],
     [ "disk_image", "classdisk__image.html", "classdisk__image" ],
     [ "disk_image_base_properties", "classdisk__image__base__properties.html", "classdisk__image__base__properties" ],

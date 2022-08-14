@@ -94,17 +94,17 @@ $(document).ready(function(){initNavTree('mfm__codec_8cpp_source.html',''); init
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="classmfm__codec.html#a18b20e6cc0489df636cc7118243570ec">   19</a></span><a class="code hl_function" href="classmfm__codec.html#a18b20e6cc0489df636cc7118243570ec">mfm_codec::mfm_codec</a>() : m_bit_stream(0),</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        m_sync_mode(false), m_wraparound(false),</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        m_prev_write_bit(0),</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        m_sampling_rate(4e6), m_data_bit_rate(500e3),</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        m_sampling_rate(4<a class="code hl_variable" href="namespacekfx2mfm.html#a7d64e8e2925838f1ca33a6b1788b0d2e">e6</a>), m_data_bit_rate(500e3),</div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        m_fluctuation(false), m_fluctuator_numerator(1), m_fluctuator_denominator(1),</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        m_track_ready(false)</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>{</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <a class="code hl_function" href="classmfm__codec.html#ab9e990407f98e4f7fe1f13d814d1757d">update_parameters</a>();</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <a class="code hl_function" href="classmfm__codec.html#a64ba742d82d8d5f6b9e86007fcbdc27c">set_vfo_gain</a>(0.1f, 10.f);           <span class="comment">// Set data separator VFO gain (low=non-SYNC and high=SYNC period)</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <a class="code hl_function" href="classmfm__codec.html#a64ba742d82d8d5f6b9e86007fcbdc27c">set_vfo_gain</a>(8.f, 12.f);           <span class="comment">// Set data separator VFO gain (low=non-SYNC and high=SYNC period)</span></div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <a class="code hl_function" href="classmfm__codec.html#a9ed71c91fd40465e9e485ca856f714fd">set_gain</a>(m_vfo_gain_l);</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>}</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="classmfm__codec.html#aa4483dff3a6830326ee2214aeeea9286">   37</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classmfm__codec.html#aa4483dff3a6830326ee2214aeeea9286">mfm_codec::reset</a>(<span class="keywordtype">void</span>) {</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    m_sampling_rate = 4e6;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    m_sampling_rate = 4<a class="code hl_variable" href="namespacekfx2mfm.html#a7d64e8e2925838f1ca33a6b1788b0d2e">e6</a>;</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    m_data_bit_rate = 500e3;</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <a class="code hl_function" href="classmfm__codec.html#ab9e990407f98e4f7fe1f13d814d1757d">update_parameters</a>();</div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    m_prev_write_bit = 0;</div>
@@ -433,6 +433,7 @@ $(document).ready(function(){initNavTree('mfm__codec_8cpp_source.html',''); init
 <div class="ttc" id="aclassmfm__codec_html_aee9a740c5f3c16a9f4be58111cbd80c0"><div class="ttname"><a href="classmfm__codec.html#aee9a740c5f3c16a9f4be58111cbd80c0">mfm_codec::enable_fluctuator</a></div><div class="ttdeci">void enable_fluctuator(size_t numerator, size_t denominator)</div><div class="ttdoc">Enable data separator fluctuator. Data separator has feature to introduce a little uncertainty to rep...</div><div class="ttdef"><b>Definition:</b> <a href="mfm__codec_8cpp_source.html#l00417">mfm_codec.cpp:417</a></div></div>
 <div class="ttc" id="aclassmfm__codec_html_afb3614a444293ecf43de800cb2198a46"><div class="ttname"><a href="classmfm__codec.html#afb3614a444293ecf43de800cb2198a46">mfm_codec::mfm_read_byte</a></div><div class="ttdeci">bool mfm_read_byte(uint8_t &amp;data, bool &amp;missing_clock, bool ignore_missing_clock=true, bool ignore_sync_field=true)</div><div class="ttdoc">Read 1 byte from track buffer.</div><div class="ttdef"><b>Definition:</b> <a href="mfm__codec_8cpp_source.html#l00255">mfm_codec.cpp:255</a></div></div>
 <div class="ttc" id="amfm__codec_8h_html"><div class="ttname"><a href="mfm__codec_8h.html">mfm_codec.h</a></div></div>
+<div class="ttc" id="anamespacekfx2mfm_html_a7d64e8e2925838f1ca33a6b1788b0d2e"><div class="ttname"><a href="namespacekfx2mfm.html#a7d64e8e2925838f1ca33a6b1788b0d2e">kfx2mfm.e6</a></div><div class="ttdeci">e6</div><div class="ttdef"><b>Definition:</b> <a href="kfx2mfm_8py_source.html#l00320">kfx2mfm.py:320</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

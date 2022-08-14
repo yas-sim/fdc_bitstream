@@ -40,6 +40,14 @@ var NAVTREE =
       [ "<em>Intentional</em> fluctuation mechanism - for timing sensitive copy-protection data reproduction", "md__r_e_a_d_m_e.html#autotoc_md12", null ],
       [ "MFM image data format:", "md__r_e_a_d_m_e.html#autotoc_md14", null ]
     ] ],
+    [ "Namespaces", "namespaces.html", [
+      [ "Namespace List", "namespaces.html", "namespaces_dup" ],
+      [ "Namespace Members", "namespacemembers.html", [
+        [ "All", "namespacemembers.html", null ],
+        [ "Functions", "namespacemembers_func.html", null ],
+        [ "Variables", "namespacemembers_vars.html", null ]
+      ] ]
+    ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
@@ -67,7 +75,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"image__raw_8cpp.html"
+"image__hfe_8h.html#a7a34c5b2fe88219aca41cd3e71bf2e9ea7c82533d600ffed072f5656e6ca3188d"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
