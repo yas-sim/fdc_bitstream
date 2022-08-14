@@ -1,7 +1,7 @@
 var searchData=
 [
   ['what_0',['what',['../classdisk__image__exception.html#a3ce15900282ae3035586e1879940a783',1,'disk_image_exception']]],
-  ['write_1',['write',['../classdisk__image.html#ad302da7b509b862d8cf2e2d14bf4d7fe',1,'disk_image::write()'],['../classdisk__image__mfm.html#a4fe134dd69da0807868c2b1046c3d84b',1,'disk_image_mfm::write()']]],
+  ['write_1',['write',['../classdisk__image.html#a3ab5df15e9b0d335c13e18a267d61053',1,'disk_image::write()'],['../classdisk__image__hfe.html#a84cf2dc2e78bb99297ed104cb7dcfafe',1,'disk_image_hfe::write()'],['../classdisk__image__mfm.html#ad75f59451003cf35e011ffdda4ecbcbf',1,'disk_image_mfm::write()'],['../classdisk__image__raw.html#ab18619ad31fca7a173950d7e4d0c3e72',1,'disk_image_raw::write()']]],
   ['write_5fallowed_2',['write_allowed',['../structpicfileformatheader__.html#a1120a2d9594bcee66f896067ba182ccd',1,'picfileformatheader_']]],
   ['write_5fdata_3',['write_data',['../classfdc__bitstream.html#aa56d06aee0676001c3b245c144f12a6b',1,'fdc_bitstream']]],
   ['write_5fmfm_4',['write_mfm',['../namespacekfx2mfm.html#aa3e14a85bfac054d777ea275811d0824',1,'kfx2mfm']]],

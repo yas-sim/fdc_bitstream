@@ -88,7 +88,7 @@ $(document).ready(function(){initNavTree('classdisk__image.html',''); initResiza
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classdisk__image-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">disk_image Class Reference</div></div>
+  <div class="headertitle"><div class="title">disk_image Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -113,24 +113,24 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a0e9aad2006b60cadee00ba839693912d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac1fbd2842ec16fe6925ff4e26d7afe1e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdisk__image.html#ac1fbd2842ec16fe6925ff4e26d7afe1e">create_empty_track_data</a> (size_t num_tracks)</td></tr>
 <tr class="separator:ac1fbd2842ec16fe6925ff4e26d7afe1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff14587e7f5fc419e2db09591fa76aba"><td class="memItemLeft" align="right" valign="top">std::ifstream&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdisk__image.html#aff14587e7f5fc419e2db09591fa76aba">open_binary_file</a> (std::string file_name)</td></tr>
-<tr class="separator:aff14587e7f5fc419e2db09591fa76aba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a05c69cff6d08b8d7cd4f32f2bed63ad9"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdisk__image.html#a05c69cff6d08b8d7cd4f32f2bed63ad9">read</a> (std::string file_name)</td></tr>
-<tr class="separator:a05c69cff6d08b8d7cd4f32f2bed63ad9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad302da7b509b862d8cf2e2d14bf4d7fe"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdisk__image.html#ad302da7b509b862d8cf2e2d14bf4d7fe">write</a> (std::string file_name)</td></tr>
-<tr class="separator:ad302da7b509b862d8cf2e2d14bf4d7fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a221bf84542040537004b0c4ab0bcc723"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbit__array.html">bit_array</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdisk__image.html#a221bf84542040537004b0c4ab0bcc723">get_track_data</a> (size_t track_number)</td></tr>
-<tr class="separator:a221bf84542040537004b0c4ab0bcc723"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ade8eb8556e1fab8596aedc0440f48f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdisk__image.html#a6ade8eb8556e1fab8596aedc0440f48f">set_track_data</a> (size_t track_number, <a class="el" href="classbit__array.html">bit_array</a> track_data)</td></tr>
-<tr class="separator:a6ade8eb8556e1fab8596aedc0440f48f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac9b4d7fba2912ba163b27b19f5b87dda"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdisk__image.html#ac9b4d7fba2912ba163b27b19f5b87dda">media_max_track_number</a> (<a class="el" href="fdc__defs_8h.html#a99c5ff7e5199a13ca4884062b413d68f">media_type</a> mtype)</td></tr>
-<tr class="separator:ac9b4d7fba2912ba163b27b19f5b87dda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fdc06a7d330106b3432c70c3da4ab52"><td class="memItemLeft" align="right" valign="top">std::ifstream&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdisk__image.html#a4fdc06a7d330106b3432c70c3da4ab52">open_binary_file</a> (const std::string file_name)</td></tr>
+<tr class="separator:a4fdc06a7d330106b3432c70c3da4ab52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85d235a1ae58907960f50d760deeaf4f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdisk__image.html#a85d235a1ae58907960f50d760deeaf4f">read</a> (const std::string file_name)=0</td></tr>
+<tr class="separator:a85d235a1ae58907960f50d760deeaf4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ab5df15e9b0d335c13e18a267d61053"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdisk__image.html#a3ab5df15e9b0d335c13e18a267d61053">write</a> (const std::string file_name)=0</td></tr>
+<tr class="separator:a3ab5df15e9b0d335c13e18a267d61053"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94db63dc2ae8d400627d9e27639586ba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbit__array.html">bit_array</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdisk__image.html#a94db63dc2ae8d400627d9e27639586ba">get_track_data</a> (const size_t track_number)</td></tr>
+<tr class="separator:a94db63dc2ae8d400627d9e27639586ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a239a55d5af39666ed370c83d1d09e2b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdisk__image.html#a239a55d5af39666ed370c83d1d09e2b2">set_track_data</a> (const size_t track_number, const <a class="el" href="classbit__array.html">bit_array</a> track_data)</td></tr>
+<tr class="separator:a239a55d5af39666ed370c83d1d09e2b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad155509a0789029f661051d408a959e0"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdisk__image.html#ad155509a0789029f661051d408a959e0">media_max_track_number</a> (const <a class="el" href="fdc__defs_8h.html#a99c5ff7e5199a13ca4884062b413d68f">media_type</a> mtype)</td></tr>
+<tr class="separator:ad155509a0789029f661051d408a959e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa063827886602494f9cdf10bec0ff9d8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdisk__image.html#aa063827886602494f9cdf10bec0ff9d8">is_ready</a> (void)</td></tr>
 <tr class="separator:aa063827886602494f9cdf10bec0ff9d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c4f20802b21ec636dd0823d84418145"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdisk__image__base__properties.html">disk_image_base_properties</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdisk__image.html#a2c4f20802b21ec636dd0823d84418145">get_property</a> (void)</td></tr>
 <tr class="separator:a2c4f20802b21ec636dd0823d84418145"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5bb97a5e1802f7d11c58a566773d00ef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdisk__image.html#a5bb97a5e1802f7d11c58a566773d00ef">set_property</a> (<a class="el" href="classdisk__image__base__properties.html">disk_image_base_properties</a> prop)</td></tr>
-<tr class="separator:a5bb97a5e1802f7d11c58a566773d00ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13a1a7535d9aeaed35bd2271c49e9eaf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdisk__image.html#a13a1a7535d9aeaed35bd2271c49e9eaf">set_property</a> (const <a class="el" href="classdisk__image__base__properties.html">disk_image_base_properties</a> prop)</td></tr>
+<tr class="separator:a13a1a7535d9aeaed35bd2271c49e9eaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -277,8 +277,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a221bf84542040537004b0c4ab0bcc723" name="a221bf84542040537004b0c4ab0bcc723"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a221bf84542040537004b0c4ab0bcc723">&#9670;&nbsp;</a></span>get_track_data()</h2>
+<a id="a94db63dc2ae8d400627d9e27639586ba" name="a94db63dc2ae8d400627d9e27639586ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94db63dc2ae8d400627d9e27639586ba">&#9670;&nbsp;</a></span>get_track_data()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -286,7 +286,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="classbit__array.html">bit_array</a> disk_image::get_track_data </td>
           <td>(</td>
-          <td class="paramtype">size_t&#160;</td>
+          <td class="paramtype">const size_t&#160;</td>
           <td class="paramname"><em>track_number</em></td><td>)</td>
           <td></td>
         </tr>
@@ -325,8 +325,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ac9b4d7fba2912ba163b27b19f5b87dda" name="ac9b4d7fba2912ba163b27b19f5b87dda"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac9b4d7fba2912ba163b27b19f5b87dda">&#9670;&nbsp;</a></span>media_max_track_number()</h2>
+<a id="ad155509a0789029f661051d408a959e0" name="ad155509a0789029f661051d408a959e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad155509a0789029f661051d408a959e0">&#9670;&nbsp;</a></span>media_max_track_number()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -334,7 +334,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">size_t disk_image::media_max_track_number </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="fdc__defs_8h.html#a99c5ff7e5199a13ca4884062b413d68f">media_type</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="fdc__defs_8h.html#a99c5ff7e5199a13ca4884062b413d68f">media_type</a>&#160;</td>
           <td class="paramname"><em>mtype</em></td><td>)</td>
           <td></td>
         </tr>
@@ -345,8 +345,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="aff14587e7f5fc419e2db09591fa76aba" name="aff14587e7f5fc419e2db09591fa76aba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aff14587e7f5fc419e2db09591fa76aba">&#9670;&nbsp;</a></span>open_binary_file()</h2>
+<a id="a4fdc06a7d330106b3432c70c3da4ab52" name="a4fdc06a7d330106b3432c70c3da4ab52"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fdc06a7d330106b3432c70c3da4ab52">&#9670;&nbsp;</a></span>open_binary_file()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -354,7 +354,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">std::ifstream disk_image::open_binary_file </td>
           <td>(</td>
-          <td class="paramtype">std::string&#160;</td>
+          <td class="paramtype">const std::string&#160;</td>
           <td class="paramname"><em>file_name</em></td><td>)</td>
           <td></td>
         </tr>
@@ -365,8 +365,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a05c69cff6d08b8d7cd4f32f2bed63ad9" name="a05c69cff6d08b8d7cd4f32f2bed63ad9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a05c69cff6d08b8d7cd4f32f2bed63ad9">&#9670;&nbsp;</a></span>read()</h2>
+<a id="a85d235a1ae58907960f50d760deeaf4f" name="a85d235a1ae58907960f50d760deeaf4f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85d235a1ae58907960f50d760deeaf4f">&#9670;&nbsp;</a></span>read()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -377,26 +377,24 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">virtual void disk_image::read </td>
           <td>(</td>
-          <td class="paramtype">std::string&#160;</td>
+          <td class="paramtype">const std::string&#160;</td>
           <td class="paramname"><em>file_name</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented in <a class="el" href="classdisk__image__hfe.html#a1eb0adcda1be3e6ab0b94b185b3653dc">disk_image_hfe</a>, <a class="el" href="classdisk__image__mfm.html#a82088c196208f18d4cc23d9701b4d9f1">disk_image_mfm</a>, and <a class="el" href="classdisk__image__raw.html#ab463b904c710e11fff9ac42a16c636fd">disk_image_raw</a>.</p>
-
-<p class="definition">Definition at line <a class="el" href="image__base_8h_source.html#l00059">59</a> of file <a class="el" href="image__base_8h_source.html">image_base.h</a>.</p>
+<p>Implemented in <a class="el" href="classdisk__image__hfe.html#aeadca366b024fe3633d681dd217b4e44">disk_image_hfe</a>, <a class="el" href="classdisk__image__mfm.html#a0eaa3b808cd84c53d17108c9dbb03491">disk_image_mfm</a>, and <a class="el" href="classdisk__image__raw.html#ae39818fee995a4cc9797bfb842f23277">disk_image_raw</a>.</p>
 
 </div>
 </div>
-<a id="a5bb97a5e1802f7d11c58a566773d00ef" name="a5bb97a5e1802f7d11c58a566773d00ef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5bb97a5e1802f7d11c58a566773d00ef">&#9670;&nbsp;</a></span>set_property()</h2>
+<a id="a13a1a7535d9aeaed35bd2271c49e9eaf" name="a13a1a7535d9aeaed35bd2271c49e9eaf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13a1a7535d9aeaed35bd2271c49e9eaf">&#9670;&nbsp;</a></span>set_property()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -407,7 +405,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">void disk_image::set_property </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classdisk__image__base__properties.html">disk_image_base_properties</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="classdisk__image__base__properties.html">disk_image_base_properties</a>&#160;</td>
           <td class="paramname"><em>prop</em></td><td>)</td>
           <td></td>
         </tr>
@@ -423,8 +421,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a6ade8eb8556e1fab8596aedc0440f48f" name="a6ade8eb8556e1fab8596aedc0440f48f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6ade8eb8556e1fab8596aedc0440f48f">&#9670;&nbsp;</a></span>set_track_data()</h2>
+<a id="a239a55d5af39666ed370c83d1d09e2b2" name="a239a55d5af39666ed370c83d1d09e2b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a239a55d5af39666ed370c83d1d09e2b2">&#9670;&nbsp;</a></span>set_track_data()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -432,13 +430,13 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">void disk_image::set_track_data </td>
           <td>(</td>
-          <td class="paramtype">size_t&#160;</td>
+          <td class="paramtype">const size_t&#160;</td>
           <td class="paramname"><em>track_number</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classbit__array.html">bit_array</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="classbit__array.html">bit_array</a>&#160;</td>
           <td class="paramname"><em>track_data</em>&#160;</td>
         </tr>
         <tr>
@@ -453,8 +451,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ad302da7b509b862d8cf2e2d14bf4d7fe" name="ad302da7b509b862d8cf2e2d14bf4d7fe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad302da7b509b862d8cf2e2d14bf4d7fe">&#9670;&nbsp;</a></span>write()</h2>
+<a id="a3ab5df15e9b0d335c13e18a267d61053" name="a3ab5df15e9b0d335c13e18a267d61053"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ab5df15e9b0d335c13e18a267d61053">&#9670;&nbsp;</a></span>write()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -465,21 +463,19 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">virtual void disk_image::write </td>
           <td>(</td>
-          <td class="paramtype">std::string&#160;</td>
+          <td class="paramtype">const std::string&#160;</td>
           <td class="paramname"><em>file_name</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented in <a class="el" href="classdisk__image__mfm.html#a4fe134dd69da0807868c2b1046c3d84b">disk_image_mfm</a>.</p>
-
-<p class="definition">Definition at line <a class="el" href="image__base_8h_source.html#l00060">60</a> of file <a class="el" href="image__base_8h_source.html">image_base.h</a>.</p>
+<p>Implemented in <a class="el" href="classdisk__image__hfe.html#a84cf2dc2e78bb99297ed104cb7dcfafe">disk_image_hfe</a>, <a class="el" href="classdisk__image__mfm.html#ad75f59451003cf35e011ffdda4ecbcbf">disk_image_mfm</a>, and <a class="el" href="classdisk__image__raw.html#ab18619ad31fca7a173950d7e4d0c3e72">disk_image_raw</a>.</p>
 
 </div>
 </div>

@@ -5,7 +5,7 @@ var searchData=
   ['disable_5ffluctuator_2',['disable_fluctuator',['../classfdc__bitstream.html#a0b39dd619d4fdc04b89392a1a87c7589',1,'fdc_bitstream::disable_fluctuator()'],['../classmfm__codec.html#a6e8a09604245fb10c7ab0dd49dc1ffa1',1,'mfm_codec::disable_fluctuator()']]],
   ['disk_5fimage_3',['disk_image',['../classdisk__image.html#a0b4ff664c6e4bfc36cd2eb996d681068',1,'disk_image']]],
   ['disk_5fimage_5fbase_5fproperties_4',['disk_image_base_properties',['../classdisk__image__base__properties.html#a6611a1d78b58eacd36d4cb6b2b3a3c11',1,'disk_image_base_properties']]],
-  ['disk_5fimage_5fexception_5',['disk_image_exception',['../classdisk__image__exception.html#abfdf8f3a0baedaeaab518fc042b7d68e',1,'disk_image_exception']]],
+  ['disk_5fimage_5fexception_5',['disk_image_exception',['../classdisk__image__exception.html#a5b3f1dd8e62e0d55cbcf16b827319f09',1,'disk_image_exception']]],
   ['disk_5fimage_5fhfe_6',['disk_image_hfe',['../classdisk__image__hfe.html#a42071345f9cafd8d1f6f3d5df3e137e3',1,'disk_image_hfe']]],
   ['disk_5fimage_5fmfm_7',['disk_image_mfm',['../classdisk__image__mfm.html#ac51b983986c6271afa580e625458faa3',1,'disk_image_mfm']]],
   ['disk_5fimage_5fraw_8',['disk_image_raw',['../classdisk__image__raw.html#a033186b96254b49014ed1b388a6075db',1,'disk_image_raw']]],

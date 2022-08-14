@@ -88,36 +88,39 @@ $(document).ready(function(){initNavTree('image__raw_8h_source.html',''); initRe
 <div class="contents">
 <a href="image__raw_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#ifdef _WIN32</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#ifdef DLL_BODY</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#define DLL_EXPORT  __declspec(dllexport)</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#define DLL_EXPORT  __declspec(dllimport)</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="image__raw_8h.html#a1ca888bd091694c05472e1b91df1a97b">   11</a></span><span class="preprocessor">#define DLL_EXPORT</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &lt;sstream&gt;</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &quot;<a class="code" href="image__base_8h.html">image_base.h</a>&quot;</span></div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="classdisk__image__raw.html">   20</a></span><span class="keyword">class </span><a class="code hl_define" href="image__raw_8h.html#a1ca888bd091694c05472e1b91df1a97b">DLL_EXPORT</a> <a class="code hl_class" href="classdisk__image__raw.html">disk_image_raw</a> : <span class="keyword">public</span> <a class="code hl_class" href="classdisk__image.html">disk_image</a> {</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="classdisk__image__raw.html#a033186b96254b49014ed1b388a6075db">   23</a></span>    <a class="code hl_function" href="classdisk__image__raw.html#a033186b96254b49014ed1b388a6075db">disk_image_raw</a>() : <a class="code hl_class" href="classdisk__image.html">disk_image</a>() {};</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classdisk__image.html#a05c69cff6d08b8d7cd4f32f2bed63ad9">read</a>(std::string raw_file_name);</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>};</div>
-<div class="ttc" id="aclassdisk__image__raw_html"><div class="ttname"><a href="classdisk__image__raw.html">disk_image_raw</a></div><div class="ttdef"><b>Definition:</b> <a href="image__raw_8h_source.html#l00020">image_raw.h:20</a></div></div>
-<div class="ttc" id="aclassdisk__image__raw_html_a033186b96254b49014ed1b388a6075db"><div class="ttname"><a href="classdisk__image__raw.html#a033186b96254b49014ed1b388a6075db">disk_image_raw::disk_image_raw</a></div><div class="ttdeci">disk_image_raw()</div><div class="ttdef"><b>Definition:</b> <a href="image__raw_8h_source.html#l00023">image_raw.h:23</a></div></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;cassertgit &gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#ifdef _WIN32</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#ifdef DLL_BODY</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#define DLL_EXPORT  __declspec(dllexport)</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#define DLL_EXPORT  __declspec(dllimport)</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="image__raw_8h.html#a1ca888bd091694c05472e1b91df1a97b">   12</a></span><span class="preprocessor">#define DLL_EXPORT</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &lt;sstream&gt;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &quot;<a class="code" href="image__base_8h.html">image_base.h</a>&quot;</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="classdisk__image__raw.html">   21</a></span><span class="keyword">class </span><a class="code hl_define" href="image__raw_8h.html#a1ca888bd091694c05472e1b91df1a97b">DLL_EXPORT</a> <a class="code hl_class" href="classdisk__image__raw.html">disk_image_raw</a> : <span class="keyword">public</span> <a class="code hl_class" href="classdisk__image.html">disk_image</a> {</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="classdisk__image__raw.html#a033186b96254b49014ed1b388a6075db">   24</a></span>    <a class="code hl_function" href="classdisk__image__raw.html#a033186b96254b49014ed1b388a6075db">disk_image_raw</a>() : <a class="code hl_class" href="classdisk__image.html">disk_image</a>() {};</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classdisk__image.html#a85d235a1ae58907960f50d760deeaf4f">read</a>(<span class="keyword">const</span> std::string raw_file_name) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="classdisk__image__raw.html#ab18619ad31fca7a173950d7e4d0c3e72">   27</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classdisk__image__raw.html#ab18619ad31fca7a173950d7e4d0c3e72">write</a>(<span class="keyword">const</span> std::string raw_file_name)<span class="keyword"> override </span>{ assert(<span class="keyword">false</span>); }</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>};</div>
+<div class="ttc" id="aclassdisk__image__raw_html"><div class="ttname"><a href="classdisk__image__raw.html">disk_image_raw</a></div><div class="ttdef"><b>Definition:</b> <a href="image__raw_8h_source.html#l00021">image_raw.h:21</a></div></div>
+<div class="ttc" id="aclassdisk__image__raw_html_a033186b96254b49014ed1b388a6075db"><div class="ttname"><a href="classdisk__image__raw.html#a033186b96254b49014ed1b388a6075db">disk_image_raw::disk_image_raw</a></div><div class="ttdeci">disk_image_raw()</div><div class="ttdef"><b>Definition:</b> <a href="image__raw_8h_source.html#l00024">image_raw.h:24</a></div></div>
+<div class="ttc" id="aclassdisk__image__raw_html_ab18619ad31fca7a173950d7e4d0c3e72"><div class="ttname"><a href="classdisk__image__raw.html#ab18619ad31fca7a173950d7e4d0c3e72">disk_image_raw::write</a></div><div class="ttdeci">void write(const std::string raw_file_name) override</div><div class="ttdef"><b>Definition:</b> <a href="image__raw_8h_source.html#l00027">image_raw.h:27</a></div></div>
 <div class="ttc" id="aclassdisk__image_html"><div class="ttname"><a href="classdisk__image.html">disk_image</a></div><div class="ttdef"><b>Definition:</b> <a href="image__base_8h_source.html#l00042">image_base.h:42</a></div></div>
-<div class="ttc" id="aclassdisk__image_html_a05c69cff6d08b8d7cd4f32f2bed63ad9"><div class="ttname"><a href="classdisk__image.html#a05c69cff6d08b8d7cd4f32f2bed63ad9">disk_image::read</a></div><div class="ttdeci">virtual void read(std::string file_name)</div><div class="ttdef"><b>Definition:</b> <a href="image__base_8h_source.html#l00059">image_base.h:59</a></div></div>
+<div class="ttc" id="aclassdisk__image_html_a85d235a1ae58907960f50d760deeaf4f"><div class="ttname"><a href="classdisk__image.html#a85d235a1ae58907960f50d760deeaf4f">disk_image::read</a></div><div class="ttdeci">virtual void read(const std::string file_name)=0</div></div>
 <div class="ttc" id="aimage__base_8h_html"><div class="ttname"><a href="image__base_8h.html">image_base.h</a></div></div>
-<div class="ttc" id="aimage__raw_8h_html_a1ca888bd091694c05472e1b91df1a97b"><div class="ttname"><a href="image__raw_8h.html#a1ca888bd091694c05472e1b91df1a97b">DLL_EXPORT</a></div><div class="ttdeci">#define DLL_EXPORT</div><div class="ttdef"><b>Definition:</b> <a href="image__raw_8h_source.html#l00011">image_raw.h:11</a></div></div>
+<div class="ttc" id="aimage__raw_8h_html_a1ca888bd091694c05472e1b91df1a97b"><div class="ttname"><a href="image__raw_8h.html#a1ca888bd091694c05472e1b91df1a97b">DLL_EXPORT</a></div><div class="ttdeci">#define DLL_EXPORT</div><div class="ttdef"><b>Definition:</b> <a href="image__raw_8h_source.html#l00012">image_raw.h:12</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
