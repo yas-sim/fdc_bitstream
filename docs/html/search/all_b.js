@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['n_0',['N',['../structfdc__bitstream_1_1id__field.html#a39fc307b94423a960cd1fd969f0f9180',1,'fdc_bitstream::id_field']]],
-  ['number_5fof_5fside_1',['number_of_side',['../structpicfileformatheader__.html#aff10abd83080f8136c77e2b0a5146a16',1,'picfileformatheader_']]],
-  ['number_5fof_5ftrack_2',['number_of_track',['../structpicfileformatheader__.html#a787dd9fb0840285d30d1e593e4cf6f82',1,'picfileformatheader_']]],
-  ['number_5fof_5ftracks_3',['number_of_tracks',['../structmfm__header__.html#a641f93ea8ca1bede95d1feb0c252c544',1,'mfm_header_']]]
+  ['length_5fbit_0',['length_bit',['../structtrack__table__.html#a3413d83496b1a91bda45587c900722c0',1,'track_table_']]],
+  ['license_1',['LICENSE',['../md__l_i_c_e_n_s_e.html',1,'']]],
+  ['license_2emd_2',['LICENSE.md',['../_l_i_c_e_n_s_e_8md.html',1,'']]],
+  ['load_3',['load',['../classbit__array.html#a66dfba5b8657a1234292febd00582173',1,'bit_array']]]
 ];

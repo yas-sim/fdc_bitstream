@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['bit_5farray_0',['bit_array',['../classbit__array.html#a2bfe5f37464003cab697f4ea32e8e9fb',1,'bit_array']]],
-  ['bit_5fdump_1',['bit_dump',['../common_8cpp.html#a6154d40a19bad45a44e62ede6c275d98',1,'bit_dump(const uint64_t data, size_t bit_width, size_t spacing=0, bool line_feed=true):&#160;common.cpp'],['../common_8cpp.html#a24de6cbc652db202a2eb6d573f3add10',1,'bit_dump(bit_array &amp;data, size_t bit_width=0, size_t spacing=0, bool line_feed=true):&#160;common.cpp'],['../common_8h.html#a6154d40a19bad45a44e62ede6c275d98',1,'bit_dump(const uint64_t data, size_t bit_width, size_t spacing=0, bool line_feed=true):&#160;common.cpp'],['../common_8h.html#a55817a61738b93af32d1f474bbc00db9',1,'bit_dump(const bit_array &amp;data, size_t bit_width=0, size_t spacing=0, bool line_feed=true):&#160;common.h']]]
+  ['advance_5fstream_5fpos_0',['advance_stream_pos',['../classbit__array.html#a4d9be589626877b42ac820f55796783b',1,'bit_array']]],
+  ['align_1',['align',['../classdisk__image.html#ae687a0552b7be7fdea0c2becf0ec059e',1,'disk_image::align()'],['../namespacekfx2mfm.html#a6a1f0bd82aebf48777c2d9d73b7c3c40',1,'kfx2mfm.align(val, boundary)']]],
+  ['append_5fuint64_5ft_5fle_2',['append_uint64_t_le',['../namespacekfx2mfm.html#a4f3bb21bd0731146d8b5e7f4d610e7ff',1,'kfx2mfm']]]
 ];

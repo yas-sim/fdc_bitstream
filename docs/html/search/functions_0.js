@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['advance_5fstream_5fpos_0',['advance_stream_pos',['../classbit__array.html#a4d9be589626877b42ac820f55796783b',1,'bit_array']]],
-  ['align_1',['align',['../classdisk__image.html#ae687a0552b7be7fdea0c2becf0ec059e',1,'disk_image']]]
+  ['_5f_5finit_5f_5f_0',['__init__',['../classkfx2mfm_1_1_k_f_x__stream.html#a78d498e4f4c8719bb2ceb9893340c7b9',1,'kfx2mfm::KFX_stream']]]
 ];

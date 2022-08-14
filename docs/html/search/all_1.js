@@ -1,8 +1,12 @@
 var searchData=
 [
-  ['bit_5farray_0',['bit_array',['../classbit__array.html',1,'bit_array'],['../classbit__array.html#a2bfe5f37464003cab697f4ea32e8e9fb',1,'bit_array::bit_array()']]],
-  ['bit_5farray_2ecpp_1',['bit_array.cpp',['../bit__array_8cpp.html',1,'']]],
-  ['bit_5farray_2eh_2',['bit_array.h',['../bit__array_8h.html',1,'']]],
-  ['bit_5fdump_3',['bit_dump',['../common_8cpp.html#a6154d40a19bad45a44e62ede6c275d98',1,'bit_dump(const uint64_t data, size_t bit_width, size_t spacing=0, bool line_feed=true):&#160;common.cpp'],['../common_8cpp.html#a24de6cbc652db202a2eb6d573f3add10',1,'bit_dump(bit_array &amp;data, size_t bit_width=0, size_t spacing=0, bool line_feed=true):&#160;common.cpp'],['../common_8h.html#a6154d40a19bad45a44e62ede6c275d98',1,'bit_dump(const uint64_t data, size_t bit_width, size_t spacing=0, bool line_feed=true):&#160;common.cpp'],['../common_8h.html#a55817a61738b93af32d1f474bbc00db9',1,'bit_dump(const bit_array &amp;data, size_t bit_width=0, size_t spacing=0, bool line_feed=true):&#160;common.h']]],
-  ['bitrate_4',['bitRate',['../structpicfileformatheader__.html#afc596c1b379470682d21fa505bba2235',1,'picfileformatheader_']]]
+  ['advance_5fstream_5fpos_0',['advance_stream_pos',['../classbit__array.html#a4d9be589626877b42ac820f55796783b',1,'bit_array']]],
+  ['align_1',['align',['../classdisk__image.html#ae687a0552b7be7fdea0c2becf0ec059e',1,'disk_image::align()'],['../namespacekfx2mfm.html#a6a1f0bd82aebf48777c2d9d73b7c3c40',1,'kfx2mfm.align()']]],
+  ['amiga_5fdd_5ffloppymode_2',['AMIGA_DD_FLOPPYMODE',['../image__hfe_8h.html#a5a32e85d29147897edd93f230a20cfe3',1,'image_hfe.h']]],
+  ['amiga_5fhd_5ffloppymode_3',['AMIGA_HD_FLOPPYMODE',['../image__hfe_8h.html#a098af3789865e41833adfdd47c624eea',1,'image_hfe.h']]],
+  ['amiga_5fmfm_5fencoding_4',['AMIGA_MFM_ENCODING',['../image__hfe_8h.html#a7a34c5b2fe88219aca41cd3e71bf2e9ea597d33806f06577a549448452971b682',1,'image_hfe.h']]],
+  ['append_5fuint64_5ft_5fle_5',['append_uint64_t_le',['../namespacekfx2mfm.html#a4f3bb21bd0731146d8b5e7f4d610e7ff',1,'kfx2mfm']]],
+  ['args_6',['args',['../namespacekfx2mfm.html#aabc521fe9ff6f77000aa52b3230e2e62',1,'kfx2mfm']]],
+  ['atarist_5fdd_5ffloppymode_7',['ATARIST_DD_FLOPPYMODE',['../image__hfe_8h.html#a16f2ad54ae3236854e0f4bce14e178d8',1,'image_hfe.h']]],
+  ['atarist_5fhd_5ffloppymode_8',['ATARIST_HD_FLOPPYMODE',['../image__hfe_8h.html#aa4b318f87ee28b498f1dc91e28fc04cf',1,'image_hfe.h']]]
 ];

@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['picfileformatheader_0',['picfileformatheader',['../image__hfe_8h.html#a559944a799bdb535a0c5c64534181aa4',1,'image_hfe.h']]],
-  ['picfileformatheader_5f_1',['picfileformatheader_',['../structpicfileformatheader__.html',1,'']]],
-  ['pictrack_2',['pictrack',['../image__hfe_8h.html#a5128f917f40b8930bc309024a8192d89',1,'image_hfe.h']]],
-  ['pictrack_5f_3',['pictrack_',['../structpictrack__.html',1,'']]],
-  ['pos_4',['pos',['../structfdc__bitstream_1_1id__field.html#a5c022c8eeb9b3bbd5f6c1add7e7513a6',1,'fdc_bitstream::id_field']]]
+  ['n_0',['N',['../structfdc__bitstream_1_1id__field.html#a39fc307b94423a960cd1fd969f0f9180',1,'fdc_bitstream::id_field']]],
+  ['number_5fof_5fside_1',['number_of_side',['../structpicfileformatheader__.html#aff10abd83080f8136c77e2b0a5146a16',1,'picfileformatheader_']]],
+  ['number_5fof_5ftrack_2',['number_of_track',['../structpicfileformatheader__.html#a787dd9fb0840285d30d1e593e4cf6f82',1,'picfileformatheader_']]],
+  ['number_5fof_5ftracks_3',['number_of_tracks',['../structmfm__header__.html#a641f93ea8ca1bede95d1feb0c252c544',1,'mfm_header_']]]
 ];
