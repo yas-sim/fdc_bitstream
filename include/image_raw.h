@@ -1,6 +1,6 @@
 #pragma once
 
-#include <cassertgit >
+#include <cassert>
 
 #ifdef _WIN32
 #ifdef DLL_BODY
