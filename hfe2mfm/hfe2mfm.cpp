@@ -7,6 +7,7 @@
 #include "image_mfm.h"
 #include "bit_array.h"
 
+#include "image_d77.h"
 
 void usage(std::string cmd_name) {
     std::cout << cmd_name << " input_file.hfm" << std::endl;
@@ -26,15 +27,15 @@ int main(int argc, char* argv[]) {
     }
     int period_pos = input_file_name.find_last_of(".");
     const std::string extension = input_file_name.substr(period_pos + 1, input_file_name.length());
-    if (extension != "hfe") {
-        usage(argv[0]);
-        std::cout << "A file with wrong extension is given (" << extension << ")." << std::endl;
-        return -1;
-    }
+//    if (extension != "hfe") {
+//        usage(argv[0]);
+//        std::cout << "A file with wrong extension is given (" << extension << ")." << std::endl;
+//        return -1;
+//    }
     const std::string base_file_name = input_file_name.substr(0, input_file_name.find_last_of("."));
     const std::string output_file_name = base_file_name + ".mfm";
 
-    disk_image_hfe in_image;
+    disk_image_d77 in_image;
     in_image.read(input_file_name);
     if(!in_image.is_ready()) {
         std::cout << "Failed to read the input file. (Possibly wrong file format)" << std::endl;

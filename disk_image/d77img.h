@@ -31,9 +31,6 @@ public:
         }
 	};
 	
-	size_t	    m_image_size;
-	byte_array	m_image_data;
-
 	std::string m_disk_name;
 	uint8_t		m_write_protect;		// 0x00=No-protect	0x10=Protected
 	uint8_t		m_disk_type;			// 0x00:2D, 0x10:2DD, 0x20:2HD, 0x30:1D, 0x40:1DD
@@ -43,8 +40,7 @@ public:
 	using track_data = std::vector<sector_data>;
 	std::vector<track_data> m_disk_data;
 public:
-	d77img(void) : m_image_size(0), m_write_protect(0), m_disk_type(0), m_disk_size(0) {
-		m_image_data.clear();
+	d77img(void) : m_write_protect(0), m_disk_type(0), m_disk_size(0) {
 		m_disk_name.clear();
 		m_disk_data.clear();
 	}

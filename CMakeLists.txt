@@ -8,8 +8,9 @@ link_directories("${CMAKE_SOURCE_DIR}/bin/debug")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 
-add_subdirectory(disk_image)
+add_subdirectory(fdc_common)
 add_subdirectory(fdc_bitstream)
+add_subdirectory(disk_image)
 
 add_subdirectory(fdc_test)
 add_subdirectory(hfe2mfm)
