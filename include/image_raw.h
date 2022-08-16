@@ -1,5 +1,7 @@
 #pragma once
 
+#include "dll_export.h"
+
 #include <cassert>
 
 #ifdef _WIN32

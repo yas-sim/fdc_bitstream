@@ -75,7 +75,7 @@ int main(int argc, char *argv[]) {
 			track_dump_flag = true;
 		}
 		else if (*it == "-gain") {
-			if (it + 1 != cmd_opts.end() and it + 2 != cmd_opts.end()) {
+			if (it + 1 != cmd_opts.end() && it + 2 != cmd_opts.end()) {
 				gain_l = std::stod(*(it + 1));
 				gain_h = std::stod(*(it + 2));
 				it += 2;

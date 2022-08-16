@@ -11,7 +11,6 @@
 #define DLL_BODY
 #include "image_hfe.h"
 
-
 void disk_image_hfe::read(const std::string file_name) {
 	m_track_data_is_set = false;
 	picfileformatheader header;
