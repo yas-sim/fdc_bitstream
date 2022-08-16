@@ -3,7 +3,6 @@ var image__hfe_8h =
     [ "picfileformatheader_", "structpicfileformatheader__.html", "structpicfileformatheader__" ],
     [ "pictrack_", "structpictrack__.html", "structpictrack__" ],
     [ "disk_image_hfe", "classdisk__image__hfe.html", "classdisk__image__hfe" ],
-    [ "DLL_EXPORT", "image__hfe_8h.html#a1ca888bd091694c05472e1b91df1a97b", null ],
     [ "picfileformatheader", "image__hfe_8h.html#a559944a799bdb535a0c5c64534181aa4", null ],
     [ "pictrack", "image__hfe_8h.html#a5128f917f40b8930bc309024a8192d89", null ],
     [ "track_encoding_t", "image__hfe_8h.html#a7a34c5b2fe88219aca41cd3e71bf2e9e", [

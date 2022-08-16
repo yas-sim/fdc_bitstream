@@ -4,8 +4,11 @@ var annotated_dup =
       [ "KFX_stream", "classkfx2mfm_1_1_k_f_x__stream.html", "classkfx2mfm_1_1_k_f_x__stream" ]
     ] ],
     [ "bit_array", "classbit__array.html", "classbit__array" ],
+    [ "byte_array", "classbyte__array.html", "classbyte__array" ],
+    [ "d77img", "classd77img.html", "classd77img" ],
     [ "disk_image", "classdisk__image.html", "classdisk__image" ],
     [ "disk_image_base_properties", "classdisk__image__base__properties.html", "classdisk__image__base__properties" ],
+    [ "disk_image_d77", "classdisk__image__d77.html", "classdisk__image__d77" ],
     [ "disk_image_exception", "classdisk__image__exception.html", "classdisk__image__exception" ],
     [ "disk_image_hfe", "classdisk__image__hfe.html", "classdisk__image__hfe" ],
     [ "disk_image_mfm", "classdisk__image__mfm.html", "classdisk__image__mfm" ],
