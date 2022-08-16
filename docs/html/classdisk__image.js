@@ -9,6 +9,7 @@ var classdisk__image =
     [ "is_ready", "classdisk__image.html#aa063827886602494f9cdf10bec0ff9d8", null ],
     [ "media_max_track_number", "classdisk__image.html#ad155509a0789029f661051d408a959e0", null ],
     [ "open_binary_file", "classdisk__image.html#a4fdc06a7d330106b3432c70c3da4ab52", null ],
+    [ "open_text_file", "classdisk__image.html#aa2fbdcb556ce5ac6f9970ed65945a815", null ],
     [ "read", "classdisk__image.html#a85d235a1ae58907960f50d760deeaf4f", null ],
     [ "set_property", "classdisk__image.html#a13a1a7535d9aeaed35bd2271c49e9eaf", null ],
     [ "set_track_data", "classdisk__image.html#a239a55d5af39666ed370c83d1d09e2b2", null ],
