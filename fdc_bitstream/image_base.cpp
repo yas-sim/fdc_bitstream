@@ -40,6 +40,15 @@ std::ifstream disk_image::open_binary_file(const std::string file_name) {
     return ifs;
 }
 
+std::ifstream disk_image::open_text_file(const std::string file_name) {
+    std::ifstream ifs;
+    ifs.open(file_name, std::ios::in);
+    if (!ifs) {
+        throw disk_image_exception(-1, "Failed to open '" + file_name + "'.");
+    }
+    return ifs;
+}
+
 bit_array disk_image::get_track_data(const size_t track_number) {
     if (track_number < m_track_data.size() && track_number <= m_base_prop.m_max_track_number) {
         return m_track_data[track_number];

@@ -56,6 +56,7 @@ public:
     void create_empty_track_data(size_t num_tracks);        // Create empty track buffers with length of 0.
 
     std::ifstream open_binary_file(const std::string file_name);
+    std::ifstream open_text_file(const std::string file_name);
     virtual void read(const std::string file_name) = 0;
     virtual void write(const std::string file_name) = 0;
 

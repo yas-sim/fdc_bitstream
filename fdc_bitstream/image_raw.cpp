@@ -13,7 +13,7 @@
 
 void disk_image_raw::read(const std::string file_name) {
     m_track_data_is_set = false;
-    std::ifstream ifs = open_binary_file(file_name);
+    std::ifstream ifs = open_text_file(file_name);
 
     std::string  buf;
     bool read_track_mode = false;
@@ -50,6 +50,7 @@ void disk_image_raw::read(const std::string file_name) {
                 }
                 else if (items[0] == "**TRACK_END") {
                     m_track_data[cylinder * 2 + side] = track_data;
+                    m_base_prop.m_max_track_number = cylinder * 2 + side;
                     read_track_mode = false;
                 }
                 else if (items[0] == "**MEDIA_TYPE") {
