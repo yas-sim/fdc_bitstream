@@ -37,8 +37,11 @@ public:
     void read(const std::string file_name) override;
     void write(const std::string file_name) override;
 
-    inline size_t get_number_of_tracks(void) { return m_base_prop.m_max_track_number; }
-    inline size_t get_spindle_time_ns(void)  { return m_base_prop.m_spindle_time_ns; }
-    inline size_t get_data_bit_rate(void)    { return m_base_prop.m_data_bit_rate; }
-    inline size_t get_sampling_rate(void)    { return m_base_prop.m_sampling_rate; }
+    disk_image_mfm& operator=(disk_image &image)
+    {
+        m_base_prop = image.get_property();
+        m_track_data = image.get_track_data_all();
+        return *this;
+    }
+
 };

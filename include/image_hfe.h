@@ -75,4 +75,11 @@ public:
 
 	void read(const std::string file_name) override;
 	void write(const std::string file_name) override { assert(false); }
+
+    disk_image_hfe& operator=(disk_image &image)
+    {
+        m_base_prop = image.get_property();
+        m_track_data = image.get_track_data_all();
+        return *this;
+    }
 };

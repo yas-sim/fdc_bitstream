@@ -61,4 +61,18 @@ public:
 
     disk_image_base_properties get_property(void) { return m_base_prop; }
     void set_property(const disk_image_base_properties prop) { m_base_prop = prop; }
+    std::vector<bit_array> get_track_data_all(void) { return m_track_data; }
+    void set_track_data_all(std::vector<bit_array> track_data) { 
+        m_track_data = track_data; 
+        if(track_data.size() > 0) {
+            m_track_data_is_set = true;
+        } else {
+            m_track_data_is_set = false;
+        }
+    }
+
+    inline size_t get_number_of_tracks(void) { return m_base_prop.m_max_track_number; }
+    inline size_t get_spindle_time_ns(void)  { return m_base_prop.m_spindle_time_ns; }
+    inline size_t get_data_bit_rate(void)    { return m_base_prop.m_data_bit_rate; }
+    inline size_t get_sampling_rate(void)    { return m_base_prop.m_sampling_rate; }
 };
