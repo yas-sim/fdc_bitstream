@@ -110,6 +110,63 @@ The `test4()` in the `fdc_test` generates random irregular pulses at a specific 
 
 ----
 
+## Command line examples for sample programs and tools.  
+
+```sh
+CMD> create_mfm_image
+# 'new_image.mfm' will be created.
+=== 0
+=== 1
+=== 2
+ :  :
+=== 83
+
+CMD> check_image -i new_mfm.mfm
+# ID list will be shown.
+
+Gain L = 8, Gain H = 12
+Start track = 0, End track = 79
+
+=== 0
+ 0 00 00 01 01 fa0c OK
+ 1 00 00 02 01 af5f OK
+ 2 00 00 03 01 9c6e OK
+ :  :  :  :  :  :    :
+15 00 00 10 01 ca4e OK
+Error rate: 0
+=== 1
+ 0 00 01 01 01 cd3c OK
+ 1 00 01 02 01 986f OK
+ 2 00 01 03 01 ab5e OK
+ :  :  :  :  :  :    :
+
+CMD> image_converter new_image.mfm new_image.d77
+# new_image.d77 will be created from new_image.mfm
+
+new_image.mfm -> new_image.d77
+
+CMD> check_image -i new_mfm.mfm
+# ID list will be shown. (the same contents as original new_image.mfm)
+
+Gain L = 8, Gain H = 12
+Start track = 0, End track = 79
+
+=== 0
+ 0 00 00 01 01 fa0c OK
+ 1 00 00 02 01 af5f OK
+ 2 00 00 03 01 9c6e OK
+ :  :  :  :  :  :    :
+15 00 00 10 01 ca4e OK
+Error rate: 0
+=== 1
+ 0 00 01 01 01 cd3c OK
+ 1 00 01 02 01 986f OK
+ 2 00 01 03 01 ab5e OK
+ :  :  :  :  :  :    :
+
+```
+
+----
 ## MFM image data format:
 The default sampling rate for the MFM format is 4MHz. The data rate of an orginary 2D/MFM format data is 500KHz. This means, one bit cell will be recorded with eight bits of data in the MFM format.  
 
