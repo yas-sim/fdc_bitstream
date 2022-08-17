@@ -4,7 +4,7 @@
 ```sh
 python kfx2mfm.py -i <input_raw_directory> 
 ```
-The convert will generate "`<input_raw_directory>.mfm`" file as output.  
+The converter will generate "`<input_raw_directory>.mfm`" file as output.  
 
 Kryoflux RAW image directory may contain RAW track files like below:  
 ```
