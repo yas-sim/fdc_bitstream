@@ -230,18 +230,27 @@ std::vector<fdc_bitstream::id_field> fdc_bitstream::read_all_idam(void) {
 * @param[out] sect_data Read sector data buffer
 * @param[out] crc_error CRC error flag (true=error)
 * @param[out] dam_type (true=DDAM/false=DAM)
+* @param[out] record_not_found (true=Record-not-found, false=no error)
+* @param[in] time out enable flag (true=time out when DAM can't find in 43 bytes of data read / false = no time out)
 * @return size_t Track position of the read_sector() started reading.
 */
-size_t fdc_bitstream::read_sector_body(size_t sect_length_code, std::vector<uint8_t>& sect_data, bool& crc_error, bool& dam_type) {
+size_t fdc_bitstream::read_sector_body(size_t sect_length_code, std::vector<uint8_t>& sect_data, bool& crc_error, bool& dam_type, bool &record_not_found, bool timeout) {
     std::vector<size_t> sector_length_table{ 128, 256, 512, 1024 };
-    uint8_t read_data, mc_byte = 0;
-    bool missing_clock;
-    size_t read_count = 0;
+
     sect_data.clear();
     crc_error = false;
     dam_type = false;
+    record_not_found = false;
+
+    size_t read_count = 0;
     size_t total_read_count = 0;
     size_t read_start_pos = 0;
+    int time_out_count;
+    time_out_count = timeout ? 43 : -1;     // Time out (=record not found) in 43 bytes
+
+    uint8_t read_data, mc_byte = 0;
+    bool missing_clock;
+
     while (true) {
         switch (m_state) {
         case fdc_state::IDLE:
@@ -267,7 +276,8 @@ size_t fdc_bitstream::read_sector_body(size_t sect_length_code, std::vector<uint
                 sect_data.clear();
                 m_crcgen.reset();
                 m_crcgen.data(read_data);
-                read_count = sector_length_table[sect_length_code & 0b0011u] + 2;    // sector size+CRC
+                read_count = sector_length_table[sect_length_code & 0b0011u] + 2;   // sector size+CRC
+                time_out_count = -1;                                                // hereafter, no time out
                 m_state = fdc_state::READ_SECT;
             }
             else {
@@ -292,6 +302,12 @@ size_t fdc_bitstream::read_sector_body(size_t sect_length_code, std::vector<uint
 
         if (m_state == fdc_state::OPERATION_COMPLETED) {
             break;
+        }
+        if (time_out_count >0 ) {
+            if (--time_out_count == 0) {        // DAM/DDAM didn't appear in 43 bytes
+                record_not_found = true;
+                return read_start_pos;
+            }
         }
         total_read_count++;
         if (total_read_count > m_codec.get_track_length()) {
@@ -447,6 +463,7 @@ fdc_bitstream::sector_data fdc_bitstream::read_sector(int trk, int sid, int sct)
     memset(&sect_data, 0, sizeof(sector_data));
     bool crc_error = false;
     bool dam_type = false;
+    bool record_not_found = false;
     if (trk > 43) trk = 43;
     while (true) {
         if (is_wraparound()) {
@@ -460,7 +477,7 @@ fdc_bitstream::sector_data fdc_bitstream::read_sector(int trk, int sid, int sct)
         sect_data.id_pos = pos;
         if (sect_id[0] == trk && sect_id[2] == sct) {       // FD179x/MB8876 won'nt compare 'head' field
             if (crc_error == false) {
-                pos = read_sector_body(sect_id[3], sect_body_data, crc_error, dam_type);
+                pos = read_sector_body(sect_id[3], sect_body_data, crc_error, dam_type, record_not_found);
                 sect_data.data_pos = pos;
                 size_t distance;
                 if (sect_data.data_pos >= sect_data.id_pos) {
@@ -474,7 +491,7 @@ fdc_bitstream::sector_data fdc_bitstream::read_sector(int trk, int sid, int sct)
                 }
                 else {
                     sect_data.data = sect_body_data;
-                    sect_data.record_not_found = false;
+                    sect_data.record_not_found = record_not_found;
                     return sect_data;
                 }
             }
