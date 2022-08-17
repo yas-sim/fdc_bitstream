@@ -218,6 +218,59 @@ How to build the test program and tools</h1>
 <p ><img src="resources/corocoro.png" alt="" class="inline"/></p>
 <hr  />
 <h1><a class="anchor" id="autotoc_md18"></a>
+Command line examples for sample programs and tools.</h1>
+<div class="fragment"><div class="line">CMD&gt; create_mfm_image</div>
+<div class="line"># &#39;new_image.mfm&#39; will be created.</div>
+<div class="line">=== 0</div>
+<div class="line">=== 1</div>
+<div class="line">=== 2</div>
+<div class="line"> :  :</div>
+<div class="line">=== 83</div>
+<div class="line"> </div>
+<div class="line">CMD&gt; check_image -i new_mfm.mfm</div>
+<div class="line"># ID list will be shown.</div>
+<div class="line"> </div>
+<div class="line">Gain L = 8, Gain H = 12</div>
+<div class="line">Start track = 0, End track = 79</div>
+<div class="line"> </div>
+<div class="line">=== 0</div>
+<div class="line"> 0 00 00 01 01 fa0c OK</div>
+<div class="line"> 1 00 00 02 01 af5f OK</div>
+<div class="line"> 2 00 00 03 01 9c6e OK</div>
+<div class="line"> :  :  :  :  :  :    :</div>
+<div class="line">15 00 00 10 01 ca4e OK</div>
+<div class="line">Error rate: 0</div>
+<div class="line">=== 1</div>
+<div class="line"> 0 00 01 01 01 cd3c OK</div>
+<div class="line"> 1 00 01 02 01 986f OK</div>
+<div class="line"> 2 00 01 03 01 ab5e OK</div>
+<div class="line"> :  :  :  :  :  :    :</div>
+<div class="line"> </div>
+<div class="line">CMD&gt; image_converter new_image.mfm new_image.d77</div>
+<div class="line"># new_image.d77 will be created from new_image.mfm</div>
+<div class="line"> </div>
+<div class="line">new_image.mfm -&gt; new_image.d77</div>
+<div class="line"> </div>
+<div class="line">CMD&gt; check_image -i new_mfm.mfm</div>
+<div class="line"># ID list will be shown. (the same contents as original new_image.mfm)</div>
+<div class="line"> </div>
+<div class="line">Gain L = 8, Gain H = 12</div>
+<div class="line">Start track = 0, End track = 79</div>
+<div class="line"> </div>
+<div class="line">=== 0</div>
+<div class="line"> 0 00 00 01 01 fa0c OK</div>
+<div class="line"> 1 00 00 02 01 af5f OK</div>
+<div class="line"> 2 00 00 03 01 9c6e OK</div>
+<div class="line"> :  :  :  :  :  :    :</div>
+<div class="line">15 00 00 10 01 ca4e OK</div>
+<div class="line">Error rate: 0</div>
+<div class="line">=== 1</div>
+<div class="line"> 0 00 01 01 01 cd3c OK</div>
+<div class="line"> 1 00 01 02 01 986f OK</div>
+<div class="line"> 2 00 01 03 01 ab5e OK</div>
+<div class="line"> :  :  :  :  :  :    :</div>
+</div><!-- fragment --><hr  />
+ <h1><a class="anchor" id="autotoc_md20"></a>
 MFM image data format:</h1>
 <p >The default sampling rate for the MFM format is 4MHz. The data rate of an orginary 2D/MFM format data is 500KHz. This means, one bit cell will be recorded with eight bits of data in the MFM format. <br  />
 </p>

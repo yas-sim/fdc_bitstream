@@ -42,7 +42,8 @@ var NAVTREE =
       [ "Directory structure - Sample/Test/Tool programs, etc", "md__r_e_a_d_m_e.html#autotoc_md13", null ],
       [ "How to build the test program and tools", "md__r_e_a_d_m_e.html#autotoc_md14", null ],
       [ "<em>Intentional</em> fluctuation mechanism - for timing sensitive copy-protection data reproduction", "md__r_e_a_d_m_e.html#autotoc_md16", null ],
-      [ "MFM image data format:", "md__r_e_a_d_m_e.html#autotoc_md18", null ]
+      [ "Command line examples for sample programs and tools.", "md__r_e_a_d_m_e.html#autotoc_md18", null ],
+      [ "MFM image data format:", "md__r_e_a_d_m_e.html#autotoc_md20", null ]
     ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
