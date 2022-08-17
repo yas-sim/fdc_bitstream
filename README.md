@@ -121,7 +121,7 @@ CMD> create_mfm_image
  :  :
 === 83
 
-CMD> check_image -i new_mfm.mfm
+CMD> check_image -i new_image.mfm
 # ID list will be shown.
 
 Gain L = 8, Gain H = 12
@@ -145,7 +145,7 @@ CMD> image_converter new_image.mfm new_image.d77
 
 new_image.mfm -> new_image.d77
 
-CMD> check_image -i new_mfm.mfm
+CMD> check_image -i new_image.d77
 # ID list will be shown. (the same contents as original new_image.mfm)
 
 Gain L = 8, Gain H = 12
