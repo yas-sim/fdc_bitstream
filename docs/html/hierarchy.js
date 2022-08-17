@@ -22,6 +22,7 @@ var hierarchy =
     [ "fdc_bitstream::sector_data", "structfdc__bitstream_1_1sector__data.html", null ],
     [ "track_table_", "structtrack__table__.html", null ],
     [ "std::vector", null, [
+      [ "byte_array", "classbyte__array.html", null ],
       [ "byte_array", "classbyte__array.html", null ]
     ] ]
 ];

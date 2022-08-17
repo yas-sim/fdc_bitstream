@@ -11,7 +11,7 @@ var searchData=
   ['fdc_5fmisc_2ecpp_8',['fdc_misc.cpp',['../fdc__misc_8cpp.html',1,'']]],
   ['fdc_5fmisc_2eh_9',['fdc_misc.h',['../fdc__misc_8h.html',1,'']]],
   ['fdc_5ftest_2ecpp_10',['fdc_test.cpp',['../fdc__test_8cpp.html',1,'']]],
-  ['fill_11',['fill',['../classbyte__array.html#a1eb63bbeb65665d3744493cb6868d4bd',1,'byte_array']]],
+  ['fill_11',['fill',['../classbyte__array.html#a1eb63bbeb65665d3744493cb6868d4bd',1,'byte_array::fill(size_t pos, size_t count, uint8_t val)'],['../classbyte__array.html#a1eb63bbeb65665d3744493cb6868d4bd',1,'byte_array::fill(size_t pos, size_t count, uint8_t val)']]],
   ['fill_5fstream_12',['fill_stream',['../classbit__array.html#a36cdaff5e771ccbe45e63a691730ba12',1,'bit_array']]],
   ['floppy_5f2d_13',['FLOPPY_2D',['../fdc__defs_8h.html#a99c5ff7e5199a13ca4884062b413d68fa048b9b8231a2e07d36aed7acd46a0cd0',1,'fdc_defs.h']]],
   ['floppy_5f2dd_14',['FLOPPY_2DD',['../fdc__defs_8h.html#a99c5ff7e5199a13ca4884062b413d68fa3a51151130f155d99f8482dccae69e7a',1,'fdc_defs.h']]],

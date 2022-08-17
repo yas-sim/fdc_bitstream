@@ -93,7 +93,7 @@ $(document).ready(function(){initNavTree('classd77img.html',''); initResizable()
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="d77img_8h_source.html">d77img.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="disk__image_2d77img_8h_source.html">d77img.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
@@ -104,9 +104,23 @@ Classes</h2></td></tr>
 Public Types</h2></td></tr>
 <tr class="memitem:a75fff6808579c5e0b12fffb2cc085b97"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classd77img.html#a75fff6808579c5e0b12fffb2cc085b97">track_data</a> = std::vector&lt; <a class="el" href="classd77img_1_1sector__data.html">sector_data</a> &gt;</td></tr>
 <tr class="separator:a75fff6808579c5e0b12fffb2cc085b97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75fff6808579c5e0b12fffb2cc085b97"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classd77img.html#a75fff6808579c5e0b12fffb2cc085b97">track_data</a> = std::vector&lt; <a class="el" href="classd77img_1_1sector__data.html">sector_data</a> &gt;</td></tr>
+<tr class="separator:a75fff6808579c5e0b12fffb2cc085b97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a79f7063301753897ad3b09f4d589973b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classd77img.html#a79f7063301753897ad3b09f4d589973b">d77img</a> (void)</td></tr>
+<tr class="separator:a79f7063301753897ad3b09f4d589973b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8662679fabbacdf84a2103e2e565bec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classd77img.html#ae8662679fabbacdf84a2103e2e565bec">read</a> (const std::string &amp;file_name)</td></tr>
+<tr class="separator:ae8662679fabbacdf84a2103e2e565bec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29d3b741051f92e9a03a9cdc69e7d790"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classd77img.html#a29d3b741051f92e9a03a9cdc69e7d790">write</a> (std::string file_name)</td></tr>
+<tr class="separator:a29d3b741051f92e9a03a9cdc69e7d790"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0019f66260579dc5a9f6288139313cd4"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classd77img.html#a0019f66260579dc5a9f6288139313cd4">media_max_track</a> (void)</td></tr>
+<tr class="separator:a0019f66260579dc5a9f6288139313cd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5caaa93ed613d229074be543b91e293a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbyte__array.html">byte_array</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classd77img.html#a5caaa93ed613d229074be543b91e293a">read_sector</a> (const size_t track, const size_t side, const size_t sect)</td></tr>
+<tr class="separator:a5caaa93ed613d229074be543b91e293a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76157d8606ecefb3ab3de7de9a7742b6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classd77img.html#a76157d8606ecefb3ab3de7de9a7742b6">write_sector</a> (const size_t track, const size_t side, const size_t sect, const <a class="el" href="classbyte__array.html">byte_array</a> &amp;<a class="el" href="classd77img_1_1sector__data.html">sector_data</a>)</td></tr>
+<tr class="separator:a76157d8606ecefb3ab3de7de9a7742b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a79f7063301753897ad3b09f4d589973b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classd77img.html#a79f7063301753897ad3b09f4d589973b">d77img</a> (void)</td></tr>
 <tr class="separator:a79f7063301753897ad3b09f4d589973b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8662679fabbacdf84a2103e2e565bec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classd77img.html#ae8662679fabbacdf84a2103e2e565bec">read</a> (const std::string &amp;file_name)</td></tr>
@@ -130,17 +144,21 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a34a356f9628c51ecb5bb451c29e6a356"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a11b3dfcdc178f67061c9108e22fd4b80"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classd77img.html#a11b3dfcdc178f67061c9108e22fd4b80">m_disk_size</a></td></tr>
 <tr class="separator:a11b3dfcdc178f67061c9108e22fd4b80"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaab43583a2acf13b4e52916bcfd4aabc"><td class="memItemLeft" align="right" valign="top">std::vector&lt; uint32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classd77img.html#aaab43583a2acf13b4e52916bcfd4aabc">m_track_offset_table</a></td></tr>
-<tr class="separator:aaab43583a2acf13b4e52916bcfd4aabc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37aab366e27de174c1f78e030af28437"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classd77img.html#a75fff6808579c5e0b12fffb2cc085b97">track_data</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classd77img.html#a37aab366e27de174c1f78e030af28437">m_disk_data</a></td></tr>
-<tr class="separator:a37aab366e27de174c1f78e030af28437"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa438499ee1ed1138b865767609d66601"><td class="memItemLeft" align="right" valign="top">std::vector&lt; uint32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classd77img.html#aa438499ee1ed1138b865767609d66601">m_track_offset_table</a></td></tr>
+<tr class="separator:aa438499ee1ed1138b865767609d66601"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a230cc8222b4d2f833d3650c5a78d462b"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classd77img.html#a75fff6808579c5e0b12fffb2cc085b97">track_data</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classd77img.html#a230cc8222b4d2f833d3650c5a78d462b">m_disk_data</a></td></tr>
+<tr class="separator:a230cc8222b4d2f833d3650c5a78d462b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3f541eef35a53ba17070922fca07c8a"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classd77img.html#ac3f541eef35a53ba17070922fca07c8a">m_image_size</a></td></tr>
+<tr class="separator:ac3f541eef35a53ba17070922fca07c8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4cd5668d8a827e4748fba2aec743aee6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbyte__array.html">byte_array</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classd77img.html#a4cd5668d8a827e4748fba2aec743aee6">m_image_data</a></td></tr>
+<tr class="separator:a4cd5668d8a827e4748fba2aec743aee6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="d77img_8h_source.html#l00014">14</a> of file <a class="el" href="d77img_8h_source.html">d77img.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="disk__image_2d77img_8h_source.html#l00014">14</a> of file <a class="el" href="disk__image_2d77img_8h_source.html">d77img.h</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a75fff6808579c5e0b12fffb2cc085b97" name="a75fff6808579c5e0b12fffb2cc085b97"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a75fff6808579c5e0b12fffb2cc085b97">&#9670;&nbsp;</a></span>track_data</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a75fff6808579c5e0b12fffb2cc085b97">&#9670;&nbsp;</a></span>track_data <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -151,13 +169,29 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="d77img_8h_source.html#l00040">40</a> of file <a class="el" href="d77img_8h_source.html">d77img.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="disk__image_2d77img_8h_source.html#l00040">40</a> of file <a class="el" href="disk__image_2d77img_8h_source.html">d77img.h</a>.</p>
+
+</div>
+</div>
+<a id="a75fff6808579c5e0b12fffb2cc085b97" name="a75fff6808579c5e0b12fffb2cc085b97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75fff6808579c5e0b12fffb2cc085b97">&#9670;&nbsp;</a></span>track_data <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="classd77img.html#a75fff6808579c5e0b12fffb2cc085b97">d77img::track_data</a> =  std::vector&lt;<a class="el" href="classd77img_1_1sector__data.html">sector_data</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="image__converter_2d77img_8h_source.html#l00041">41</a> of file <a class="el" href="image__converter_2d77img_8h_source.html">d77img.h</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a79f7063301753897ad3b09f4d589973b" name="a79f7063301753897ad3b09f4d589973b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a79f7063301753897ad3b09f4d589973b">&#9670;&nbsp;</a></span>d77img()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a79f7063301753897ad3b09f4d589973b">&#9670;&nbsp;</a></span>d77img() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -180,13 +214,41 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="d77img_8h_source.html#l00043">43</a> of file <a class="el" href="d77img_8h_source.html">d77img.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="disk__image_2d77img_8h_source.html#l00043">43</a> of file <a class="el" href="disk__image_2d77img_8h_source.html">d77img.h</a>.</p>
+
+</div>
+</div>
+<a id="a79f7063301753897ad3b09f4d589973b" name="a79f7063301753897ad3b09f4d589973b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79f7063301753897ad3b09f4d589973b">&#9670;&nbsp;</a></span>d77img() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">d77img::d77img </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="image__converter_2d77img_8h_source.html#l00044">44</a> of file <a class="el" href="image__converter_2d77img_8h_source.html">d77img.h</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a0019f66260579dc5a9f6288139313cd4" name="a0019f66260579dc5a9f6288139313cd4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0019f66260579dc5a9f6288139313cd4">&#9670;&nbsp;</a></span>media_max_track()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0019f66260579dc5a9f6288139313cd4">&#9670;&nbsp;</a></span>media_max_track() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -201,12 +263,30 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="d77img_8cpp_source.html#l00136">136</a> of file <a class="el" href="d77img_8cpp_source.html">d77img.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="disk__image_2d77img_8cpp_source.html#l00139">139</a> of file <a class="el" href="disk__image_2d77img_8cpp_source.html">d77img.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a0019f66260579dc5a9f6288139313cd4" name="a0019f66260579dc5a9f6288139313cd4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0019f66260579dc5a9f6288139313cd4">&#9670;&nbsp;</a></span>media_max_track() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t d77img::media_max_track </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
 <a id="ae8662679fabbacdf84a2103e2e565bec" name="ae8662679fabbacdf84a2103e2e565bec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae8662679fabbacdf84a2103e2e565bec">&#9670;&nbsp;</a></span>read()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8662679fabbacdf84a2103e2e565bec">&#9670;&nbsp;</a></span>read() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -221,12 +301,30 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="d77img_8cpp_source.html#l00036">36</a> of file <a class="el" href="d77img_8cpp_source.html">d77img.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="disk__image_2d77img_8cpp_source.html#l00038">38</a> of file <a class="el" href="disk__image_2d77img_8cpp_source.html">d77img.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ae8662679fabbacdf84a2103e2e565bec" name="ae8662679fabbacdf84a2103e2e565bec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8662679fabbacdf84a2103e2e565bec">&#9670;&nbsp;</a></span>read() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void d77img::read </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>file_name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
 <a id="a5caaa93ed613d229074be543b91e293a" name="a5caaa93ed613d229074be543b91e293a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5caaa93ed613d229074be543b91e293a">&#9670;&nbsp;</a></span>read_sector()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5caaa93ed613d229074be543b91e293a">&#9670;&nbsp;</a></span>read_sector() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -257,12 +355,46 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="d77img_8cpp_source.html#l00159">159</a> of file <a class="el" href="d77img_8cpp_source.html">d77img.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="disk__image_2d77img_8cpp_source.html#l00162">162</a> of file <a class="el" href="disk__image_2d77img_8cpp_source.html">d77img.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a5caaa93ed613d229074be543b91e293a" name="a5caaa93ed613d229074be543b91e293a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5caaa93ed613d229074be543b91e293a">&#9670;&nbsp;</a></span>read_sector() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classbyte__array.html">byte_array</a> d77img::read_sector </td>
+          <td>(</td>
+          <td class="paramtype">const size_t&#160;</td>
+          <td class="paramname"><em>track</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const size_t&#160;</td>
+          <td class="paramname"><em>side</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const size_t&#160;</td>
+          <td class="paramname"><em>sect</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
 <a id="a29d3b741051f92e9a03a9cdc69e7d790" name="a29d3b741051f92e9a03a9cdc69e7d790"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a29d3b741051f92e9a03a9cdc69e7d790">&#9670;&nbsp;</a></span>write()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a29d3b741051f92e9a03a9cdc69e7d790">&#9670;&nbsp;</a></span>write() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -277,12 +409,30 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="d77img_8cpp_source.html#l00091">91</a> of file <a class="el" href="d77img_8cpp_source.html">d77img.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="disk__image_2d77img_8cpp_source.html#l00093">93</a> of file <a class="el" href="disk__image_2d77img_8cpp_source.html">d77img.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a29d3b741051f92e9a03a9cdc69e7d790" name="a29d3b741051f92e9a03a9cdc69e7d790"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a29d3b741051f92e9a03a9cdc69e7d790">&#9670;&nbsp;</a></span>write() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void d77img::write </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>file_name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
 <a id="a76157d8606ecefb3ab3de7de9a7742b6" name="a76157d8606ecefb3ab3de7de9a7742b6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a76157d8606ecefb3ab3de7de9a7742b6">&#9670;&nbsp;</a></span>write_sector()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a76157d8606ecefb3ab3de7de9a7742b6">&#9670;&nbsp;</a></span>write_sector() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -319,24 +469,64 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="d77img_8cpp_source.html#l00171">171</a> of file <a class="el" href="d77img_8cpp_source.html">d77img.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="disk__image_2d77img_8cpp_source.html#l00174">174</a> of file <a class="el" href="disk__image_2d77img_8cpp_source.html">d77img.cpp</a>.</p>
 
 </div>
 </div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="a37aab366e27de174c1f78e030af28437" name="a37aab366e27de174c1f78e030af28437"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a37aab366e27de174c1f78e030af28437">&#9670;&nbsp;</a></span>m_disk_data</h2>
+<a id="a76157d8606ecefb3ab3de7de9a7742b6" name="a76157d8606ecefb3ab3de7de9a7742b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a76157d8606ecefb3ab3de7de9a7742b6">&#9670;&nbsp;</a></span>write_sector() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;<a class="el" href="classd77img.html#a75fff6808579c5e0b12fffb2cc085b97">track_data</a>&gt; d77img::m_disk_data</td>
+          <td class="memname">bool d77img::write_sector </td>
+          <td>(</td>
+          <td class="paramtype">const size_t&#160;</td>
+          <td class="paramname"><em>track</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const size_t&#160;</td>
+          <td class="paramname"><em>side</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const size_t&#160;</td>
+          <td class="paramname"><em>sect</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classbyte__array.html">byte_array</a> &amp;&#160;</td>
+          <td class="paramname"><em>sector_data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="d77img_8h_source.html#l00041">41</a> of file <a class="el" href="d77img_8h_source.html">d77img.h</a>.</p>
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a230cc8222b4d2f833d3650c5a78d462b" name="a230cc8222b4d2f833d3650c5a78d462b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a230cc8222b4d2f833d3650c5a78d462b">&#9670;&nbsp;</a></span>m_disk_data</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="classd77img.html#a75fff6808579c5e0b12fffb2cc085b97">track_data</a> &gt; d77img::m_disk_data</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="disk__image_2d77img_8h_source.html#l00041">41</a> of file <a class="el" href="disk__image_2d77img_8h_source.html">d77img.h</a>.</p>
 
 </div>
 </div>
@@ -352,7 +542,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="d77img_8h_source.html#l00034">34</a> of file <a class="el" href="d77img_8h_source.html">d77img.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="disk__image_2d77img_8h_source.html#l00034">34</a> of file <a class="el" href="disk__image_2d77img_8h_source.html">d77img.h</a>.</p>
 
 </div>
 </div>
@@ -368,7 +558,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="d77img_8h_source.html#l00037">37</a> of file <a class="el" href="d77img_8h_source.html">d77img.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="disk__image_2d77img_8h_source.html#l00037">37</a> of file <a class="el" href="disk__image_2d77img_8h_source.html">d77img.h</a>.</p>
 
 </div>
 </div>
@@ -384,23 +574,55 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="d77img_8h_source.html#l00036">36</a> of file <a class="el" href="d77img_8h_source.html">d77img.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="disk__image_2d77img_8h_source.html#l00036">36</a> of file <a class="el" href="disk__image_2d77img_8h_source.html">d77img.h</a>.</p>
 
 </div>
 </div>
-<a id="aaab43583a2acf13b4e52916bcfd4aabc" name="aaab43583a2acf13b4e52916bcfd4aabc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaab43583a2acf13b4e52916bcfd4aabc">&#9670;&nbsp;</a></span>m_track_offset_table</h2>
+<a id="a4cd5668d8a827e4748fba2aec743aee6" name="a4cd5668d8a827e4748fba2aec743aee6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4cd5668d8a827e4748fba2aec743aee6">&#9670;&nbsp;</a></span>m_image_data</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;uint32_t&gt; d77img::m_track_offset_table</td>
+          <td class="memname"><a class="el" href="classbyte__array.html">byte_array</a> d77img::m_image_data</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="d77img_8h_source.html#l00038">38</a> of file <a class="el" href="d77img_8h_source.html">d77img.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="image__converter_2d77img_8h_source.html#l00033">33</a> of file <a class="el" href="image__converter_2d77img_8h_source.html">d77img.h</a>.</p>
+
+</div>
+</div>
+<a id="ac3f541eef35a53ba17070922fca07c8a" name="ac3f541eef35a53ba17070922fca07c8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3f541eef35a53ba17070922fca07c8a">&#9670;&nbsp;</a></span>m_image_size</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t d77img::m_image_size</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="image__converter_2d77img_8h_source.html#l00032">32</a> of file <a class="el" href="image__converter_2d77img_8h_source.html">d77img.h</a>.</p>
+
+</div>
+</div>
+<a id="aa438499ee1ed1138b865767609d66601" name="aa438499ee1ed1138b865767609d66601"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa438499ee1ed1138b865767609d66601">&#9670;&nbsp;</a></span>m_track_offset_table</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; uint32_t &gt; d77img::m_track_offset_table</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="disk__image_2d77img_8h_source.html#l00038">38</a> of file <a class="el" href="disk__image_2d77img_8h_source.html">d77img.h</a>.</p>
 
 </div>
 </div>
@@ -416,13 +638,15 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="d77img_8h_source.html#l00035">35</a> of file <a class="el" href="d77img_8h_source.html">d77img.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="disk__image_2d77img_8h_source.html#l00035">35</a> of file <a class="el" href="disk__image_2d77img_8h_source.html">d77img.h</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>disk_image/<a class="el" href="d77img_8h_source.html">d77img.h</a></li>
-<li>disk_image/<a class="el" href="d77img_8cpp_source.html">d77img.cpp</a></li>
+<li>disk_image/<a class="el" href="disk__image_2d77img_8h_source.html">d77img.h</a></li>
+<li>image_converter/<a class="el" href="image__converter_2d77img_8h_source.html">d77img.h</a></li>
+<li>disk_image/<a class="el" href="disk__image_2d77img_8cpp_source.html">d77img.cpp</a></li>
+<li>image_converter/<a class="el" href="image__converter_2d77img_8cpp_source.html">d77img.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
