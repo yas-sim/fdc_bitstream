@@ -1,7 +1,6 @@
 var classd77img_1_1sector__data =
 [
     [ "sector_data", "classd77img_1_1sector__data.html#a279167e2c44cb27aa283b3b4bca23e01", null ],
-    [ "sector_data", "classd77img_1_1sector__data.html#a279167e2c44cb27aa283b3b4bca23e01", null ],
     [ "m_C", "classd77img_1_1sector__data.html#a3c87b7b42846c8a4a1b0b9deaf829dc3", null ],
     [ "m_dam_type", "classd77img_1_1sector__data.html#ac97ae7a8c688d5985e5834c4fdac393b", null ],
     [ "m_density", "classd77img_1_1sector__data.html#a85cef61ccc2b6f96cc2892d854a780a4", null ],

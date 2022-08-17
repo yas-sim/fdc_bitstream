@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['d77img_0',['d77img',['../classd77img.html#a79f7063301753897ad3b09f4d589973b',1,'d77img::d77img(void)'],['../classd77img.html#a79f7063301753897ad3b09f4d589973b',1,'d77img::d77img(void)']]],
+  ['d77img_0',['d77img',['../classd77img.html#a79f7063301753897ad3b09f4d589973b',1,'d77img']]],
   ['data_1',['data',['../classfdc__crc.html#aba3bf1b24ee2b59db02da17fcadbf611',1,'fdc_crc::data(uint8_t dt)'],['../classfdc__crc.html#a755e3eccb37c3bcfbb24e31aebf7f72c',1,'fdc_crc::data(std::vector&lt; uint8_t &gt; &amp;buf)']]],
   ['decode_5ftrack_2',['decode_track',['../namespacekfx2mfm.html#a95ac50e7b16859cb3bcfe76953d179d7',1,'kfx2mfm']]],
   ['disable_5ffluctuator_3',['disable_fluctuator',['../classfdc__bitstream.html#a0b39dd619d4fdc04b89392a1a87c7589',1,'fdc_bitstream::disable_fluctuator()'],['../classmfm__codec.html#a6e8a09604245fb10c7ab0dd49dc1ffa1',1,'mfm_codec::disable_fluctuator()']]],

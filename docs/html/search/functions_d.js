@@ -1,7 +1,7 @@
 var searchData=
 [
   ['save_0',['save',['../classbit__array.html#adeaec22b49197dce2061cd030086b3f8',1,'bit_array']]],
-  ['sector_5fdata_1',['sector_data',['../classd77img_1_1sector__data.html#a279167e2c44cb27aa283b3b4bca23e01',1,'d77img::sector_data::sector_data()'],['../classd77img_1_1sector__data.html#a279167e2c44cb27aa283b3b4bca23e01',1,'d77img::sector_data::sector_data()']]],
+  ['sector_5fdata_1',['sector_data',['../classd77img_1_1sector__data.html#a279167e2c44cb27aa283b3b4bca23e01',1,'d77img::sector_data']]],
   ['set_2',['set',['../classbit__array.html#acf9c84cdba557e1b96e8439fd6650618',1,'bit_array']]],
   ['set_5farray_3',['set_array',['../classbit__array.html#a91e639276c0daeecc9e2be8dab22df23',1,'bit_array::set_array(std::vector&lt; uint8_t &gt; &amp;buf)'],['../classbit__array.html#aa21bae246be7ba212d8cd92f24524307',1,'bit_array::set_array(size_t size)']]],
   ['set_5fblock_4',['set_block',['../classbyte__array.html#a218e9245791042a954ba61ea8f5f5efe',1,'byte_array::set_block(size_t pos, byte_array data)'],['../classbyte__array.html#a218e9245791042a954ba61ea8f5f5efe',1,'byte_array::set_block(size_t pos, byte_array data)']]],

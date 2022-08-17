@@ -8,7 +8,7 @@ var searchData=
   ['track0s0_5fencoding_5',['track0s0_encoding',['../structpicfileformatheader__.html#a50cae5e8619f22f26053d3dc1f7c9ede',1,'picfileformatheader_']]],
   ['track0s1_5faltencoding_6',['track0s1_altencoding',['../structpicfileformatheader__.html#a50477c7d6c5ae9008240c5a1c3cbe5ba',1,'picfileformatheader_']]],
   ['track0s1_5fencoding_7',['track0s1_encoding',['../structpicfileformatheader__.html#a312d96e94ab55373a1f3075e957b4e19',1,'picfileformatheader_']]],
-  ['track_5fdata_8',['track_data',['../classd77img.html#a75fff6808579c5e0b12fffb2cc085b97',1,'d77img::track_data()'],['../classd77img.html#a75fff6808579c5e0b12fffb2cc085b97',1,'d77img::track_data()']]],
+  ['track_5fdata_8',['track_data',['../classd77img.html#a75fff6808579c5e0b12fffb2cc085b97',1,'d77img']]],
   ['track_5fencoding_9',['track_encoding',['../structpicfileformatheader__.html#a56842aedc851ef39e191e21367c08bce',1,'picfileformatheader_']]],
   ['track_5fencoding_5ft_10',['track_encoding_t',['../image__hfe_8h.html#a7a34c5b2fe88219aca41cd3e71bf2e9e',1,'image_hfe.h']]],
   ['track_5flen_11',['track_len',['../structpictrack__.html#a8553bf427c9a9b1747448843b7f204d8',1,'pictrack_']]],
