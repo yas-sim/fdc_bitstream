@@ -24,11 +24,12 @@ var searchData=
   ['set_5ftrack_5fdata_21',['set_track_data',['../classfdc__bitstream.html#a9cdff4c84a7787e014101f0f7c1d0283',1,'fdc_bitstream::set_track_data()'],['../classdisk__image.html#a239a55d5af39666ed370c83d1d09e2b2',1,'disk_image::set_track_data()'],['../classmfm__codec.html#a40e88ddbea86a9f619834f173c95755f',1,'mfm_codec::set_track_data()']]],
   ['set_5ftrack_5fdata_5fall_22',['set_track_data_all',['../classdisk__image.html#a40b9864b210a1608929690dcdd8b2449',1,'disk_image']]],
   ['set_5ftrack_5fstatus_5fforcibly_23',['set_track_status_forcibly',['../classmfm__codec.html#a58bc2c2042b51353bfe7243631ed1ffa',1,'mfm_codec']]],
-  ['set_5fvfo_5fgain_24',['set_vfo_gain',['../classmfm__codec.html#a64ba742d82d8d5f6b9e86007fcbdc27c',1,'mfm_codec::set_vfo_gain()'],['../classfdc__bitstream.html#a8a75a1f7be3131cf88ba60d3fe49cd71',1,'fdc_bitstream::set_vfo_gain()']]],
+  ['set_5fvfo_5fgain_24',['set_vfo_gain',['../classfdc__bitstream.html#a8a75a1f7be3131cf88ba60d3fe49cd71',1,'fdc_bitstream::set_vfo_gain()'],['../classmfm__codec.html#a64ba742d82d8d5f6b9e86007fcbdc27c',1,'mfm_codec::set_vfo_gain()']]],
   ['set_5fword_5fle_25',['set_word_le',['../classbyte__array.html#a2b5de59f120c5e24a3c5afda5fac9bdb',1,'byte_array::set_word_le(size_t pos, uint32_t val)'],['../classbyte__array.html#a2b5de59f120c5e24a3c5afda5fac9bdb',1,'byte_array::set_word_le(size_t pos, uint32_t val)']]],
-  ['single_5fstep_26',['single_step',['../structpicfileformatheader__.html#af22d5c3d29006b1db5261f74308fad93',1,'picfileformatheader_']]],
-  ['size_27',['size',['../classbit__array.html#a4dcea898e5a2ac7a36ac7bde6091f229',1,'bit_array']]],
-  ['spindle_5ftime_5fns_28',['spindle_time_ns',['../structmfm__header__.html#a6d19b9bb46000bd8cd0213e5aa21a818',1,'mfm_header_']]],
-  ['str_29',['str',['../namespacekfx2mfm.html#a9020e3db097a2eee704df8efe0700c0b',1,'kfx2mfm']]],
-  ['streamdata_30',['streamdata',['../classkfx2mfm_1_1_k_f_x__stream.html#af1001ee192457b4ad4707aba5dfd8bfa',1,'kfx2mfm::KFX_stream']]]
+  ['simple_20kryoflux_20raw_20image_20file_28s_29_20to_20mfm_20image_20converter_26',['Simple Kryoflux RAW image file(s) to MFM image converter',['../md_kfx2mfm__r_e_a_d_m_e.html',1,'']]],
+  ['single_5fstep_27',['single_step',['../structpicfileformatheader__.html#af22d5c3d29006b1db5261f74308fad93',1,'picfileformatheader_']]],
+  ['size_28',['size',['../classbit__array.html#a4dcea898e5a2ac7a36ac7bde6091f229',1,'bit_array']]],
+  ['spindle_5ftime_5fns_29',['spindle_time_ns',['../structmfm__header__.html#a6d19b9bb46000bd8cd0213e5aa21a818',1,'mfm_header_']]],
+  ['str_30',['str',['../namespacekfx2mfm.html#a9020e3db097a2eee704df8efe0700c0b',1,'kfx2mfm']]],
+  ['streamdata_31',['streamdata',['../classkfx2mfm_1_1_k_f_x__stream.html#af1001ee192457b4ad4707aba5dfd8bfa',1,'kfx2mfm::KFX_stream']]]
 ];
