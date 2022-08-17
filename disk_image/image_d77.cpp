@@ -3,9 +3,9 @@
 
 #include "image_d77.h"
 #include "d77img.h"
+#include "byte_array.h"
 
-#include "mfm_codec.h"
-#include "fdc_crc.h"
+#include "fdc_bitstream.h"
 
 #include <iostream>
 
@@ -37,7 +37,7 @@ void disk_image_d77::read(const std::string file_name) {
         // sectors
         d77img::track_data image_track = input_image.m_disk_data[track_n]; 
         if (image_track.size() == 0) continue;
-        for(size_t sect_n=1; sect_n<image_track.size(); sect_n++) {
+        for(size_t sect_n=0; sect_n<image_track.size(); sect_n++) {
             d77img::sector_data sect = image_track[sect_n];
             byte_array sect_body = sect.m_sector_data;
             for(size_t i=0; i<12; i++) codec.mfm_write_byte(0x00, false); // SYNC
@@ -76,5 +76,36 @@ void disk_image_d77::read(const std::string file_name) {
 }
 
 void disk_image_d77::write(const std::string file_name) {
+    fdc_bitstream fdc;
+    d77img output_image;
 
+    output_image.m_disk_name = "D77IMG";
+    output_image.m_write_protect = 0;
+    output_image.m_disk_type = 0;       // 2D
+    output_image.m_disk_size = 0;
+
+    for (size_t track_n = 0; track_n < m_base_prop.m_max_track_number; track_n++) {
+        d77img::track_data d77_trk;
+        bit_array mfm_trk = m_track_data[track_n];
+        fdc.set_track_data(mfm_trk);
+        fdc.set_pos(0);
+        std::vector<fdc_bitstream::id_field> id_list = fdc.read_all_idam();
+
+        for (size_t sect_n = 0; sect_n < id_list.size(); sect_n++) {
+            d77img::sector_data sect_dt;
+            sect_dt.m_C = id_list[sect_n].C;
+            sect_dt.m_H = id_list[sect_n].H;
+            sect_dt.m_R = id_list[sect_n].R;
+            sect_dt.m_N = id_list[sect_n].N;
+            sect_dt.m_dam_type = 0;
+            sect_dt.m_density = 0;
+            sect_dt.m_num_sectors = id_list.size();
+            fdc_bitstream::sector_data read_sect = fdc.read_sector(sect_dt.m_C, sect_dt.m_H, sect_dt.m_R);
+            sect_dt.m_sector_data = read_sect.data;
+            sect_dt.m_sector_data_length = read_sect.data.size();
+            d77_trk.push_back(sect_dt);
+        }
+        output_image.m_disk_data.push_back(d77_trk);
+    }
+    output_image.write(file_name);
 }

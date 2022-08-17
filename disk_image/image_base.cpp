@@ -59,12 +59,14 @@ bit_array disk_image::get_track_data(const size_t track_number) {
 }
 
 void disk_image::set_track_data(const size_t track_number, const bit_array track_data) {
-    if (track_number < m_track_data.size() && track_number <= m_base_prop.m_max_track_number) {
-        m_track_data[track_number] = track_data;
+    if (track_number >= 164) {
+        assert(false);  return;
     }
-    else if (track_number < 164) {
-        m_track_data.resize(track_number+1);
-        m_track_data[track_number] = track_data;
+    if (track_number >= m_track_data.size()) {
+        m_track_data.resize(track_number + 1);
+    }
+    m_track_data[track_number] = track_data;
+    if (m_base_prop.m_max_track_number < track_number) {
         m_base_prop.m_max_track_number = track_number;
     }
 }

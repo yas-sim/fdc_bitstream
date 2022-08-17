@@ -22,7 +22,6 @@
 //	0x0e		2		Sector data size
 //	0x10		#		Sector data
 
-#define DLL_BODY
 
 #include <iostream>
 #include <vector>
@@ -33,52 +32,48 @@
 
 #include "d77img.h"
 
-
-
 void d77img::read(const std::string& file_name) {
-	byte_array	image_data;
-	size_t	    image_size;
-
     std::ifstream ifs;
-    ifs.open(file_name, std::ios_base::binary);
+    m_image_size = 0;
+    ifs.open("disk.d77", std::ios_base::binary);
     if (ifs.is_open() == false) {
         std::cout << "Failed to open file" << std::endl;
         return;
     }
     // Get image size
     ifs.seekg(0, std::ios_base::end);
-    image_size = ifs.tellg();
+    m_image_size = ifs.tellg();
     ifs.seekg(0, std::ios_base::beg);
 
     // Read image
-    image_data.resize(image_size);
-    ifs.read(reinterpret_cast<char*>(image_data.data()), image_size);
+    m_image_data.resize(m_image_size);
+    ifs.read(reinterpret_cast<char*>(m_image_data.data()), m_image_size);
 
     // Parse image
-    m_disk_name     = image_data.get_string_z(0);
-    m_write_protect = image_data.get_byte_le(0x1a);
-    m_disk_type     = image_data.get_byte_le(0x1b);
-    m_disk_size     = image_data.get_dword_le(0x1c);
+    m_disk_name     = m_image_data.get_string_z(0);
+    m_write_protect = m_image_data.get_byte_le(0x1a);
+    m_disk_type     = m_image_data.get_byte_le(0x1b);
+    m_disk_size     = m_image_data.get_dword_le(0x1c);
 
     m_disk_data.clear();
     m_disk_data.resize(164);
 
     for (size_t track = 0; track < 164; track++) {
-        size_t track_offset = image_data.get_dword_le(0x20 + track * 4);
+        size_t track_offset = m_image_data.get_dword_le(0x20 + track * 4);
         if (track_offset != 0) {
             size_t num_sect = 0;
             do {
                 sector_data sect;
-                sect.m_C = image_data.get_byte_le(track_offset + 0);
-                sect.m_H = image_data.get_byte_le(track_offset + 1);
-                sect.m_R = image_data.get_byte_le(track_offset + 2);
-                sect.m_N = image_data.get_byte_le(track_offset + 3);
-                sect.m_num_sectors        = image_data.get_word_le(track_offset + 4);
-                sect.m_density            = image_data.get_byte_le(track_offset + 6);
-                sect.m_dam_type           = image_data.get_byte_le(track_offset + 7);
-                sect.m_status             = image_data.get_byte_le(track_offset + 8);
-                sect.m_sector_data_length = image_data.get_word_le(track_offset + 0x0e);
-                sect.m_sector_data        = image_data.get_block(track_offset + 0x10, (128 << (sect.m_N & 3)));
+                sect.m_C = m_image_data.get_byte_le(track_offset + 0);
+                sect.m_H = m_image_data.get_byte_le(track_offset + 1);
+                sect.m_R = m_image_data.get_byte_le(track_offset + 2);
+                sect.m_N = m_image_data.get_byte_le(track_offset + 3);
+                sect.m_num_sectors        = m_image_data.get_word_le(track_offset + 4);
+                sect.m_density            = m_image_data.get_byte_le(track_offset + 6);
+                sect.m_dam_type           = m_image_data.get_byte_le(track_offset + 7);
+                sect.m_status             = m_image_data.get_byte_le(track_offset + 8);
+                sect.m_sector_data_length = m_image_data.get_word_le(track_offset + 0x0e);
+                sect.m_sector_data        = m_image_data.get_block(track_offset + 0x10, (128 << (sect.m_N & 3)));
                 num_sect = sect.m_num_sectors;
                 m_disk_data[track].push_back(sect);
 
@@ -87,6 +82,7 @@ void d77img::read(const std::string& file_name) {
             } while (m_disk_data[track].size() < num_sect);
         }
     }
+    m_image_data.clear();
     ifs.close();
 }
 
@@ -102,7 +98,6 @@ void d77img::write(std::string file_name) {
     size_t num_track = media_max_track();
 
     for (size_t track_n = 0; track_n < num_track; track_n++) {
-        if (track_n >= m_disk_data.size()) continue;
         size_t num_sect = m_disk_data[track_n].size();
         if (num_sect > 0) {
             image.set_dword_le(0x20 + track_n * 4, track_offset);			// track offset table
@@ -128,7 +123,7 @@ void d77img::write(std::string file_name) {
     }
     image.set_dword_le(0x1c, track_offset);
 
-    ofs.open(file_name, std::ios_base::binary);
+    ofs.open("disk_out.d77", std::ios_base::binary);
     if (ofs.is_open() == false) {
         std::cout << "Failed to open file" << std::endl;
         return;

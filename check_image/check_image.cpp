@@ -7,6 +7,7 @@
 #include "image_raw.h"
 #include "image_hfe.h"
 #include "image_mfm.h"
+#include "image_d77.h"
 #include "fdc_bitstream.h"
 
 #include "fdc_misc.h"
@@ -99,6 +100,7 @@ int main(int argc, char *argv[]) {
 		if( ext == "hfe") image = new disk_image_hfe();
 		else if (ext == "mfm") image = new disk_image_mfm();
 		else if (ext == "raw") image = new disk_image_raw();
+		else if (ext == "d77") image = new disk_image_d77();
 		else {
 			std::cerr << "Unsupported file extension" << std::endl;
 			return -1;
