@@ -2,7 +2,7 @@
 
 This is a test program to check the function and API integrity of the fdc_bitstream class and disk_image_??? classes.  
 
-|||
+|test func|test contents|
 |-|-|
 |`test1()`|Read a HFM file / Read track / Dump sector IDs|
 |`test2()`|Format a track (1 sector) / Read track / Write sector / Read track / Read sector|
