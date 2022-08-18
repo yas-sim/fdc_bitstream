@@ -36,6 +36,7 @@ fdc_bitstream::fdc_bitstream() : m_state(fdc_state::IDLE), m_sampling_rate(4e6),
 * 
 * @param[in] sampling_rate The sampling rate of the floppy image (track data) in MHz unit. (e.g. 4e6 == 4MHz)
 * @param[in] data_bit_rate The FDC bit rate in bit/sec uint. (MFM/2D == 500e3 == 500HKz)
+* @param[in] bit_window_ratio The ratio of the bit window period to the entire bit cell width (<1.0). In general, the wider the bit window, the more stable the bit reading.  Default in the specification is 0.5 but 0.75 is recommended for stable reading. 
 * @return none
 */
 void fdc_bitstream::set_fdc_params(size_t sampling_rate, size_t data_bit_rate, double bit_window_ratio) {
