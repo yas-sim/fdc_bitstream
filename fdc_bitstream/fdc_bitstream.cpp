@@ -18,7 +18,7 @@
 //#define DEBUG
 
 /**
- * @brief Construct a new fdc bitstream::fdc bitstream object
+ * @brief Construct a new fdc bitstream::fdc bitstream object.
  * 
  */
 fdc_bitstream::fdc_bitstream() : m_state(fdc_state::IDLE), m_sampling_rate(4e6), m_data_bit_rate(500e3) {
@@ -53,8 +53,7 @@ void fdc_bitstream::set_fdc_params(size_t sampling_rate, size_t data_bit_rate, d
 }
 
 /**
-* @brief Read track.
-* Reads track data from the current position until the pointer reaches to the end of the track (no wrap around).
+* @brief Read track. Reads track data from the current position until the pointer reaches to the end of the track (no wrap around).
 * 
 * @param[in] none
 * @return std::vector<uint8_t> Read track data (Decoded MFM data)
@@ -123,7 +122,7 @@ void fdc_bitstream::write_track(const std::vector<uint8_t>& track_buf) {
 }
 
 /**
-* @brief Read an sector ID. Start reading from the current position and read the 1st found sector ID
+* @brief Read an sector ID. Start reading from the current position and read the 1st found sector ID.
 *
 * @param[in] none
 * @param[out] id_field read sector ID data
@@ -404,7 +403,7 @@ size_t fdc_bitstream::get_pos(void) {
 
 /**
 * @brief Set a new track data.
-*        Set a new track data in new a bit_array.
+*        Set a new track data in a new bit_array.
 * 
 * @param[in] track_data New track data.
 * @return none
