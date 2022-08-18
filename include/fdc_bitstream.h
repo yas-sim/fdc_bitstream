@@ -61,7 +61,7 @@ public:
     };
 
     fdc_bitstream();
-    void set_fdc_params(size_t sampling_rate, size_t data_bit_rate);
+    void set_fdc_params(size_t sampling_rate, size_t data_bit_rate, double bit_window_ratio = 0.75f);   // bit_window_ratio = 0.5 is the standard defined in MFM spec.
     /** unit = bit */
     inline size_t get_track_length(void) { return m_codec.get_track_length(); }
     void set_track_data(bit_array track_data);
