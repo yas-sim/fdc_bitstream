@@ -24,7 +24,7 @@ mfm_codec::mfm_codec() : m_bit_stream(0),
         m_track_ready(false)
 {
     update_parameters();
-    set_vfo_gain(8.f, 12.f);           // Set data separator VFO gain (low=non-SYNC and high=SYNC period)
+    set_vfo_gain(2.f, 8.f);           // Set data separator VFO gain (low=non-SYNC and high=SYNC period)
     set_gain(m_vfo_gain_l);
 }
 
@@ -100,7 +100,7 @@ void mfm_codec::unset_track_data(void) {
  */
 void mfm_codec::set_cell_size(double cell_size, double window_ratio) {
     m_bit_cell_size = cell_size;
-    m_data_window_size = cell_size * window_ratio;        // typical window_ratio for actual drive is 0.5 but uses 0.8 as default in this SW
+    m_data_window_size = cell_size * window_ratio;        // typical window_ratio for actual drive is 0.5 but uses 0.75 as default in this SW
     m_data_window_size = m_data_window_size < 1.f ? 1.f : m_data_window_size;  // Avoid too narrow m_data_window_size situation
     m_data_window_ofst = (cell_size - m_data_window_size) / 2.f;
 #ifdef DEBUG
