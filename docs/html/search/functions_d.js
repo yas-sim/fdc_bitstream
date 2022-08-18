@@ -10,7 +10,7 @@ var searchData=
   ['set_5fdata_5fbit_5frate_7',['set_data_bit_rate',['../classmfm__codec.html#a0ada66863916cc19444c518b1f02c830',1,'mfm_codec']]],
   ['set_5fdword_5fle_8',['set_dword_le',['../classbyte__array.html#ab0d9704d89424d8d2bbd633a59ca2473',1,'byte_array::set_dword_le(size_t pos, uint32_t val)'],['../classbyte__array.html#ab0d9704d89424d8d2bbd633a59ca2473',1,'byte_array::set_dword_le(size_t pos, uint32_t val)']]],
   ['set_5felastic_9',['set_elastic',['../classbyte__array.html#a6fb63bdf017567d1420233b9960bbffc',1,'byte_array::set_elastic(size_t pos, uint8_t val)'],['../classbyte__array.html#a6fb63bdf017567d1420233b9960bbffc',1,'byte_array::set_elastic(size_t pos, uint8_t val)']]],
-  ['set_5ffdc_5fparams_10',['set_fdc_params',['../classfdc__bitstream.html#a0007d69b882edc1b3dfb3522328539c8',1,'fdc_bitstream']]],
+  ['set_5ffdc_5fparams_10',['set_fdc_params',['../classfdc__bitstream.html#a5e607ac3f28e6e9b15a60c69f4b11376',1,'fdc_bitstream']]],
   ['set_5fgain_11',['set_gain',['../classmfm__codec.html#a9ed71c91fd40465e9e485ca856f714fd',1,'mfm_codec']]],
   ['set_5fpos_12',['set_pos',['../classfdc__bitstream.html#a028dd1120ce703253589a87186ec5ec3',1,'fdc_bitstream::set_pos()'],['../classmfm__codec.html#a2e63b88fd758f365e1882b13a7839a9b',1,'mfm_codec::set_pos()']]],
   ['set_5fproperty_13',['set_property',['../classdisk__image.html#a13a1a7535d9aeaed35bd2271c49e9eaf',1,'disk_image']]],
