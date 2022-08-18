@@ -82,6 +82,7 @@ python kfx2mfm.py -i <kfx raw image directory>
 |`check_image`|Performs read ID for all tracks. You can specify VFO gain to check what value is the best for the image.|  
 |`create_mfm_image`|Creates an 2D/MFM disk image with regular format (ECMA/ISO).The program will create `new_image.mfm`.|  
 |`kfx2mfm`|Kryoflux `RAW` files to `MFM` disk image file converter. Kryoflux `RAW` image consists of multiple `RAW` files. Each file contains bitstream data of a track captured at the clock rate of 24MHz.|  
+|`disk_analyzer`|Simple disk image analyze tool. You can try VFO gain and fluctuator setting.|
 
 ## How to build the test program and tools
 
@@ -168,7 +169,7 @@ Error rate: 0
 
 ----
 ## MFM image data format:
-The default sampling rate for the MFM format is 4MHz. The data rate of an orginary 2D/MFM format data is 500KHz. This means, one bit cell will be recorded with eight bits of data in the MFM format.  
+The default sampling rate for the MFM format is 4MHz. The data rate of the 2D/MFM format disk is 500KHz. This means, one bit cell will be recorded with eight bits of data in the MFM format.  
 
 `|00001000|00000000|00100000|00010000|00000000| => 0x08,0x00,0x20,0x10,0x00 in MFM format`
 
