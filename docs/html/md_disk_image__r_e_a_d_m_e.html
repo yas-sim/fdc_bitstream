@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.4"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>fdc_bitstream: Related Pages</title>
+<title>fdc_bitstream: C++ class library for the disk image file handling</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -64,7 +64,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('pages.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('md_disk_image__r_e_a_d_m_e.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -82,24 +82,23 @@ $(document).ready(function(){initNavTree('pages.html',''); initResizable(); });
 </iframe>
 </div>
 
-<div class="header">
-  <div class="headertitle"><div class="title">Related Pages</div></div>
+<div><div class="header">
+  <div class="headertitle"><div class="title">C++ class library for the disk image file handling </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock">Here is a list of all related documentation pages:</div><div class="directory">
-<table class="directory">
-<tr id="row_0_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md_check_image__r_e_a_d_m_e.html" target="_self">check_image - Disk image file check tool</a></td><td class="desc"></td></tr>
-<tr id="row_1_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md_create_mfm_image__r_e_a_d_m_e.html" target="_self">create_mfm_image - Brand-new formatted MFM disk image file generator.</a></td><td class="desc"></td></tr>
-<tr id="row_2_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md_disk_image__r_e_a_d_m_e.html" target="_self">C++ class library for the disk image file handling</a></td><td class="desc"></td></tr>
-<tr id="row_3_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md_fdc_bitstream__r_e_a_d_m_e.html" target="_self">The C++ FDC bitstream library</a></td><td class="desc"></td></tr>
-<tr id="row_4_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md_fdc_common__r_e_a_d_m_e.html" target="_self">C++ library of common functions for fdc_bitstream</a></td><td class="desc"></td></tr>
-<tr id="row_5_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md_image_converter__r_e_a_d_m_e.html" target="_self">Multi format supported disk image converter.</a></td><td class="desc"></td></tr>
-<tr id="row_6_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md_kfx2mfm__r_e_a_d_m_e.html" target="_self">Simple Kryoflux RAW image file(s) to MFM image converter</a></td><td class="desc"></td></tr>
-<tr id="row_7_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md__l_i_c_e_n_s_e.html" target="_self">LICENSE</a></td><td class="desc"></td></tr>
-<tr id="row_8_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md__r_e_a_d_m_e.html" target="_self">C++ FDC library to manipulate 2D/MFM bitstream image data</a></td><td class="desc"></td></tr>
-</table>
-</div><!-- directory -->
-</div><!-- contents -->
+<div class="textblock"><p >Library supports <code>mfm</code>, <code>raw</code> , <code>d77</code> and <code>hfe</code> file formats. <code>disk_image_???</code> classes derived from <code>disk_image_base</code> class.</p>
+<ul>
+<li><code>mfm</code> and <code>d77</code> classes overridden <code>read()</code> and <code>write()</code> function. Those image types can read and write a file. <br  />
+</li>
+<li><code>hfe</code> and <code>raw</code> overridden only <code>read()</code> functions. <br  />
+</li>
+<li>All classes read a disk image file and convert it into the MFM bit stream data internally. <br  />
+</li>
+<li>When the <code>write()</code> function is called, the internal MFM bit stream will be translated into a specific file format and be written. <br  />
+ </li>
+</ul>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

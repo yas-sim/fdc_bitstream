@@ -111,7 +111,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a948703f45052ce4a5a1f73f4c126df43"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#a948703f45052ce4a5a1f73f4c126df43">get_track_length</a> (void)</td></tr>
 <tr class="separator:a948703f45052ce4a5a1f73f4c126df43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9cdff4c84a7787e014101f0f7c1d0283"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#a9cdff4c84a7787e014101f0f7c1d0283">set_track_data</a> (<a class="el" href="classbit__array.html">bit_array</a> track_data)</td></tr>
-<tr class="memdesc:a9cdff4c84a7787e014101f0f7c1d0283"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a new track data. Set a new track data in new a <a class="el" href="classbit__array.html">bit_array</a>.  <a href="classfdc__bitstream.html#a9cdff4c84a7787e014101f0f7c1d0283">More...</a><br /></td></tr>
+<tr class="memdesc:a9cdff4c84a7787e014101f0f7c1d0283"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a new track data. Set a new track data in a new <a class="el" href="classbit__array.html">bit_array</a>.  <a href="classfdc__bitstream.html#a9cdff4c84a7787e014101f0f7c1d0283">More...</a><br /></td></tr>
 <tr class="separator:a9cdff4c84a7787e014101f0f7c1d0283"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a9ccb2de40c6ae4c94bb963b4817515"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbit__array.html">bit_array</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#a9a9ccb2de40c6ae4c94bb963b4817515">get_track_data</a> (void)</td></tr>
 <tr class="memdesc:a9a9ccb2de40c6ae4c94bb963b4817515"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the track data in <a class="el" href="classbit__array.html">bit_array</a>.  <a href="classfdc__bitstream.html#a9a9ccb2de40c6ae4c94bb963b4817515">More...</a><br /></td></tr>
@@ -127,10 +127,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5d5b4821c9b9cac9d7ee88e77fb5d098"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#a5d5b4821c9b9cac9d7ee88e77fb5d098">clear_wraparound</a> (void)</td></tr>
 <tr class="separator:a5d5b4821c9b9cac9d7ee88e77fb5d098"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab37c5cb738437d0a0fad5feeaf49ae90"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#ab37c5cb738437d0a0fad5feeaf49ae90">enable_fluctuator</a> (size_t numerator, size_t denominator)</td></tr>
+<tr class="memdesc:ab37c5cb738437d0a0fad5feeaf49ae90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable FDC read operation fluctuatior. If you set the fluctuator with enable_fluctuator(1,4), the VFO in the data separator will operate at rate of 3/4 and stop operation at the rate of 1/4. The operation will be determined by a random generator, so the VFO operation will be stochastic, and this introduces some uncertainty in the read data.  <a href="classfdc__bitstream.html#ab37c5cb738437d0a0fad5feeaf49ae90">More...</a><br /></td></tr>
 <tr class="separator:ab37c5cb738437d0a0fad5feeaf49ae90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b39dd619d4fdc04b89392a1a87c7589"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#a0b39dd619d4fdc04b89392a1a87c7589">disable_fluctuator</a> (void)</td></tr>
 <tr class="separator:a0b39dd619d4fdc04b89392a1a87c7589"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a75a1f7be3131cf88ba60d3fe49cd71"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#a8a75a1f7be3131cf88ba60d3fe49cd71">set_vfo_gain</a> (double low, double high)</td></tr>
+<tr class="memdesc:a8a75a1f7be3131cf88ba60d3fe49cd71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set VFO gain. Recommended setting : High gain (high speed) mode(10.0f). Low gain (1.0f) for data reading. FDC needs to synchronized with the data stream quickly in the SYNC field before start reading the actual data (sector ID or sector body). High speed (high gain) setting will be used during the SYNC field to lock-in the read timing quickly. Low speed (low gain) setting will be used during reading data (other than SYNC field) to cancel slow spindle speed fluctuation but not follow the quick timing change such as irregular pulses in the bit stream and keep the same reading pace.  <a href="classfdc__bitstream.html#a8a75a1f7be3131cf88ba60d3fe49cd71">More...</a><br /></td></tr>
 <tr class="separator:a8a75a1f7be3131cf88ba60d3fe49cd71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa56d06aee0676001c3b245c144f12a6b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#aa56d06aee0676001c3b245c144f12a6b">write_data</a> (uint8_t data, bool mode=false, bool write_gate=true)</td></tr>
 <tr class="memdesc:aa56d06aee0676001c3b245c144f12a6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a byte data to the track buffer at the current position and advance the position for one byte. This function writes a byte data to the track buffer. The data wil be written at the current position, and the pointer will advance for one byte. This function also supports FD179x/MB8877 special codes. When the 'mode' is set to 'true', the special codes are recognized and handled respectively. When the 'write_gate' is set to 'false', this function will not perform actual data writing but advance the pointer. You can use this feature for dummy data writing (or just skip certain bytes).  <a href="classfdc__bitstream.html#aa56d06aee0676001c3b245c144f12a6b">More...</a><br /></td></tr>
@@ -242,7 +244,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p >Disable FDC read operation fluctuator </p>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8h_source.html#l00081">81</a> of file <a class="el" href="fdc__bitstream_8h_source.html">fdc_bitstream.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8h_source.html#l00082">82</a> of file <a class="el" href="fdc__bitstream_8h_source.html">fdc_bitstream.h</a>.</p>
 
 </div>
 </div>
@@ -279,9 +281,10 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >Enable FDC read operation fluctuatior If you set the fluctuator with enable_fluctuator(1,4), the VFO in the data separator will operate at rate of 3/4 and stop operation at the rate of 1/4. The operation will be determined by a random generator, so the VFO operation will be stochastic, and this introduces some uncertainty in the read data. </p>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8h_source.html#l00079">79</a> of file <a class="el" href="fdc__bitstream_8h_source.html">fdc_bitstream.h</a>.</p>
+<p>Enable FDC read operation fluctuatior. If you set the fluctuator with enable_fluctuator(1,4), the VFO in the data separator will operate at rate of 3/4 and stop operation at the rate of 1/4. The operation will be determined by a random generator, so the VFO operation will be stochastic, and this introduces some uncertainty in the read data. </p>
+
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8h_source.html#l00080">80</a> of file <a class="el" href="fdc__bitstream_8h_source.html">fdc_bitstream.h</a>.</p>
 
 </div>
 </div>
@@ -310,7 +313,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>size_t Current bit position in the track buffer. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00401">401</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00400">400</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -333,7 +336,7 @@ Public Member Functions</h2></td></tr>
 <p>Get the track data in <a class="el" href="classbit__array.html">bit_array</a>. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classbit__array.html">bit_array</a> Track dta in <a class="el" href="classbit__array.html">bit_array</a>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00421">421</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00420">420</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -413,7 +416,7 @@ Public Member Functions</h2></td></tr>
 <p>Reads all IDAM in the track buffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>std::vector&lt;fdc_bitstream::id_field&gt; Read ID field data. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00201">201</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00200">200</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -467,7 +470,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00452">452</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00451">451</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -508,7 +511,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>size_t Track position of the <a class="el" href="classfdc__bitstream.html#a285e12ca70b10ad1c3f9b65a2cb4e64d" title="Read an sector ID. Start reading from the current position and read the 1st found sector ID.">read_id()</a> started reading. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00134">134</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00133">133</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -555,7 +558,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structfdc__bitstream_1_1sector__data.html">fdc_bitstream::sector_data</a> Read sector data. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00465">465</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00464">464</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -623,7 +626,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>size_t Track position of the <a class="el" href="classfdc__bitstream.html#a6976607e1c1803150b21cd769f8582b4" title="FD189x/MB8876 compatible TYPE-II READ SECTOR operation.">read_sector()</a> started reading. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00244">244</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00243">243</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -652,7 +655,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>std::vector&lt;uint8_t&gt; Read track data (Decoded MFM data) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00062">62</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00061">61</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -727,7 +730,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00390">390</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00389">389</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -747,7 +750,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set a new track data. Set a new track data in new a <a class="el" href="classbit__array.html">bit_array</a>. </p>
+<p>Set a new track data. Set a new track data in a new <a class="el" href="classbit__array.html">bit_array</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">track_data</td><td>New track data. </td></tr>
@@ -756,7 +759,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00412">412</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00411">411</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -793,9 +796,10 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >Set VFO gain Recommended setting : High gain (high speed) mode(10.0f). Low gain (1.0f) for data reading. FDC needs to synchronized with the data stream quickly in the SYNC field before start reading the actual data (sector ID or sector body). High speed (high gain) setting will be used during the SYNC field to lock-in the read timing quickly. Low speed (low gain) setting will be used during reading data (other than SYNC field) to cancel slow spindle speed fluctuation but not follow the quick timing change such as irregular pulses in the bit stream and keep the same reading pace. </p>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8h_source.html#l00090">90</a> of file <a class="el" href="fdc__bitstream_8h_source.html">fdc_bitstream.h</a>.</p>
+<p>Set VFO gain. Recommended setting : High gain (high speed) mode(10.0f). Low gain (1.0f) for data reading. FDC needs to synchronized with the data stream quickly in the SYNC field before start reading the actual data (sector ID or sector body). High speed (high gain) setting will be used during the SYNC field to lock-in the read timing quickly. Low speed (low gain) setting will be used during reading data (other than SYNC field) to cancel slow spindle speed fluctuation but not follow the quick timing change such as irregular pulses in the bit stream and keep the same reading pace. </p>
+
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8h_source.html#l00092">92</a> of file <a class="el" href="fdc__bitstream_8h_source.html">fdc_bitstream.h</a>.</p>
 
 </div>
 </div>
@@ -841,7 +845,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00435">435</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00434">434</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -911,7 +915,7 @@ Public Member Functions</h2></td></tr>
 <dd>
 false Record-not-found error </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00522">522</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00521">521</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -957,7 +961,7 @@ false Record-not-found error </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00339">339</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00338">338</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -986,7 +990,7 @@ false Record-not-found error </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00087">87</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00086">86</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>

@@ -36,5 +36,6 @@ var searchData=
   ['mfm_5fread_5fbyte_33',['mfm_read_byte',['../classmfm__codec.html#afb3614a444293ecf43de800cb2198a46',1,'mfm_codec']]],
   ['mfm_5ftrack_5ftable_34',['mfm_track_table',['../image__mfm_8h.html#afe0080f4421adf258cde0137128f8049',1,'image_mfm.h']]],
   ['mfm_5fwrite_5fbyte_35',['mfm_write_byte',['../classmfm__codec.html#a6ac57dc1c37a2395d264659f805caf39',1,'mfm_codec']]],
-  ['msx2_5fdd_5ffloppymode_36',['MSX2_DD_FLOPPYMODE',['../image__hfe_8h.html#a4e4e471245fe4f55db38332ca5f478ba',1,'image_hfe.h']]]
+  ['msx2_5fdd_5ffloppymode_36',['MSX2_DD_FLOPPYMODE',['../image__hfe_8h.html#a4e4e471245fe4f55db38332ca5f478ba',1,'image_hfe.h']]],
+  ['multi_20format_20supported_20disk_20image_20converter_2e_37',['Multi format supported disk image converter.',['../md_image_converter__r_e_a_d_m_e.html',1,'']]]
 ];
