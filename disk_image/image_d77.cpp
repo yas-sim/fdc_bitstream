@@ -51,20 +51,43 @@ void disk_image_d77::read(const std::string file_name) {
             uint16_t crcval;
             crcgen.data(0); crcgen.data(0);
             crcval = crcgen.get();
-            codec.mfm_write_byte(crcval >> 8, false); codec.mfm_write_byte(crcval, false);   // CRC
-            for(size_t i=0; i<22; i++) codec.mfm_write_byte(0x4e, false); // Gap2
-            for(size_t i=0; i<12; i++) codec.mfm_write_byte(0x00, false); // SYNC
-            for(size_t i=0; i< 3; i++) codec.mfm_write_byte(0xf5, true);  // 0xa1
-            crcgen.reset();
-            codec.mfm_write_byte(0xfb, false); crcgen.data(0xfb); // DAM
-            for(size_t i=0; i<sect.m_sector_data_length; i++) {
-                codec.mfm_write_byte(sect_body[i], false);
-                crcgen.data(sect_body[i]);
+            switch(sect.m_status) {
+            case 0xa0: // ID-CRC error
+                codec.mfm_write_byte(~crcval >> 8, false); codec.mfm_write_byte(~crcval, false);   // CRC (intentional CRC error)
+                break;
+            default:
+                codec.mfm_write_byte(crcval >> 8, false); codec.mfm_write_byte(crcval, false);   // CRC
+                break;
             }
-            crcgen.data(0); crcgen.data(0);
-            crcval = crcgen.get();
-            codec.mfm_write_byte(crcval >> 8, false); codec.mfm_write_byte(crcval, false);   // CRC
-            for(size_t i=0; i<54; i++) codec.mfm_write_byte(0x4e, false); //Gap3
+            if(sect.m_status != 0xf0) {  // no DAM
+                for(size_t i=0; i<22; i++) codec.mfm_write_byte(0x4e, false); // Gap2
+                for(size_t i=0; i<12; i++) codec.mfm_write_byte(0x00, false); // SYNC
+                for(size_t i=0; i< 3; i++) codec.mfm_write_byte(0xf5, true);  // 0xa1
+                crcgen.reset();
+                switch(sect.m_dam_type) {
+                case 0x10:
+                    codec.mfm_write_byte(0xfb, false); crcgen.data(0xf8); // DDAM
+                    break;
+                default:
+                    codec.mfm_write_byte(0xfb, false); crcgen.data(0xfb); // DAM
+                    break;
+                }
+                for(size_t i=0; i<sect.m_sector_data_length; i++) {
+                    codec.mfm_write_byte(sect_body[i], false);
+                    crcgen.data(sect_body[i]);
+                }
+                crcgen.data(0); crcgen.data(0);
+                crcval = crcgen.get();
+                switch(sect.m_status) {
+                case 0xb0: // DT-CRC error
+                    codec.mfm_write_byte(~crcval >> 8, false); codec.mfm_write_byte(~crcval, false);   // CRC (intentional CRC error)
+                    break;
+                default:
+                    codec.mfm_write_byte(crcval >> 8, false); codec.mfm_write_byte(crcval, false);   // CRC
+                    break;
+                }
+                for(size_t i=0; i<54; i++) codec.mfm_write_byte(0x4e, false); //Gap3
+            }
         }
         for(size_t i=0; i<152; i++) codec.mfm_write_byte(0x4e, false); //Gap4b
 
@@ -90,7 +113,6 @@ void disk_image_d77::write(const std::string file_name) {
         fdc.set_track_data(mfm_trk);
         fdc.set_pos(0);
         std::vector<fdc_bitstream::id_field> id_list = fdc.read_all_idam();
-
         for (size_t sect_n = 0; sect_n < id_list.size(); sect_n++) {
             d77img::sector_data sect_dt;
             sect_dt.m_C = id_list[sect_n].C;
@@ -100,6 +122,7 @@ void disk_image_d77::write(const std::string file_name) {
             sect_dt.m_dam_type = 0;
             sect_dt.m_density = 0;
             sect_dt.m_num_sectors = id_list.size();
+            sect_dt.m_status = id_list[sect_n].crc_sts ? 0xb0 : 0x00;  // DT-CRC error
             fdc_bitstream::sector_data read_sect = fdc.read_sector(sect_dt.m_C, sect_dt.m_H, sect_dt.m_R);
             sect_dt.m_sector_data = read_sect.data;
             sect_dt.m_sector_data_length = read_sect.data.size();
