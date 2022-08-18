@@ -2,6 +2,7 @@ var files_dup =
 [
     [ "check_image", "dir_76d043ae026bd472f5c3952c83a38466.html", "dir_76d043ae026bd472f5c3952c83a38466" ],
     [ "create_mfm_image", "dir_b69692e95baa5c641c3b74eda32f3092.html", "dir_b69692e95baa5c641c3b74eda32f3092" ],
+    [ "disk_analyzer", "dir_18acafd1dbfbeb250ec47804f4d361e0.html", "dir_18acafd1dbfbeb250ec47804f4d361e0" ],
     [ "disk_image", "dir_f9a432e3309c0be794712365c981fe60.html", "dir_f9a432e3309c0be794712365c981fe60" ],
     [ "fdc_bitstream", "dir_04700cb65f3786cf311fa988e0d45468.html", "dir_04700cb65f3786cf311fa988e0d45468" ],
     [ "fdc_common", "dir_7da322dc6df0825a12640fe3641e42c5.html", "dir_7da322dc6df0825a12640fe3641e42c5" ],

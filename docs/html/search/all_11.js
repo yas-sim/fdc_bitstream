@@ -26,10 +26,11 @@ var searchData=
   ['set_5ftrack_5fstatus_5fforcibly_23',['set_track_status_forcibly',['../classmfm__codec.html#a58bc2c2042b51353bfe7243631ed1ffa',1,'mfm_codec']]],
   ['set_5fvfo_5fgain_24',['set_vfo_gain',['../classfdc__bitstream.html#a8a75a1f7be3131cf88ba60d3fe49cd71',1,'fdc_bitstream::set_vfo_gain()'],['../classmfm__codec.html#a64ba742d82d8d5f6b9e86007fcbdc27c',1,'mfm_codec::set_vfo_gain()']]],
   ['set_5fword_5fle_25',['set_word_le',['../classbyte__array.html#a2b5de59f120c5e24a3c5afda5fac9bdb',1,'byte_array::set_word_le(size_t pos, uint32_t val)'],['../classbyte__array.html#a2b5de59f120c5e24a3c5afda5fac9bdb',1,'byte_array::set_word_le(size_t pos, uint32_t val)']]],
-  ['simple_20kryoflux_20raw_20image_20file_28s_29_20to_20mfm_20image_20converter_26',['Simple Kryoflux RAW image file(s) to MFM image converter',['../md_kfx2mfm__r_e_a_d_m_e.html',1,'']]],
-  ['single_5fstep_27',['single_step',['../structpicfileformatheader__.html#af22d5c3d29006b1db5261f74308fad93',1,'picfileformatheader_']]],
-  ['size_28',['size',['../classbit__array.html#a4dcea898e5a2ac7a36ac7bde6091f229',1,'bit_array']]],
-  ['spindle_5ftime_5fns_29',['spindle_time_ns',['../structmfm__header__.html#a6d19b9bb46000bd8cd0213e5aa21a818',1,'mfm_header_']]],
-  ['str_30',['str',['../namespacekfx2mfm.html#a9020e3db097a2eee704df8efe0700c0b',1,'kfx2mfm']]],
-  ['streamdata_31',['streamdata',['../classkfx2mfm_1_1_k_f_x__stream.html#af1001ee192457b4ad4707aba5dfd8bfa',1,'kfx2mfm::KFX_stream']]]
+  ['simple_20disk_20image_20analyzer_20tool_26',['Simple disk image analyzer tool',['../md_disk_analyzer__r_e_a_d_m_e.html',1,'']]],
+  ['simple_20kryoflux_20raw_20image_20file_28s_29_20to_20mfm_20image_20converter_27',['Simple Kryoflux RAW image file(s) to MFM image converter',['../md_kfx2mfm__r_e_a_d_m_e.html',1,'']]],
+  ['single_5fstep_28',['single_step',['../structpicfileformatheader__.html#af22d5c3d29006b1db5261f74308fad93',1,'picfileformatheader_']]],
+  ['size_29',['size',['../classbit__array.html#a4dcea898e5a2ac7a36ac7bde6091f229',1,'bit_array']]],
+  ['spindle_5ftime_5fns_30',['spindle_time_ns',['../structmfm__header__.html#a6d19b9bb46000bd8cd0213e5aa21a818',1,'mfm_header_']]],
+  ['str_31',['str',['../namespacekfx2mfm.html#a9020e3db097a2eee704df8efe0700c0b',1,'kfx2mfm']]],
+  ['streamdata_32',['streamdata',['../classkfx2mfm_1_1_k_f_x__stream.html#af1001ee192457b4ad4707aba5dfd8bfa',1,'kfx2mfm::KFX_stream']]]
 ];

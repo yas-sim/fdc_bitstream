@@ -18,9 +18,10 @@ var searchData=
   ['image_5fraw_2ecpp_15',['image_raw.cpp',['../image__raw_8cpp.html',1,'']]],
   ['image_5fraw_2eh_16',['image_raw.h',['../image__raw_8h.html',1,'']]],
   ['int_17',['int',['../namespacekfx2mfm.html#a740df438911e55477ee5ec87ad1bb6d4',1,'kfx2mfm']]],
-  ['is_5fready_18',['is_ready',['../classdisk__image.html#aa063827886602494f9cdf10bec0ff9d8',1,'disk_image']]],
-  ['is_5ftrack_5fready_19',['is_track_ready',['../classmfm__codec.html#a9909a5a02033c1a682e3170059ac2772',1,'mfm_codec']]],
-  ['is_5fwraparound_20',['is_wraparound',['../classbit__array.html#ac546e6382350c7885aedc0e710ef46ae',1,'bit_array::is_wraparound()'],['../classmfm__codec.html#a3ade7ff8918720b6269ece33c6f7807c',1,'mfm_codec::is_wraparound()'],['../classfdc__bitstream.html#a91d0a24862c9cdf24aa1664b48f2f917',1,'fdc_bitstream::is_wraparound()']]],
-  ['isoibm_5ffm_5fencoding_21',['ISOIBM_FM_ENCODING',['../image__hfe_8h.html#a7a34c5b2fe88219aca41cd3e71bf2e9ea621f66cb224f0ef094b7ad7c798aa182',1,'image_hfe.h']]],
-  ['isoibm_5fmfm_5fencoding_22',['ISOIBM_MFM_ENCODING',['../image__hfe_8h.html#a7a34c5b2fe88219aca41cd3e71bf2e9ea0162830ec04ad020b237d16374652c58',1,'image_hfe.h']]]
+  ['is_5fimage_5fready_18',['is_image_ready',['../analyzer_8cpp.html#a759e47a8775cc608192ee41cee1e8a96',1,'analyzer.cpp']]],
+  ['is_5fready_19',['is_ready',['../classdisk__image.html#aa063827886602494f9cdf10bec0ff9d8',1,'disk_image']]],
+  ['is_5ftrack_5fready_20',['is_track_ready',['../classmfm__codec.html#a9909a5a02033c1a682e3170059ac2772',1,'mfm_codec']]],
+  ['is_5fwraparound_21',['is_wraparound',['../classbit__array.html#ac546e6382350c7885aedc0e710ef46ae',1,'bit_array::is_wraparound()'],['../classmfm__codec.html#a3ade7ff8918720b6269ece33c6f7807c',1,'mfm_codec::is_wraparound()'],['../classfdc__bitstream.html#a91d0a24862c9cdf24aa1664b48f2f917',1,'fdc_bitstream::is_wraparound()']]],
+  ['isoibm_5ffm_5fencoding_22',['ISOIBM_FM_ENCODING',['../image__hfe_8h.html#a7a34c5b2fe88219aca41cd3e71bf2e9ea621f66cb224f0ef094b7ad7c798aa182',1,'image_hfe.h']]],
+  ['isoibm_5fmfm_5fencoding_23',['ISOIBM_MFM_ENCODING',['../image__hfe_8h.html#a7a34c5b2fe88219aca41cd3e71bf2e9ea0162830ec04ad020b237d16374652c58',1,'image_hfe.h']]]
 ];
