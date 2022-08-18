@@ -15,7 +15,7 @@ var classmfm__codec =
     [ "read_bit_ds", "classmfm__codec.html#a04e612265044876b9af9216696fdcb99", null ],
     [ "reset", "classmfm__codec.html#aa4483dff3a6830326ee2214aeeea9286", null ],
     [ "reset_sync_mode", "classmfm__codec.html#a8e4002d3d156c205177e4c880ab7cfbd", null ],
-    [ "set_cell_size", "classmfm__codec.html#ad0adedb2bfc44c3a1f46c9a5d2e77a45", null ],
+    [ "set_cell_size", "classmfm__codec.html#a68e064882769149ee8594109b4d151c5", null ],
     [ "set_data_bit_rate", "classmfm__codec.html#a0ada66863916cc19444c518b1f02c830", null ],
     [ "set_gain", "classmfm__codec.html#a9ed71c91fd40465e9e485ca856f714fd", null ],
     [ "set_pos", "classmfm__codec.html#a2e63b88fd758f365e1882b13a7839a9b", null ],

@@ -100,9 +100,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa4483dff3a6830326ee2214aeeea9286"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmfm__codec.html#aa4483dff3a6830326ee2214aeeea9286">reset</a> (void)</td></tr>
 <tr class="memdesc:aa4483dff3a6830326ee2214aeeea9286"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset MFM decoder parameters.  <a href="classmfm__codec.html#aa4483dff3a6830326ee2214aeeea9286">More...</a><br /></td></tr>
 <tr class="separator:aa4483dff3a6830326ee2214aeeea9286"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad0adedb2bfc44c3a1f46c9a5d2e77a45"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmfm__codec.html#ad0adedb2bfc44c3a1f46c9a5d2e77a45">set_cell_size</a> (double cell_size, double window_ratio=0.8f)</td></tr>
-<tr class="memdesc:ad0adedb2bfc44c3a1f46c9a5d2e77a45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set new bit cell size. 012345678 | WWWW | &lt;--&gt; Window size (4) &lt;-&gt; Window ofst (2) &lt;---&mdash;&gt; Cell size (8)  <a href="classmfm__codec.html#ad0adedb2bfc44c3a1f46c9a5d2e77a45">More...</a><br /></td></tr>
-<tr class="separator:ad0adedb2bfc44c3a1f46c9a5d2e77a45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68e064882769149ee8594109b4d151c5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmfm__codec.html#a68e064882769149ee8594109b4d151c5">set_cell_size</a> (double cell_size, double window_ratio=0.75f)</td></tr>
+<tr class="memdesc:a68e064882769149ee8594109b4d151c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set new bit cell size. 012345678 | WWWW | &lt;--&gt; Window size (4) &lt;-&gt; Window ofst (2) &lt;---&mdash;&gt; Cell size (8)  <a href="classmfm__codec.html#a68e064882769149ee8594109b4d151c5">More...</a><br /></td></tr>
+<tr class="separator:a68e064882769149ee8594109b4d151c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab9e990407f98e4f7fe1f13d814d1757d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmfm__codec.html#ab9e990407f98e4f7fe1f13d814d1757d">update_parameters</a> (void)</td></tr>
 <tr class="memdesc:ab9e990407f98e4f7fe1f13d814d1757d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update data cell parameters.  <a href="classmfm__codec.html#ab9e990407f98e4f7fe1f13d814d1757d">More...</a><br /></td></tr>
 <tr class="separator:ab9e990407f98e4f7fe1f13d814d1757d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -633,8 +633,8 @@ false: Track bit array data is not set. Returned values are invalid. </dd></dl>
 
 </div>
 </div>
-<a id="ad0adedb2bfc44c3a1f46c9a5d2e77a45" name="ad0adedb2bfc44c3a1f46c9a5d2e77a45"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad0adedb2bfc44c3a1f46c9a5d2e77a45">&#9670;&nbsp;</a></span>set_cell_size()</h2>
+<a id="a68e064882769149ee8594109b4d151c5" name="a68e064882769149ee8594109b4d151c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a68e064882769149ee8594109b4d151c5">&#9670;&nbsp;</a></span>set_cell_size()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -649,7 +649,7 @@ false: Track bit array data is not set. Returned values are invalid. </dd></dl>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>window_ratio</em> = <code>0.8f</code>&#160;</td>
+          <td class="paramname"><em>window_ratio</em> = <code>0.75f</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
