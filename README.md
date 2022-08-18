@@ -187,7 +187,7 @@ typedef struct mfm_header_ {
 typedef struct track_table_ {
     uint64_t    offset;                     // Offset to the track data (unit=byte, from the top of the file == absolute offset)
     uint64_t    length_bit;                 // Track data length (uint=bits, not bytes)
-} mfm_track_table;
+} mfm_track_table[number_of_tracks];
 
 // Track data * 84
 //   ofst(byte) = track_table[track#].offset

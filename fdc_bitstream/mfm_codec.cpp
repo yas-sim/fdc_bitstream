@@ -98,13 +98,11 @@ void mfm_codec::unset_track_data(void) {
  * 
  * @param cell_size New bit cell size (unit=bits)
  */
-void mfm_codec::set_cell_size(double cell_size) {
+void mfm_codec::set_cell_size(double cell_size, double window_ratio) {
     m_bit_cell_size = cell_size;
-    m_data_window_size = cell_size / 2.f;
-    if (m_data_window_size < 0.5f) {          // Avoid too narrow m_data_window_size situation
-        m_data_window_size = 0.5f;
-    }
-    m_data_window_ofst = cell_size / 4.f;
+    m_data_window_size = cell_size * window_ratio;        // typical window_ratio for actual drive is 0.5 but uses 0.8 as default in this SW
+    m_data_window_size = m_data_window_size < 1.f ? 1.f : m_data_window_size;  // Avoid too narrow m_data_window_size situation
+    m_data_window_ofst = (cell_size - m_data_window_size) / 2.f;
 #ifdef DEBUG
     std::cout << "Bit cell size:" << m_bit_cell_size << std::endl;
     std::cout << "Data window size:" << m_data_window_size << std::endl;

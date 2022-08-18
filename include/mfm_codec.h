@@ -47,7 +47,7 @@ private:
 public:
     mfm_codec();
     void reset(void);
-    void set_cell_size(double cell_size);
+    void set_cell_size(double cell_size, double window_ratio=0.8f);    // typical window_ratio for actual drive is 0.5 but uses 0.8 as default in this SW
     void update_parameters(void);
     void set_data_bit_rate(size_t data_bit_rate);
     void set_sampling_rate(size_t sampling_rate);
