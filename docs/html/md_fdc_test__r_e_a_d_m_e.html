@@ -88,7 +88,18 @@ $(document).ready(function(){initNavTree('md_fdc_test__r_e_a_d_m_e.html',''); in
 <div class="contents">
 <div class="textblock"><p >This is a test program to check the function and API integrity of the <a class="el" href="classfdc__bitstream.html">fdc_bitstream</a> class and disk_image_??? classes. <br  />
 </p>
-<p >||| |-|-| |<code><a class="el" href="fdc__test_8cpp.html#a1197cb03337a67733be5a549ef4c7aff">test1()</a></code>|Read a HFM file / Read track / Dump sector IDs| |<code><a class="el" href="fdc__test_8cpp.html#a0283886819c7c140a023582b7269e2d0">test2()</a></code>|Format a track (1 sector) / Read track / Write sector / Read track / Read sector| |<code><a class="el" href="fdc__test_8cpp.html#ab0f93702cbdb4b0ad3172fbacde22e85">test3()</a></code>|Format a track (16 sectors) / Dump sector IDs / Read sector / Write 16 sectors with data / Read Track / Read sector data | |<code><a class="el" href="fdc__test_8cpp.html#a8cd5114dae85c02da78296daa44d39e2">test4()</a></code>|'Corocoro (unstable data)' protect test. Format a track and then place random pulses in the desired region to make the data in the region unstable. Performs read sector operation multiple times with fluctuator enabled to check whether the <a class="el" href="classfdc__bitstream.html">fdc_bitstream</a> can generate random data on the unstable region.| </p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">test func   </th><th class="markdownTableHeadNone">test contents    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code><a class="el" href="fdc__test_8cpp.html#a1197cb03337a67733be5a549ef4c7aff">test1()</a></code>   </td><td class="markdownTableBodyNone">Read a HFM file / Read track / Dump sector IDs    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code><a class="el" href="fdc__test_8cpp.html#a0283886819c7c140a023582b7269e2d0">test2()</a></code>   </td><td class="markdownTableBodyNone">Format a track (1 sector) / Read track / Write sector / Read track / Read sector    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code><a class="el" href="fdc__test_8cpp.html#ab0f93702cbdb4b0ad3172fbacde22e85">test3()</a></code>   </td><td class="markdownTableBodyNone">Format a track (16 sectors) / Dump sector IDs / Read sector / Write 16 sectors with data / Read Track / Read sector data    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code><a class="el" href="fdc__test_8cpp.html#a8cd5114dae85c02da78296daa44d39e2">test4()</a></code>   </td><td class="markdownTableBodyNone">'Corocoro (unstable data)' protect test. Format a track and then place random pulses in the desired region to make the data in the region unstable. Performs read sector operation multiple times with fluctuator enabled to check whether the <a class="el" href="classfdc__bitstream.html">fdc_bitstream</a> can generate random data on the unstable region.   </td></tr>
+</table>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
