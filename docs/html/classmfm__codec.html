@@ -100,9 +100,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa4483dff3a6830326ee2214aeeea9286"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmfm__codec.html#aa4483dff3a6830326ee2214aeeea9286">reset</a> (void)</td></tr>
 <tr class="memdesc:aa4483dff3a6830326ee2214aeeea9286"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset MFM decoder parameters.  <a href="classmfm__codec.html#aa4483dff3a6830326ee2214aeeea9286">More...</a><br /></td></tr>
 <tr class="separator:aa4483dff3a6830326ee2214aeeea9286"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1109ffec6b08d54ea56c3d643e41293d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmfm__codec.html#a1109ffec6b08d54ea56c3d643e41293d">set_cell_size</a> (double cell_size)</td></tr>
-<tr class="memdesc:a1109ffec6b08d54ea56c3d643e41293d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set new bit cell size. 012345678 | WWWW | &lt;--&gt; Window size (4) &lt;-&gt; Window ofst (2) &lt;---&mdash;&gt; Cell size (8)  <a href="classmfm__codec.html#a1109ffec6b08d54ea56c3d643e41293d">More...</a><br /></td></tr>
-<tr class="separator:a1109ffec6b08d54ea56c3d643e41293d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0adedb2bfc44c3a1f46c9a5d2e77a45"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmfm__codec.html#ad0adedb2bfc44c3a1f46c9a5d2e77a45">set_cell_size</a> (double cell_size, double window_ratio=0.8f)</td></tr>
+<tr class="memdesc:ad0adedb2bfc44c3a1f46c9a5d2e77a45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set new bit cell size. 012345678 | WWWW | &lt;--&gt; Window size (4) &lt;-&gt; Window ofst (2) &lt;---&mdash;&gt; Cell size (8)  <a href="classmfm__codec.html#ad0adedb2bfc44c3a1f46c9a5d2e77a45">More...</a><br /></td></tr>
+<tr class="separator:ad0adedb2bfc44c3a1f46c9a5d2e77a45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab9e990407f98e4f7fe1f13d814d1757d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmfm__codec.html#ab9e990407f98e4f7fe1f13d814d1757d">update_parameters</a> (void)</td></tr>
 <tr class="memdesc:ab9e990407f98e4f7fe1f13d814d1757d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update data cell parameters.  <a href="classmfm__codec.html#ab9e990407f98e4f7fe1f13d814d1757d">More...</a><br /></td></tr>
 <tr class="separator:ab9e990407f98e4f7fe1f13d814d1757d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -237,7 +237,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Disable data separator fluctuator. </p>
 
-<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00424">424</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00422">422</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
 
 </div>
 </div>
@@ -276,7 +276,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00414">414</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00412">412</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
 
 </div>
 </div>
@@ -299,7 +299,7 @@ Public Member Functions</h2></td></tr>
 <p>Get current read/write position. </p>
 <dl class="section return"><dt>Returns</dt><dd>size_t Current position (unit=bits). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00399">399</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00397">397</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
 
 </div>
 </div>
@@ -446,7 +446,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>uint16_t Encoded bit pattern data. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00320">320</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00318">318</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
 
 </div>
 </div>
@@ -502,7 +502,7 @@ Public Member Functions</h2></td></tr>
 <dd>
 false: Track bit array data is not set. Returned values are invalid. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00255">255</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00253">253</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
 
 </div>
 </div>
@@ -548,7 +548,7 @@ false: Track bit array data is not set. Returned values are invalid. </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00364">364</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00362">362</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
 
 </div>
 </div>
@@ -572,7 +572,7 @@ false: Track bit array data is not set. Returned values are invalid. </dd></dl>
 <p >unit = bit</p>
 <dl class="section return"><dt>Returns</dt><dd>int Read bit data. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00165">165</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00163">163</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
 
 </div>
 </div>
@@ -633,8 +633,8 @@ false: Track bit array data is not set. Returned values are invalid. </dd></dl>
 
 </div>
 </div>
-<a id="a1109ffec6b08d54ea56c3d643e41293d" name="a1109ffec6b08d54ea56c3d643e41293d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1109ffec6b08d54ea56c3d643e41293d">&#9670;&nbsp;</a></span>set_cell_size()</h2>
+<a id="ad0adedb2bfc44c3a1f46c9a5d2e77a45" name="ad0adedb2bfc44c3a1f46c9a5d2e77a45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0adedb2bfc44c3a1f46c9a5d2e77a45">&#9670;&nbsp;</a></span>set_cell_size()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -643,8 +643,18 @@ false: Track bit array data is not set. Returned values are invalid. </dd></dl>
           <td class="memname">void mfm_codec::set_cell_size </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>cell_size</em></td><td>)</td>
+          <td class="paramname"><em>cell_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>window_ratio</em> = <code>0.8f</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -685,7 +695,7 @@ false: Track bit array data is not set. Returned values are invalid. </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00131">131</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00129">129</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
 
 </div>
 </div>
@@ -713,7 +723,7 @@ false: Track bit array data is not set. Returned values are invalid. </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00235">235</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00233">233</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
 
 </div>
 </div>
@@ -741,7 +751,7 @@ false: Track bit array data is not set. Returned values are invalid. </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00387">387</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00385">385</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
 
 </div>
 </div>
@@ -769,7 +779,7 @@ false: Track bit array data is not set. Returned values are invalid. </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00141">141</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00139">139</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
 
 </div>
 </div>
@@ -935,7 +945,7 @@ false: Track bit array data is not set. Returned values are invalid. </dd></dl>
 
 <p>Update data cell parameters. </p>
 
-<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00120">120</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mfm__codec_8cpp_source.html#l00118">118</a> of file <a class="el" href="mfm__codec_8cpp_source.html">mfm_codec.cpp</a>.</p>
 
 </div>
 </div>

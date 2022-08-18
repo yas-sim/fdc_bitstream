@@ -290,7 +290,7 @@ MFM image data format:</h1>
 <div class="line">typedef struct track_table_ {</div>
 <div class="line">    uint64_t    offset;                     // Offset to the track data (unit=byte, from the top of the file == absolute offset)</div>
 <div class="line">    uint64_t    length_bit;                 // Track data length (uint=bits, not bytes)</div>
-<div class="line">} mfm_track_table;</div>
+<div class="line">} mfm_track_table[number_of_tracks];</div>
 <div class="line"> </div>
 <div class="line">// Track data * 84</div>
 <div class="line">//   ofst(byte) = track_table[track#].offset</div>
