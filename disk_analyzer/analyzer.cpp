@@ -119,9 +119,11 @@ void cmd_open_image(std::string file_name) {
 
     disk_image_base_properties props = disk_img->get_property();
     std::cout << "Max Track num : " << props.m_max_track_number << std::endl;
-    std::cout << "Spindle speed : " << props.m_spindle_time_ns / 1e6 << "[ms/rotation]" << std::endl;
-    std::cout << "Sampling rate : " << props.m_sampling_rate / 1e6 << "[Msamples/sec]" << std::endl;
-    std::cout << "Data bit rate : " << props.m_data_bit_rate / 1e3 << "[Kbit/sec]" << std::endl;
+    std::cout << "Spindle speed : " << props.m_spindle_time_ns / 1e6 << " [ms/rotation]" << std::endl;
+    std::cout << "Sampling rate : " << props.m_sampling_rate / 1e6 << " [Msamples/sec]" << std::endl;
+    std::cout << "Data bit rate : " << props.m_data_bit_rate / 1e3 << " [Kbit/sec]" << std::endl;
+
+    fdc->set_fdc_params(props.m_sampling_rate, props.m_data_bit_rate);
 }
 
 void cmd_read_track(size_t track_n) {

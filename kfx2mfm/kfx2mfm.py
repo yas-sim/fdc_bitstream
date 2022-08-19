@@ -261,16 +261,16 @@ def align(val, boundary):
     ret = ((val // boundary) + (1 if val % boundary != 0 else 0)) * boundary
     return ret
 
-def write_mfm(bitstreams, sampling_clk, bit_rate, spindle_rpm, f):
+def write_mfm(bitstreams, sampling_clk, sampling_rate, bit_rate, spindle_rpm, f):
     spindle_speed = 60/spindle_rpm   # 1 rotation / sec
     spindle_time_ns = spindle_speed * 1e9
     header = bytearray('MFM_IMG '.encode())
     track_offset_table_offset = 0x200
     append_uint64_t_le(header, track_offset_table_offset)      # track table offset
-    append_uint64_t_le(header, len(bitstreams))      # number of tracks
-    append_uint64_t_le(header, spindle_time_ns)   # spindle time [ns]
-    append_uint64_t_le(header, 500e3)               # data bit rate
-    append_uint64_t_le(header, 4e6)             # sampling rate
+    append_uint64_t_le(header, len(bitstreams))          # number of tracks
+    append_uint64_t_le(header, spindle_time_ns)          # spindle time [ns]
+    append_uint64_t_le(header, bit_rate)                 # data bit rate
+    append_uint64_t_le(header, sampling_rate)            # sampling rate
     f.write(header)
 
     track_ofst_table = bytearray()
@@ -311,7 +311,7 @@ def main(args):
             bitstream = encode(track)                                    # Convert pulse interval data into bit stream
             track_bitstream.append(bitstream)
             count += 1
-        write_mfm(track_bitstream, fdshield_clk, 500e3, rpm, f)
+        write_mfm(track_bitstream, fdshield_clk, fdshield_clk, 500e3, rpm, f)
 
 if __name__ == '__main__':
     print('** "FryoFlux RAW stream data" to "fdc_bitstream MFM format" file converter (https://www.kryoflux.com/)')
