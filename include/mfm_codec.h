@@ -38,10 +38,8 @@ private:
     double      m_vfo_gain_h        = 10.f;       // VFO gain for SYNC period
     double      m_vfo_gain_l        = 1.f;        // VFO gain for period other than SYNC
     double      m_vfo_gain          = 1.f;        // Current VFO gain
+    double      m_vfo_suspension_rate = 0.f;
 
-    bool        m_fluctuation = false;
-    size_t      m_fluctuator_numerator = 1;
-    size_t      m_fluctuator_denominator = 4;    // data separator fluctuation occur rate = numerator/denominator
     std::random_device m_rnd;
 
 public:
@@ -75,5 +73,6 @@ public:
     inline void set_vfo_gain(double low, double high) { m_vfo_gain_h = high; m_vfo_gain_l = low; }
 
     void enable_fluctuator(size_t numerator, size_t denominator);
+    void enable_fluctuator(double vfo_suspension_rate);
     void disable_fluctuator(void);
 };

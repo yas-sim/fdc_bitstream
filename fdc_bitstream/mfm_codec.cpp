@@ -20,7 +20,7 @@ mfm_codec::mfm_codec() : m_bit_stream(0),
         m_sync_mode(false), m_wraparound(false),
         m_prev_write_bit(0),
         m_sampling_rate(4e6), m_data_bit_rate(500e3),
-        m_fluctuation(false), m_fluctuator_numerator(1), m_fluctuator_denominator(1),
+        m_vfo_suspension_rate(0.f),
         m_track_ready(false)
 {
     update_parameters();
@@ -41,9 +41,7 @@ void mfm_codec::reset(void) {
     m_prev_write_bit = 0;
     m_sync_mode = false;
     clear_wraparound();
-    m_fluctuation = false;
-    m_fluctuator_numerator = 1;
-    m_fluctuator_denominator = 1;
+    m_vfo_suspension_rate = 0.f;
     m_track.clear_array();
     m_track_ready = false;
     set_vfo_gain(1.f, 10.f);
@@ -187,7 +185,7 @@ int mfm_codec::read_bit_ds(void) {
             }
             // Adjust pulse phase (imitate PLL/VFO operation)
             // Limit the PLL/VFO operation frequency and introduce fluctuation with the random generator (certain fluctuation is required to reproduce some copy protection)
-            if (m_fluctuation == false || m_rnd() % m_fluctuator_denominator >= m_fluctuator_numerator) {
+            if ((static_cast<double>(m_rnd()) / static_cast<double>(INT32_MAX)) >= m_vfo_suspension_rate) {
                 cell_center = m_data_window_ofst + m_data_window_size / 2.f;
                 double error = m_distance_to_next_pulse - cell_center;
 
@@ -406,14 +404,26 @@ size_t mfm_codec::get_pos(void) {
  * @brief Enable data separator fluctuator.
  *        Data separator has feature to introduce a little uncertainty to reproduce time sensitive copy protect data which relies on the ambiguity of the bit pattern.
  *        PLL will skip working at the rate of (numerator/denominator). If you set it 1/4, the PLL works at rate of 3/4 and stop at rate of 1/4.
+ * @deprecated This funciton is deprecated. Use mfm_codec::enable_fluctuator(double vfo_suspension_rate) instead.
  * 
  * @param numerator Numerator to define fluctuate rate.
  * @param denominator Denominator to define fluctuate rate.
  */
 void mfm_codec::enable_fluctuator(size_t numerator, size_t denominator) {
-    m_fluctuation = true;
-    m_fluctuator_numerator = numerator;
-    m_fluctuator_denominator = denominator;
+    enable_fluctuator(static_cast<double>(numerator)/static_cast<double>(denominator));
+}
+
+/**
+ * @brief Enable data separator fluctuator.
+ *        The VFO in the data separator has feature to introduce a little uncertainty to reproduce time sensitive copy protect data which relies on the ambiguity of the bit pattern.
+ *        The VFO will suspend working at the rate of suspension_rate.
+ * 
+ * @param vfo_suspension_rate VFO suspension rate (0.0-1.0)
+ */
+void mfm_codec::enable_fluctuator(double vfo_suspension_rate) {
+    if (vfo_suspension_rate < 0.f) vfo_suspension_rate = 0.f;
+    if (vfo_suspension_rate > 1.f) vfo_suspension_rate = 1.f;
+    m_vfo_suspension_rate = vfo_suspension_rate;
 }
 
 /**
@@ -421,5 +431,5 @@ void mfm_codec::enable_fluctuator(size_t numerator, size_t denominator) {
  * 
  */
 void mfm_codec::disable_fluctuator(void) {
-    m_fluctuation = false;
+    m_vfo_suspension_rate=0.f;
 }
