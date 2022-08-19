@@ -304,9 +304,9 @@ def main(args):
         for file in files:
             m = [ int(s) for s in re.findall(r'track(\d+)\.(\d)\.raw', file)[0] ]
             print('track {} {}  '.format(*m), end='', flush=True)
-            stream, stream_pos, index, sck, rpm = decode_track(file)     # parse KryoFlux raw stream data
+            stream, stream_pos, index, kfx_sck, rpm = decode_track(file)     # parse KryoFlux raw stream data
             track = get_track(stream, stream_pos, index)                 # Kryoflux stream buffer may contain track data for multiple spins. Extract the data of exact 1 track
-            scale = sck / fdshield_clk
+            scale = kfx_sck / fdshield_clk
             track = [ int(s/scale) for s in track ]                      # Downsample
             bitstream = encode(track)                                    # Convert pulse interval data into bit stream
             track_bitstream.append(bitstream)
@@ -317,6 +317,6 @@ if __name__ == '__main__':
     print('** "FryoFlux RAW stream data" to "fdc_bitstream MFM format" file converter (https://www.kryoflux.com/)')
     parser = argparse.ArgumentParser()
     parser.add_argument('-i', '--input', type=str, required=True, help='Directory name which contains input KryoFlux RAW bitstream files')
-    parser.add_argument('--clk_spd', type=int, required=False, default=4e6, help='clock speed for down-sampling (default=4MHz=4000000)')
+    parser.add_argument('--clk_spd', type=float, required=False, default=4e6, help='clock speed for down-sampling (default=4MHz=4000000)')
     args = parser.parse_args()
     main(args)
