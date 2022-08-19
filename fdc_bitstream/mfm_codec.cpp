@@ -117,6 +117,7 @@ void mfm_codec::set_cell_size(double cell_size, double window_ratio) {
  */
 void mfm_codec::update_parameters(void) {
     double cell_size = m_sampling_rate / m_data_bit_rate;
+    m_bit_width_w = static_cast<size_t>(cell_size);      // bit width for mfm write (bit length)
     m_bit_cell_size_ref = cell_size;
     set_cell_size(cell_size);
 }
@@ -364,13 +365,13 @@ void mfm_codec::mfm_write_byte(uint8_t data, bool mode, bool write_gate) {
     for (uint16_t bit_pos = 0x8000; bit_pos != 0; bit_pos >>= 1) {
         int bit = (bit_pattern & bit_pos) ? 1 : 0;
         if (write_gate == true) {
-            for (size_t i = 0; i < m_bit_width; i++) {
-                if (m_bit_width / 2 == i)   m_track.write_stream(bit);    // write data pulse at the center of the bit cell
+            for (size_t i = 0; i < m_bit_width_w; i++) {
+                if (m_bit_width_w / 2 == i)   m_track.write_stream(bit);    // write data pulse at the center of the bit cell
                 else                        m_track.write_stream(0);
             }
         }
         else {
-            for (size_t i = 0; i < m_bit_width; i++) {
+            for (size_t i = 0; i < m_bit_width_w; i++) {
                 m_track.advance_stream_pos();                          // advance stream pointer without actual data write (dummy write)
             }
         }

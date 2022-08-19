@@ -15,7 +15,7 @@ private:
     bool        m_track_ready;
     bool        m_sync_mode;
     uint64_t    m_bit_stream;                         // decoded MFM bit stream from the raw track bit data
-    size_t      m_bit_width = ((4e6 / 1e6) * 2);      // == 8  # 4MHz/1MHz * 2
+    size_t      m_bit_width_w = ((4e6 / 1e6) * 2);    // Bit cell width for writing. default == 8  # 4MHz/500KHz
     const uint16_t m_missing_clock_a1 = 0x4489;       //  0100_0100_10*0_1001
     const uint16_t m_missing_clock_c2 = 0x5224;       //  0101_0010_*010_0100
     const uint64_t m_pattern_ff = 0x5555555555555555; // for 4 bytes of sync data(unused)
