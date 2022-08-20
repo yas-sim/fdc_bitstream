@@ -122,7 +122,7 @@ int main(int argc, char *argv[]) {
 	bit_array track;
 
 	std::cout << "Gain L = " << gain_l << ", Gain H = " << gain_h << std::endl;
-	fdc.set_vfo_gain(gain_l, gain_h);
+	fdc.set_vfo_gain_val(gain_l, gain_h);
 
 	std::cout << "Start track = " << track_start << ", End track = " << track_end << std::endl;
 	for (int track_n = track_start; track_n <= track_end; track_n++) {

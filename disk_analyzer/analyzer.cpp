@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <direct.h>
 
 #include "fdc_bitstream.h"
 
@@ -124,6 +125,7 @@ void cmd_open_image(std::string file_name) {
     std::cout << "Data bit rate : " << props.m_data_bit_rate / 1e3 << " [Kbit/sec]" << std::endl;
 
     fdc->set_fdc_params(props.m_sampling_rate, props.m_data_bit_rate);
+    fdc->disp_vfo_status();
 }
 
 void cmd_read_track(size_t track_n) {
@@ -153,8 +155,9 @@ void cmd_read_id(size_t track_n) {
 }
 
 void cmd_set_gain(double gain_l, double gain_h) {
-    fdc->set_vfo_gain(gain_l, gain_h);
+    fdc->set_vfo_gain_val(gain_l, gain_h);
     std::cout << "gain=(L:" << gain_l << ", H:" << gain_h << ")" << std::endl;
+    fdc->disp_vfo_status();
 }
 
 void cmd_read_sector(size_t cyl, size_t hed, size_t rcd) {
@@ -173,13 +176,17 @@ void cmd_read_sector(size_t cyl, size_t hed, size_t rcd) {
     std::cout << std::setw(10) << read_data.id_pos << " " << std::setw(10) << read_data.data_pos << " " << read_data.data.size() << std::endl;
 }
 
-void cmd_enable_fluctuator(size_t numerator, size_t denominator) {
-    fdc->enable_fluctuator(numerator, denominator);
-    std::cout << "VFO stops operation at rate of " << numerator << "/" << denominator << "." << std::endl;
+void cmd_enable_fluctuator(double vfo_suspension_rate) {
+    fdc->enable_fluctuator(vfo_suspension_rate);
+    std::cout << "VFO stops operation at rate of " << vfo_suspension_rate << "." << std::endl;
 }
 
 void cmd_disable_fluctuator(void) {
     fdc->disable_fluctuator();
+}
+
+void cmd_disp_vfo_status(void) {
+    fdc->disp_vfo_status();
 }
 
 void cmd_help(void) {
@@ -189,7 +196,7 @@ void cmd_help(void) {
     "rt trk          Read track\n"
     "ri trk          Read all sector IDs\n"
     "rs trk sid sct  Read sector\n"
-    "ef nume denom   Enable fluctuator (VFO stops at rate of nume/denom)\n"
+    "ef sus_radio    Enable fluctuator (VFO stops operation at rate of sus_ratio (0.0-1.0))\n"
     "ef              Disable fluctuator\n"
     "gain gl gh      Set VFO gain (low=gl, high=gh)\n"
     "q               Quit analyzer\n"
@@ -198,8 +205,14 @@ void cmd_help(void) {
 // -------------------------------------------------------------------------
 
 int main(int argc, char* argv[]) {
+    char tmp[256];
+    _getcwd(tmp, 256);
+    std::cout << "Current working directory : " << tmp << std::endl;
+
     cmd_help();
     fdc = new fdc_bitstream();
+    fdc->disp_vfo_status();
+
     size_t cmd_count = 1;
     std::ifstream ifs;
     if (argc>1) {
@@ -208,12 +221,13 @@ int main(int argc, char* argv[]) {
     std::istream &in_stream = ifs.is_open()? ifs : std::cin;
 
     std::string cmd_line;
+    std::string prev_cmd;
     do {
         std::cout << "CMD(" << cmd_count << ") > ";
         std::getline(in_stream, cmd_line);
         if(cmd_line.size() == 0) {
-            cmd_help();
-            continue;
+            cmd_line = prev_cmd;
+            cmd_disp_vfo_status();
         }
 
         cmd_count++;
@@ -241,14 +255,18 @@ int main(int argc, char* argv[]) {
             cmd_set_gain(std::stod(args[1]), std::stod(args[2]));
         }
         else if(args[0] == "ef") {
-            cmd_enable_fluctuator(std::stoi(args[1]), std::stoi(args[2]));            
+            cmd_enable_fluctuator(std::stod(args[1]));            
         }
         else if(args[0] == "df") {
             cmd_disable_fluctuator();
         }
+        else if(args[0] == "vfo") {
+            cmd_disp_vfo_status();
+        }
         else if(args[0] == "h") {
             cmd_help();
         }
+        prev_cmd = cmd_line;
     } while (cmd_line != "q");
 
     if(fdc != nullptr) delete fdc;

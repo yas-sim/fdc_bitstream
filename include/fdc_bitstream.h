@@ -60,6 +60,11 @@ public:
         size_t      data_pos;
     };
 
+    enum gain_state {
+        low = 0,
+        high = 1
+    };
+
     fdc_bitstream();
     void set_fdc_params(size_t sampling_rate, size_t data_bit_rate, double bit_window_ratio = 0.75f);   // bit_window_ratio = 0.5 is the standard defined in MFM spec.
     /** unit = bit */
@@ -75,9 +80,16 @@ public:
      * @brief Enable FDC read operation fluctuatior.
      * If you set the fluctuator with enable_fluctuator(1,4), the VFO in the data separator will operate at 
      * rate of 3/4 and stop operation at the rate of 1/4. The operation will be determined by 
-     a random generator, so the VFO operation will be stochastic, and this introduces some uncertainty in the read data.
+     * a random generator, so the VFO operation will be stochastic, and this introduces some uncertainty in the read data.
+     * @deprecated This function is deprecated. Use fdc_bitcontrol::enable_fluctuator(double) instead.
      */
     inline void enable_fluctuator(size_t numerator, size_t denominator) { m_codec.enable_fluctuator(numerator, denominator); }
+    /** 
+     * @brief Enable FDC read operation fluctuatior.
+     * The VFO in the C/D separator will suspend its operation at the rate of vfo_suspension_rate (0.0-1.0).
+     * The operation will be determined by a random generator, so the VFO operation will be stochastic, and this introduces some uncertainty in the read data.
+     */
+    inline void enable_fluctuator(double vfo_suspension_rate) { m_codec.enable_fluctuator(vfo_suspension_rate); }
     /** Disable FDC read operation fluctuator */
     inline void disable_fluctuator(void) { m_codec.disable_fluctuator(); }
 
@@ -89,7 +101,21 @@ public:
     * Low speed (low gain) setting will be used during reading data (other than SYNC field) to cancel slow spindle speed 
     * fluctuation but not follow the quick timing change such as irregular pulses in the bit stream and keep the same reading pace.
     */
-    inline void set_vfo_gain(double low, double high) { m_codec.set_vfo_gain(low, high); }
+    inline void set_vfo_gain_val(double low, double high) { m_codec.set_vfo_gain_val(low, high); }
+
+    inline void set_vfo_gain_mode(gain_state state) { 
+        switch(state) {
+        case gain_state::low:
+        default:
+            m_codec.set_vfo_gain(mfm_codec::gain_state::low);
+            break;
+        case gain_state::high:
+            m_codec.set_vfo_gain(mfm_codec::gain_state::high);
+            break;
+        }
+    }
+    inline void disp_vfo_status(void) { m_codec.disp_vfo_status(); }
+
 
     void write_data(uint8_t data, bool mode = false, bool write_gate = true);
     void read_data(uint8_t& data, bool& missing_clock, bool ignore_missing_clock = true, bool ignore_sync_field = true);

@@ -10,6 +10,8 @@
 
 #define DLL_BODY
 
+#include <cmath>
+
 #include "mfm_codec.h"
 
 /**
@@ -23,9 +25,12 @@ mfm_codec::mfm_codec() : m_bit_stream(0),
         m_vfo_suspension_rate(0.f),
         m_track_ready(false)
 {
-    update_parameters();
-    set_vfo_gain(2.f, 8.f);           // Set data separator VFO gain (low=non-SYNC and high=SYNC period)
-    set_gain(m_vfo_gain_l);
+    m_vfo = new fdc_vfo1();
+    reset();
+}
+
+mfm_codec::~mfm_codec() {
+    delete m_vfo;
 }
 
 /**
@@ -35,16 +40,17 @@ mfm_codec::mfm_codec() : m_bit_stream(0),
  * @param[out] None
  */
 void mfm_codec::reset(void) {
-    m_sampling_rate = 4e6;
-    m_data_bit_rate = 500e3;
-    update_parameters();
+    //update_parameters();
     m_prev_write_bit = 0;
     m_sync_mode = false;
     clear_wraparound();
     m_vfo_suspension_rate = 0.f;
     m_track.clear_array();
     m_track_ready = false;
-    set_vfo_gain(1.f, 10.f);
+
+    m_vfo->set_params(m_sampling_rate, m_data_bit_rate);
+    m_vfo->set_gain_val(1.f, 2.f);
+    m_vfo->set_gain_mode(vfo_base::gain_state::low);
 }
 
 /**
@@ -96,29 +102,35 @@ void mfm_codec::unset_track_data(void) {
  * 
  * @param cell_size New bit cell size (unit=bits)
  */
+# if 0
 void mfm_codec::set_cell_size(double cell_size, double window_ratio) {
     m_bit_cell_size = cell_size;
     m_data_window_size = cell_size * window_ratio;        // typical window_ratio for actual drive is 0.5 but uses 0.75 as default in this SW
     m_data_window_size = m_data_window_size < 1.f ? 1.f : m_data_window_size;  // Avoid too narrow m_data_window_size situation
-    m_data_window_ofst = (cell_size - m_data_window_size) / 2.f;
+    m_data_window_ofst = (m_bit_cell_size - m_data_window_size) / 2.f;
 #ifdef DEBUG
     std::cout << "Bit cell size:" << m_bit_cell_size << std::endl;
     std::cout << "Data window size:" << m_data_window_size << std::endl;
     std::cout << "Data window offset:" << m_data_window_ofst << std::endl;
 #endif
 }
-
+#endif
 
 /**
  * @brief Update data cell parameters
  * 
  */
+#if 0
 void mfm_codec::update_parameters(void) {
     double cell_size = m_sampling_rate / m_data_bit_rate;
     m_bit_width_w = static_cast<size_t>(cell_size);      // bit width for mfm write (bit length)
     m_bit_cell_size_ref = cell_size;
     set_cell_size(cell_size);
+    m_vfo_prev_phase_error = 0.f;
+    m_vfo_prev_freq_error = 0.f;
+    m_vfo_freq_bias = 0.f;
 }
+#endif
 
 /**
  * @brief Set new data bit rate for the bit array buffer.
@@ -127,7 +139,9 @@ void mfm_codec::update_parameters(void) {
  */
 void mfm_codec::set_data_bit_rate(size_t data_bit_rate) {
     m_data_bit_rate = data_bit_rate;
-    update_parameters();
+    m_vfo -> set_params(m_sampling_rate, m_data_bit_rate);
+    m_vfo -> update_cell_params();
+    //update_parameters();
 }
 
 /**
@@ -137,7 +151,9 @@ void mfm_codec::set_data_bit_rate(size_t data_bit_rate) {
  */
 void mfm_codec::set_sampling_rate(size_t sampling_rate) { 
     m_sampling_rate = sampling_rate; 
-    update_parameters(); 
+    m_vfo -> set_params(m_sampling_rate, m_data_bit_rate);
+    m_vfo -> update_cell_params();
+    //update_parameters(); 
 }
 
 
@@ -170,11 +186,11 @@ int mfm_codec::read_bit_ds(void) {
 
     do {
         // check if the next bit is within the next data window
-        if (m_distance_to_next_pulse < m_bit_cell_size) {
+        if (m_distance_to_next_pulse < m_vfo->m_cell_size) {
             // check pulse position
-            if (m_distance_to_next_pulse >= m_data_window_ofst &&
+            if (m_distance_to_next_pulse >= m_vfo->m_window_ofst &&
                 // regular pulse (within the data window)
-                m_distance_to_next_pulse < m_data_window_ofst + m_data_window_size) {
+                m_distance_to_next_pulse < m_vfo->m_window_ofst + m_vfo->m_window_size) {
                 bit_reading = 1;
             }
             else {
@@ -186,18 +202,7 @@ int mfm_codec::read_bit_ds(void) {
             // Adjust pulse phase (imitate PLL/VFO operation)
             // Limit the PLL/VFO operation frequency and introduce fluctuation with the random generator (certain fluctuation is required to reproduce some copy protection)
             if ((static_cast<double>(m_rnd()) / static_cast<double>(INT32_MAX)) >= m_vfo_suspension_rate) {
-                cell_center = m_data_window_ofst + m_data_window_size / 2.f;
-                double error = m_distance_to_next_pulse - cell_center;
-
-                // Data pulse position adjustment == phase correction
-                m_distance_to_next_pulse -= error * 0.05f * m_vfo_gain;
-
-                // Cell size adjustment == frequency correction
-                double new_cell_size = m_bit_cell_size + error * 0.01f * m_vfo_gain;
-                // Limit the range of cell size
-                if (new_cell_size < m_bit_cell_size_ref * 0.8) new_cell_size = m_bit_cell_size_ref * 0.8;
-                if (new_cell_size > m_bit_cell_size_ref * 1.2) new_cell_size = m_bit_cell_size_ref * 1.2;
-                set_cell_size(new_cell_size);
+                m_distance_to_next_pulse = m_vfo->calc(m_distance_to_next_pulse);
             }
             size_t distance = m_track.distance_to_next_bit1();
 #if 0
@@ -212,14 +217,14 @@ int mfm_codec::read_bit_ds(void) {
 #endif
             m_distance_to_next_pulse += distance;
 
-            if (loop_count++ > m_bit_cell_size) {       // time out
+            if (loop_count++ > m_vfo->m_cell_size) {       // time out
                 return -1;
             }
         }
-    } while (m_distance_to_next_pulse < m_bit_cell_size);
+    } while (m_distance_to_next_pulse < m_vfo->m_cell_size);
     // advance bit cell position
-    if (m_distance_to_next_pulse >= m_bit_cell_size) {
-        m_distance_to_next_pulse -= m_bit_cell_size;
+    if (m_distance_to_next_pulse >= m_vfo->m_cell_size) {
+        m_distance_to_next_pulse -= m_vfo->m_cell_size;
     }
     return bit_reading;
 }
@@ -229,10 +234,17 @@ int mfm_codec::read_bit_ds(void) {
  * 
  * @param[in] gain Gain value for the PLL (value in double type).
  */
-void mfm_codec::set_gain(double gain) {
-    if (gain <= 0.f) gain = 0.01f;
-    if (gain > 100.f) gain = 100.f;
-    m_vfo_gain = gain;
+void mfm_codec::set_vfo_gain(gain_state state) {
+    double gain;
+    switch(state) {
+    case gain_state::low:
+    default:
+        m_vfo -> set_gain_mode(vfo_base::gain_state::low);
+        break;
+    case gain_state::high:
+        m_vfo -> set_gain_mode(vfo_base::gain_state::high);
+        break;
+    }
 }
 
 
@@ -288,10 +300,10 @@ bool mfm_codec::mfm_read_byte(uint8_t& data, bool& missing_clock, bool ignore_mi
         if (ignore_sync_field == false) {
             if (m_bit_stream == m_pattern_00) {
                 decode_count &= ~0b01u;                                 // C/D synchronize
-                set_gain(m_vfo_gain_h);
+                set_vfo_gain(mfm_codec::gain_state::high);
             }
             else {
-                set_gain(m_vfo_gain_l);
+                set_vfo_gain(mfm_codec::gain_state::low);
             }
         }
     } while (decode_count < 16);

@@ -47,11 +47,11 @@ int main(void) {
 		fdc_bitstream fdc;
 		bit_array track;
 		std::ofstream ofs("log.csv", std::ios::out);
-		fdc.set_vfo_gain(8.f, 8.f);
+		fdc.set_vfo_gain_val(8.f, 8.f);
 
 		for (double l = 0.3f; l < 13.f; l += 0.1f) {
 			for (double h = 0.3f; h < 13.f; h += 0.1f) {
-				fdc.set_vfo_gain(l, h);
+				fdc.set_vfo_gain_val(l, h);
 				ofs << l << "," << h;
 				std::cout << l << "," << h;
 				for (int track_n = 0; track_n < 69; track_n++) {

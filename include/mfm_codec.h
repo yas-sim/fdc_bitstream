@@ -6,6 +6,7 @@
 #include <random>
 
 #include "bit_array.h"
+#include "fdc_vfo.h"
 
 //#define DEBUG
 
@@ -30,20 +31,32 @@ private:
     size_t      m_data_bit_rate;
 
     size_t      m_current_bit_pos   = 0;          // current bit position to process
-    double      m_data_window_size  = 0.f;        // data window size in [bits] unit
-    double      m_data_window_ofst  = 0.f;        // data window start offset in the data cell (in [bits] unit)
-    double      m_bit_cell_size     = 0.f;        // bit cell size in [bits] unit   (4MHz sample, 500Kbps bit rate, MFM = 4.0e6/500e3 = 8)
-    double      m_bit_cell_size_ref = 0.f;
+    //double      m_data_window_size  = 0.f;        // data window size in [bits] unit
+    //double      m_data_window_ofst  = 0.f;        // data window start offset in the data cell (in [bits] unit)
+    //double      m_bit_cell_size     = 0.f;        // bit cell size in [bits] unit   (4MHz sample, 500Kbps bit rate, MFM = 4.0e6/500e3 = 8)
+    //double      m_bit_cell_size_ref = 0.f;
     double      m_distance_to_next_pulse = 0.f;
-    double      m_vfo_gain_h        = 10.f;       // VFO gain for SYNC period
-    double      m_vfo_gain_l        = 1.f;        // VFO gain for period other than SYNC
-    double      m_vfo_gain          = 1.f;        // Current VFO gain
+    //double      m_vfo_gain_h        = 10.f;       // VFO gain for SYNC period
+    //double      m_vfo_gain_l        = 1.f;        // VFO gain for period other than SYNC
+    //double      m_vfo_gain          = 1.f;        // Current VFO gain
     double      m_vfo_suspension_rate = 0.f;
+
+    //double      m_vfo_prev_phase_error = 0.f;           // for VFO PD control
+    //double      m_vfo_prev_freq_error = 0.f;
+    //double      m_vfo_freq_bias = 0.f;
+
+    vfo_base    *m_vfo;
 
     std::random_device m_rnd;
 
 public:
+    enum gain_state {
+        low = 0,
+        high = 1
+    };
+public:
     mfm_codec();
+    ~mfm_codec();
     void reset(void);
     void set_cell_size(double cell_size, double window_ratio=0.75f);    // typical window_ratio for actual drive is 0.5 but uses 0.75 as default in this SW
     void update_parameters(void);
@@ -62,7 +75,7 @@ public:
 
     int read_bit_ds(void);
     bool mfm_read_byte(uint8_t& data, bool& missing_clock, bool ignore_missing_clock = true, bool ignore_sync_field = true);
-    void set_gain(double gain);
+    void set_vfo_gain(gain_state state);
     uint16_t mfm_encoder(uint8_t data, bool mode = false);
     void mfm_write_byte(uint8_t data, bool mode = false, bool write_gate = true);
     void set_pos(size_t bit_pos);
@@ -70,7 +83,8 @@ public:
 
     inline void reset_sync_mode(void) { m_sync_mode = false; }
     inline void set_sync_mode(bool sync_mode) { m_sync_mode = sync_mode; }
-    inline void set_vfo_gain(double low, double high) { m_vfo_gain_h = high; m_vfo_gain_l = low; }
+    inline void set_vfo_gain_val(double low, double high) { m_vfo -> set_gain_val(low, high); }
+    inline void disp_vfo_status(void) { m_vfo->disp_vfo_status(); }
 
     void enable_fluctuator(size_t numerator, size_t denominator);
     void enable_fluctuator(double vfo_suspension_rate);

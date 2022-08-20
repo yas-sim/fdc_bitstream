@@ -48,8 +48,8 @@ void fdc_bitstream::set_fdc_params(size_t sampling_rate, size_t data_bit_rate, d
     if(bit_window_ratio<0.2 || bit_window_ratio>0.8) {
         bit_window_ratio = 0.5f;
     }
-    size_t bit_cell_size = m_sampling_rate / m_data_bit_rate;
-    m_codec.set_cell_size(bit_cell_size, bit_window_ratio);
+    //size_t bit_cell_size = m_sampling_rate / m_data_bit_rate;
+    //m_codec.set_cell_size(bit_cell_size, bit_window_ratio);
 }
 
 /**
@@ -207,9 +207,9 @@ std::vector<fdc_bitstream::id_field> fdc_bitstream::read_all_idam(void) {
     clear_wraparound();
     set_pos(0);
     while(true) {
+        sect_id.clear();
         size_t pos = read_id(sect_id, crc_error);
-        if (is_wraparound() == true) break;
-        if (sect_id.size() ==6) {
+        if (sect_id.size()>0) {
             item.C = sect_id[0];
             item.H = sect_id[1];
             item.R = sect_id[2];
@@ -219,6 +219,7 @@ std::vector<fdc_bitstream::id_field> fdc_bitstream::read_all_idam(void) {
             item.pos = pos;
             result.push_back(item);
         }
+        if (is_wraparound() == true) break;
     }
     return result;
 }
@@ -481,6 +482,7 @@ fdc_bitstream::sector_data fdc_bitstream::read_sector(int trk, int sid, int sct)
         }
         size_t pos = read_id(sect_id, crc_error);
         sect_data.id_pos = pos;
+        if(sect_id.size()==0) continue;                     // Failed to read ID
         if (sect_id[0] == trk && sect_id[2] == sct) {       // FD179x/MB8876 won'nt compare 'head' field
             if (crc_error == false) {
                 pos = read_sector_body(sect_id[3], sect_body_data, crc_error, dam_type, record_not_found);
@@ -532,6 +534,7 @@ bool fdc_bitstream::write_sector(int trk, int sid, int sct, bool dam_type, std::
             }
         }
         read_id(sect_id, crc_error);
+        if(sect_id.size() == 0) continue;
         if (sect_id[0] == trk && sect_id[2] == sct) {       // FD179x/MB8876 won'nt compare 'head' field
             if (crc_error == false) {
                 if (fluctuate) {

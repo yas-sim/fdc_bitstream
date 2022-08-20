@@ -42,11 +42,13 @@ void test1(void) {
         std::vector<uint8_t> track = fdc.read_track();
         dump_buf(track.data(), track.size() > 2048 ? 2048 : track.size());
         std::cout << std::endl;
+        fdc.disp_vfo_status();
 
         std::cout << "ID" << std::endl;
         std::vector<fdc_bitstream::id_field> ids = fdc.read_all_idam();
         display_id_list(ids);
         std::cout << std::endl;
+        fdc.disp_vfo_status();
     } catch(disk_image_exception cause) {
         std::cout << cause.what() << std::endl;
         std::cout << "error code:" << cause.get_error_code() << std::endl;
@@ -70,6 +72,7 @@ void test2() {
     std::vector<uint8_t> track = fdc.read_track();
     dump_buf(track.data(), track.size());
     std::cout << std::endl;
+    fdc.disp_vfo_status();
 
     fdc.clear_wraparound();
     fdc.set_pos(0);
@@ -86,6 +89,7 @@ void test2() {
     track = fdc.read_track();
     dump_buf(track.data(), track.size());
     std::cout << std::endl;
+    fdc.disp_vfo_status();
 
     // verify written data by reading the sector
     std::cout << "Read sector data" << std::endl;
@@ -110,17 +114,20 @@ void test3(void) {
     std::vector<uint8_t> track = fdc.read_track();
     dump_buf(track.data(), track.size());
     std::cout << std::endl;
+    fdc.disp_vfo_status();
 
     std::cout << "ID" << std::endl;
     std::vector<fdc_bitstream::id_field> ids = fdc.read_all_idam();
     display_id_list(ids);
     std::cout << std::endl;
+    fdc.disp_vfo_status();
 
     std::cout << "Read sector data" << std::endl;
     fdc_bitstream::sector_data sect_data_r;
     sect_data_r = fdc.read_sector(0, 0, 1);
     dump_buf(sect_data_r.data.data(), sect_data_r.data.size());
     std::cout << std::endl;
+    fdc.disp_vfo_status();
 
     std::cout << "Write to all sectors (0-16)" << std::endl;
     std::vector<uint8_t> sect_data_w;
@@ -138,9 +145,10 @@ void test3(void) {
     track = fdc.read_track();
     dump_buf(track.data(), track.size());
     std::cout << std::endl;
+    fdc.disp_vfo_status();
 
     std::cout << "Read sector data" << std::endl;
-    fdc.set_vfo_gain(2.f, 10.f);
+    fdc.set_vfo_gain_val(1.f, 2.f);
     for (int i = 1; i <= 16; i++) {
         std::cout << "Sector " << i << std::endl;
         fdc_bitstream::sector_data sect_data_r;
@@ -148,6 +156,7 @@ void test3(void) {
         dump_buf(sect_data_r.data.data(), sect_data_r.data.size());
     }
     std::cout << std::endl;
+    fdc.disp_vfo_status();
 
 }
 
@@ -184,7 +193,11 @@ void test4(void) {
         bool crc_error, dam_type, record_not_found;
         fdc.read_sector_body(00, sect_data, crc_error, dam_type, record_not_found);
         std::cout << std::setw(2) <<  i + 1 << " : ";
-        dump_buf(sect_data.data(), 32);
+        if(sect_data.size()>=32) {
+            dump_buf(sect_data.data(), 32);
+        } else {
+            std::cout << std::endl;
+        }
     }
 }
 
