@@ -30,10 +30,10 @@ var NAVTREEINDEX1 =
 "classvfo__pid.html#a25b409d96c081921431f3af4709ccaef":[13,0,20,4],
 "classvfo__pid.html#a3d41c5e2839c02b12c17c46f3d1a1554":[13,0,20,1],
 "classvfo__pid.html#a40fe98b423eca8f56b4c350a25c497c9":[13,0,20,6],
-"classvfo__pid.html#a426c3b65e456af97c76d28d835bca7f1":[13,0,20,2],
 "classvfo__pid.html#a5013301d4a1dfeeec6f849d22ddade6d":[13,0,20,5],
 "classvfo__pid.html#a6e35d9f93526d4c489a2003fcab84886":[13,0,20,0],
 "classvfo__pid.html#a95243079603c68ce4640e18a53e4647c":[13,0,20,3],
+"classvfo__pid.html#ae303e2a77c9018de6278d11688181588":[13,0,20,2],
 "common_8cpp.html":[14,0,6,0],
 "common_8cpp.html#a00e068b3e6a53ba319bdc7cb0198e089":[14,0,6,0,3],
 "common_8cpp.html#a24de6cbc652db202a2eb6d573f3add10":[14,0,6,0,0],
@@ -108,7 +108,6 @@ var NAVTREEINDEX1 =
 "fdc__test_8cpp.html#ab0f93702cbdb4b0ad3172fbacde22e85":[14,0,6,2,3],
 "fdc__test_8cpp_source.html":[14,0,6,2],
 "fdc__vfo_8h.html":[14,0,8,7],
-"fdc__vfo_8h.html#ad5fba5f8a0abc32938852bcbf341340a":[14,0,8,7,3],
 "fdc__vfo_8h_source.html":[14,0,8,7],
 "files.html":[14,0],
 "functions.html":[13,3,0],
@@ -249,5 +248,6 @@ var NAVTREEINDEX1 =
 "md_disk_analyzer__r_e_a_d_m_e.html#autotoc_md3":[2,0],
 "md_disk_image__r_e_a_d_m_e.html":[3],
 "md_fdc_bitstream__r_e_a_d_m_e.html":[4],
-"md_fdc_bitstream__r_e_a_d_m_e.html#autotoc_md10":[4,2]
+"md_fdc_bitstream__r_e_a_d_m_e.html#autotoc_md10":[4,2],
+"md_fdc_bitstream__r_e_a_d_m_e.html#autotoc_md6":[4,0]
 };
