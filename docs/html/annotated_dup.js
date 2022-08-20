@@ -15,9 +15,11 @@ var annotated_dup =
     [ "disk_image_raw", "classdisk__image__raw.html", "classdisk__image__raw" ],
     [ "fdc_bitstream", "classfdc__bitstream.html", "classfdc__bitstream" ],
     [ "fdc_crc", "classfdc__crc.html", "classfdc__crc" ],
+    [ "fdc_vfo1", "classfdc__vfo1.html", "classfdc__vfo1" ],
     [ "mfm_codec", "classmfm__codec.html", "classmfm__codec" ],
     [ "mfm_header_", "structmfm__header__.html", "structmfm__header__" ],
     [ "picfileformatheader_", "structpicfileformatheader__.html", "structpicfileformatheader__" ],
     [ "pictrack_", "structpictrack__.html", "structpictrack__" ],
-    [ "track_table_", "structtrack__table__.html", "structtrack__table__" ]
+    [ "track_table_", "structtrack__table__.html", "structtrack__table__" ],
+    [ "vfo_base", "classvfo__base.html", "classvfo__base" ]
 ];

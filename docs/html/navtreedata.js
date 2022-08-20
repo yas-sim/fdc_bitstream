@@ -62,6 +62,7 @@ var NAVTREE =
       [ "Command line examples for sample programs and tools.", "md__r_e_a_d_m_e.html#autotoc_md32", null ],
       [ "MFM image data format:", "md__r_e_a_d_m_e.html#autotoc_md34", null ]
     ] ],
+    [ "Deprecated List", "deprecated.html", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -78,7 +79,9 @@ var NAVTREE =
         [ "All", "functions.html", "functions_dup" ],
         [ "Functions", "functions_func.html", null ],
         [ "Variables", "functions_vars.html", null ],
-        [ "Typedefs", "functions_type.html", null ]
+        [ "Typedefs", "functions_type.html", null ],
+        [ "Enumerations", "functions_enum.html", null ],
+        [ "Enumerator", "functions_eval.html", null ]
       ] ]
     ] ],
     [ "Files", "files.html", [
@@ -98,8 +101,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "analyzer_8cpp.html",
-"common_8h.html#acdc23ebf7656b2d2e6dff383a8fcb9e3",
-"structmfm__header__.html#a60def78d36c8bedcb7e3f61276071129"
+"classmfm__codec.html#acbcbccbb4d67a4225d54379a3c20f075",
+"md_fdc_bitstream__r_e_a_d_m_e.html#autotoc_md8"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
