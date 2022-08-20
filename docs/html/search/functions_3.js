@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['calc_0',['calc',['../classfdc__vfo1.html#a1c2c391f0a22a3aef82ed0079dfa716d',1,'fdc_vfo1::calc()'],['../classvfo__base.html#a2399fcc796c169d6c55520c8d4dd3796',1,'vfo_base::calc()']]],
+  ['calc_0',['calc',['../classvfo__pid.html#a3d41c5e2839c02b12c17c46f3d1a1554',1,'vfo_pid::calc()'],['../classvfo__fixed.html#adaf69636ee867eba32002eb52a2e7bf0',1,'vfo_fixed::calc()'],['../classvfo__base.html#a2399fcc796c169d6c55520c8d4dd3796',1,'vfo_base::calc()']]],
   ['check_5fextension_1',['check_extension',['../analyzer_8cpp.html#ae7ebf12a2d3a5b98e12304a5f7fdaf89',1,'check_extension(std::string extension):&#160;analyzer.cpp'],['../image__converter_8cpp.html#ae7ebf12a2d3a5b98e12304a5f7fdaf89',1,'check_extension(std::string extension):&#160;image_converter.cpp']]],
   ['clear_5farray_2',['clear_array',['../classbit__array.html#a4e2e12feb739995bca487fa805baeedc',1,'bit_array']]],
   ['clear_5ftrack_5fdata_3',['clear_track_data',['../classdisk__image.html#a0e9aad2006b60cadee00ba839693912d',1,'disk_image']]],

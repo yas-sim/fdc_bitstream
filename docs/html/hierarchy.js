@@ -26,6 +26,7 @@ var hierarchy =
       [ "byte_array", "classbyte__array.html", null ]
     ] ],
     [ "vfo_base", "classvfo__base.html", [
-      [ "fdc_vfo1", "classfdc__vfo1.html", null ]
+      [ "vfo_fixed", "classvfo__fixed.html", null ],
+      [ "vfo_pid", "classvfo__pid.html", null ]
     ] ]
 ];
