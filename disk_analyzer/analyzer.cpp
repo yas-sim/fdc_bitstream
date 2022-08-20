@@ -3,7 +3,10 @@
 #include <string>
 #include <sstream>
 #include <vector>
+
+#ifdef _WIN32
 #include <direct.h>
+#endif
 
 #include "fdc_bitstream.h"
 
@@ -205,10 +208,11 @@ void cmd_help(void) {
 // -------------------------------------------------------------------------
 
 int main(int argc, char* argv[]) {
+#ifdef _WIN32
     char tmp[256];
     _getcwd(tmp, 256);
     std::cout << "Current working directory : " << tmp << std::endl;
-
+#endif
     cmd_help();
     fdc = new fdc_bitstream();
     fdc->disp_vfo_status();
