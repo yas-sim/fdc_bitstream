@@ -8,5 +8,6 @@ var searchData=
   ['fdc_5fmisc_2ecpp_5',['fdc_misc.cpp',['../fdc__misc_8cpp.html',1,'']]],
   ['fdc_5fmisc_2eh_6',['fdc_misc.h',['../fdc__misc_8h.html',1,'']]],
   ['fdc_5ftest_2ecpp_7',['fdc_test.cpp',['../fdc__test_8cpp.html',1,'']]],
-  ['fdc_5fvfo_2eh_8',['fdc_vfo.h',['../fdc__vfo_8h.html',1,'']]]
+  ['fdc_5fvfo_2ecpp_8',['fdc_vfo.cpp',['../fdc__vfo_8cpp.html',1,'']]],
+  ['fdc_5fvfo_2eh_9',['fdc_vfo.h',['../fdc__vfo_8h.html',1,'']]]
 ];
