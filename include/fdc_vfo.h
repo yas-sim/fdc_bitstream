@@ -102,20 +102,20 @@ public:
 
 
 
-class fdc_vfo1 : public vfo_base {
+class vfo_pid : public vfo_base {
 public:
     double m_prev_phase_error;
     double m_prev_freq_error;
     double m_freq_bias;
 
 public:
-    fdc_vfo1() {
+    vfo_pid() {
         reset();
     }
 
     virtual void disp_vfo_status(void) override {
         vfo_base::disp_vfo_status();
-        std::cout << "-- fdc_vfo1 --" << std::endl;
+        std::cout << "-- vfo_pid --" << std::endl;
         std::cout << "Prev phase err : " << m_prev_phase_error << std::endl;
         std::cout << "Prev freq err  : " << m_prev_freq_error << std::endl;
         std::cout << "Freq bias      : " << m_freq_bias << std::endl;
@@ -166,4 +166,10 @@ public:
 
         return pulse_pos;
     }
+};
+
+
+class vfo_fixed : public vfo_base {
+public:
+    double calc(double pulse_pos) override { return pulse_pos; }
 };
