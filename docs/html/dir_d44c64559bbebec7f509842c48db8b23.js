@@ -7,6 +7,7 @@ var dir_d44c64559bbebec7f509842c48db8b23 =
     [ "fdc_crc.h", "fdc__crc_8h.html", "fdc__crc_8h" ],
     [ "fdc_defs.h", "fdc__defs_8h.html", "fdc__defs_8h" ],
     [ "fdc_misc.h", "fdc__misc_8h.html", "fdc__misc_8h" ],
+    [ "fdc_vfo.h", "fdc__vfo_8h.html", "fdc__vfo_8h" ],
     [ "image_base.h", "image__base_8h.html", "image__base_8h" ],
     [ "image_d77.h", "image__d77_8h.html", "image__d77_8h" ],
     [ "image_hfe.h", "image__hfe_8h.html", "image__hfe_8h" ],

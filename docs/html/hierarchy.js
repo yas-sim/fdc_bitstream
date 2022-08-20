@@ -24,5 +24,8 @@ var hierarchy =
     [ "std::vector", null, [
       [ "byte_array", "classbyte__array.html", null ],
       [ "byte_array", "classbyte__array.html", null ]
+    ] ],
+    [ "vfo_base", "classvfo__base.html", [
+      [ "fdc_vfo1", "classfdc__vfo1.html", null ]
     ] ]
 ];
