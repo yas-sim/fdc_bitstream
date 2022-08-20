@@ -89,43 +89,42 @@ $(document).ready(function(){initNavTree('fdc__crc_8cpp_source.html',''); initRe
 <a href="fdc__crc_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="fdc__crc_8cpp.html#ad5fba5f8a0abc32938852bcbf341340a">   22</a></span><span class="preprocessor">#define DLL_BODY</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#include &quot;<a class="code" href="fdc__crc_8h.html">fdc_crc.h</a>&quot;</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="classfdc__crc.html#a131ac02efdd134bf60a41e638af182df">   29</a></span><a class="code hl_function" href="classfdc__crc.html#a131ac02efdd134bf60a41e638af182df">fdc_crc::fdc_crc</a>() { </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <a class="code hl_function" href="classfdc__crc.html#a19583ac432fbb317b4e8ddbc676a4e1f">reset</a>();</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>};</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="classfdc__crc.html#a19583ac432fbb317b4e8ddbc676a4e1f">   38</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classfdc__crc.html#a19583ac432fbb317b4e8ddbc676a4e1f">fdc_crc::reset</a>(<span class="keywordtype">size_t</span> <a class="code hl_variable" href="namespacekfx2mfm.html#a237f663f31a47153e50a7a8acf4c45b2">type</a>) {</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keywordflow">switch</span> (<a class="code hl_variable" href="namespacekfx2mfm.html#a237f663f31a47153e50a7a8acf4c45b2">type</a>) {</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keywordflow">case</span> 1:  </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        m_crc_val = 0x84cf00; <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keywordflow">default</span>: </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        m_crc_val = 0xe59a00; <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    }</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>}</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="classfdc__crc.html#aec2a17f87b106244f79931a4d2d44b10">   54</a></span>uint16_t <a class="code hl_function" href="classfdc__crc.html#aec2a17f87b106244f79931a4d2d44b10">fdc_crc::get</a>(<span class="keywordtype">void</span>) { <span class="keywordflow">return</span> (m_crc_val &gt;&gt; 8) &amp; 0x0ffffu; }</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="classfdc__crc.html#aba3bf1b24ee2b59db02da17fcadbf611">   61</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classfdc__crc.html#aba3bf1b24ee2b59db02da17fcadbf611">fdc_crc::data</a>(uint8_t dt) {</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    m_crc_val |= dt;</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; 8; i++) {</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        m_crc_val &lt;&lt;= 1;</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        <span class="keywordflow">if</span> (m_crc_val &amp; 0x1000000) {</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>            m_crc_val ^= m_polynomial;</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        }</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    }</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>}</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="classfdc__crc.html#a755e3eccb37c3bcfbb24e31aebf7f72c">   76</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classfdc__crc.html#aba3bf1b24ee2b59db02da17fcadbf611">fdc_crc::data</a>(std::vector&lt;uint8_t&gt;&amp; buf) {</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> it = buf.begin(); it != buf.end(); ++it) {</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        <a class="code hl_function" href="classfdc__crc.html#aba3bf1b24ee2b59db02da17fcadbf611">data</a>(<span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(*it));</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    }</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>}</div>
-<div class="ttc" id="aclassfdc__crc_html_a131ac02efdd134bf60a41e638af182df"><div class="ttname"><a href="classfdc__crc.html#a131ac02efdd134bf60a41e638af182df">fdc_crc::fdc_crc</a></div><div class="ttdeci">fdc_crc()</div><div class="ttdoc">Construct a new fdc crc::fdc crc object.</div><div class="ttdef"><b>Definition:</b> <a href="fdc__crc_8cpp_source.html#l00029">fdc_crc.cpp:29</a></div></div>
-<div class="ttc" id="aclassfdc__crc_html_a19583ac432fbb317b4e8ddbc676a4e1f"><div class="ttname"><a href="classfdc__crc.html#a19583ac432fbb317b4e8ddbc676a4e1f">fdc_crc::reset</a></div><div class="ttdeci">void reset(size_t type=0)</div><div class="ttdoc">Reset CRC generator.</div><div class="ttdef"><b>Definition:</b> <a href="fdc__crc_8cpp_source.html#l00038">fdc_crc.cpp:38</a></div></div>
-<div class="ttc" id="aclassfdc__crc_html_aba3bf1b24ee2b59db02da17fcadbf611"><div class="ttname"><a href="classfdc__crc.html#aba3bf1b24ee2b59db02da17fcadbf611">fdc_crc::data</a></div><div class="ttdeci">void data(uint8_t dt)</div><div class="ttdoc">Supply a data for CRC calculation.</div><div class="ttdef"><b>Definition:</b> <a href="fdc__crc_8cpp_source.html#l00061">fdc_crc.cpp:61</a></div></div>
-<div class="ttc" id="aclassfdc__crc_html_aec2a17f87b106244f79931a4d2d44b10"><div class="ttname"><a href="classfdc__crc.html#aec2a17f87b106244f79931a4d2d44b10">fdc_crc::get</a></div><div class="ttdeci">uint16_t get(void)</div><div class="ttdoc">Get CRC calculated value.</div><div class="ttdef"><b>Definition:</b> <a href="fdc__crc_8cpp_source.html#l00054">fdc_crc.cpp:54</a></div></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include &quot;<a class="code" href="fdc__crc_8h.html">fdc_crc.h</a>&quot;</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="classfdc__crc.html#a131ac02efdd134bf60a41e638af182df">   28</a></span><a class="code hl_function" href="classfdc__crc.html#a131ac02efdd134bf60a41e638af182df">fdc_crc::fdc_crc</a>() { </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <a class="code hl_function" href="classfdc__crc.html#a19583ac432fbb317b4e8ddbc676a4e1f">reset</a>();</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>};</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="classfdc__crc.html#a19583ac432fbb317b4e8ddbc676a4e1f">   37</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classfdc__crc.html#a19583ac432fbb317b4e8ddbc676a4e1f">fdc_crc::reset</a>(<span class="keywordtype">size_t</span> <a class="code hl_variable" href="namespacekfx2mfm.html#a237f663f31a47153e50a7a8acf4c45b2">type</a>) {</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="keywordflow">switch</span> (<a class="code hl_variable" href="namespacekfx2mfm.html#a237f663f31a47153e50a7a8acf4c45b2">type</a>) {</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keywordflow">case</span> 1:  </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        m_crc_val = 0x84cf00; <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keywordflow">default</span>: </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        m_crc_val = 0xe59a00; <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    }</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>}</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="classfdc__crc.html#aec2a17f87b106244f79931a4d2d44b10">   53</a></span>uint16_t <a class="code hl_function" href="classfdc__crc.html#aec2a17f87b106244f79931a4d2d44b10">fdc_crc::get</a>(<span class="keywordtype">void</span>) { <span class="keywordflow">return</span> (m_crc_val &gt;&gt; 8) &amp; 0x0ffffu; }</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="classfdc__crc.html#aba3bf1b24ee2b59db02da17fcadbf611">   60</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classfdc__crc.html#aba3bf1b24ee2b59db02da17fcadbf611">fdc_crc::data</a>(uint8_t dt) {</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    m_crc_val |= dt;</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; 8; i++) {</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        m_crc_val &lt;&lt;= 1;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        <span class="keywordflow">if</span> (m_crc_val &amp; 0x1000000) {</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>            m_crc_val ^= m_polynomial;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        }</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    }</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>}</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno"><a class="line" href="classfdc__crc.html#a755e3eccb37c3bcfbb24e31aebf7f72c">   75</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classfdc__crc.html#aba3bf1b24ee2b59db02da17fcadbf611">fdc_crc::data</a>(std::vector&lt;uint8_t&gt;&amp; buf) {</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> it = buf.begin(); it != buf.end(); ++it) {</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <a class="code hl_function" href="classfdc__crc.html#aba3bf1b24ee2b59db02da17fcadbf611">data</a>(<span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(*it));</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    }</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>}</div>
+<div class="ttc" id="aclassfdc__crc_html_a131ac02efdd134bf60a41e638af182df"><div class="ttname"><a href="classfdc__crc.html#a131ac02efdd134bf60a41e638af182df">fdc_crc::fdc_crc</a></div><div class="ttdeci">fdc_crc()</div><div class="ttdoc">Construct a new fdc crc::fdc crc object.</div><div class="ttdef"><b>Definition:</b> <a href="fdc__crc_8cpp_source.html#l00028">fdc_crc.cpp:28</a></div></div>
+<div class="ttc" id="aclassfdc__crc_html_a19583ac432fbb317b4e8ddbc676a4e1f"><div class="ttname"><a href="classfdc__crc.html#a19583ac432fbb317b4e8ddbc676a4e1f">fdc_crc::reset</a></div><div class="ttdeci">void reset(size_t type=0)</div><div class="ttdoc">Reset CRC generator.</div><div class="ttdef"><b>Definition:</b> <a href="fdc__crc_8cpp_source.html#l00037">fdc_crc.cpp:37</a></div></div>
+<div class="ttc" id="aclassfdc__crc_html_aba3bf1b24ee2b59db02da17fcadbf611"><div class="ttname"><a href="classfdc__crc.html#aba3bf1b24ee2b59db02da17fcadbf611">fdc_crc::data</a></div><div class="ttdeci">void data(uint8_t dt)</div><div class="ttdoc">Supply a data for CRC calculation.</div><div class="ttdef"><b>Definition:</b> <a href="fdc__crc_8cpp_source.html#l00060">fdc_crc.cpp:60</a></div></div>
+<div class="ttc" id="aclassfdc__crc_html_aec2a17f87b106244f79931a4d2d44b10"><div class="ttname"><a href="classfdc__crc.html#aec2a17f87b106244f79931a4d2d44b10">fdc_crc::get</a></div><div class="ttdeci">uint16_t get(void)</div><div class="ttdoc">Get CRC calculated value.</div><div class="ttdef"><b>Definition:</b> <a href="fdc__crc_8cpp_source.html#l00053">fdc_crc.cpp:53</a></div></div>
 <div class="ttc" id="afdc__crc_8h_html"><div class="ttname"><a href="fdc__crc_8h.html">fdc_crc.h</a></div></div>
 <div class="ttc" id="anamespacekfx2mfm_html_a237f663f31a47153e50a7a8acf4c45b2"><div class="ttname"><a href="namespacekfx2mfm.html#a237f663f31a47153e50a7a8acf4c45b2">kfx2mfm.type</a></div><div class="ttdeci">type</div><div class="ttdef"><b>Definition:</b> <a href="kfx2mfm_8py_source.html#l00319">kfx2mfm.py:319</a></div></div>
 </div><!-- fragment --></div><!-- contents -->

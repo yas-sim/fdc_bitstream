@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['emu_5ffm_5fencoding_0',['EMU_FM_ENCODING',['../image__hfe_8h.html#a7a34c5b2fe88219aca41cd3e71bf2e9ea67b83ed377c8f3df72652a44aa516bfa',1,'image_hfe.h']]]
+  ['c64_5fdd_5ffloppymode_0',['C64_DD_FLOPPYMODE',['../image__hfe_8h.html#afda37dcef662538819b81c4ff563ae7faad93184c2354688e1fbabd1ff2c2c128',1,'image_hfe.h']]],
+  ['cpc_5fdd_5ffloppymode_1',['CPC_DD_FLOPPYMODE',['../image__hfe_8h.html#afda37dcef662538819b81c4ff563ae7faf86c482de48fff564be53441394adac5',1,'image_hfe.h']]]
 ];

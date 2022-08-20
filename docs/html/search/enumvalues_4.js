@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['isoibm_5ffm_5fencoding_0',['ISOIBM_FM_ENCODING',['../image__hfe_8h.html#a7a34c5b2fe88219aca41cd3e71bf2e9ea621f66cb224f0ef094b7ad7c798aa182',1,'image_hfe.h']]],
-  ['isoibm_5fmfm_5fencoding_1',['ISOIBM_MFM_ENCODING',['../image__hfe_8h.html#a7a34c5b2fe88219aca41cd3e71bf2e9ea0162830ec04ad020b237d16374652c58',1,'image_hfe.h']]]
+  ['floppy_5f2d_0',['FLOPPY_2D',['../fdc__defs_8h.html#a99c5ff7e5199a13ca4884062b413d68fa048b9b8231a2e07d36aed7acd46a0cd0',1,'fdc_defs.h']]],
+  ['floppy_5f2dd_1',['FLOPPY_2DD',['../fdc__defs_8h.html#a99c5ff7e5199a13ca4884062b413d68fa3a51151130f155d99f8482dccae69e7a',1,'fdc_defs.h']]],
+  ['floppy_5f2hd_2',['FLOPPY_2HD',['../fdc__defs_8h.html#a99c5ff7e5199a13ca4884062b413d68faadc6bc39a38b1133be70a07ec60b6faf',1,'fdc_defs.h']]]
 ];

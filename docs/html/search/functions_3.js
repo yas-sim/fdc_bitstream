@@ -1,10 +1,10 @@
 var searchData=
 [
-  ['calc_0',['calc',['../classvfo__pid.html#a3d41c5e2839c02b12c17c46f3d1a1554',1,'vfo_pid::calc()'],['../classvfo__fixed.html#adaf69636ee867eba32002eb52a2e7bf0',1,'vfo_fixed::calc()'],['../classvfo__base.html#a2399fcc796c169d6c55520c8d4dd3796',1,'vfo_base::calc()']]],
-  ['check_5fextension_1',['check_extension',['../analyzer_8cpp.html#ae7ebf12a2d3a5b98e12304a5f7fdaf89',1,'check_extension(std::string extension):&#160;analyzer.cpp'],['../image__converter_8cpp.html#ae7ebf12a2d3a5b98e12304a5f7fdaf89',1,'check_extension(std::string extension):&#160;image_converter.cpp']]],
+  ['calc_0',['calc',['../classvfo__pid.html#a3d41c5e2839c02b12c17c46f3d1a1554',1,'vfo_pid::calc()'],['../classvfo__pid2.html#a1d41be91b1c37c2be76aee7c44a9d5dd',1,'vfo_pid2::calc()'],['../classvfo__fixed.html#adaf69636ee867eba32002eb52a2e7bf0',1,'vfo_fixed::calc()'],['../classvfo__base.html#a2399fcc796c169d6c55520c8d4dd3796',1,'vfo_base::calc()']]],
+  ['check_5fextension_1',['check_extension',['../image__converter_8cpp.html#ae7ebf12a2d3a5b98e12304a5f7fdaf89',1,'check_extension(std::string extension):&#160;image_converter.cpp'],['../analyzer_8cpp.html#ae7ebf12a2d3a5b98e12304a5f7fdaf89',1,'check_extension(std::string extension):&#160;analyzer.cpp']]],
   ['clear_5farray_2',['clear_array',['../classbit__array.html#a4e2e12feb739995bca487fa805baeedc',1,'bit_array']]],
   ['clear_5ftrack_5fdata_3',['clear_track_data',['../classdisk__image.html#a0e9aad2006b60cadee00ba839693912d',1,'disk_image']]],
-  ['clear_5fwraparound_4',['clear_wraparound',['../classfdc__bitstream.html#a5d5b4821c9b9cac9d7ee88e77fb5d098',1,'fdc_bitstream::clear_wraparound()'],['../classmfm__codec.html#ada5e869f03f20757a9d75c91c3eaa382',1,'mfm_codec::clear_wraparound()']]],
+  ['clear_5fwraparound_4',['clear_wraparound',['../classmfm__codec.html#ada5e869f03f20757a9d75c91c3eaa382',1,'mfm_codec::clear_wraparound()'],['../classfdc__bitstream.html#a5d5b4821c9b9cac9d7ee88e77fb5d098',1,'fdc_bitstream::clear_wraparound()']]],
   ['clear_5fwraparound_5fflag_5',['clear_wraparound_flag',['../classbit__array.html#a095ab4d72a708ca8016cdcb8d29fbdb2',1,'bit_array']]],
   ['cmd_5fdisable_5ffluctuator_6',['cmd_disable_fluctuator',['../analyzer_8cpp.html#a431f804e576ffdd681a6bed55e1028f5',1,'analyzer.cpp']]],
   ['cmd_5fdisp_5fvfo_5fstatus_7',['cmd_disp_vfo_status',['../analyzer_8cpp.html#ac4f625890a5d94f59cff70c41b1e848f',1,'analyzer.cpp']]],

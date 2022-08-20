@@ -4,7 +4,6 @@ var searchData=
   ['fdc_1',['fdc',['../analyzer_8cpp.html#a172eac6ed2a0db501d9220c1fa1c75c5',1,'analyzer.cpp']]],
   ['float_2',['float',['../namespacekfx2mfm.html#a5bf69425fee987e13c7a6c356784b89d',1,'kfx2mfm']]],
   ['floppyinterfacemode_3',['floppyinterfacemode',['../structpicfileformatheader__.html#ac5a89ec543644ddcceb7b329459c7d20',1,'picfileformatheader_']]],
-  ['floppyinterfacemode_5ft_4',['floppyinterfacemode_t',['../image__hfe_8h.html#a18093199b529fa24559846bd4e561fdf',1,'image_hfe.h']]],
-  ['floppyrpm_5',['floppyRPM',['../structpicfileformatheader__.html#aca6a30f39b4723fadbb8d114b9f3feee',1,'picfileformatheader_']]],
-  ['formatrevision_6',['formatrevision',['../structpicfileformatheader__.html#a6553abb8999b3fbe770a74ae9d7dfbfb',1,'picfileformatheader_']]]
+  ['floppyrpm_4',['floppyRPM',['../structpicfileformatheader__.html#aca6a30f39b4723fadbb8d114b9f3feee',1,'picfileformatheader_']]],
+  ['formatrevision_5',['formatrevision',['../structpicfileformatheader__.html#a6553abb8999b3fbe770a74ae9d7dfbfb',1,'picfileformatheader_']]]
 ];

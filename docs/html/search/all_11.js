@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['s950_5fdd_5ffloppymode_0',['S950_DD_FLOPPYMODE',['../image__hfe_8h.html#ae0a3da6216a8b4503a21d4b256c44c57',1,'image_hfe.h']]],
-  ['s950_5fhd_5ffloppymode_1',['S950_HD_FLOPPYMODE',['../image__hfe_8h.html#a98b810d02b089f7272c49f9c4ff9dedf',1,'image_hfe.h']]],
+  ['s950_5fdd_5ffloppymode_0',['S950_DD_FLOPPYMODE',['../image__hfe_8h.html#afda37dcef662538819b81c4ff563ae7fa5c71a124b9df6e82f5f59d42422ecc93',1,'image_hfe.h']]],
+  ['s950_5fhd_5ffloppymode_1',['S950_HD_FLOPPYMODE',['../image__hfe_8h.html#afda37dcef662538819b81c4ff563ae7fa5cdf5a787366e39a5efcd20b3e951392',1,'image_hfe.h']]],
   ['sampling_5frate_2',['sampling_rate',['../structmfm__header__.html#aa4730a859aeb428f92f90490b476df42',1,'mfm_header_']]],
   ['save_3',['save',['../classbit__array.html#adeaec22b49197dce2061cd030086b3f8',1,'bit_array']]],
   ['sector_5fdata_4',['sector_data',['../classd77img_1_1sector__data.html',1,'d77img::sector_data'],['../structfdc__bitstream_1_1sector__data.html',1,'fdc_bitstream::sector_data'],['../classd77img_1_1sector__data.html#a279167e2c44cb27aa283b3b4bca23e01',1,'d77img::sector_data::sector_data()']]],
