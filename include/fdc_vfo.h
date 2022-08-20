@@ -14,6 +14,7 @@ public:
     double  m_gain_l;
     double  m_gain_h;
     double  m_current_gain;
+public:
     enum gain_state {
         low = 0,
         high = 1
@@ -46,6 +47,13 @@ public:
     vfo_pid() { reset(); }
     void disp_vfo_status(void) override;
     void reset(void) override;
+    double calc(double pulse_pos) override;
+};
+
+
+
+class DLL_EXPORT vfo_pid2 : public vfo_pid {
+public:
     double calc(double pulse_pos) override;
 };
 

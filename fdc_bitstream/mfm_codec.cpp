@@ -26,7 +26,8 @@ mfm_codec::mfm_codec() : m_bit_stream(0),
         m_vfo_suspension_rate(0.f),
         m_track_ready(false)
 {
-    m_vfo = new vfo_pid();
+    //m_vfo = new vfo_pid();
+    m_vfo = new vfo_pid2();
     //m_vfo = new vfo_fixed();
     reset();
 }

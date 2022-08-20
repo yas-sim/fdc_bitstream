@@ -55,10 +55,10 @@ public:
     void set_track_data(bit_array track);
     bit_array get_track_data(void);
     void unset_track_data(void);
-    inline bool is_track_ready(void) { return m_track_ready; }
+    inline bool is_track_ready(void) const { return m_track_ready; }
     inline void set_track_status_forcibly(bool status) { m_track_ready = status; };
 
-    inline bool is_wraparound(void) { return m_wraparound; }
+    inline bool is_wraparound(void) const { return m_wraparound; }
     inline void clear_wraparound(void) { m_wraparound = false; }
     inline size_t get_track_length(void) { return m_track.get_length(); }       /** unit = bit */
 
