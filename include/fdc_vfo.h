@@ -1,5 +1,12 @@
-#pragma once
+/**
+ * @brief VFO for data separator in mfm_codec
+ * 
+ */
 
+/**
+ * @brief Base class of VFO (virtual).
+ * 
+ */
 class vfo_base {
 public:
     double  m_cell_size;
@@ -36,6 +43,10 @@ public:
 
 
 
+/**
+ * @brief VFO class using PID control
+ * 
+ */
 class vfo_pid : public vfo_base {
 public:
     double m_prev_phase_error;
@@ -50,6 +61,10 @@ public:
 
 
 
+/**
+ * @brief VFO class using PID control (2)
+ * 
+ */
 class vfo_pid2 : public vfo_pid {
 public:
     double calc(double pulse_pos) override;
@@ -57,6 +72,10 @@ public:
 
 
 
+/**
+ * @brief Fixed VFO class (no VFO)
+ * 
+ */
 class vfo_fixed : public vfo_base {
 public:
     double calc(double pulse_pos) override { return pulse_pos; }
