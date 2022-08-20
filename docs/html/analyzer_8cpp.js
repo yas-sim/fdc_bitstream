@@ -12,6 +12,7 @@ var analyzer_8cpp =
     [ "cmd_read_sector", "analyzer_8cpp.html#aba9395354fa51bdfb99d45584ba7fb79", null ],
     [ "cmd_read_track", "analyzer_8cpp.html#aa89878b60f62aacb30f8608e4c5f1d02", null ],
     [ "cmd_set_gain", "analyzer_8cpp.html#ab74471106683d8e31f644d80b462718f", null ],
+    [ "cmd_visualize_vfo", "analyzer_8cpp.html#a96bc5a0c2af3dffe249f9db70f15bc37", null ],
     [ "create_object_by_ext", "analyzer_8cpp.html#a951938f545ae411a3bbef610ffc7324d", null ],
     [ "display_id_list", "analyzer_8cpp.html#acdc23ebf7656b2d2e6dff383a8fcb9e3", null ],
     [ "dump_buf", "analyzer_8cpp.html#a00e068b3e6a53ba319bdc7cb0198e089", null ],
@@ -20,5 +21,7 @@ var analyzer_8cpp =
     [ "is_image_ready", "analyzer_8cpp.html#a759e47a8775cc608192ee41cee1e8a96", null ],
     [ "main", "analyzer_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97", null ],
     [ "disk_img", "analyzer_8cpp.html#ac8dde5975a6fb3d83de90b204c68e7ed", null ],
-    [ "fdc", "analyzer_8cpp.html#a172eac6ed2a0db501d9220c1fa1c75c5", null ]
+    [ "fdc", "analyzer_8cpp.html#a172eac6ed2a0db501d9220c1fa1c75c5", null ],
+    [ "g_gain_h", "analyzer_8cpp.html#acead11922c36a315a1e89ca56680cc61", null ],
+    [ "g_gain_l", "analyzer_8cpp.html#a3b71647dd275d20b3b6aadbab8d2d17c", null ]
 ];
