@@ -208,6 +208,7 @@ std::vector<fdc_bitstream::id_field> fdc_bitstream::read_all_idam(void) {
     while(true) {
         sect_id.clear();
         size_t pos = read_id(sect_id, crc_error);
+        if (is_wraparound() == true) break;
         if (sect_id.size()>0) {
             item.C = sect_id[0];
             item.H = sect_id[1];
@@ -218,7 +219,6 @@ std::vector<fdc_bitstream::id_field> fdc_bitstream::read_all_idam(void) {
             item.pos = pos;
             result.push_back(item);
         }
-        if (is_wraparound() == true) break;
     }
     return result;
 }
