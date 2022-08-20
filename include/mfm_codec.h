@@ -31,19 +31,8 @@ private:
     size_t      m_data_bit_rate;
 
     size_t      m_current_bit_pos   = 0;          // current bit position to process
-    //double      m_data_window_size  = 0.f;        // data window size in [bits] unit
-    //double      m_data_window_ofst  = 0.f;        // data window start offset in the data cell (in [bits] unit)
-    //double      m_bit_cell_size     = 0.f;        // bit cell size in [bits] unit   (4MHz sample, 500Kbps bit rate, MFM = 4.0e6/500e3 = 8)
-    //double      m_bit_cell_size_ref = 0.f;
     double      m_distance_to_next_pulse = 0.f;
-    //double      m_vfo_gain_h        = 10.f;       // VFO gain for SYNC period
-    //double      m_vfo_gain_l        = 1.f;        // VFO gain for period other than SYNC
-    //double      m_vfo_gain          = 1.f;        // Current VFO gain
     double      m_vfo_suspension_rate = 0.f;
-
-    //double      m_vfo_prev_phase_error = 0.f;           // for VFO PD control
-    //double      m_vfo_prev_freq_error = 0.f;
-    //double      m_vfo_freq_bias = 0.f;
 
     vfo_base    *m_vfo;
 

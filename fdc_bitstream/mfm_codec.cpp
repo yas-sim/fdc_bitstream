@@ -9,6 +9,7 @@
  */
 
 #define DLL_BODY
+#include "dll_export.h"
 
 #include <cmath>
 
@@ -41,7 +42,6 @@ mfm_codec::~mfm_codec() {
  * @param[out] None
  */
 void mfm_codec::reset(void) {
-    //update_parameters();
     m_prev_write_bit = 0;
     m_sync_mode = false;
     clear_wraparound();
@@ -89,50 +89,6 @@ void mfm_codec::unset_track_data(void) {
     m_track_ready = false;
 }
 
-//inline bool is_wraparound(void) { return m_wraparound; }
-//inline void clear_wraparound(void) { m_wraparound = false; }
-//inline size_t get_track_length(void) { return m_track.get_length(); }       // unit = bit
-
-/**
- * @brief Set new bit cell size.
- *   012345678
- *   | WWWW  |
- *     <-->    Window size (4)
- *   <->       Window ofst (2)
- *   <------>  Cell size   (8)
- * 
- * @param cell_size New bit cell size (unit=bits)
- */
-# if 0
-void mfm_codec::set_cell_size(double cell_size, double window_ratio) {
-    m_bit_cell_size = cell_size;
-    m_data_window_size = cell_size * window_ratio;        // typical window_ratio for actual drive is 0.5 but uses 0.75 as default in this SW
-    m_data_window_size = m_data_window_size < 1.f ? 1.f : m_data_window_size;  // Avoid too narrow m_data_window_size situation
-    m_data_window_ofst = (m_bit_cell_size - m_data_window_size) / 2.f;
-#ifdef DEBUG
-    std::cout << "Bit cell size:" << m_bit_cell_size << std::endl;
-    std::cout << "Data window size:" << m_data_window_size << std::endl;
-    std::cout << "Data window offset:" << m_data_window_ofst << std::endl;
-#endif
-}
-#endif
-
-/**
- * @brief Update data cell parameters
- * 
- */
-#if 0
-void mfm_codec::update_parameters(void) {
-    double cell_size = m_sampling_rate / m_data_bit_rate;
-    m_bit_width_w = static_cast<size_t>(cell_size);      // bit width for mfm write (bit length)
-    m_bit_cell_size_ref = cell_size;
-    set_cell_size(cell_size);
-    m_vfo_prev_phase_error = 0.f;
-    m_vfo_prev_freq_error = 0.f;
-    m_vfo_freq_bias = 0.f;
-}
-#endif
-
 /**
  * @brief Set new data bit rate for the bit array buffer.
  * 
@@ -142,7 +98,6 @@ void mfm_codec::set_data_bit_rate(size_t data_bit_rate) {
     m_data_bit_rate = data_bit_rate;
     m_vfo -> set_params(m_sampling_rate, m_data_bit_rate);
     m_vfo -> update_cell_params();
-    //update_parameters();
 }
 
 /**
@@ -154,7 +109,6 @@ void mfm_codec::set_sampling_rate(size_t sampling_rate) {
     m_sampling_rate = sampling_rate; 
     m_vfo -> set_params(m_sampling_rate, m_data_bit_rate);
     m_vfo -> update_cell_params();
-    //update_parameters(); 
 }
 
 
@@ -236,7 +190,6 @@ int mfm_codec::read_bit_ds(void) {
  * @param[in] gain Gain value for the PLL (value in double type).
  */
 void mfm_codec::set_vfo_gain(gain_state state) {
-    double gain;
     switch(state) {
     case gain_state::low:
     default:
