@@ -149,7 +149,20 @@ How to integrate the fdc_bitstream library with your program</h1>
 </li>
 </ul>
 <p >Use one of the <code>disk_image_???</code> class to read the disk image file. Supported formats are <code>HFE</code>, <code>MFM</code>, <code>RAW</code>, and <code>D77</code> (<code>MFM</code> and <code>RAW</code> are my original format. It is not compatible any other existing disk formats which shares the same file extension). <br  />
-</p>
+</p><ol type="1">
+<li>Software VFO <br  />
+</li>
+</ol>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Variable-frequency_oscillator">VFO</a> is an oscillator that can change its oscillation frequency and is used in the floppy disk drives to follow the bit rate variation of the recorded data on the floppy disks. <br  />
+</li>
+<li>It is one of the key component for accurate and reliable data reading. <br  />
+</li>
+<li>This FDC library has software VFO to read the bit stream data. The SW-VFO is still the key component for reliable data reading. <br  />
+</li>
+<li>You can modify or create your own VFO algorithm for better reading quality by implementing a new VFO class based on the <code><a class="el" href="classvfo__base.html" title="VFO for data separator in mfm_codec.">vfo_base</a></code> class. <br  />
+</li>
+</ul>
 <p ><img src="./resources/class-diagram.png" alt="" class="inline"/></p>
 <hr  />
 <h1><a class="anchor" id="autotoc_md23"></a>
