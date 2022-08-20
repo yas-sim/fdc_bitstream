@@ -27,8 +27,7 @@ var hierarchy =
     ] ],
     [ "vfo_base", "classvfo__base.html", [
       [ "vfo_fixed", "classvfo__fixed.html", null ],
-      [ "vfo_pid", "classvfo__pid.html", [
-        [ "vfo_pid2", "classvfo__pid2.html", null ]
-      ] ]
+      [ "vfo_pid", "classvfo__pid.html", null ],
+      [ "vfo_pid2", "classvfo__pid2.html", null ]
     ] ]
 ];
