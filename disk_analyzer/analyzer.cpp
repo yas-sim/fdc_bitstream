@@ -15,6 +15,8 @@
 disk_image *disk_img = nullptr;
 fdc_bitstream *fdc = nullptr;
 
+double g_gain_l = 1.f, g_gain_h = 2.f;
+
 void dump_buf(uint8_t* ptr, size_t size, bool line_feed = true) {
     std::ios::fmtflags flags_saved = std::cout.flags();
     for (size_t i = 0; i < size; i++) {
@@ -159,6 +161,8 @@ void cmd_read_id(size_t track_n) {
 
 void cmd_set_gain(double gain_l, double gain_h) {
     fdc->set_vfo_gain_val(gain_l, gain_h);
+    g_gain_l = gain_l;      // for VFO visualizer
+    g_gain_h = gain_h;
     std::cout << "gain=(L:" << gain_l << ", H:" << gain_h << ")" << std::endl;
     fdc->disp_vfo_status();
 }
@@ -192,6 +196,65 @@ void cmd_disp_vfo_status(void) {
     fdc->disp_vfo_status();
 }
 
+void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=0) {
+    if(is_image_ready()==false) {
+        std::cout << "Disk image is not ready." << std::endl;
+        return;
+    }
+    bit_array track_stream;
+    track_stream = disk_img->get_track_data(track_n);
+    vfo_base *vfo;
+    switch(vfo_sel) {
+    default:
+    case 0:
+        vfo = new vfo_simple();
+        break;
+    case 1:
+        vfo = new vfo_fixed();
+        break;
+    case 2:
+        vfo = new vfo_pid();
+        break;
+    case 3:
+        vfo = new vfo_pid2();
+        break;
+    }
+
+    disk_image_base_properties props = disk_img->get_property();
+    vfo->set_params(props.m_sampling_rate, props.m_data_bit_rate);
+    vfo->set_gain_val(g_gain_l, g_gain_h);
+    vfo->set_gain_mode(vfo_base::gain_state::low);
+    track_stream.set_stream_pos(0);
+
+    double dist = 0.f;
+    for(size_t i=0; i<5000; i++) {
+        dist += static_cast<double>(track_stream.distance_to_next_bit1());
+        //dist -= std::floor(dist / vfo->m_cell_size) * vfo->m_cell_size;
+        while(dist > vfo->m_cell_size) {
+            dist -= vfo->m_cell_size;
+        }
+
+        // visualize
+        std::string line = std::string(80, ' ');
+        for(size_t x = vfo->m_window_ofst; x<vfo->m_window_ofst+vfo->m_window_size; x++) {
+            line[x] = '_';
+        }
+        line[vfo->m_cell_size+1] = '<';
+        if(dist>=0.f) {
+            line[dist] = 'P';
+        } else {
+            line[0] = '*';
+        }
+        std::cout << line << std::endl;
+
+        // run VFO
+        dist = vfo->calc(dist);
+    }
+    vfo->disp_vfo_status();
+
+    delete vfo;
+}
+
 void cmd_help(void) {
     std::cout <<
     "*** Command list\n"
@@ -202,6 +265,9 @@ void cmd_help(void) {
     "ef sus_radio    Enable fluctuator (VFO stops operation at rate of sus_ratio (0.0-1.0))\n"
     "ef              Disable fluctuator\n"
     "gain gl gh      Set VFO gain (low=gl, high=gh)\n"
+    "vfo             Display current VFO parameters"
+    "vv trk vfo_type VFO visualizer. Read 5,000 pulses from the top of a track using specified type of VFO.\n"
+    "                VFO type = 0:vfo_fixed, 1:vfo_simple, 2:vfo_pid, 3:vfo_pid2\n"
     "q               Quit analyzer\n"
     << std::endl;
 }
@@ -246,26 +312,30 @@ int main(int argc, char* argv[]) {
         if(args[0] == "o") {
             cmd_open_image(args[1]);
         } 
-        else if(args[0] == "rt") {
+        else if(args[0] == "rt" && args.size()>=2) {
             cmd_read_track(std::stoi(args[1]));
         } 
         else if(args[0] == "ri") {
-            cmd_read_id(std::stoi(args[1]));
+            cmd_read_id(std::stoi(args[1]) && args.size()>=2);
         } 
         else if(args[0] == "rs") {
-            cmd_read_sector(std::stoi(args[1]), std::stoi(args[2]), std::stoi(args[3]));
+            cmd_read_sector(std::stoi(args[1]), std::stoi(args[2]), std::stoi(args[3]) && args.size()>=4);
         }
         else if(args[0] == "gain") {
-            cmd_set_gain(std::stod(args[1]), std::stod(args[2]));
+            cmd_set_gain(std::stod(args[1]), std::stod(args[2]) && args.size()>=3);
         }
         else if(args[0] == "ef") {
-            cmd_enable_fluctuator(std::stod(args[1]));            
+            cmd_enable_fluctuator(std::stod(args[1]) && args.size()>=2);            
         }
         else if(args[0] == "df") {
             cmd_disable_fluctuator();
         }
         else if(args[0] == "vfo") {
             cmd_disp_vfo_status();
+        }
+        else if(args[0] == "vv" && args.size()>=2) {
+            if(args.size()==2) cmd_visualize_vfo(std::stoi(args[1]));
+                               cmd_visualize_vfo(std::stoi(args[1]), std::stoi(args[2]));
         }
         else if(args[0] == "h") {
             cmd_help();

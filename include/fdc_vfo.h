@@ -44,6 +44,37 @@ public:
 
 
 /**
+ * @brief Fixed VFO class (no VFO)
+ * 
+ */
+class vfo_fixed : public vfo_base {
+public:
+    void disp_vfo_status(void) override {
+        vfo_base::disp_vfo_status();
+        std::cout << "-- vfo_fixed --" << std::endl;
+    }
+    double calc(double pulse_pos) override { return m_cell_center; }
+};
+
+
+
+/**
+ * @brief VFO class using simple proportional error correction (P)
+ * 
+ */
+class vfo_simple : public vfo_base {
+public:
+    void disp_vfo_status(void) override {
+        vfo_base::disp_vfo_status();
+        std::cout << "-- vfo_simple --" << std::endl;
+    }
+    double calc(double pulse_pos) override;
+};
+
+
+
+
+/**
  * @brief VFO class using PID control
  * 
  */
@@ -79,15 +110,5 @@ public:
 
 
 
-/**
- * @brief Fixed VFO class (no VFO)
- * 
- */
-class vfo_fixed : public vfo_base {
-public:
-    void disp_vfo_status(void) override {
-        vfo_base::disp_vfo_status();
-        std::cout << "-- vfo_fixed --" << std::endl;
-    }
-    double calc(double pulse_pos) override { return m_cell_center; }
-};
+
+
