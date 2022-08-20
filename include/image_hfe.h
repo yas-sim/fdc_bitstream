@@ -1,7 +1,5 @@
 #pragma once
 
-#include "dll_export.h"
-
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -12,7 +10,7 @@
 
 #include "image_base.h"
 
-typedef struct DLL_EXPORT picfileformatheader_
+typedef struct picfileformatheader_
 {
 	uint8_t HEADERSIGNATURE[8];		// "HXCPICFE"
 	uint8_t formatrevision;			// Revision 0
@@ -36,7 +34,7 @@ typedef struct DLL_EXPORT picfileformatheader_
 } picfileformatheader;
 
 // floppyinterfacemode
-enum class DLL_EXPORT floppyinterfacemode_t {
+enum class floppyinterfacemode_t {
 	IBMPC_DD_FLOPPYMODE				= 0x00,
 	IBMPC_HD_FLOPPYMODE				= 0x01,
 	ATARIST_DD_FLOPPYMODE			= 0x02,
@@ -63,13 +61,13 @@ enum class track_encoding_t {
 	UNKNOWN_ENCODING				= 0xFF
 };
 
-typedef struct DLL_EXPORT pictrack_
+typedef struct pictrack_
 {
 	uint16_t offset;		// Offset of the track data in block of 512 bytes (Ex: 2=0x400)
 	uint16_t track_len;		// Length of the track data in byte.
 }pictrack;
 
-class DLL_EXPORT disk_image_hfe : public disk_image {
+class disk_image_hfe : public disk_image {
 public:
 	disk_image_hfe(void) : disk_image() {}
 

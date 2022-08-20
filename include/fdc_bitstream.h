@@ -1,7 +1,5 @@
 #pragma once
 
-#include "dll_export.h"
-
 #include <vector>
 #include <random>
 #include <cstdint>
@@ -12,7 +10,7 @@
 
 //#define DEBUG
 
-class DLL_EXPORT fdc_bitstream {
+class fdc_bitstream {
 private:
     /** 
      * FDC state machine status definition.

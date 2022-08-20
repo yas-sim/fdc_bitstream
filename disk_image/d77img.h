@@ -1,7 +1,5 @@
 #pragma once
 
-#include "dll_export.h"
-
 #include <iostream>
 #include <vector>
 #include <string>
@@ -11,9 +9,9 @@
 
 #include "byte_array.h"
 
-class DLL_EXPORT d77img {
+class d77img {
 public:
-	class DLL_EXPORT sector_data {
+	class sector_data {
     public:
 		uint8_t		m_C;
 		uint8_t		m_H;

@@ -8,7 +8,6 @@
  * @copyright Copyright (c) 2022
  * 
  */
-#define DLL_BODY
 #include "image_base.h"
 
 disk_image::disk_image() : m_track_data_is_set(false) {

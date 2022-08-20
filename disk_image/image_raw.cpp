@@ -8,7 +8,6 @@
  * @copyright Copyright (c) 2022
  * 
  */
-#define DLL_BODY
 #include "image_raw.h"
 
 void disk_image_raw::read(const std::string file_name) {

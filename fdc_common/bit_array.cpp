@@ -8,7 +8,6 @@
  * @copyright Copyright (c) 2022
  * 
  */
-#define DLL_BODY
 #include "bit_array.h"
 
 #include <string.h>

@@ -1,8 +1,6 @@
 #pragma once
 
-#include "dll_export.h"
-
-class DLL_EXPORT vfo_base {
+class vfo_base {
 public:
     double  m_cell_size;
     double  m_cell_size_ref;
@@ -38,7 +36,7 @@ public:
 
 
 
-class DLL_EXPORT vfo_pid : public vfo_base {
+class vfo_pid : public vfo_base {
 public:
     double m_prev_phase_error;
     double m_prev_freq_error;
@@ -52,14 +50,14 @@ public:
 
 
 
-class DLL_EXPORT vfo_pid2 : public vfo_pid {
+class vfo_pid2 : public vfo_pid {
 public:
     double calc(double pulse_pos) override;
 };
 
 
 
-class DLL_EXPORT vfo_fixed : public vfo_base {
+class vfo_fixed : public vfo_base {
 public:
     double calc(double pulse_pos) override { return pulse_pos; }
 };

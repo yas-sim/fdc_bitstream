@@ -1,13 +1,11 @@
 #pragma once
 
-#include "dll_export.h"
-
 #include <vector>
 #include <string>
 #include <iostream>
 #include <fstream>
 
-class DLL_EXPORT bit_array
+class bit_array
 {
 private:
     std::vector<uint8_t>    m_array_data;

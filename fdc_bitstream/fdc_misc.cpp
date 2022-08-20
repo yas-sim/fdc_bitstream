@@ -9,7 +9,6 @@
  * 
  */
 
-#define DLL_BODY
 #include "fdc_misc.h"
 
 /**

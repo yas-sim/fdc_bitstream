@@ -19,7 +19,6 @@
  */
 #include <vector>
 
-#define DLL_BODY
 #include "fdc_crc.h"
 
 /**

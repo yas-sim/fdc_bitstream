@@ -1,11 +1,9 @@
 #pragma once
 
-#include "dll_export.h"
-
 #include <vector>
 #include <cstdint>
 
-class DLL_EXPORT fdc_crc {
+class fdc_crc {
 private:
 	const uint32_t m_polynomial = 0b0001000100000010000100000000;   // 0001 0001 0000 0010 0001 [0000 0000]
 	uint32_t       m_crc_val;

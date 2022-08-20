@@ -1,6 +1,3 @@
-#define DLL_BODY
-#include "dll_export.h"
-
 #include "image_d77.h"
 #include "d77img.h"
 #include "byte_array.h"

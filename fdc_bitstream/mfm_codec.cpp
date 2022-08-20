@@ -8,9 +8,6 @@
  * @copyright Copyright (c) 2022
  */
 
-#define DLL_BODY
-#include "dll_export.h"
-
 #include <cmath>
 
 #include "mfm_codec.h"

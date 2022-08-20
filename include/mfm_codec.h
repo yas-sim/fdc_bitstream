@@ -1,7 +1,5 @@
 #pragma once
 
-#include "dll_export.h"
-
 #include <vector>
 #include <random>
 
@@ -10,7 +8,7 @@
 
 //#define DEBUG
 
-class DLL_EXPORT mfm_codec {
+class mfm_codec {
 private:
     bit_array   m_track;
     bool        m_track_ready;

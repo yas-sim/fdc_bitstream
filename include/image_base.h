@@ -1,14 +1,12 @@
 #pragma once
 
-#include "dll_export.h"
-
 #include <cstdint>
 #include <cassert>
 
 #include "fdc_defs.h"
 #include "bit_array.h"
 
-class DLL_EXPORT disk_image_exception {
+class disk_image_exception {
 private:
     int m_error_code;
     std::string m_message;
@@ -18,7 +16,7 @@ public:
     std::string what(void) { return m_message; };
 };
 
-class DLL_EXPORT disk_image_base_properties {
+class disk_image_base_properties {
 public:
     disk_image_base_properties() : m_max_track_number(0), m_spindle_time_ns(0), m_sampling_rate(0), m_data_bit_rate(0) {};
 
@@ -31,7 +29,7 @@ public:
     size_t      m_data_bit_rate;
 };
 
-class DLL_EXPORT disk_image {
+class disk_image {
 private:
 protected:
     bool        m_track_data_is_set;            /** true=track data is set and ready */

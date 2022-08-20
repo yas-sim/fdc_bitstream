@@ -1,11 +1,9 @@
 #pragma once
 
-#include "dll_export.h"
-
 #include <cstdint>
 #include <vector>
 
-class DLL_EXPORT byte_array : public std::vector<uint8_t> {
+class byte_array : public std::vector<uint8_t> {
 public:
 	uint32_t    get_dword_le(size_t pos) { return at(pos) | (at(pos + 1) << 8) | (at(pos + 2) << 16) | (at(pos + 3) << 24); }
 	uint16_t    get_word_le(size_t pos)  { return at(pos) | (at(pos + 1) << 8); }

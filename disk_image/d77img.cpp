@@ -22,8 +22,6 @@
 //	0x0e		2		Sector data size
 //	0x10		#		Sector data
 
-#define DLL_BODY
-
 #include <iostream>
 #include <vector>
 #include <string>
