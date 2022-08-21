@@ -30,5 +30,6 @@ var searchData=
   ['size_27',['size',['../classbit__array.html#a4dcea898e5a2ac7a36ac7bde6091f229',1,'bit_array']]],
   ['soft_5freset_28',['soft_reset',['../classvfo__base.html#ae137ed93a8d85d8aaa91b3b5f2f897cd',1,'vfo_base']]],
   ['soft_5freset_5fvfo_29',['soft_reset_vfo',['../classfdc__bitstream.html#a072d35a6d440b6e4b36c6b5908673dd7',1,'fdc_bitstream::soft_reset_vfo()'],['../classmfm__codec.html#a76e0d671d39edf4b49c873bcea27cc9d',1,'mfm_codec::soft_reset_vfo()']]],
-  ['swap_5fvfo_30',['swap_vfo',['../classfdc__bitstream.html#ad22ef25ddf2c5878dd559459b8e2cdfa',1,'fdc_bitstream::swap_vfo()'],['../classmfm__codec.html#a872a1b6274730139e3380e2d8db41e9a',1,'mfm_codec::swap_vfo()']]]
+  ['str2val_30',['str2val',['../analyzer_8cpp.html#af53b2b90ac6797c24fb34bbe22faa675',1,'analyzer.cpp']]],
+  ['swap_5fvfo_31',['swap_vfo',['../classfdc__bitstream.html#ad22ef25ddf2c5878dd559459b8e2cdfa',1,'fdc_bitstream::swap_vfo()'],['../classmfm__codec.html#a872a1b6274730139e3380e2d8db41e9a',1,'mfm_codec::swap_vfo()']]]
 ];
