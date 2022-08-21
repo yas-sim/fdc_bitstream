@@ -347,7 +347,7 @@ $(document).ready(function(){initNavTree('analyzer_8cpp_source.html',''); initRe
 <div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>    vfo-&gt;<a class="code hl_function" href="classvfo__base.html#ad97957733090f702b16fffc219663298">set_gain_mode</a>(vfo_base::gain_state::low);</div>
 <div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>    track_stream.<a class="code hl_function" href="classbit__array.html#a3ad614e1d9ffc090c78be08b14373b2b">set_stream_pos</a>(0);</div>
 <div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span> </div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    <span class="keywordtype">double</span> scale = 100.f / (props.<a class="code hl_variable" href="classdisk__image__base__properties.html#a2f4c761207d82622336a8aad10dd33a3">m_sampling_rate</a> / props.<a class="code hl_variable" href="classdisk__image__base__properties.html#a20477d0d11b45fd81fb4762f732b9960">m_data_bit_rate</a>);</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    <span class="keywordtype">double</span> scale = 50.f / (props.<a class="code hl_variable" href="classdisk__image__base__properties.html#a2f4c761207d82622336a8aad10dd33a3">m_sampling_rate</a> / props.<a class="code hl_variable" href="classdisk__image__base__properties.html#a20477d0d11b45fd81fb4762f732b9960">m_data_bit_rate</a>);</div>
 <div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span> </div>
 <div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    <span class="keywordtype">double</span> dist = 0.f;</div>
 <div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>    <span class="keywordflow">for</span>(<span class="keywordtype">size_t</span> i=0; i&lt;5000; i++) {</div>
@@ -358,11 +358,11 @@ $(document).ready(function(){initNavTree('analyzer_8cpp_source.html',''); initRe
 <div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>        <span class="comment">//}</span></div>
 <div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span> </div>
 <div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>        <span class="comment">// visualize</span></div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>        std::string line = std::string(110, <span class="charliteral">&#39; &#39;</span>);</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>        std::string line = std::string(100, <span class="charliteral">&#39; &#39;</span>);</div>
 <div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>        <span class="keywordtype">size_t</span> win_st = (vfo-&gt;<a class="code hl_variable" href="classvfo__base.html#ab0f2b78ec8efb4ef74ed84a28bb756d9">m_window_ofst</a>) * scale;</div>
 <div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>        <span class="keywordtype">size_t</span> win_en = (vfo-&gt;<a class="code hl_variable" href="classvfo__base.html#ab0f2b78ec8efb4ef74ed84a28bb756d9">m_window_ofst</a>+vfo-&gt;<a class="code hl_variable" href="classvfo__base.html#a8e584eb0d195094cdd9bafb7b20c9ccf">m_window_size</a>) * scale;</div>
 <div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>        <span class="keywordflow">for</span>(<span class="keywordtype">size_t</span> x = win_st; x &lt; win_en; x++) {</div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>            line[x] = <span class="charliteral">&#39;_&#39;</span>;</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>            line[x] = <span class="charliteral">&#39;-&#39;</span>;</div>
 <div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>        }</div>
 <div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>        line[vfo-&gt;<a class="code hl_variable" href="classvfo__base.html#a6da6df9b227bf64518dfa01a2767cad4">m_cell_size</a> * scale] = <span class="charliteral">&#39;&lt;&#39;</span>;</div>
 <div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>        <span class="keywordflow">if</span>(dist&gt;=0.f) {</div>
