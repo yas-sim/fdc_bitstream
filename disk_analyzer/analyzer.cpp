@@ -259,7 +259,7 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=99) {
     vfo->set_gain_mode(vfo_base::gain_state::low);
     track_stream.set_stream_pos(0);
 
-    double scale = 100.f / (props.m_sampling_rate / props.m_data_bit_rate);
+    double scale = 50.f / (props.m_sampling_rate / props.m_data_bit_rate);
 
     double dist = 0.f;
     for(size_t i=0; i<5000; i++) {
@@ -270,11 +270,11 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=99) {
         //}
 
         // visualize
-        std::string line = std::string(110, ' ');
+        std::string line = std::string(100, ' ');
         size_t win_st = (vfo->m_window_ofst) * scale;
         size_t win_en = (vfo->m_window_ofst+vfo->m_window_size) * scale;
         for(size_t x = win_st; x < win_en; x++) {
-            line[x] = '_';
+            line[x] = '-';
         }
         line[vfo->m_cell_size * scale] = '<';
         if(dist>=0.f) {
