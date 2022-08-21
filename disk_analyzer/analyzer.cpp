@@ -124,6 +124,25 @@ disk_image* create_object_by_ext(std::string ext) {
     return obj;
 }
 
+size_t str2val(std::string hexstr) {
+    size_t res = 0;
+    if (hexstr.size()==0) return 0;
+    if (hexstr[0] == '$') {
+        for(auto it = hexstr.begin(); it != hexstr.end(); ++it) {
+            if (*it >='0' && *it <= '9') {
+                res = (res<<4) | ((*it) - '0');
+            } else if (*it>='a' && *it <= 'f') {
+                res = (res<<4) | ((*it) - 'a' + 10);
+            }
+        } 
+    } 
+    else if (hexstr[0] >= '0' && hexstr[0] <= '9') {
+        res = std::stoi(hexstr);
+    }
+    //std::cout << hexstr << " " << res << std::endl;
+    return res;
+}
+
 // -------------------------------------------------------------------------
 
 void cmd_open_image(std::string file_name) {
@@ -189,6 +208,7 @@ void cmd_read_sector(size_t cyl, size_t hed, size_t rcd) {
         std::cout << "Disk image is not ready." << std::endl;
         return;
     }
+    std::cout << "Sector read : " << cyl << ", " << hed << ", " << rcd << std::endl;
     bit_array track_stream;
     fdc_bitstream::sector_data read_data;
     track_stream = disk_img->get_track_data(cyl);
@@ -380,6 +400,8 @@ void cmd_help(void) {
     "rv              (soft) reset VFO\n"
     "histogram trk   Display histogram of data pulse distance in a track.\n"
     "q               Quit analyzer\n"
+    "\n"
+    "Note: The number starting with '$' will be handled as hexadecimal value (e.g. $f7)\n"
     << std::endl;
 }
 // -------------------------------------------------------------------------
@@ -424,13 +446,13 @@ int main(int argc, char* argv[]) {
             cmd_open_image(args[1]);
         } 
         else if(args[0] == "rt" && args.size()>=2) {
-            cmd_read_track(std::stoi(args[1]));
+            cmd_read_track(str2val(args[1]));
         } 
         else if(args[0] == "ri") {
-            cmd_read_id(std::stoi(args[1]) && args.size()>=2);
+            cmd_read_id(str2val(args[1]) && args.size()>=2);
         } 
-        else if(args[0] == "rs") {
-            cmd_read_sector(std::stoi(args[1]), std::stoi(args[2]), std::stoi(args[3]) && args.size()>=4);
+        else if(args[0] == "rs" && args.size()>=4) {
+            cmd_read_sector(str2val(args[1]), str2val(args[2]), str2val(args[3]));
         }
         else if(args[0] == "gain" && args.size()>=3) {
             cmd_set_gain(std::stod(args[1]), std::stod(args[2]) && args.size()>=3);
@@ -455,7 +477,7 @@ int main(int argc, char* argv[]) {
             cmd_reset_vfo();
         }
         else if(args[0] == "histogram" && args.size()>=2) {
-            cmd_histogram(std::stoi(args[1]));            
+            cmd_histogram(str2val(args[1]));            
         }
         else if(args[0] == "h") {
             cmd_help();
