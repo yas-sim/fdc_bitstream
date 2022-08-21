@@ -8,9 +8,9 @@
  */
 class vfo_simple : public vfo_base {
 public:
-    void disp_vfo_status(void) override {
-        vfo_base::disp_vfo_status();
-        std::cout << "-- vfo_simple --" << std::endl;
-    }
+    double m_freq_integral;
+public:
+    void reset(void) override;
+    void disp_vfo_status(void) override;
     double calc(double pulse_pos) override;
 };

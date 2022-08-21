@@ -218,6 +218,9 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=0) {
     case 3:
         vfo = new vfo_pid2();
         break;
+    case 9:
+        vfo = new vfo_experimental();
+        break;
     }
 
     disk_image_base_properties props = disk_img->get_property();
@@ -229,10 +232,10 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=0) {
     double dist = 0.f;
     for(size_t i=0; i<5000; i++) {
         dist += static_cast<double>(track_stream.distance_to_next_bit1());
-        //dist -= std::floor(dist / vfo->m_cell_size) * vfo->m_cell_size;
-        while(dist > vfo->m_cell_size) {
-            dist -= vfo->m_cell_size;
-        }
+        dist -= std::floor(dist / vfo->m_cell_size) * vfo->m_cell_size;
+        //while(dist > vfo->m_cell_size) {
+        //    dist -= vfo->m_cell_size;
+        //}
 
         // visualize
         std::string line = std::string(80, ' ');
@@ -267,7 +270,7 @@ void cmd_help(void) {
     "gain gl gh      Set VFO gain (low=gl, high=gh)\n"
     "vfo             Display current VFO parameters"
     "vv trk vfo_type VFO visualizer. Read 5,000 pulses from the top of a track using specified type of VFO.\n"
-    "                VFO type = 0:vfo_fixed, 1:vfo_simple, 2:vfo_pid, 3:vfo_pid2\n"
+    "                VFO type = 0:vfo_fixed, 1:vfo_simple, 2:vfo_pid, 3:vfo_pid2, 9=experimental\n"
     "q               Quit analyzer\n"
     << std::endl;
 }
@@ -309,7 +312,7 @@ int main(int argc, char* argv[]) {
             args.push_back(tmp_item);
         }
 
-        if(args[0] == "o") {
+        if(args[0] == "o" && args.size()>=2) {
             cmd_open_image(args[1]);
         } 
         else if(args[0] == "rt" && args.size()>=2) {
@@ -321,7 +324,7 @@ int main(int argc, char* argv[]) {
         else if(args[0] == "rs") {
             cmd_read_sector(std::stoi(args[1]), std::stoi(args[2]), std::stoi(args[3]) && args.size()>=4);
         }
-        else if(args[0] == "gain") {
+        else if(args[0] == "gain" && args.size()>=3) {
             cmd_set_gain(std::stod(args[1]), std::stod(args[2]) && args.size()>=3);
         }
         else if(args[0] == "ef") {

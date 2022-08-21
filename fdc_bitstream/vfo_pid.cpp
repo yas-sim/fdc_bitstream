@@ -34,6 +34,11 @@ void vfo_pid::reset(void) {
  */
 double vfo_pid::calc(double pulse_pos) {
 
+    // Cell size adjustment == frequency correction
+    double freq_error = m_cell_center - pulse_pos;
+    m_freq_bias += freq_error;                                                              // 'I' element
+    double new_cell_size = m_cell_size_ref - (m_freq_bias * 0.01f) * m_current_gain;        // 'I' only control
+
     // Data pulse position adjustment == phase correction
     double phase_error = m_cell_center - pulse_pos;
     constexpr double phase_error_limitter = 0.25f;
@@ -47,10 +52,6 @@ double vfo_pid::calc(double pulse_pos) {
     pulse_pos += phase_correction;
     m_prev_phase_error = phase_error;
 
-    // Cell size adjustment == frequency correction
-    double freq_error = m_cell_center - pulse_pos;
-    m_freq_bias += freq_error;                                                              // 'I' element
-    double new_cell_size = m_cell_size_ref - (m_freq_bias * 0.01f) * m_current_gain;        // 'I' only control
     set_cell_size(new_cell_size);
 
     return pulse_pos;
