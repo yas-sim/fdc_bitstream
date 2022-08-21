@@ -74,22 +74,21 @@ python kfx2mfm.py -i <kfx raw image directory>
 ## Directory structure - Libraries 
 |Directory|Description|  
 |---|---|  
-|`fdc_bitstream`|C++ FDC library source code (dependent on `fdc_common`)|  
+|[`fdc_bitstream`](./fdc_bitstream/)|C++ FDC library source code (dependent on `fdc_common`)|  
 |`fdc_common`|C++ source files for FDC common functions|  
-|`disk_image`|C++ soure files to read/write/manipulate disk image files (MFM/D77/RAW/HFE). (dependent on `fdc_common`)|
+|[`disk_image`](./disk_image/)|C++ soure files to read/write/manipulate disk image files (MFM/D77/RAW/HFE). (dependent on `fdc_common`)|
 |`include`|C++ header files for the FDC library|  
 
 ## Directory structure - Sample/Test/Tool programs, etc  
 |Directory|Description|  
 |---|---|  
 |`docs/html`|FDC library API document (`index.html`)|  
-|`fdc_test`|FDC lib test program source code. You can learn how to use `bit_stream` and `image_???` classes.|  
-|`image_converter`|(MFM/D77/RAW/HFE) to (MFM/D77) disk image converter. The converter will take one of mfm/raw/hfe/d77 image file, translate it into a MFM data internally, and then output the data as either one of mfm/d77.|
-|`hfe2mfm`|HFE to MFM floppy disk image converter source code|  
-|`check_image`|Performs read ID for all tracks. You can specify VFO gain to check what value is the best for the image.|  
-|`create_mfm_image`|Creates an 2D/MFM disk image with regular format (ECMA/ISO).The program will create `new_image.mfm`.|  
-|`kfx2mfm`|Kryoflux `RAW` files to `MFM` disk image file converter. Kryoflux `RAW` image consists of multiple `RAW` files. Each file contains bitstream data of a track captured at the clock rate of 24MHz.|  
-|`disk_analyzer`|Simple disk image analyze tool. You can try VFO gain and fluctuator setting.|
+|[`fdc_test`](./fdc_test/)|FDC lib test program source code. You can learn how to use `bit_stream` and `image_???` classes.|  
+|[`image_converter`](./image_converter/)|(MFM/D77/RAW/HFE) to (MFM/D77) disk image converter. The converter will take one of mfm/raw/hfe/d77 image file, translate it into a MFM data internally, and then output the data as either one of mfm/d77.|
+|[`check_image`](./check_image/)|Performs read ID for all tracks. You can specify VFO gain to check what value is the best for the image.|  
+|[`create_mfm_image`](./create_mfm_image/)|Creates an 2D/MFM disk image with regular format (ECMA/ISO).The program will create `new_image.mfm`.|  
+|[`kfx2mfm`](./kfx2mfm/)|Kryoflux `RAW` files to `MFM` disk image file converter. Kryoflux `RAW` image consists of multiple `RAW` files. Each file contains bitstream data of a track captured at the clock rate of 24MHz.|  
+|[`disk_analyzer`](./disk_analyzer/)|Simple disk image analyze tool. You can try VFO gain and fluctuator setting. This tool can visualize how VFO behaves (VFO visualizer) and check the pulse timing distribution of the disk image (histogram).|
 
 ## How to build the test program and tools
 
