@@ -16,6 +16,11 @@ disk_image *disk_img = nullptr;
 fdc_bitstream *fdc = nullptr;
 
 double g_gain_l = 1.f, g_gain_h = 2.f;
+size_t g_vfo_type = 0;
+
+void disp_status(void) {
+    std::cout << "Gain L:" << g_gain_l << ", Gain H:" << g_gain_h << std::endl;
+}
 
 void dump_buf(uint8_t* ptr, size_t size, bool line_feed = true) {
     std::ios::fmtflags flags_saved = std::cout.flags();
@@ -196,7 +201,7 @@ void cmd_disp_vfo_status(void) {
     fdc->disp_vfo_status();
 }
 
-void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=0) {
+void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=99) {
     if(is_image_ready()==false) {
         std::cout << "Disk image is not ready." << std::endl;
         return;
@@ -204,23 +209,16 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=0) {
     bit_array track_stream;
     track_stream = disk_img->get_track_data(track_n);
     vfo_base *vfo;
+    if(vfo_sel == 99) {
+        vfo_sel = g_vfo_type;
+    }
     switch(vfo_sel) {
     default:
-    case 0:
-        vfo = new vfo_simple();
-        break;
-    case 1:
-        vfo = new vfo_fixed();
-        break;
-    case 2:
-        vfo = new vfo_pid();
-        break;
-    case 3:
-        vfo = new vfo_pid2();
-        break;
-    case 9:
-        vfo = new vfo_experimental();
-        break;
+    case 0: vfo = new vfo_simple();       break;
+    case 1: vfo = new vfo_fixed();        break;
+    case 2: vfo = new vfo_pid();          break;
+    case 3: vfo = new vfo_pid2();         break;
+    case 9: vfo = new vfo_experimental(); break;
     }
 
     disk_image_base_properties props = disk_img->get_property();
@@ -256,6 +254,21 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=0) {
     vfo->disp_vfo_status();
 
     delete vfo;
+}
+
+
+void cmd_select_vfo(size_t vfo_type) {
+    if (vfo_type>3 && vfo_type !=9) {
+        std::cout << "wrong VFO type. 0-3 or 9." << std::endl;
+        return;
+    }
+    g_vfo_type = vfo_type;
+    fdc->swap_vfo(vfo_type);
+}
+
+void cmd_reset_vfo(void) {
+    std::cout << "Reset VFO" << std::endl;
+    fdc->soft_reset_vfo();
 }
 
 void cmd_help(void) {
@@ -333,12 +346,18 @@ int main(int argc, char* argv[]) {
         else if(args[0] == "df") {
             cmd_disable_fluctuator();
         }
+        else if(args[0] == "sv" && args.size()>=2) {
+            cmd_select_vfo(std::stoi(args[1]));
+        }
         else if(args[0] == "vfo") {
             cmd_disp_vfo_status();
         }
         else if(args[0] == "vv" && args.size()>=2) {
             if(args.size()==2) cmd_visualize_vfo(std::stoi(args[1]));
             else               cmd_visualize_vfo(std::stoi(args[1]), std::stoi(args[2]));
+        }
+        else if(args[0] == "rv") {
+            cmd_reset_vfo();
         }
         else if(args[0] == "h") {
             cmd_help();

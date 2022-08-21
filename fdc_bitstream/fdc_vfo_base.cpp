@@ -30,7 +30,16 @@ void vfo_base::reset(void) {
     set_gain_val(1.f, 2.f);
 }
 
+void vfo_base::soft_reset(void) {
+    set_params(m_sampling_rate, m_fdc_bit_rate, m_data_window_ratio);
+}
+
 void vfo_base::set_params(size_t sampling_rate, size_t fdc_bit_rate, double data_window_ratio) {
+    // keep parameters for soft reset
+    m_sampling_rate = sampling_rate;
+    m_fdc_bit_rate = fdc_bit_rate;
+    m_data_window_ratio = data_window_ratio;
+
     m_cell_size_ref = static_cast<double>(sampling_rate) / static_cast<double>(fdc_bit_rate);
     m_cell_size = m_cell_size_ref;
 

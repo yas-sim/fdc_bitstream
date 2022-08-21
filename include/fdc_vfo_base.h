@@ -21,6 +21,10 @@ public:
     double  m_gain_l;
     double  m_gain_h;
     double  m_current_gain;
+    // for soft reset
+    double  m_sampling_rate;
+    double  m_fdc_bit_rate;
+    double  m_data_window_ratio;
 public:
     enum gain_state {
         low = 0,
@@ -30,6 +34,7 @@ public:
     vfo_base() {};
     virtual void disp_vfo_status(void);
     virtual void reset(void);
+    virtual void soft_reset(void);
     inline double limit(double val, double lower_limit, double upper_limit) {
         if(val < lower_limit) val = lower_limit;
         if(val > upper_limit) val = upper_limit;

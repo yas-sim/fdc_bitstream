@@ -44,6 +44,11 @@ public:
 public:
     mfm_codec();
     ~mfm_codec();
+
+    void swap_vfo(size_t vfo_type);
+    void reset_vfo(void);
+    void soft_reset_vfo(void);
+
     void reset(void);
     void set_cell_size(double cell_size, double window_ratio=0.75f);    // typical window_ratio for actual drive is 0.5 but uses 0.75 as default in this SW
     void update_parameters(void);

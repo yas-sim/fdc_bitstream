@@ -21,17 +21,58 @@ mfm_codec::mfm_codec() : m_bit_stream(0),
         m_prev_write_bit(0),
         m_sampling_rate(4e6), m_data_bit_rate(500e3),
         m_vfo_suspension_rate(0.f),
-        m_track_ready(false)
+        m_track_ready(false),
+        m_vfo(nullptr)
 {
-    // Select VFO type
-    m_vfo = new vfo_pid();
-    //m_vfo = new vfo_pid2();
-    //m_vfo = new vfo_fixed();
+    m_vfo = new vfo_simple();
+    reset_vfo();
     reset();
 }
 
 mfm_codec::~mfm_codec() {
-    delete m_vfo;
+    if(m_vfo != nullptr) delete m_vfo;
+}
+
+void mfm_codec::swap_vfo(size_t vfo_type) {
+    if (m_vfo != nullptr) {
+        vfo_base *new_vfo, *swap_tmp;
+        switch(vfo_type) {
+            default:
+            case 0: new_vfo = new vfo_simple();       break;
+            case 1: new_vfo = new vfo_fixed();        break;
+            case 2: new_vfo = new vfo_pid();          break;
+            case 3: new_vfo = new vfo_pid2();         break;
+
+            case 9: new_vfo = new vfo_experimental(); break;
+        }
+        new_vfo->m_gain_h = m_vfo->m_gain_h;
+        new_vfo->m_gain_l = m_vfo->m_gain_l;
+        new_vfo->m_cell_center = m_vfo->m_cell_center;
+        new_vfo->m_cell_size = m_vfo->m_cell_size;
+        new_vfo->m_cell_size_ref = m_vfo->m_cell_size_ref;
+        new_vfo->m_current_gain = m_vfo->m_current_gain;
+        new_vfo->m_window_ofst = m_vfo->m_window_ofst;
+        new_vfo->m_window_size = m_vfo->m_window_size;
+        new_vfo->m_window_ratio = m_vfo->m_window_ratio;
+        new_vfo->set_params(m_sampling_rate, m_data_bit_rate);
+
+        swap_tmp = m_vfo;
+        m_vfo = new_vfo;
+        delete swap_tmp;
+        m_vfo->reset();
+    }
+}
+
+void mfm_codec::reset_vfo(void) {
+    if (m_vfo != nullptr) {
+        m_vfo -> reset();
+    }
+}
+
+void mfm_codec::soft_reset_vfo(void) {
+    if (m_vfo != nullptr) {
+        m_vfo -> soft_reset();        
+    }
 }
 
 /**

@@ -93,7 +93,7 @@ public:
 
     /** 
      * @brief Set VFO gain.
-    * Recommended setting : High gain (high speed) mode(10.0f). Low gain (1.0f) for data reading. 
+    * Recommended setting : High gain (high speed) mode(2.0f). Low gain (1.0f) for data reading. 
     * FDC needs to synchronized with the data stream quickly in the SYNC field before start reading the actual data (sector ID or sector body).
     * High speed (high gain) setting will be used during the SYNC field to lock-in the read timing quickly.
     * Low speed (low gain) setting will be used during reading data (other than SYNC field) to cancel slow spindle speed 
@@ -101,6 +101,12 @@ public:
     */
     inline void set_vfo_gain_val(double low, double high) { m_codec.set_vfo_gain_val(low, high); }
 
+    /**
+     * @brief Set the VFO gain mode.
+     *        Low gain for regular data reading and high gain for SYNC field.
+     * 
+     * @param state fdc_bitstream::gain_state::low or fdc_bitstream::gain_state::high
+     */
     inline void set_vfo_gain_mode(gain_state state) { 
         switch(state) {
         case gain_state::low:
@@ -113,7 +119,20 @@ public:
         }
     }
     inline void disp_vfo_status(void) { m_codec.disp_vfo_status(); }
-
+    /**
+     * @brief Swap the vfo with a new one.
+     * @param vfo_type 0=vfo_simple, 1=vfo_fixed, 2=vfo_pid, 3=vfo_pid2, 9=vfo_experimental
+     */
+    inline void swap_vfo(size_t vfo_type) { m_codec.swap_vfo(vfo_type); }
+    /** 
+     * @brief Reset VFO parameters
+     */
+    inline void reset_vfo(void) { m_codec.reset_vfo(); }
+    /**
+     * @brief Soft reset VFO parameters.
+     *        Keep bit_cell_ref and reset window_size, window_ofst parameters.
+     */
+    inline void soft_reset_vfo(void) { m_codec.soft_reset_vfo(); }
 
     void write_data(uint8_t data, bool mode = false, bool write_gate = true);
     void read_data(uint8_t& data, bool& missing_clock, bool ignore_missing_clock = true, bool ignore_sync_field = true);
