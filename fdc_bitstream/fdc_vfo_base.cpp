@@ -31,7 +31,9 @@ void vfo_base::reset(void) {
 }
 
 void vfo_base::soft_reset(void) {
-    set_params(m_sampling_rate, m_fdc_bit_rate, m_data_window_ratio);
+    if(m_sampling_rate != 0 && m_fdc_bit_rate != 0 && m_data_window_ratio != 0) {
+        set_params(m_sampling_rate, m_fdc_bit_rate, m_data_window_ratio);
+    }
 }
 
 void vfo_base::set_params(size_t sampling_rate, size_t fdc_bit_rate, double data_window_ratio) {

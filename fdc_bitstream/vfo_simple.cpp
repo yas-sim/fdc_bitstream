@@ -3,6 +3,12 @@
 #include "vfo_simple.h"
 
 void vfo_simple::reset(void) {
+    vfo_base::reset();
+    m_freq_integral = 0.f;
+}
+
+void vfo_simple::soft_reset(void) {
+    vfo_base::soft_reset();
     m_freq_integral = 0.f;
 }
 

@@ -19,6 +19,14 @@ void vfo_pid2::reset(void) {
     m_freq_integral = 0.f;
 }
 
+void vfo_pid2::soft_reset(void) {
+    vfo_base::soft_reset();
+    m_prev_phase_error = 0.f;
+    m_prev_freq_error = 0.f;
+    m_phase_integral = 0.f;
+    m_freq_integral = 0.f;
+}
+
 
 /**
  * @brief Calculate new pulse position based on the current bit cell parameters. Adjust pulse position, and calculate and optimize bit cell parameters.

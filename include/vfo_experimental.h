@@ -15,5 +15,6 @@ public:
 public:
     void disp_vfo_status(void) override;
     void reset(void) override;
+    void soft_reset(void) override;
     double calc(double pulse_pos) override;
 };
