@@ -1,9 +1,20 @@
 var searchData=
 [
   ['vfo_5fbase_0',['vfo_base',['../classvfo__base.html',1,'vfo_base'],['../classvfo__base.html#afdac4498005556ac7d185c5ff80101ca',1,'vfo_base::vfo_base()']]],
-  ['vfo_5ffixed_1',['vfo_fixed',['../classvfo__fixed.html',1,'']]],
-  ['vfo_5foptimizer_2ecpp_2',['vfo_optimizer.cpp',['../vfo__optimizer_8cpp.html',1,'']]],
-  ['vfo_5fpid_3',['vfo_pid',['../classvfo__pid.html',1,'vfo_pid'],['../classvfo__pid.html#a6e35d9f93526d4c489a2003fcab84886',1,'vfo_pid::vfo_pid()']]],
-  ['vfo_5fpid2_4',['vfo_pid2',['../classvfo__pid2.html',1,'']]],
-  ['vfo_5fsimple_5',['vfo_simple',['../classvfo__simple.html',1,'']]]
+  ['vfo_5fexperimental_1',['vfo_experimental',['../classvfo__experimental.html',1,'']]],
+  ['vfo_5fexperimental_2ecpp_2',['vfo_experimental.cpp',['../vfo__experimental_8cpp.html',1,'']]],
+  ['vfo_5fexperimental_2eh_3',['vfo_experimental.h',['../vfo__experimental_8h.html',1,'']]],
+  ['vfo_5ffixed_4',['vfo_fixed',['../classvfo__fixed.html',1,'']]],
+  ['vfo_5ffixed_2ecpp_5',['vfo_fixed.cpp',['../vfo__fixed_8cpp.html',1,'']]],
+  ['vfo_5ffixed_2eh_6',['vfo_fixed.h',['../vfo__fixed_8h.html',1,'']]],
+  ['vfo_5foptimizer_2ecpp_7',['vfo_optimizer.cpp',['../vfo__optimizer_8cpp.html',1,'']]],
+  ['vfo_5fpid_8',['vfo_pid',['../classvfo__pid.html#a6e35d9f93526d4c489a2003fcab84886',1,'vfo_pid::vfo_pid()'],['../classvfo__pid.html',1,'vfo_pid']]],
+  ['vfo_5fpid_2ecpp_9',['vfo_pid.cpp',['../vfo__pid_8cpp.html',1,'']]],
+  ['vfo_5fpid_2eh_10',['vfo_pid.h',['../vfo__pid_8h.html',1,'']]],
+  ['vfo_5fpid2_11',['vfo_pid2',['../classvfo__pid2.html',1,'']]],
+  ['vfo_5fpid2_2ecpp_12',['vfo_pid2.cpp',['../vfo__pid2_8cpp.html',1,'']]],
+  ['vfo_5fpid2_2eh_13',['vfo_pid2.h',['../vfo__pid2_8h.html',1,'']]],
+  ['vfo_5fsimple_14',['vfo_simple',['../classvfo__simple.html',1,'']]],
+  ['vfo_5fsimple_2ecpp_15',['vfo_simple.cpp',['../vfo__simple_8cpp.html',1,'']]],
+  ['vfo_5fsimple_2eh_16',['vfo_simple.h',['../vfo__simple_8h.html',1,'']]]
 ];

@@ -21,6 +21,7 @@ var annotated_dup =
     [ "pictrack_", "structpictrack__.html", "structpictrack__" ],
     [ "track_table_", "structtrack__table__.html", "structtrack__table__" ],
     [ "vfo_base", "classvfo__base.html", "classvfo__base" ],
+    [ "vfo_experimental", "classvfo__experimental.html", "classvfo__experimental" ],
     [ "vfo_fixed", "classvfo__fixed.html", "classvfo__fixed" ],
     [ "vfo_pid", "classvfo__pid.html", "classvfo__pid" ],
     [ "vfo_pid2", "classvfo__pid2.html", "classvfo__pid2" ],
