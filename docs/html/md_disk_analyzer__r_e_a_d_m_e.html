@@ -104,8 +104,21 @@ $(document).ready(function(){initNavTree('md_disk_analyzer__r_e_a_d_m_e.html',''
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>gain</code> <code>gl</code> <code>gh</code>   </td><td class="markdownTableBodyNone">Set VFO gain (low=gl, high=gh)    </td></tr>
 <tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>vfo</code>   </td><td class="markdownTableBodyNone">Display vurrent VFO parameters    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>vv</code> <code>trk</code> [<code>vfo_type</code>]   </td><td class="markdownTableBodyNone">VFO visualizer. Read 5,000 pulses from the top of a track using specified type of VFO.<br  />
+VFO type = 0:<a class="el" href="classvfo__fixed.html" title="Fixed VFO class (no VFO)">vfo_fixed</a>, 1:<a class="el" href="classvfo__simple.html" title="VFO class using simple proportional error correction (P)">vfo_simple</a>, 2:<a class="el" href="classvfo__pid.html" title="VFO class using PID control.">vfo_pid</a>, 3:<a class="el" href="classvfo__pid2.html" title="VFO class using PID control (2)">vfo_pid2</a>, 9=experimental    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>rv</code>   </td><td class="markdownTableBodyNone">(soft) reset VFO    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>histogram</code> <code>trk</code>   </td><td class="markdownTableBodyNone">Display histogram of data pulse distances in a track    </td></tr>
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>q</code>   </td><td class="markdownTableBodyNone">Quit analyzer   </td></tr>
 </table>
+<ul>
+<li>Note: The number starting with '$' will be handled as hexadecimal value (e.g. $f7 == 247) <br  />
+</li>
+</ul>
 <h1><a class="anchor" id="autotoc_md3"></a>
 Example</h1>
 <div class="fragment"><div class="line">&gt;analyzer</div>
@@ -150,8 +163,119 @@ Example</h1>
 <div class="line">4e 4e 4e 4e 4e 4e 4e 4e 00 00 00 00 00 00 00 00 00 00 00 00 02 c2 a1 a1 a1 fb 1a 50 86 fd 1f 8b 0d 0f 8e 01 1a c6 0f ad 9f fb fa 6c 02 6c 05 5a 26 f5 20 08 0a 00 02 00 00 02 00 00 1a 50 0c 0f</div>
 <div class="line">  :     :     :     :</div>
 <div class="line">00 00 00 00 00 00 00 e1 22 4e 08 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 7f ff ff</div>
+</div><!-- fragment --><ul>
+<li>Histogram <br  />
+<ul>
+<li>Shows distribution of pulse to pulse distance in a track. <br  />
+ <div class="fragment"><div class="line">CMD(5) &gt; histogram 0</div>
+<div class="line">#clocks  #pulses</div>
+<div class="line">   0 :        0 :</div>
+<div class="line">   1 :        3 :</div>
+<div class="line">   2 :        1 :</div>
+<div class="line">   3 :        1 :</div>
+<div class="line">   4 :        0 :</div>
+<div class="line">   5 :        0 :</div>
+<div class="line">   6 :        0 :</div>
+<div class="line">   7 :        0 :</div>
+<div class="line">   8 :        1 :</div>
+<div class="line">   9 :        2 :</div>
+<div class="line">  10 :        3 :</div>
+<div class="line">  11 :        2 :</div>
+<div class="line">  12 :        2 :</div>
+<div class="line">  13 :        4 :</div>
+<div class="line">  14 :        0 :</div>
+<div class="line">  15 :      236 : *</div>
+<div class="line">  16 :    14395 : ****************************************************************************************************</div>
+<div class="line">  17 :    10734 : **************************************************************************</div>
+<div class="line">  18 :      192 : *</div>
+<div class="line">  19 :        4 :</div>
+<div class="line">  20 :        1 :</div>
+<div class="line">  21 :        2 :</div>
+<div class="line">  22 :       21 :</div>
+<div class="line">  23 :     1668 : ***********</div>
+<div class="line">  24 :     6770 : ***********************************************</div>
+<div class="line">  25 :     3705 : *************************</div>
+<div class="line">  26 :      208 : *</div>
+<div class="line">  27 :        0 :</div>
+<div class="line">  28 :        2 :</div>
+<div class="line">  29 :        0 :</div>
+<div class="line">  30 :        2 :</div>
+<div class="line">  31 :      228 : *</div>
+<div class="line">  32 :     1378 : *********</div>
+<div class="line">  33 :      692 : ****</div>
+<div class="line">  34 :       22 :</div>
+<div class="line">  35 :        0 :</div>
+<div class="line">  36 :        0 :</div>
+<div class="line">  37 :        0 :</div>
+<div class="line">  38 :        0 :</div>
+<div class="line">  39 :        3 :</div>
+<div class="line">  40 :        1 :</div>
+<div class="line">  41 :        0 :</div>
 <div class="line"> </div>
-<div class="line">CMD(5) &gt; q</div>
+<div class="line">Peaks:</div>
+<div class="line">1 : 16 [CLKs]</div>
+<div class="line">2 : 24 [CLKs]</div>
+<div class="line">3 : 32 [CLKs]</div>
+<div class="line"> </div>
+<div class="line">Estimated bit cell width : 8 [CLKs] (CLK=4 MHz)</div>
+<div class="line">Data bit rate : 500 [Kbits/sec]</div>
+</div><!-- fragment --></li>
+</ul>
+</li>
+<li>VFO Visualizer<ul>
+<li>Visualises the operation of software VFO. <br  />
+</li>
+</ul>
+</li>
+</ul>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Symbol   </th><th class="markdownTableHeadNone">Meaning    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>&gt;</code>, <code>&lt;</code>   </td><td class="markdownTableBodyNone">Bit cell width.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>_</code>   </td><td class="markdownTableBodyNone">Data window period.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>P</code>   </td><td class="markdownTableBodyNone">Data pulse   </td></tr>
+</table>
+<div class="fragment"><div class="line">CMD(6) &gt; vv 0</div>
+<div class="line">     0 &gt;P           ___________________________________________________________________________             &lt;</div>
+<div class="line">     1 &gt;           ______________P_________________________________________________________           &lt;</div>
+<div class="line">     2 &gt;           ________________________________________P_____________________________           &lt;</div>
+<div class="line">     3 &gt;           ____________________________________________________P_________________            &lt;</div>
+<div class="line">     4 &gt;           _______________________________________________________________________P           &lt;</div>
+<div class="line">     5 &gt;            ____________________________________________________________________P_____            &lt;</div>
+<div class="line">     6 &gt;            _________________________________________________________P__________________             &lt;</div>
+<div class="line">     7 &gt;            ___________________________________________P__________________________________             &lt;</div>
+<div class="line">     8 &gt;            _______________________________P______________________________________________             &lt;</div>
+<div class="line">     9 &gt;            __________________________P___________________________________________________            &lt;</div>
+<div class="line">    10 &gt;            ______________________________________P_____________________________________             &lt;</div>
+<div class="line">     :                                               :                                                       :</div>
+<div class="line">  4987 &gt;            ________________________________________________P____________________________             &lt;</div>
+<div class="line">  4988 &gt;            ____________________________________P_________________________________________             &lt;</div>
+<div class="line">  4989 &gt;            ________________________________________P_____________________________________             &lt;</div>
+<div class="line">  4990 &gt;            _________________________________P____________________________________________             &lt;</div>
+<div class="line">  4991 &gt;            __________________________________________P__________________________________             &lt;</div>
+<div class="line">  4992 &gt;            ___________________________________P__________________________________________            &lt;</div>
+<div class="line">  4993 &gt;            ___________________________________________P_________________________________             &lt;</div>
+<div class="line">  4994 &gt;            ______________________________P_______________________________________________             &lt;</div>
+<div class="line">  4995 &gt;            ________________________________________P____________________________________             &lt;</div>
+<div class="line">  4996 &gt;            ___________________________________P_________________________________________             &lt;</div>
+<div class="line">  4997 &gt;            ____________________________________________P________________________________             &lt;</div>
+<div class="line">  4998 &gt;            ___________________________________P_________________________________________             &lt;</div>
+<div class="line">  4999 &gt;            ____________________________________________P________________________________             &lt;</div>
+<div class="line">-- vfo_base --</div>
+<div class="line">Cell_size : 8.22547</div>
+<div class="line">Cell_size_ref : 8</div>
+<div class="line">Window ratio  : 0.75</div>
+<div class="line">Window size   : 6.1691</div>
+<div class="line">Windoe offset : 1.02818</div>
+<div class="line">Gain (Low)    : 1</div>
+<div class="line">Gain (High)   : 2</div>
+<div class="line">Current gain  : 1</div>
+<div class="line">-- vfo_simple --</div>
+<div class="line">Freq integral  : -2.25465</div>
+<div class="line">CMD(7) &gt; q</div>
 </div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
