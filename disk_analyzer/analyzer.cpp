@@ -345,6 +345,7 @@ void cmd_histogram(size_t track_n) {
 
     size_t max_count = *std::max_element(dist_array.begin(), dist_array.end());
     double scale = 100.f / static_cast<double>(max_count);
+    std::cout << "#clocks  #pulses" << std::endl;
     for(size_t i=0; i<=max_val; i++) {
         std::cout << std::setw(4) << std::setfill(' ') << i << " : ";
         std::cout << std::setw(8) << std::setfill(' ') << dist_array[i] << " : ";
@@ -356,10 +357,10 @@ void cmd_histogram(size_t track_n) {
     std::cout << std::endl;
     std::cout << "Peaks:" << std::endl;
     for(size_t i=0; i<3; i++) {
-        std::cout << i+1 << " : " << peaks[i] << " [bits]" << std::endl;
+        std::cout << i+1 << " : " << peaks[i] << " [CLKs]" << std::endl;
     }
     std::cout << std::endl;
-    std::cout << "Estimated bit cell width : " << peaks[0] / 2 << " [bits]" << std::endl;
+    std::cout << "Estimated bit cell width : " << peaks[0] / 2 << " [CLKs] (CLK=" << g_sampling_rate/1e6 << " MHz)"  << std::endl;
     std::cout << "Data bit rate : " << (g_sampling_rate / (peaks[0] / 2.f)) / 1000.f << " [Kbits/sec]" << std::endl;
 }
 
