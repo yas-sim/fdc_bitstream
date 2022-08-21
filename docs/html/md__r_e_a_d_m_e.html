@@ -187,11 +187,11 @@ Directory structure - Libraries</h1>
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Directory   </th><th class="markdownTableHeadNone">Description    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code><a class="el" href="classfdc__bitstream.html">fdc_bitstream</a></code>   </td><td class="markdownTableBodyNone">C++ FDC library source code (dependent on <code>fdc_common</code>)    </td></tr>
+<td class="markdownTableBodyNone"><a href="./fdc_bitstream/"><code>fdc_bitstream</code></a>   </td><td class="markdownTableBodyNone">C++ FDC library source code (dependent on <code>fdc_common</code>)    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>fdc_common</code>   </td><td class="markdownTableBodyNone">C++ source files for FDC common functions    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code><a class="el" href="classdisk__image.html">disk_image</a></code>   </td><td class="markdownTableBodyNone">C++ soure files to read/write/manipulate disk image files (MFM/D77/RAW/HFE). (dependent on <code>fdc_common</code>)    </td></tr>
+<td class="markdownTableBodyNone"><a href="./disk_image/"><code>disk_image</code></a>   </td><td class="markdownTableBodyNone">C++ soure files to read/write/manipulate disk image files (MFM/D77/RAW/HFE). (dependent on <code>fdc_common</code>)    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>include</code>   </td><td class="markdownTableBodyNone">C++ header files for the FDC library   </td></tr>
 </table>
@@ -203,19 +203,17 @@ Directory structure - Sample/Test/Tool programs, etc</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>docs/html</code>   </td><td class="markdownTableBodyNone">FDC library API document (<code>index.html</code>)    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>fdc_test</code>   </td><td class="markdownTableBodyNone">FDC lib test program source code. You can learn how to use <code>bit_stream</code> and <code>image_???</code> classes.    </td></tr>
+<td class="markdownTableBodyNone"><a href="./fdc_test/"><code>fdc_test</code></a>   </td><td class="markdownTableBodyNone">FDC lib test program source code. You can learn how to use <code>bit_stream</code> and <code>image_???</code> classes.    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>image_converter</code>   </td><td class="markdownTableBodyNone">(MFM/D77/RAW/HFE) to (MFM/D77) disk image converter. The converter will take one of mfm/raw/hfe/d77 image file, translate it into a MFM data internally, and then output the data as either one of mfm/d77.    </td></tr>
+<td class="markdownTableBodyNone"><a href="./image_converter/"><code>image_converter</code></a>   </td><td class="markdownTableBodyNone">(MFM/D77/RAW/HFE) to (MFM/D77) disk image converter. The converter will take one of mfm/raw/hfe/d77 image file, translate it into a MFM data internally, and then output the data as either one of mfm/d77.    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>hfe2mfm</code>   </td><td class="markdownTableBodyNone">HFE to MFM floppy disk image converter source code    </td></tr>
+<td class="markdownTableBodyNone"><a href="./check_image/"><code>check_image</code></a>   </td><td class="markdownTableBodyNone">Performs read ID for all tracks. You can specify VFO gain to check what value is the best for the image.    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>check_image</code>   </td><td class="markdownTableBodyNone">Performs read ID for all tracks. You can specify VFO gain to check what value is the best for the image.    </td></tr>
+<td class="markdownTableBodyNone"><a href="./create_mfm_image/"><code>create_mfm_image</code></a>   </td><td class="markdownTableBodyNone">Creates an 2D/MFM disk image with regular format (ECMA/ISO).The program will create <code>new_image.mfm</code>.    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>create_mfm_image</code>   </td><td class="markdownTableBodyNone">Creates an 2D/MFM disk image with regular format (ECMA/ISO).The program will create <code>new_image.mfm</code>.    </td></tr>
+<td class="markdownTableBodyNone"><a href="./kfx2mfm/"><code>kfx2mfm</code></a>   </td><td class="markdownTableBodyNone">Kryoflux <code>RAW</code> files to <code>MFM</code> disk image file converter. Kryoflux <code>RAW</code> image consists of multiple <code>RAW</code> files. Each file contains bitstream data of a track captured at the clock rate of 24MHz.    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code><a class="el" href="namespacekfx2mfm.html">kfx2mfm</a></code>   </td><td class="markdownTableBodyNone">Kryoflux <code>RAW</code> files to <code>MFM</code> disk image file converter. Kryoflux <code>RAW</code> image consists of multiple <code>RAW</code> files. Each file contains bitstream data of a track captured at the clock rate of 24MHz.    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>disk_analyzer</code>   </td><td class="markdownTableBodyNone">Simple disk image analyze tool. You can try VFO gain and fluctuator setting.   </td></tr>
+<td class="markdownTableBodyNone"><a href="./disk_analyzer/"><code>disk_analyzer</code></a>   </td><td class="markdownTableBodyNone">Simple disk image analyze tool. You can try VFO gain and fluctuator setting. This tool can visualize how VFO behaves (VFO visualizer) and check the pulse timing distribution of the disk image (histogram).   </td></tr>
 </table>
 <h1><a class="anchor" id="autotoc_md28"></a>
 How to build the test program and tools</h1>
