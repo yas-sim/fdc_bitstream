@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <algorithm>
 
 #ifdef _WIN32
 #include <direct.h>
@@ -17,6 +18,12 @@ fdc_bitstream *fdc = nullptr;
 
 double g_gain_l = 1.f, g_gain_h = 2.f;
 size_t g_vfo_type = 0;
+
+size_t g_sampling_rate = 0;
+size_t g_data_bit_rate = 0;
+size_t g_spindle_time_ns = 0;
+size_t g_max_track_number = 0;
+
 
 void disp_status(void) {
     std::cout << "Gain L:" << g_gain_l << ", Gain H:" << g_gain_h << std::endl;
@@ -136,6 +143,11 @@ void cmd_open_image(std::string file_name) {
 
     fdc->set_fdc_params(props.m_sampling_rate, props.m_data_bit_rate);
     fdc->disp_vfo_status();
+
+    g_sampling_rate = props.m_sampling_rate;
+    g_data_bit_rate = props.m_sampling_rate;
+    g_spindle_time_ns = props.m_spindle_time_ns;
+    g_max_track_number = props.m_max_track_number;
 }
 
 void cmd_read_track(size_t track_n) {
@@ -271,6 +283,86 @@ void cmd_reset_vfo(void) {
     fdc->soft_reset_vfo();
 }
 
+std::vector<size_t> find_peaks(std::vector<size_t> vec) {
+    // calc moving average
+    std::vector<size_t> avg(vec.size());
+    for(size_t i = 2; i<vec.size()-2-1; i++) {
+        size_t avg_tmp = 0;
+        for(int j=-2; j<=2; j++) {
+            avg_tmp += vec[i+j];
+        }
+        avg[i] = avg_tmp / 5;
+    }
+
+    // detect peaks
+    std::vector<std::pair<size_t, size_t>> peaks;
+    for(size_t i=1; i<vec.size()-1-1; i++) {
+        if(vec[i-1]<vec[i] && vec[i+1]<vec[i]) {    // peak
+            peaks.push_back(std::pair<size_t, size_t>(i, vec[i]));
+        }
+    }
+
+    // sort peaks
+    std::sort(peaks.begin(), peaks.end(), [](const std::pair<size_t, size_t> &left, const std::pair<size_t, size_t> &right) 
+                                                { return left.second > right.second; });
+
+    // Display sort result
+    //for(auto it=peaks.begin(); it != peaks.end(); ++it) {
+    //    std::cout << (*it).first << "," << (*it).second << std::endl;
+    //}
+
+    if (peaks.size()<3) {
+        peaks.resize(3);
+    }
+    std::vector<size_t> result;
+    for(auto it=peaks.begin(); it != peaks.begin()+3; ++it) {
+        result.push_back((*it).first);
+    }
+    return result;
+}
+
+void cmd_histogram(size_t track_n) {
+    if(is_image_ready()==false) {
+        std::cout << "Disk image is not ready." << std::endl;
+        return;
+    }
+    bit_array track_stream;
+    track_stream = disk_img->get_track_data(track_n);
+    track_stream.set_stream_pos(0);
+    track_stream.clear_wraparound_flag();
+    size_t max_val = 0;
+    std::vector<size_t> dist_array(500);
+    do {
+        size_t dist = track_stream.distance_to_next_bit1();
+        if(dist >= dist_array.size()) {
+            dist = dist_array.size() - 1;
+        }
+        dist_array[dist]++;
+        if(max_val < dist) {
+            max_val = dist;
+        }
+    } while(!track_stream.is_wraparound());
+
+    size_t max_count = *std::max_element(dist_array.begin(), dist_array.end());
+    double scale = 100.f / static_cast<double>(max_count);
+    for(size_t i=0; i<=max_val; i++) {
+        std::cout << std::setw(4) << std::setfill(' ') << i << " : ";
+        std::cout << std::setw(8) << std::setfill(' ') << dist_array[i] << " : ";
+        size_t bar_length = static_cast<size_t>(static_cast<double>(dist_array[i]) * scale); // normalize
+        std::cout << std::string(bar_length, '*') << std::endl;
+    }
+
+    std::vector<size_t> peaks = find_peaks(dist_array);
+    std::cout << std::endl;
+    std::cout << "Peaks:" << std::endl;
+    for(size_t i=0; i<3; i++) {
+        std::cout << i+1 << " : " << peaks[i] << " [bits]" << std::endl;
+    }
+    std::cout << std::endl;
+    std::cout << "Estimated bit cell width : " << peaks[0] / 2 << " [bits]" << std::endl;
+    std::cout << "Data bit rate : " << (g_sampling_rate / (peaks[0] / 2.f)) / 1000.f << " [Kbits/sec]" << std::endl;
+}
+
 void cmd_help(void) {
     std::cout <<
     "*** Command list\n"
@@ -284,6 +376,8 @@ void cmd_help(void) {
     "vfo             Display current VFO parameters"
     "vv trk vfo_type VFO visualizer. Read 5,000 pulses from the top of a track using specified type of VFO.\n"
     "                VFO type = 0:vfo_fixed, 1:vfo_simple, 2:vfo_pid, 3:vfo_pid2, 9=experimental\n"
+    "rv              (soft) reset VFO\n"
+    "histogram trk   Display histogram of data pulse distance in a track.\n"
     "q               Quit analyzer\n"
     << std::endl;
 }
@@ -358,6 +452,9 @@ int main(int argc, char* argv[]) {
         }
         else if(args[0] == "rv") {
             cmd_reset_vfo();
+        }
+        else if(args[0] == "histogram" && args.size()>=2) {
+            cmd_histogram(std::stoi(args[1]));            
         }
         else if(args[0] == "h") {
             cmd_help();
