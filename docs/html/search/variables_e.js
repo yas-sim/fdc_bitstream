@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['sampling_5frate_0',['sampling_rate',['../structmfm__header__.html#aa4730a859aeb428f92f90490b476df42',1,'mfm_header_']]],
-  ['single_5fstep_1',['single_step',['../structpicfileformatheader__.html#af22d5c3d29006b1db5261f74308fad93',1,'picfileformatheader_']]],
-  ['spindle_5ftime_5fns_2',['spindle_time_ns',['../structmfm__header__.html#a6d19b9bb46000bd8cd0213e5aa21a818',1,'mfm_header_']]],
-  ['str_3',['str',['../namespacekfx2mfm.html#a9020e3db097a2eee704df8efe0700c0b',1,'kfx2mfm']]],
-  ['streamdata_4',['streamdata',['../classkfx2mfm_1_1_k_f_x__stream.html#af1001ee192457b4ad4707aba5dfd8bfa',1,'kfx2mfm::KFX_stream']]]
+  ['r_0',['R',['../structfdc__bitstream_1_1id__field.html#a5ee129bdb20f1fe617fad759c7f0256a',1,'fdc_bitstream::id_field']]],
+  ['record_5fnot_5ffound_1',['record_not_found',['../structfdc__bitstream_1_1sector__data.html#a913d1ff37fec4e46f9fdb0cda76fd18a',1,'fdc_bitstream::sector_data']]],
+  ['required_2',['required',['../namespacekfx2mfm.html#a7acd1b7005a220b0504fee773c474fa3',1,'kfx2mfm']]]
 ];
