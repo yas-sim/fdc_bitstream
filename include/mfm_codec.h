@@ -4,7 +4,7 @@
 #include <random>
 
 #include "bit_array.h"
-#include "fdc_vfo.h"
+#include "fdc_vfo_base.h"
 
 //#define DEBUG
 

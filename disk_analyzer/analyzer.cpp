@@ -245,7 +245,7 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=0) {
         } else {
             line[0] = '*';
         }
-        std::cout << line << std::endl;
+        std::cout << std::setw(6) << i << " >" << line << std::endl;
 
         // run VFO
         dist = vfo->calc(dist);
@@ -258,7 +258,7 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=0) {
 void cmd_help(void) {
     std::cout <<
     "*** Command list\n"
-    "o  file_name    Open an image file.\n"
+    "o  file_name    Open an image file. (.raw, .mfm, .hfe, .d77)\n"
     "rt trk          Read track\n"
     "ri trk          Read all sector IDs\n"
     "rs trk sid sct  Read sector\n"
@@ -335,7 +335,7 @@ int main(int argc, char* argv[]) {
         }
         else if(args[0] == "vv" && args.size()>=2) {
             if(args.size()==2) cmd_visualize_vfo(std::stoi(args[1]));
-                               cmd_visualize_vfo(std::stoi(args[1]), std::stoi(args[2]));
+            else               cmd_visualize_vfo(std::stoi(args[1]), std::stoi(args[2]));
         }
         else if(args[0] == "h") {
             cmd_help();
