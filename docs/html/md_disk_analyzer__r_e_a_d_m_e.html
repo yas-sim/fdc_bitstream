@@ -169,8 +169,17 @@ Example</h1>
 </div><!-- fragment --><ul>
 <li>Histogram <br  />
 <ul>
-<li>Shows distribution of pulse to pulse distance in a track. <br  />
- <div class="fragment"><div class="line">CMD(5) &gt; histogram 0</div>
+<li>Shows distribution of the pulse-to-pulse distance in a track. <br  />
+</li>
+</ul>
+</li>
+</ul>
+<p >You can check the image quality. The more clear separation of pulse distribution, the better quality. <br  />
+</p><ul>
+<li>Also, you can check the <b>actual</b> bit rate of the pulses. The actual bit rate can vary due to spindle motor speed fluctuation or incorrect spindle motor speed calibration. <br  />
+</li>
+</ul>
+<div class="fragment"><div class="line">CMD(5) &gt; histogram 0</div>
 <div class="line">#clocks  #pulses</div>
 <div class="line">   0 :        0 :</div>
 <div class="line">   1 :        3 :</div>
@@ -222,22 +231,22 @@ Example</h1>
 <div class="line"> </div>
 <div class="line">Estimated bit cell width : 8 [CLKs] (CLK=4 MHz)</div>
 <div class="line">Data bit rate : 500 [Kbits/sec]</div>
-</div><!-- fragment --></li>
-</ul>
-</li>
+</div><!-- fragment --><ul>
 <li>VFO Visualizer<ul>
 <li>Visualises the operation of software VFO. <br  />
 </li>
 </ul>
 </li>
 </ul>
+<p >You can try different type of VFOs with <code>sv</code> command. <br  />
+</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Symbol   </th><th class="markdownTableHeadNone">Meaning    </th></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>&gt;</code>, <code>&lt;</code>   </td><td class="markdownTableBodyNone">Bit cell width.    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>_</code>   </td><td class="markdownTableBodyNone">Data window period.    </td></tr>
+<td class="markdownTableBodyNone"><code>-</code>   </td><td class="markdownTableBodyNone">Data window period. The data pulse must be in this period. The data window width should be 50% of the bit cell width in MFM/2D standard, but this library uses 75% for easy data reading. You can tweak the data window ratio with an API.    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>P</code>   </td><td class="markdownTableBodyNone">Data pulse   </td></tr>
 </table>
