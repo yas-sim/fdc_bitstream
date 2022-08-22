@@ -64,7 +64,10 @@ CMD(4) > rt 0
 00 00 00 00 00 00 00 e1 22 4e 08 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 7f ff ff
 ```
 * Histogram  
-	* Shows distribution of pulse to pulse distance in a track.  
+	* Shows distribution of the pulse-to-pulse distance in a track.  
+  * You can check the image quality. The more clear separation of pulse distribution, the better quality.  
+  * Also, you can check the **actual** bit rate of the pulses. The actual bit rate can vary due to spindle motor speed fluctuation or incorrect spindle motor speed calibration.  
+
 ```sh
 CMD(5) > histogram 0
 #clocks  #pulses
@@ -121,11 +124,12 @@ Data bit rate : 500 [Kbits/sec]
 ```
 * VFO Visualizer
 	* Visualises the operation of software VFO.   
+  * You can try different type of VFOs with `sv` command.  
 
 |Symbol|Meaning|
 |--|--|
 |`>`, `<`|Bit cell width.|
-|`_`|Data window period.|  
+|`-`|Data window period. The data pulse must be in this period. The data window width should be 50% of the bit cell width in MFM/2D standard, but this library uses 75% for easy data reading. You can tweak the data window ratio with an API. |  
 |`P`|Data pulse|
 
 ```sh
