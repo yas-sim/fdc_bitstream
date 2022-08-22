@@ -125,6 +125,10 @@ void bit_array::set(size_t index, uint8_t value) {
  * @return bool Read data.
  */
 uint8_t bit_array::get(size_t index) {
+    if(m_array_data.size() == 0) {
+        m_wraparound = true;
+        return 0;
+    }
     size_t  byte_pos = to_byte_pos(index);
     uint8_t bit_pos = to_bit_pos(index);
     uint8_t res = (m_array_data[byte_pos] & bit_pos) ? 1 : 0;
@@ -180,6 +184,10 @@ void bit_array::write_stream(uint8_t value, bool elastic) {
  * 
  */
 void bit_array::advance_stream_pos(void) {
+    if(m_array_data.size() == 0) {
+        m_wraparound = true;
+        return;
+    }
     m_stream_pos++;
     if (m_stream_pos >= m_bit_length) {     // wrap around
         m_stream_pos = 0;
@@ -193,6 +201,10 @@ void bit_array::advance_stream_pos(void) {
  * @return uint8_t Read data.
  */
 uint8_t bit_array::read_stream(void) {
+    if(m_array_data.size() == 0) {
+        m_wraparound = true;
+        return 0;
+    }
     uint8_t val = get(m_stream_pos++);
     if (m_stream_pos >= m_bit_length) {     // wrap around
         m_stream_pos = 0;
@@ -207,6 +219,10 @@ uint8_t bit_array::read_stream(void) {
  * @return size_t Distance to next bit 1 (in bit unit).
  */
 size_t bit_array::distance_to_next_bit1(void) {
+    if(m_array_data.size() == 0) {
+        m_wraparound = true;
+        return 0;
+    }
     size_t distance = 0;
     uint8_t val;
     if (m_bit_length == 0) return 0;

@@ -63,8 +63,8 @@ int main(int argc, char *argv[]) {
 
 	disk_image *image;
 
-	double gain_h = 12.f, gain_l = 8.f;
-	size_t track_start = 0, track_end = 79;
+	double gain_h = 2.f, gain_l = 1.f;
+	size_t track_start = 0, track_end = 83;
 	std::string file_name;
 	bool track_dump_flag = false;
 	for(auto it = cmd_opts.begin(); it != cmd_opts.end(); ++it) {

@@ -20,7 +20,7 @@ void disk_image_mfm::read(const std::string file_name) {
     if (memcmp(header.id_str, "MFM_IMG ", 8) != 0) {               // Header signature mismatch
         return;
     }
-    m_base_prop.m_max_track_number = header.number_of_tracks;
+    m_base_prop.m_max_track_number = header.number_of_tracks-1;
     m_base_prop.m_spindle_time_ns = header.spindle_time_ns;
     m_base_prop.m_sampling_rate = header.sampling_rate;
     m_base_prop.m_data_bit_rate = header.data_bit_rate;
@@ -50,7 +50,7 @@ void disk_image_mfm::write(const std::string file_name) {
 
     memcpy(reinterpret_cast<char*>(header.id_str), "MFM_IMG ", 8);
     header.track_table_offset = 0x100;
-    header.number_of_tracks = m_base_prop.m_max_track_number;
+    header.number_of_tracks = m_base_prop.m_max_track_number+1;
     header.spindle_time_ns = m_base_prop.m_spindle_time_ns;
     header.data_bit_rate = m_base_prop.m_data_bit_rate;
     header.sampling_rate = m_base_prop.m_sampling_rate;
@@ -59,7 +59,7 @@ void disk_image_mfm::write(const std::string file_name) {
     track_table.resize(header.number_of_tracks);
 
     size_t track_data_offset = align(header.track_table_offset + header.number_of_tracks * sizeof(mfm_track_table), 0x400);
-    for (size_t track_n = 0; track_n < m_base_prop.m_max_track_number; track_n++) {
+    for (size_t track_n = 0; track_n <= m_base_prop.m_max_track_number; track_n++) {
         std::vector<uint8_t> track = m_track_data[track_n].get_array();
         ofs.seekp(track_data_offset);
         ofs.write(reinterpret_cast<char*>(track.data()), track.size());

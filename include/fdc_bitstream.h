@@ -120,10 +120,10 @@ public:
     }
     inline void disp_vfo_status(void) { m_codec.disp_vfo_status(); }
     /**
-     * @brief Swap the vfo with a new one.
+     * @brief Set new VFO.
      * @param vfo_type 0=vfo_simple, 1=vfo_fixed, 2=vfo_pid, 3=vfo_pid2, 9=vfo_experimental
      */
-    inline void swap_vfo(size_t vfo_type) { m_codec.swap_vfo(vfo_type); }
+    inline void set_vfo_type(size_t vfo_type) { m_codec.set_vfo_type(vfo_type); }
     /** 
      * @brief Reset VFO parameters
      */

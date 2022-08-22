@@ -22,7 +22,7 @@ void disk_image_hfe::read(const std::string file_name) {
 	if (header.number_of_track > 84) {
 		header.number_of_track = 84;
 	}
-	m_base_prop.m_max_track_number = header.number_of_track * header.number_of_side;		// HFE(MFM,2D) = 42, 2
+	m_base_prop.m_max_track_number = header.number_of_track * header.number_of_side-1;		// HFE(MFM,2D) = 42, 2
 	if (header.floppyRPM == 0) {
 		m_base_prop.m_spindle_time_ns = 0.2 * 1e9;
 	}

@@ -27,7 +27,8 @@ void vfo_base::disp_vfo_status(void) {
 
 void vfo_base::reset(void) {
     set_params(4e6, 500e3);
-    set_gain_val(1.f, 2.f);
+    set_gain_val(VFO_GAIN_L_DEFAULT, VFO_GAIN_H_DEFAULT);
+    set_gain_mode(vfo_base::gain_state::low);
 }
 
 void vfo_base::soft_reset(void) {

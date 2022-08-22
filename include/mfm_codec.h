@@ -45,7 +45,7 @@ public:
     mfm_codec();
     ~mfm_codec();
 
-    void swap_vfo(size_t vfo_type);
+    void set_vfo_type(size_t vfo_type);
     void reset_vfo(void);
     void soft_reset_vfo(void);
 

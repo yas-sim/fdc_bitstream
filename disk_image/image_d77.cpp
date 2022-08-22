@@ -90,7 +90,7 @@ void disk_image_d77::read(const std::string file_name) {
 
         track_data = codec.get_track_data();
         m_track_data[track_n] = track_data;
-        m_base_prop.m_max_track_number = track_n + 1;
+        m_base_prop.m_max_track_number = track_n;
     }
     m_track_data_is_set = true;
 }
@@ -104,11 +104,12 @@ void disk_image_d77::write(const std::string file_name) {
     output_image.m_disk_type = 0;       // 2D
     output_image.m_disk_size = 0;
 
-    for (size_t track_n = 0; track_n < m_base_prop.m_max_track_number; track_n++) {
+    for (size_t track_n = 0; track_n <= m_base_prop.m_max_track_number; track_n++) {
         d77img::track_data d77_trk;
         bit_array mfm_trk = m_track_data[track_n];
         fdc.set_track_data(mfm_trk);
         fdc.set_pos(0);
+        fdc.set_vfo_type(m_vfo_type);
         std::vector<fdc_bitstream::id_field> id_list = fdc.read_all_idam();
         for (size_t sect_n = 0; sect_n < id_list.size(); sect_n++) {
             d77img::sector_data sect_dt;
@@ -128,4 +129,8 @@ void disk_image_d77::write(const std::string file_name) {
         output_image.m_disk_data.push_back(d77_trk);
     }
     output_image.write(file_name);
+}
+
+void disk_image_d77::set_vfo_type(const size_t vfo_type) {
+    m_vfo_type = vfo_type;
 }

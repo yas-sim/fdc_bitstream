@@ -12,12 +12,13 @@
 #include "fdc_bitstream.h"
 
 #include "disk_images.h"
+#include "fdc_vfo_def.h"
 
 disk_image *disk_img = nullptr;
 fdc_bitstream *fdc = nullptr;
 
 double g_gain_l = 1.f, g_gain_h = 2.f;
-size_t g_vfo_type = 0;
+size_t g_vfo_type = VFO_TYPE_DEFAULT;
 
 size_t g_sampling_rate = 0;
 size_t g_data_bit_rate = 0;
@@ -246,11 +247,11 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=99) {
     }
     switch(vfo_sel) {
     default:
-    case 0: vfo = new vfo_simple();       break;
-    case 1: vfo = new vfo_fixed();        break;
-    case 2: vfo = new vfo_pid();          break;
-    case 3: vfo = new vfo_pid2();         break;
-    case 9: vfo = new vfo_experimental(); break;
+    case VFO_TYPE_SIMPLE:       vfo = new vfo_simple();       break;
+    case VFO_TYPE_FIXED:        vfo = new vfo_fixed();        break;
+    case VFO_TYPE_PID:          vfo = new vfo_pid();          break;
+    case VFO_TYPE_PID2:         vfo = new vfo_pid2();         break;
+    case VFO_TYPE_EXPERIMANTAL: vfo = new vfo_experimental(); break;
     }
 
     disk_image_base_properties props = disk_img->get_property();
@@ -295,11 +296,11 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=99) {
 
 void cmd_select_vfo(size_t vfo_type) {
     if (vfo_type>3 && vfo_type !=9) {
-        std::cout << "wrong VFO type. 0-3 or 9." << std::endl;
+        std::cout << "wrong VFO type. (" VFO_TYPE_DESC_STR ")" << std::endl;
         return;
     }
     g_vfo_type = vfo_type;
-    fdc->swap_vfo(vfo_type);
+    fdc->set_vfo_type(vfo_type);
 }
 
 void cmd_reset_vfo(void) {
@@ -360,6 +361,8 @@ std::vector<size_t> find_peaks(std::vector<size_t> vec) {
     for(auto it=peaks.begin(); it != peaks.begin()+3; ++it) {
         result.push_back((*it).first);
     }
+    std::sort(result.begin(), result.end(), [](const size_t &left, const size_t &right) 
+                                            { return left < right; });
     return result;
 }
 

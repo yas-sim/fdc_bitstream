@@ -73,4 +73,6 @@ public:
     inline size_t get_spindle_time_ns(void)  { return m_base_prop.m_spindle_time_ns; }
     inline size_t get_data_bit_rate(void)    { return m_base_prop.m_data_bit_rate; }
     inline size_t get_sampling_rate(void)    { return m_base_prop.m_sampling_rate; }
+
+    virtual void set_vfo_type(size_t vfo_type) {};
 };

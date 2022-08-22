@@ -4,6 +4,7 @@
  * 
  */
 
+#include "fdc_vfo_def.h"
 
 /**
  * @brief Base class of VFO (virtual).
@@ -32,7 +33,7 @@ public:
     };
 public:
     vfo_base() : m_cell_size(), m_cell_size_ref(), m_window_ratio(), m_window_size(), m_window_ofst(), m_cell_center(),
-                 m_gain_l(), m_gain_h(), m_current_gain(),
+                 m_gain_l(VFO_GAIN_L_DEFAULT), m_gain_h(VFO_GAIN_H_DEFAULT), m_current_gain(vfo_base::gain_state::low),
                  m_sampling_rate(), m_fdc_bit_rate(), m_data_window_ratio() {};
     virtual void disp_vfo_status(void);
     virtual void reset(void);
