@@ -188,6 +188,7 @@ void cmd_read_id(size_t track_n) {
         std::cout << "Disk image is not ready." << std::endl;
         return;
     }
+    std::cout << "Read ID (" << track_n << ")" << std::endl;
     bit_array track_stream;
     std::vector<fdc_bitstream::id_field> read_data;
     track_stream = disk_img->get_track_data(track_n);
@@ -212,7 +213,7 @@ void cmd_read_sector(size_t cyl, size_t hed, size_t rcd) {
     std::cout << "Sector read : " << cyl << ", " << hed << ", " << rcd << std::endl;
     bit_array track_stream;
     fdc_bitstream::sector_data read_data;
-    track_stream = disk_img->get_track_data(cyl);
+    track_stream = disk_img->get_track_data(cyl * 2 + hed);
     fdc->set_track_data(track_stream);
     read_data = fdc->read_sector(cyl, hed, rcd);
     dump_buf(read_data.data.data(), read_data.data.size());
@@ -473,17 +474,17 @@ int main(int argc, char* argv[]) {
         else if(args[0] == "rt" && args.size()>=2) {
             cmd_read_track(str2val(args[1]));
         } 
-        else if(args[0] == "ri") {
-            cmd_read_id(str2val(args[1]) && args.size()>=2);
+        else if(args[0] == "ri" && args.size()>=2) {
+            cmd_read_id(str2val(args[1]));
         } 
         else if(args[0] == "rs" && args.size()>=4) {
             cmd_read_sector(str2val(args[1]), str2val(args[2]), str2val(args[3]));
         }
         else if(args[0] == "gain" && args.size()>=3) {
-            cmd_set_gain(std::stod(args[1]), std::stod(args[2]) && args.size()>=3);
+            cmd_set_gain(std::stod(args[1]), std::stod(args[2]));
         }
-        else if(args[0] == "ef") {
-            cmd_enable_fluctuator(std::stod(args[1]) && args.size()>=2);            
+        else if(args[0] == "ef" && args.size()>=2) {
+            cmd_enable_fluctuator(std::stod(args[1]));            
         }
         else if(args[0] == "df") {
             cmd_disable_fluctuator();
