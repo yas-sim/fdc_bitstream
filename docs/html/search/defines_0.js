@@ -1,5 +1,12 @@
 var searchData=
 [
-  ['dll_5fbody_0',['DLL_BODY',['../d77img_8cpp.html#ad5fba5f8a0abc32938852bcbf341340a',1,'DLL_BODY():&#160;d77img.cpp'],['../image__base_8cpp.html#ad5fba5f8a0abc32938852bcbf341340a',1,'DLL_BODY():&#160;image_base.cpp'],['../image__d77_8cpp.html#ad5fba5f8a0abc32938852bcbf341340a',1,'DLL_BODY():&#160;image_d77.cpp'],['../image__hfe_8cpp.html#ad5fba5f8a0abc32938852bcbf341340a',1,'DLL_BODY():&#160;image_hfe.cpp'],['../image__mfm_8cpp.html#ad5fba5f8a0abc32938852bcbf341340a',1,'DLL_BODY():&#160;image_mfm.cpp'],['../image__raw_8cpp.html#ad5fba5f8a0abc32938852bcbf341340a',1,'DLL_BODY():&#160;image_raw.cpp'],['../fdc__bitstream_8cpp.html#ad5fba5f8a0abc32938852bcbf341340a',1,'DLL_BODY():&#160;fdc_bitstream.cpp'],['../fdc__crc_8cpp.html#ad5fba5f8a0abc32938852bcbf341340a',1,'DLL_BODY():&#160;fdc_crc.cpp'],['../fdc__misc_8cpp.html#ad5fba5f8a0abc32938852bcbf341340a',1,'DLL_BODY():&#160;fdc_misc.cpp'],['../mfm__codec_8cpp.html#ad5fba5f8a0abc32938852bcbf341340a',1,'DLL_BODY():&#160;mfm_codec.cpp'],['../bit__array_8cpp.html#ad5fba5f8a0abc32938852bcbf341340a',1,'DLL_BODY():&#160;bit_array.cpp']]],
-  ['dll_5fexport_1',['DLL_EXPORT',['../dll__export_8h.html#a1ca888bd091694c05472e1b91df1a97b',1,'DLL_EXPORT():&#160;dll_export.h'],['../image__raw_8h.html#a1ca888bd091694c05472e1b91df1a97b',1,'DLL_EXPORT():&#160;image_raw.h']]]
+  ['vfo_5fgain_5fh_5fdefault_0',['VFO_GAIN_H_DEFAULT',['../fdc__vfo__def_8h.html#a04e030b2dd5301268279a224e8cfc826',1,'fdc_vfo_def.h']]],
+  ['vfo_5fgain_5fl_5fdefault_1',['VFO_GAIN_L_DEFAULT',['../fdc__vfo__def_8h.html#aa755e7cacbd6f838ca7dc13ca52c5d55',1,'fdc_vfo_def.h']]],
+  ['vfo_5ftype_5fdefault_2',['VFO_TYPE_DEFAULT',['../fdc__vfo__def_8h.html#a3722ee64ef3f8e07213d16a789f689d8',1,'fdc_vfo_def.h']]],
+  ['vfo_5ftype_5fdesc_5fstr_3',['VFO_TYPE_DESC_STR',['../fdc__vfo__def_8h.html#a03748ca3fd5367813a02533cfc7821cf',1,'fdc_vfo_def.h']]],
+  ['vfo_5ftype_5fexperimantal_4',['VFO_TYPE_EXPERIMANTAL',['../fdc__vfo__def_8h.html#a7c1e06399cd1d7fffca837dc54c9b683',1,'fdc_vfo_def.h']]],
+  ['vfo_5ftype_5ffixed_5',['VFO_TYPE_FIXED',['../fdc__vfo__def_8h.html#af6950cea16f50ba0293f8068f9ae8471',1,'fdc_vfo_def.h']]],
+  ['vfo_5ftype_5fpid_6',['VFO_TYPE_PID',['../fdc__vfo__def_8h.html#a5ccbb519d304b4d889649ca00bc718c9',1,'fdc_vfo_def.h']]],
+  ['vfo_5ftype_5fpid2_7',['VFO_TYPE_PID2',['../fdc__vfo__def_8h.html#a37e257be22cce2d11c184cc5d1982940',1,'fdc_vfo_def.h']]],
+  ['vfo_5ftype_5fsimple_8',['VFO_TYPE_SIMPLE',['../fdc__vfo__def_8h.html#a975cb9998a5e9e768428c523cf4b7393',1,'fdc_vfo_def.h']]]
 ];

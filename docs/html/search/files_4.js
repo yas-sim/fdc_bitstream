@@ -9,5 +9,6 @@ var searchData=
   ['fdc_5fmisc_2eh_6',['fdc_misc.h',['../fdc__misc_8h.html',1,'']]],
   ['fdc_5ftest_2ecpp_7',['fdc_test.cpp',['../fdc__test_8cpp.html',1,'']]],
   ['fdc_5fvfo_5fbase_2ecpp_8',['fdc_vfo_base.cpp',['../fdc__vfo__base_8cpp.html',1,'']]],
-  ['fdc_5fvfo_5fbase_2eh_9',['fdc_vfo_base.h',['../fdc__vfo__base_8h.html',1,'']]]
+  ['fdc_5fvfo_5fbase_2eh_9',['fdc_vfo_base.h',['../fdc__vfo__base_8h.html',1,'']]],
+  ['fdc_5fvfo_5fdef_2eh_10',['fdc_vfo_def.h',['../fdc__vfo__def_8h.html',1,'']]]
 ];

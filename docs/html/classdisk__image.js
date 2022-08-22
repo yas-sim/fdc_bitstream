@@ -19,6 +19,7 @@ var classdisk__image =
     [ "set_property", "classdisk__image.html#a13a1a7535d9aeaed35bd2271c49e9eaf", null ],
     [ "set_track_data", "classdisk__image.html#a239a55d5af39666ed370c83d1d09e2b2", null ],
     [ "set_track_data_all", "classdisk__image.html#a40b9864b210a1608929690dcdd8b2449", null ],
+    [ "set_vfo_type", "classdisk__image.html#a80bcb135112ed752b8f7131828b8f9ca", null ],
     [ "write", "classdisk__image.html#a3ab5df15e9b0d335c13e18a267d61053", null ],
     [ "m_base_prop", "classdisk__image.html#a7c5af99f15042628f133ab02541bbd78", null ],
     [ "m_track_data", "classdisk__image.html#aa303c751fbe4b9818f080e710a8178d3", null ],

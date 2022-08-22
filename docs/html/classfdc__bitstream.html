@@ -150,9 +150,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a5355efc823726e46982f14441b888497"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b2d1db80a7865ac8f321f97a18bc819"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#a0b2d1db80a7865ac8f321f97a18bc819">disp_vfo_status</a> (void)</td></tr>
 <tr class="separator:a0b2d1db80a7865ac8f321f97a18bc819"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad22ef25ddf2c5878dd559459b8e2cdfa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#ad22ef25ddf2c5878dd559459b8e2cdfa">swap_vfo</a> (size_t vfo_type)</td></tr>
-<tr class="memdesc:ad22ef25ddf2c5878dd559459b8e2cdfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swap the vfo with a new one.  <a href="classfdc__bitstream.html#ad22ef25ddf2c5878dd559459b8e2cdfa">More...</a><br /></td></tr>
-<tr class="separator:ad22ef25ddf2c5878dd559459b8e2cdfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a680609b74cbcd5de7348591a90f6a784"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#a680609b74cbcd5de7348591a90f6a784">set_vfo_type</a> (size_t vfo_type)</td></tr>
+<tr class="memdesc:a680609b74cbcd5de7348591a90f6a784"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set new VFO.  <a href="classfdc__bitstream.html#a680609b74cbcd5de7348591a90f6a784">More...</a><br /></td></tr>
+<tr class="separator:a680609b74cbcd5de7348591a90f6a784"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa65a0039ff046d0aa3be55ae2e557416"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#aa65a0039ff046d0aa3be55ae2e557416">reset_vfo</a> (void)</td></tr>
 <tr class="memdesc:aa65a0039ff046d0aa3be55ae2e557416"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset VFO parameters.  <a href="classfdc__bitstream.html#aa65a0039ff046d0aa3be55ae2e557416">More...</a><br /></td></tr>
 <tr class="separator:aa65a0039ff046d0aa3be55ae2e557416"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -974,6 +974,42 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a680609b74cbcd5de7348591a90f6a784" name="a680609b74cbcd5de7348591a90f6a784"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a680609b74cbcd5de7348591a90f6a784">&#9670;&nbsp;</a></span>set_vfo_type()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void fdc_bitstream::set_vfo_type </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>vfo_type</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set new VFO. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vfo_type</td><td>0=<a class="el" href="classvfo__simple.html" title="VFO class using simple proportional error correction (P)">vfo_simple</a>, 1=<a class="el" href="classvfo__fixed.html" title="Fixed VFO class (no VFO)">vfo_fixed</a>, 2=<a class="el" href="classvfo__pid.html" title="VFO class using PID control.">vfo_pid</a>, 3=<a class="el" href="classvfo__pid2.html" title="VFO class using PID control (2)">vfo_pid2</a>, 9=<a class="el" href="classvfo__experimental.html" title="VFO class using PID control (2)">vfo_experimental</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8h_source.html#l00126">126</a> of file <a class="el" href="fdc__bitstream_8h_source.html">fdc_bitstream.h</a>.</p>
+
+</div>
+</div>
 <a id="a072d35a6d440b6e4b36c6b5908673dd7" name="a072d35a6d440b6e4b36c6b5908673dd7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a072d35a6d440b6e4b36c6b5908673dd7">&#9670;&nbsp;</a></span>soft_reset_vfo()</h2>
 
@@ -1001,42 +1037,6 @@ Public Member Functions</h2></td></tr>
 <p>Soft reset VFO parameters. Keep bit_cell_ref and reset window_size, window_ofst parameters. </p>
 
 <p class="definition">Definition at line <a class="el" href="fdc__bitstream_8h_source.html#l00135">135</a> of file <a class="el" href="fdc__bitstream_8h_source.html">fdc_bitstream.h</a>.</p>
-
-</div>
-</div>
-<a id="ad22ef25ddf2c5878dd559459b8e2cdfa" name="ad22ef25ddf2c5878dd559459b8e2cdfa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad22ef25ddf2c5878dd559459b8e2cdfa">&#9670;&nbsp;</a></span>swap_vfo()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void fdc_bitstream::swap_vfo </td>
-          <td>(</td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>vfo_type</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Swap the vfo with a new one. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">vfo_type</td><td>0=<a class="el" href="classvfo__simple.html" title="VFO class using simple proportional error correction (P)">vfo_simple</a>, 1=<a class="el" href="classvfo__fixed.html" title="Fixed VFO class (no VFO)">vfo_fixed</a>, 2=<a class="el" href="classvfo__pid.html" title="VFO class using PID control.">vfo_pid</a>, 3=<a class="el" href="classvfo__pid2.html" title="VFO class using PID control (2)">vfo_pid2</a>, 9=<a class="el" href="classvfo__experimental.html" title="VFO class using PID control (2)">vfo_experimental</a> </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8h_source.html#l00126">126</a> of file <a class="el" href="fdc__bitstream_8h_source.html">fdc_bitstream.h</a>.</p>
 
 </div>
 </div>

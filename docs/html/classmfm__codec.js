@@ -32,8 +32,8 @@ var classmfm__codec =
     [ "set_track_status_forcibly", "classmfm__codec.html#a58bc2c2042b51353bfe7243631ed1ffa", null ],
     [ "set_vfo_gain", "classmfm__codec.html#a54aa927da4823cefe213c696fcb2018c", null ],
     [ "set_vfo_gain_val", "classmfm__codec.html#a7ec8c201ba54bd792dde68bcdd19bd1b", null ],
+    [ "set_vfo_type", "classmfm__codec.html#a6a2bd564eeda96533fd2b9f65ecf8ffb", null ],
     [ "soft_reset_vfo", "classmfm__codec.html#a76e0d671d39edf4b49c873bcea27cc9d", null ],
-    [ "swap_vfo", "classmfm__codec.html#a872a1b6274730139e3380e2d8db41e9a", null ],
     [ "unset_track_data", "classmfm__codec.html#a1e71d92dfcbb6624e8a96847625f0755", null ],
     [ "update_parameters", "classmfm__codec.html#ab9e990407f98e4f7fe1f13d814d1757d", null ]
 ];
