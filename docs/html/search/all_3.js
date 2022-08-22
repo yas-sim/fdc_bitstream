@@ -28,11 +28,12 @@ var searchData=
   ['cmd_5fvisualize_5fvfo_25',['cmd_visualize_vfo',['../analyzer_8cpp.html#aa62a976233956c07c79d3d5cf6c62789',1,'analyzer.cpp']]],
   ['common_2ecpp_26',['common.cpp',['../common_8cpp.html',1,'']]],
   ['common_2eh_27',['common.h',['../common_8h.html',1,'']]],
-  ['cpc_5fdd_5ffloppymode_28',['CPC_DD_FLOPPYMODE',['../image__hfe_8h.html#afda37dcef662538819b81c4ff563ae7faf86c482de48fff564be53441394adac5',1,'image_hfe.h']]],
-  ['crc_5fsts_29',['crc_sts',['../structfdc__bitstream_1_1sector__data.html#a2165fa6063196f2c55ff2094259b2c4b',1,'fdc_bitstream::sector_data::crc_sts()'],['../structfdc__bitstream_1_1id__field.html#a710c0e53e36b870fcd4fb55989e6a083',1,'fdc_bitstream::id_field::crc_sts()']]],
-  ['crc_5fval_30',['crc_val',['../structfdc__bitstream_1_1id__field.html#aea2486656dc2fb3ab46e6c4c4dafeb3c',1,'fdc_bitstream::id_field']]],
-  ['create_5fempty_5ftrack_5fdata_31',['create_empty_track_data',['../classdisk__image.html#ac1fbd2842ec16fe6925ff4e26d7afe1e',1,'disk_image']]],
-  ['create_5fmfm_5fimage_20_2d_20brand_2dnew_20formatted_20mfm_20disk_20image_20file_20generator_2e_32',['create_mfm_image - Brand-new formatted MFM disk image file generator.',['../md_create_mfm_image__r_e_a_d_m_e.html',1,'']]],
-  ['create_5fmfm_5fimage_2ecpp_33',['create_mfm_image.cpp',['../create__mfm__image_8cpp.html',1,'']]],
-  ['create_5fobject_5fby_5fext_34',['create_object_by_ext',['../image__converter_8cpp.html#a951938f545ae411a3bbef610ffc7324d',1,'create_object_by_ext(std::string ext):&#160;image_converter.cpp'],['../analyzer_8cpp.html#a951938f545ae411a3bbef610ffc7324d',1,'create_object_by_ext(std::string ext):&#160;analyzer.cpp']]]
+  ['convert_5fto_5fdist_5farray_28',['convert_to_dist_array',['../image__converter_8cpp.html#af8580587a56e292c1939a38b29dca2f5',1,'image_converter.cpp']]],
+  ['cpc_5fdd_5ffloppymode_29',['CPC_DD_FLOPPYMODE',['../image__hfe_8h.html#afda37dcef662538819b81c4ff563ae7faf86c482de48fff564be53441394adac5',1,'image_hfe.h']]],
+  ['crc_5fsts_30',['crc_sts',['../structfdc__bitstream_1_1sector__data.html#a2165fa6063196f2c55ff2094259b2c4b',1,'fdc_bitstream::sector_data::crc_sts()'],['../structfdc__bitstream_1_1id__field.html#a710c0e53e36b870fcd4fb55989e6a083',1,'fdc_bitstream::id_field::crc_sts()']]],
+  ['crc_5fval_31',['crc_val',['../structfdc__bitstream_1_1id__field.html#aea2486656dc2fb3ab46e6c4c4dafeb3c',1,'fdc_bitstream::id_field']]],
+  ['create_5fempty_5ftrack_5fdata_32',['create_empty_track_data',['../classdisk__image.html#ac1fbd2842ec16fe6925ff4e26d7afe1e',1,'disk_image']]],
+  ['create_5fmfm_5fimage_20_2d_20brand_2dnew_20formatted_20mfm_20disk_20image_20file_20generator_2e_33',['create_mfm_image - Brand-new formatted MFM disk image file generator.',['../md_create_mfm_image__r_e_a_d_m_e.html',1,'']]],
+  ['create_5fmfm_5fimage_2ecpp_34',['create_mfm_image.cpp',['../create__mfm__image_8cpp.html',1,'']]],
+  ['create_5fobject_5fby_5fext_35',['create_object_by_ext',['../image__converter_8cpp.html#a951938f545ae411a3bbef610ffc7324d',1,'create_object_by_ext(std::string ext):&#160;image_converter.cpp'],['../analyzer_8cpp.html#a951938f545ae411a3bbef610ffc7324d',1,'create_object_by_ext(std::string ext):&#160;analyzer.cpp']]]
 ];
