@@ -1,7 +1,5 @@
 # C++ FDC library to manipulate 2D/MFM bitstream image data
 
-Work in progress.
-
 ## Description:  
 This is a C++ library to provide FDC functions. 
 Read and write functions mimic the actual operation of the Western Digital FD179x or Fujitsu MB8876 FDCs.

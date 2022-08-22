@@ -307,6 +307,23 @@ void cmd_reset_vfo(void) {
     fdc->soft_reset_vfo();
 }
 
+void display_histogram(std::vector<size_t> dist_array) {
+    size_t max_count = *std::max_element(dist_array.begin(), dist_array.end());
+    double scale = 100.f / static_cast<double>(max_count);
+    size_t max_item = 0;
+    for(size_t i=0; i<dist_array.size(); i++) {
+        if (dist_array[i] != 0) max_item = i;
+    }
+
+    // display histogram
+    for(size_t i=0; i<=max_item; i++) {
+        std::cout << std::setw(4) << std::setfill(' ') << i << " : ";
+        std::cout << std::setw(8) << std::setfill(' ') << dist_array[i] << " : ";
+        size_t bar_length = static_cast<size_t>(static_cast<double>(dist_array[i]) * scale); // normalize
+        std::cout << std::string(bar_length, '*') << std::endl;
+    }
+}
+
 std::vector<size_t> find_peaks(std::vector<size_t> vec) {
     // calc moving average
     std::vector<size_t> avg(vec.size());
@@ -317,6 +334,7 @@ std::vector<size_t> find_peaks(std::vector<size_t> vec) {
         }
         avg[i] = avg_tmp / 5;
     }
+    //display_histogram(avg);       // for debug purpose
 
     // detect peaks
     std::vector<std::pair<size_t, size_t>> peaks;
@@ -354,6 +372,8 @@ void cmd_histogram(size_t track_n) {
     track_stream = disk_img->get_track_data(track_n);
     track_stream.set_stream_pos(0);
     track_stream.clear_wraparound_flag();
+
+    // count pulse distance frequency
     size_t max_val = 0;
     std::vector<size_t> dist_array(500);
     do {
@@ -367,22 +387,18 @@ void cmd_histogram(size_t track_n) {
         }
     } while(!track_stream.is_wraparound());
 
-    size_t max_count = *std::max_element(dist_array.begin(), dist_array.end());
-    double scale = 100.f / static_cast<double>(max_count);
+    // display histogram
     std::cout << "#clocks  #pulses" << std::endl;
-    for(size_t i=0; i<=max_val; i++) {
-        std::cout << std::setw(4) << std::setfill(' ') << i << " : ";
-        std::cout << std::setw(8) << std::setfill(' ') << dist_array[i] << " : ";
-        size_t bar_length = static_cast<size_t>(static_cast<double>(dist_array[i]) * scale); // normalize
-        std::cout << std::string(bar_length, '*') << std::endl;
-    }
+    display_histogram(dist_array);
 
+    // find distribution peaks
     std::vector<size_t> peaks = find_peaks(dist_array);
     std::cout << std::endl;
     std::cout << "Peaks:" << std::endl;
     for(size_t i=0; i<3; i++) {
         std::cout << i+1 << " : " << peaks[i] << " [CLKs]" << std::endl;
     }
+
     std::cout << std::endl;
     std::cout << "Estimated bit cell width : " << peaks[0] / 2 << " [CLKs] (CLK=" << g_sampling_rate/1e6 << " MHz)"  << std::endl;
     std::cout << "Data bit rate : " << (g_sampling_rate / (peaks[0] / 2.f)) / 1000.f << " [Kbits/sec]" << std::endl;
