@@ -18,6 +18,7 @@ var analyzer_8cpp =
     [ "cmd_visualize_vfo", "analyzer_8cpp.html#aa62a976233956c07c79d3d5cf6c62789", null ],
     [ "create_object_by_ext", "analyzer_8cpp.html#a951938f545ae411a3bbef610ffc7324d", null ],
     [ "disp_status", "analyzer_8cpp.html#ae3faf2fb649ea768d77746570ff8b498", null ],
+    [ "display_histogram", "analyzer_8cpp.html#a9346c1835c324592110792a8f77dda88", null ],
     [ "display_id_list", "analyzer_8cpp.html#acdc23ebf7656b2d2e6dff383a8fcb9e3", null ],
     [ "dump_buf", "analyzer_8cpp.html#a00e068b3e6a53ba319bdc7cb0198e089", null ],
     [ "find_peaks", "analyzer_8cpp.html#a703a21d0c2e37bb59adb3f053d76623e", null ],
