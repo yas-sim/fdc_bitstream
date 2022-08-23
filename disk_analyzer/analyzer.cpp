@@ -75,17 +75,37 @@ void bit_dump(bit_array &data, size_t bit_width = 0, size_t spacing = 0, bool li
     }
 }
 
-void display_id_list(std::vector<fdc_bitstream::id_field> id_fields) {
+void display_sector_data(const fdc_bitstream::sector_data &sect_data) {
+    std::ios::fmtflags flags_saved = std::cout.flags();
+    std::cout << std::dec << std::setw(4) << std::setfill(' ');
+    std::cout << sect_data.data.size() << "bytes ";
+    std::cout << (sect_data.dam_type ? "DDAM " : "DAM  ");
+    std::cout << (sect_data.crc_sts ? "DT-CRC_ERR " : "DT-CRC OK  ");
+    std::cout << (sect_data.record_not_found ? "RNF_ERR " : "RNF_OK  ");
+    std::cout << std::dec << std::setw(8);
+    std::cout << "IDAM_POS=" << std::setw(8) << sect_data.id_pos << " ";
+    std::cout << "DAM_POS="  << std::setw(8) << sect_data.data_pos << " ";
+    std::cout.flags(flags_saved);
+}
+
+void display_id(const fdc_bitstream::id_field &id) {
+    std::ios::fmtflags flags_saved = std::cout.flags();
+    std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(id.C) << " ";
+    std::cout << std::setw(2) << static_cast<int>(id.H) << " ";
+    std::cout << std::setw(2) << static_cast<int>(id.R) << " ";
+    std::cout << std::setw(2) << static_cast<int>(id.N) << " ";
+    std::cout << std::setw(4) << static_cast<int>(id.crc_val) << " ";
+    std::cout << (id.crc_sts ? "ID-CRC_ERR " : "ID-CRC_OK  ");
+    std::cout.flags(flags_saved);
+}
+
+void display_id_list(const std::vector<fdc_bitstream::id_field> &id_fields) {
     std::ios::fmtflags flags_saved = std::cout.flags();
     std::cout << std::hex << std::setw(2) << std::setfill('0');
     for (int i = 0; i < id_fields.size(); i++) {
         std::cout << std::dec << std::setw(2) << std::setfill(' ') << i << " ";
-        std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(id_fields[i].C) << " ";
-        std::cout << std::setw(2) << std::setfill('0') << static_cast<int>(id_fields[i].H) << " ";
-        std::cout << std::setw(2) << std::setfill('0') << static_cast<int>(id_fields[i].R) << " ";
-        std::cout << std::setw(2) << std::setfill('0') << static_cast<int>(id_fields[i].N) << " ";
-        std::cout << std::setw(4) << std::setfill('0') << static_cast<int>(id_fields[i].crc_val) << " ";
-        std::cout << (id_fields[i].crc_sts ? "ERR" : "OK ") << std::endl;
+        display_id(id_fields[i]);
+        std::cout << std::endl;
     }
     std::cout.flags(flags_saved);
 }
@@ -197,6 +217,35 @@ void cmd_read_id(size_t track_n, size_t track_end_n = -1) {
         fdc->set_track_data(track_stream);
         read_data = fdc->read_all_idam();
         display_id_list(read_data);
+    }
+}
+
+void cmd_validate_track(size_t track_n, size_t track_end_n = -1) {
+    if(is_image_ready()==false) {
+        std::cout << "Disk image is not ready." << std::endl;
+        return;
+    }
+    if (track_end_n == -1) track_end_n = track_n;
+    for(size_t trk_n=track_n; trk_n <= track_end_n; trk_n++) {
+        std::cout << "Validate track (" << trk_n << ")" << std::endl;
+        bit_array track_stream;
+        std::vector<fdc_bitstream::id_field> id_data;
+        track_stream = disk_img->get_track_data(trk_n);
+        fdc->set_track_data(track_stream);
+        id_data = fdc->read_all_idam();
+        std::vector<fdc_bitstream::sector_data> sect_data;
+        for(auto it = id_data.begin(); it != id_data.end(); ++it) {
+            fdc_bitstream::id_field id = *it;
+            sect_data.push_back(fdc->read_sector(id.C, id.H, id.R));
+        }
+        //           "  1: 00 00 01 01 fa0c ID-CRC_OK   256bytes DAM  DT-CRC OK  RNF_OK  IDAM_POS=    5208 DAM_POS=   10923"
+        std::cout << "  #: CC HH RR NN --- ID CRC ---  BYTES READ" << std::endl;
+        for(size_t i = 0; i < id_data.size(); i++) {
+            std::cout << std::setw(3) << i+1 << ": ";
+            display_id(id_data[i]);
+            display_sector_data(sect_data[i]);
+            std::cout << std::endl;
+        }        
     }
 }
 
@@ -416,12 +465,16 @@ void cmd_help(void) {
     "*** Command list\n"
     "o  file_name      Open an image file. (.raw, .mfm, .hfe, .d77)\n"
     "rt trk            Read track\n"
-    "ri trk [trk_e]    Read all sector IDs. Perform ID read from 'trk' to 'trk_e' if you specify trk_e. Otherwise, an ID read operation will be performed for a track.\n"
+    "vt trk [trk_e]    Validate track(s). Performs read ID and read sector for a track.\n"
+    "                  If you specify 'trk_e', the command will perform track validation\n"
+    "                  from 'trk' to 'trk_e'.\n"
+    "ri trk [trk_e]    Read all sector IDs. Perform ID read from 'trk' to 'trk_e' if you specify trk_e.\n"
+    "                  Otherwise, an ID read operation will be performed for a track.\n"
     "rs trk sid sct    Read sector\n"
     "ef sus_radio      Enable fluctuator (VFO stops operation at rate of sus_ratio (0.0-1.0))\n"
     "ef                Disable fluctuator\n"
     "gain gl gh        Set VFO gain (low=gl, high=gh)\n"
-    "vfo               Display current VFO parameters"
+    "vfo               Display current VFO parameters\n"
     "vv trk [vfo_type] VFO visualizer. Read 5,000 pulses from the top of a track using specified type of VFO.\n"
     "                  Current VFO setting will be used if 'vfo_type' is omitted.\n"
     "sv vfo_type       Select VFO type.\n"
@@ -481,6 +534,10 @@ int main(int argc, char* argv[]) {
             if(args.size()==2) cmd_read_id(str2val(args[1]), -1);
             if(args.size()==3) cmd_read_id(str2val(args[1]), str2val(args[2]));
         } 
+        else if (args[0] == "vt"){
+            if(args.size()==2) cmd_validate_track(str2val(args[1]), -1);
+            if(args.size()==3) cmd_validate_track(str2val(args[1]), str2val(args[2]));
+        }
         else if(args[0] == "rs" && args.size()>=4) {
             cmd_read_sector(str2val(args[1]), str2val(args[2]), str2val(args[3]));
         }
