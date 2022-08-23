@@ -68,6 +68,7 @@ public:
     int read_bit_ds(void);
     bool mfm_read_byte(uint8_t& data, bool& missing_clock, bool ignore_missing_clock = true, bool ignore_sync_field = true);
     void set_vfo_gain(gain_state state);
+    void set_vfo_cell_size(double cell_size);
     uint16_t mfm_encoder(uint8_t data, bool mode = false);
     void mfm_write_byte(uint8_t data, bool mode = false, bool write_gate = true);
     void set_pos(size_t bit_pos);

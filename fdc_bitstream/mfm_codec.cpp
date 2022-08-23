@@ -76,6 +76,12 @@ void mfm_codec::soft_reset_vfo(void) {
     }
 }
 
+void mfm_codec::set_vfo_cell_size(double cell_size) {
+    if (m_vfo != nullptr) {
+        m_vfo -> set_cell_size(cell_size);
+    }    
+}
+
 /**
  * @brief Reset MFM decoder parameters
  * 
@@ -173,7 +179,6 @@ void mfm_codec::set_sampling_rate(size_t sampling_rate) {
  */
 int mfm_codec::read_bit_ds(void) {
     int bit_reading = 0;
-    double cell_center;
     size_t loop_count = 0;      // for timeout check
 
     if (is_track_ready() == false) {
@@ -185,14 +190,12 @@ int mfm_codec::read_bit_ds(void) {
         if (m_distance_to_next_pulse < m_vfo->m_cell_size) {
             // check pulse position
             if (m_distance_to_next_pulse >= m_vfo->m_window_ofst &&
-                // regular pulse (within the data window)
                 m_distance_to_next_pulse < m_vfo->m_window_ofst + m_vfo->m_window_size) {
-                bit_reading = 1;
+                bit_reading = 1;                // regular pulse (within the data window)
             }
             else {
-                // irregular pulse
 #ifdef DEBUG
-                std::cout << '?';
+                std::cout << '?';               // irregular pulse
 #endif
             }
             // Adjust pulse phase (imitate PLL/VFO operation)
@@ -200,7 +203,7 @@ int mfm_codec::read_bit_ds(void) {
             if ((static_cast<double>(m_rnd()) / static_cast<double>(INT32_MAX)) >= m_vfo_suspension_rate) {
                 m_distance_to_next_pulse = m_vfo->calc(m_distance_to_next_pulse);
             }
-            size_t distance = m_track.distance_to_next_bit1();
+            size_t distance = m_track.distance_to_next_pulse();
 #if 0
             // give timing fluctuation (intentionally - to immitate the spndle rotation fluctuation)
             size_t rand_num = m_rnd() % 128;

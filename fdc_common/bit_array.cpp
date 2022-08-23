@@ -218,7 +218,7 @@ uint8_t bit_array::read_stream(void) {
  * 
  * @return size_t Distance to next bit 1 (in bit unit).
  */
-size_t bit_array::distance_to_next_bit1(void) {
+size_t bit_array::distance_to_next_pulse(void) {
     if(m_array_data.size() == 0) {
         m_wraparound = true;
         return 0;

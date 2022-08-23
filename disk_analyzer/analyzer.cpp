@@ -13,6 +13,7 @@
 
 #include "disk_images.h"
 #include "fdc_vfo_def.h"
+#include "fdc_misc.h"
 
 disk_image *disk_img = nullptr;
 fdc_bitstream *fdc = nullptr;
@@ -28,86 +29,6 @@ size_t g_max_track_number = 0;
 
 void disp_status(void) {
     std::cout << "Gain L:" << g_gain_l << ", Gain H:" << g_gain_h << std::endl;
-}
-
-void dump_buf(uint8_t* ptr, size_t size, bool line_feed = true) {
-    std::ios::fmtflags flags_saved = std::cout.flags();
-    for (size_t i = 0; i < size; i++) {
-        std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(ptr[i]) << " ";
-        if (i % 64 == 63) {
-            std::cout << std::endl;
-        }
-    }
-    if (line_feed) std::cout << std::endl;
-    std::cout.flags(flags_saved);
-}
-
-void bit_dump(const uint64_t data, size_t bit_width, size_t spacing = 0, bool line_feed = true) {
-    size_t count = 0;
-    for (uint64_t bit_pos = 1 << (bit_width - 1); bit_pos != 0; bit_pos >>= 1) {
-        std::cout << ((data & bit_pos) ? 1 : 0);
-        count++;
-        if (spacing > 0) {
-            if (count % spacing == 0) {
-                std::cout << " ";
-            }
-        }
-    }
-    if (line_feed == true) {
-        std::cout << std::endl;
-    }
-}
-
-void bit_dump(bit_array &data, size_t bit_width = 0, size_t spacing = 0, bool line_feed = true) {
-    size_t count = 0;
-    size_t length = (bit_width == 0) ? data.get_length() : bit_width;
-    for (uint64_t i = 0; i < length; length++) {
-        std::cout << (data.get(i) ? 1 : 0);
-        count++;
-        if (spacing > 0) {
-            if (count % spacing == 0) {
-                std::cout << " ";
-            }
-        }
-    }
-    if (line_feed == true) {
-        std::cout << std::endl;
-    }
-}
-
-void display_sector_data(const fdc_bitstream::sector_data &sect_data) {
-    std::ios::fmtflags flags_saved = std::cout.flags();
-    std::cout << std::dec << std::setw(4) << std::setfill(' ');
-    std::cout << sect_data.data.size() << "bytes ";
-    std::cout << (sect_data.dam_type ? "DDAM " : "DAM  ");
-    std::cout << (sect_data.crc_sts ? "DT-CRC_ERR " : "DT-CRC OK  ");
-    std::cout << (sect_data.record_not_found ? "RNF_ERR " : "RNF_OK  ");
-    std::cout << std::dec << std::setw(8);
-    std::cout << "IDAM_POS=" << std::setw(8) << sect_data.id_pos << " ";
-    std::cout << "DAM_POS="  << std::setw(8) << sect_data.data_pos << " ";
-    std::cout.flags(flags_saved);
-}
-
-void display_id(const fdc_bitstream::id_field &id) {
-    std::ios::fmtflags flags_saved = std::cout.flags();
-    std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(id.C) << " ";
-    std::cout << std::setw(2) << static_cast<int>(id.H) << " ";
-    std::cout << std::setw(2) << static_cast<int>(id.R) << " ";
-    std::cout << std::setw(2) << static_cast<int>(id.N) << " ";
-    std::cout << std::setw(4) << static_cast<int>(id.crc_val) << " ";
-    std::cout << (id.crc_sts ? "ID-CRC_ERR " : "ID-CRC_OK  ");
-    std::cout.flags(flags_saved);
-}
-
-void display_id_list(const std::vector<fdc_bitstream::id_field> &id_fields) {
-    std::ios::fmtflags flags_saved = std::cout.flags();
-    std::cout << std::hex << std::setw(2) << std::setfill('0');
-    for (int i = 0; i < id_fields.size(); i++) {
-        std::cout << std::dec << std::setw(2) << std::setfill(' ') << i << " ";
-        display_id(id_fields[i]);
-        std::cout << std::endl;
-    }
-    std::cout.flags(flags_saved);
 }
 
 bool is_image_ready(void) {
@@ -143,25 +64,6 @@ disk_image* create_object_by_ext(std::string ext) {
     if(ext == "mfm") obj = new disk_image_mfm();
     if(ext == "d77") obj = new disk_image_d77();
     return obj;
-}
-
-size_t str2val(std::string hexstr) {
-    size_t res = 0;
-    if (hexstr.size()==0) return 0;
-    if (hexstr[0] == '$') {
-        for(auto it = hexstr.begin(); it != hexstr.end(); ++it) {
-            if (*it >='0' && *it <= '9') {
-                res = (res<<4) | ((*it) - '0');
-            } else if (*it>='a' && *it <= 'f') {
-                res = (res<<4) | ((*it) - 'a' + 10);
-            }
-        } 
-    } 
-    else if (hexstr[0] >= '0' && hexstr[0] <= '9') {
-        res = std::stoi(hexstr);
-    }
-    //std::cout << hexstr << " " << res << std::endl;
-    return res;
 }
 
 // -------------------------------------------------------------------------
@@ -200,7 +102,7 @@ void cmd_read_track(size_t track_n) {
     track_stream = disk_img->get_track_data(track_n);
     fdc->set_track_data(track_stream);
     read_data = fdc->read_track();
-    dump_buf(read_data.data(), read_data.size());
+    fdc_misc::dump_buf(read_data.data(), read_data.size());
 }
 
 void cmd_read_id(size_t track_n, size_t track_end_n = -1) {
@@ -216,7 +118,7 @@ void cmd_read_id(size_t track_n, size_t track_end_n = -1) {
         track_stream = disk_img->get_track_data(trk_n);
         fdc->set_track_data(track_stream);
         read_data = fdc->read_all_idam();
-        display_id_list(read_data);
+        fdc_misc::display_id_list(read_data);
     }
 }
 
@@ -227,7 +129,7 @@ void cmd_validate_track(size_t track_n, size_t track_end_n = -1) {
     }
     if (track_end_n == -1) track_end_n = track_n;
     for(size_t trk_n=track_n; trk_n <= track_end_n; trk_n++) {
-        std::cout << "Validate track (" << trk_n << ")" << std::endl;
+        std::cout << std::endl << "Track " << trk_n << std::endl;
         bit_array track_stream;
         std::vector<fdc_bitstream::id_field> id_data;
         track_stream = disk_img->get_track_data(trk_n);
@@ -238,12 +140,12 @@ void cmd_validate_track(size_t track_n, size_t track_end_n = -1) {
             fdc_bitstream::id_field id = *it;
             sect_data.push_back(fdc->read_sector(id.C, id.H, id.R));
         }
-        //           "  1: 00 00 01 01 fa0c ID-CRC_OK   256bytes DAM  DT-CRC OK  RNF_OK  IDAM_POS=    5208 DAM_POS=   10923"
-        std::cout << "  #: CC HH RR NN --- ID CRC ---  BYTES READ" << std::endl;
+        //           "  1: 00 00 01 01 fa0c ID-CRC_OK   256 DAM  DT-CRC OK  RNF_OK  IDAM_POS=    5208 DAM_POS=   10923"
+        std::cout << "  #: CC HH RR NN --- ID CRC ---  SIZE" << std::endl;
         for(size_t i = 0; i < id_data.size(); i++) {
-            std::cout << std::setw(3) << i+1 << ": ";
-            display_id(id_data[i]);
-            display_sector_data(sect_data[i]);
+            std::cout << std::setw(3) << std::setfill(' ') << i+1 << ": ";
+            fdc_misc::display_id(id_data[i]);
+            fdc_misc::display_sector_data(sect_data[i]);
             std::cout << std::endl;
         }        
     }
@@ -268,7 +170,7 @@ void cmd_read_sector(size_t cyl, size_t hed, size_t rcd) {
     track_stream = disk_img->get_track_data(cyl * 2 + hed);
     fdc->set_track_data(track_stream);
     read_data = fdc->read_sector(cyl, hed, rcd);
-    dump_buf(read_data.data.data(), read_data.data.size());
+    fdc_misc::dump_buf(read_data.data.data(), read_data.data.size());
     std::cout << "CRC DAM  RNF --ID_POS-- --DAM_POS- SIZE" << std::endl;
     std::cout << (read_data.crc_sts ? "ERR " : "OK  ") << (read_data.dam_type ? "DDAM " : "DAM  ") << (read_data.record_not_found ? "ERR " : "OK  ");
     std::cout << std::setw(10) << read_data.id_pos << " " << std::setw(10) << read_data.data_pos << " " << read_data.data.size() << std::endl;
@@ -317,7 +219,7 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=99) {
 
     double dist = 0.f;
     for(size_t i=0; i<5000; i++) {
-        dist += static_cast<double>(track_stream.distance_to_next_bit1());
+        dist += static_cast<double>(track_stream.distance_to_next_pulse());
         dist -= std::floor(dist / vfo->m_cell_size) * vfo->m_cell_size;
         //while(dist > vfo->m_cell_size) {
         //    dist -= vfo->m_cell_size;
@@ -361,64 +263,6 @@ void cmd_reset_vfo(void) {
     fdc->soft_reset_vfo();
 }
 
-void display_histogram(std::vector<size_t> dist_array) {
-    size_t max_count = *std::max_element(dist_array.begin(), dist_array.end());
-    double scale = 100.f / static_cast<double>(max_count);
-    size_t max_item = 0;
-    for(size_t i=0; i<dist_array.size(); i++) {
-        if (dist_array[i] != 0) max_item = i;
-    }
-
-    // display histogram
-    for(size_t i=0; i<=max_item; i++) {
-        std::cout << std::setw(4) << std::setfill(' ') << i << " : ";
-        std::cout << std::setw(8) << std::setfill(' ') << dist_array[i] << " : ";
-        size_t bar_length = static_cast<size_t>(static_cast<double>(dist_array[i]) * scale); // normalize
-        std::cout << std::string(bar_length, '*') << std::endl;
-    }
-}
-
-std::vector<size_t> find_peaks(std::vector<size_t> vec) {
-    // calc moving average
-    std::vector<size_t> avg(vec.size());
-    for(size_t i = 2; i<vec.size()-2-1; i++) {
-        size_t avg_tmp = 0;
-        for(int j=-2; j<=2; j++) {
-            avg_tmp += vec[i+j];
-        }
-        avg[i] = avg_tmp / 5;
-    }
-    //display_histogram(avg);       // for debug purpose
-
-    // detect peaks
-    std::vector<std::pair<size_t, size_t>> peaks;
-    for(size_t i=1; i<vec.size()-1-1; i++) {
-        if(vec[i-1]<vec[i] && vec[i+1]<vec[i]) {    // peak
-            peaks.push_back(std::pair<size_t, size_t>(i, vec[i]));
-        }
-    }
-
-    // sort peaks
-    std::sort(peaks.begin(), peaks.end(), [](const std::pair<size_t, size_t> &left, const std::pair<size_t, size_t> &right) 
-                                                { return left.second > right.second; });
-
-    // Display sort result
-    //for(auto it=peaks.begin(); it != peaks.end(); ++it) {
-    //    std::cout << (*it).first << "," << (*it).second << std::endl;
-    //}
-
-    if (peaks.size()<3) {
-        peaks.resize(3);
-    }
-    std::vector<size_t> result;
-    for(auto it=peaks.begin(); it != peaks.begin()+3; ++it) {
-        result.push_back((*it).first);
-    }
-    std::sort(result.begin(), result.end(), [](const size_t &left, const size_t &right) 
-                                            { return left < right; });
-    return result;
-}
-
 void cmd_histogram(size_t track_n) {
     if(is_image_ready()==false) {
         std::cout << "Disk image is not ready." << std::endl;
@@ -431,24 +275,14 @@ void cmd_histogram(size_t track_n) {
 
     // count pulse distance frequency
     size_t max_val = 0;
-    std::vector<size_t> dist_array(500);
-    do {
-        size_t dist = track_stream.distance_to_next_bit1();
-        if(dist >= dist_array.size()) {
-            dist = dist_array.size() - 1;
-        }
-        dist_array[dist]++;
-        if(max_val < dist) {
-            max_val = dist;
-        }
-    } while(!track_stream.is_wraparound());
+    std::vector<size_t> dist_array = fdc_misc::get_frequent_distribution(track_stream);
 
     // display histogram
     std::cout << "#clocks  #pulses" << std::endl;
-    display_histogram(dist_array);
+    fdc_misc::display_histogram(dist_array);
 
     // find distribution peaks
-    std::vector<size_t> peaks = find_peaks(dist_array);
+    std::vector<size_t> peaks = fdc_misc::find_peaks(dist_array);
     std::cout << std::endl;
     std::cout << "Peaks:" << std::endl;
     for(size_t i=0; i<3; i++) {
@@ -528,18 +362,18 @@ int main(int argc, char* argv[]) {
             cmd_open_image(args[1]);
         } 
         else if(args[0] == "rt" && args.size()>=2) {
-            cmd_read_track(str2val(args[1]));
+            cmd_read_track(fdc_misc::str2val(args[1]));
         } 
         else if(args[0] == "ri") {
-            if(args.size()==2) cmd_read_id(str2val(args[1]), -1);
-            if(args.size()==3) cmd_read_id(str2val(args[1]), str2val(args[2]));
+            if(args.size()==2) cmd_read_id(fdc_misc::str2val(args[1]), -1);
+            if(args.size()==3) cmd_read_id(fdc_misc::str2val(args[1]), fdc_misc::str2val(args[2]));
         } 
         else if (args[0] == "vt"){
-            if(args.size()==2) cmd_validate_track(str2val(args[1]), -1);
-            if(args.size()==3) cmd_validate_track(str2val(args[1]), str2val(args[2]));
+            if(args.size()==2) cmd_validate_track(fdc_misc::str2val(args[1]), -1);
+            if(args.size()==3) cmd_validate_track(fdc_misc::str2val(args[1]), fdc_misc::str2val(args[2]));
         }
         else if(args[0] == "rs" && args.size()>=4) {
-            cmd_read_sector(str2val(args[1]), str2val(args[2]), str2val(args[3]));
+            cmd_read_sector(fdc_misc::str2val(args[1]), fdc_misc::str2val(args[2]), fdc_misc::str2val(args[3]));
         }
         else if(args[0] == "gain" && args.size()>=3) {
             cmd_set_gain(std::stod(args[1]), std::stod(args[2]));
@@ -564,7 +398,7 @@ int main(int argc, char* argv[]) {
             cmd_reset_vfo();
         }
         else if(args[0] == "histogram" && args.size()>=2) {
-            cmd_histogram(str2val(args[1]));            
+            cmd_histogram(fdc_misc::str2val(args[1]));            
         }
         else if(args[0] == "h") {
             cmd_help();

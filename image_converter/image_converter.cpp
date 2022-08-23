@@ -76,7 +76,7 @@ std::vector<size_t> get_frequent_distribution(bit_array barray) {
     barray.clear_wraparound_flag();
     std::vector<size_t> freq_dist;
     do {
-        size_t dist = barray.distance_to_next_bit1();
+        size_t dist = barray.distance_to_next_pulse();
         if(freq_dist.size() <= dist) {
             freq_dist.resize(dist+1);
         }
@@ -100,9 +100,9 @@ std::vector<size_t> find_peaks(std::vector<size_t> vec) {
 
     // detect peaks
     std::vector<std::pair<size_t, size_t>> peaks;
-    for(size_t i=1; i<vec.size()-1-1; i++) {
-        if(vec[i-1]<vec[i] && vec[i+1]<vec[i]) {    // peak
-            peaks.push_back(std::pair<size_t, size_t>(i, vec[i]));
+    for(size_t i=1; i<avg.size()-1-1; i++) {
+        if(avg[i-1]<avg[i] && avg[i+1]<avg[i]) {    // peak
+            peaks.push_back(std::pair<size_t, size_t>(i, avg[i]));
         }
     }
 
@@ -133,7 +133,7 @@ std::vector<size_t> convert_to_dist_array(bit_array track) {
     track.clear_wraparound_flag();
     std::vector<size_t> dist_array;
     do {
-        size_t dist = track.distance_to_next_bit1();
+        size_t dist = track.distance_to_next_pulse();
         dist_array.push_back(dist);
     } while(!track.is_wraparound());
     return dist_array;
@@ -154,9 +154,9 @@ std::vector<bit_array> normalize_track(std::vector<bit_array> tracks, size_t sam
         normalized.clear_array();
         if(trk.get_length() > 0) {
             std::cout << "Track " << std::setw(3) << i << " - ";
-            std::vector<size_t> freq_dist = get_frequent_distribution(trk);
+            std::vector<size_t> freq_dist = get_frequent_distribution(trk);   // convert track data into frequency-distribution data
             //display_histogram(freq_dist);
-            std::vector<size_t> peaks = find_peaks(freq_dist);
+            std::vector<size_t> peaks = find_peaks(freq_dist);                // find peaks from the frequency-distribution data
             double cell_size;
             if(peaks[0] != 0) {
                 cell_size = static_cast<double>(peaks[0]) / 2.f;

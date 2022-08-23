@@ -64,7 +64,7 @@ void test2() {
     bit_array track_b;
     track_b.resize(4e6 * 0.2);               // extend track buffer (spindle 1 spin == 0.2sec)
     fdc.set_track_data(track_b);        // Set unformatted track data
-    std::vector<uint8_t> write_data = generate_format_data(0, 0, 1, 1);       // trk=0, sid=0, #sec=1, len=1
+    std::vector<uint8_t> write_data = fdc_misc::generate_format_data(0, 0, 1, 1);       // trk=0, sid=0, #sec=1, len=1
     fdc.write_track(write_data);
 
     std::cout << "Track dump - after formatting" << std::endl;
@@ -107,7 +107,7 @@ void test3(void) {
     track_write_data.clear_array();
     track_write_data.set(4e6 * 0.2, 0);     // extend track buffer
     fdc.set_track_data(track_write_data);
-    std::vector<uint8_t> write_data = generate_format_data(0, 0, 16, 1, 3);
+    std::vector<uint8_t> write_data = fdc_misc::generate_format_data(0, 0, 16, 1, 3);
     fdc.write_track(write_data);
 
     fdc.set_pos(0);

@@ -40,7 +40,7 @@ public:
     void write_stream(uint8_t value, bool elastic = false);
     void advance_stream_pos(void);
     uint8_t read_stream(void);
-    size_t distance_to_next_bit1(void);
+    size_t distance_to_next_pulse(void);
     void fill_stream(uint8_t data, uint8_t length = 1);
 
     void dump(size_t start = 0, size_t size = 0);

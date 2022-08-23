@@ -52,7 +52,7 @@ void vfo_base::set_params(size_t sampling_rate, size_t fdc_bit_rate, double data
 }
 
 void vfo_base::set_cell_size(double cell_size) {
-    constexpr double tolerance = 0.4f;
+    constexpr double tolerance = 0.15f;
     cell_size = limit(cell_size, m_cell_size_ref * (1.f - tolerance), m_cell_size_ref * (1.f + tolerance));
     m_cell_size = cell_size;
     update_cell_params();
