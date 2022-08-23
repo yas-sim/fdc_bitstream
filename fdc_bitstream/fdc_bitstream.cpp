@@ -411,9 +411,11 @@ size_t fdc_bitstream::get_pos(void) {
 */
 void fdc_bitstream::set_track_data(bit_array track_data) {
     // Inspect track data and determine initial cell size for VFO for easy synchronization
-    std::vector<size_t> dist_freq = fdc_misc::get_frequent_distribution(track_data);
-    std::vector<size_t> peaks = fdc_misc::find_peaks(dist_freq);
-    m_codec.set_vfo_cell_size(peaks[0]/2.f);
+    //if(track_data.get_length>0) {
+    //    std::vector<size_t> dist_freq = fdc_misc::get_frequent_distribution(track_data);
+    //    std::vector<size_t> peaks = fdc_misc::find_peaks(dist_freq);
+    //    m_codec.set_vfo_cell_size(peaks[0]/2.f);
+    //}
 
     track_data.set_stream_pos(0);
     m_codec.set_track_data(track_data);
