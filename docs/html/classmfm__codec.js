@@ -30,6 +30,7 @@ var classmfm__codec =
     [ "set_sync_mode", "classmfm__codec.html#aaf6250f7080cbe158a4aea6a959f1f67", null ],
     [ "set_track_data", "classmfm__codec.html#a40e88ddbea86a9f619834f173c95755f", null ],
     [ "set_track_status_forcibly", "classmfm__codec.html#a58bc2c2042b51353bfe7243631ed1ffa", null ],
+    [ "set_vfo_cell_size", "classmfm__codec.html#a7fbb1e0c05477582cdc7cf99a5ec2799", null ],
     [ "set_vfo_gain", "classmfm__codec.html#a54aa927da4823cefe213c696fcb2018c", null ],
     [ "set_vfo_gain_val", "classmfm__codec.html#a7ec8c201ba54bd792dde68bcdd19bd1b", null ],
     [ "set_vfo_type", "classmfm__codec.html#a6a2bd564eeda96533fd2b9f65ecf8ffb", null ],

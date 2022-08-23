@@ -4,7 +4,7 @@ var classbit__array =
     [ "advance_stream_pos", "classbit__array.html#a4d9be589626877b42ac820f55796783b", null ],
     [ "clear_array", "classbit__array.html#a4e2e12feb739995bca487fa805baeedc", null ],
     [ "clear_wraparound_flag", "classbit__array.html#a095ab4d72a708ca8016cdcb8d29fbdb2", null ],
-    [ "distance_to_next_bit1", "classbit__array.html#af6253d04fc98807e18fa3035dbd4f44c", null ],
+    [ "distance_to_next_pulse", "classbit__array.html#ac31fb571ac2a69c8426a10d83587cae9", null ],
     [ "dump", "classbit__array.html#aa143fb112e7c08d70df3c8b541c6aa4c", null ],
     [ "fill_stream", "classbit__array.html#a36cdaff5e771ccbe45e63a691730ba12", null ],
     [ "get", "classbit__array.html#ab0a6852f4343cbbde470f32ae3b782fa", null ],

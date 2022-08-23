@@ -84,6 +84,7 @@ $(document).ready(function(){initNavTree('fdc__misc_8cpp.html',''); initResizabl
 
 <div class="header">
   <div class="summary">
+<a href="#namespaces">Namespaces</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">fdc_misc.cpp File Reference</div></div>
 </div><!--header-->
@@ -91,18 +92,26 @@ $(document).ready(function(){initNavTree('fdc__misc_8cpp.html',''); initResizabl
 
 <p>Miscellaneous functions for FDC lib (format data generator)  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="fdc__misc_8h_source.html">fdc_misc.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;algorithm&gt;</code><br />
+<code>#include &quot;<a class="el" href="fdc__misc_8h_source.html">fdc_misc.h</a>&quot;</code><br />
 </div>
 <p><a href="fdc__misc_8cpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespacefdc__misc"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefdc__misc.html">fdc_misc</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a89bc008db6cd085584268d55d4a880fe"><td class="memItemLeft" align="right" valign="top">std::vector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fdc__misc_8cpp.html#a89bc008db6cd085584268d55d4a880fe">generate_interleaved_sector_list</a> (size_t num_sector, int interleave=1)</td></tr>
-<tr class="memdesc:a89bc008db6cd085584268d55d4a880fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a list of interleaved sector numbers.  <a href="fdc__misc_8cpp.html#a89bc008db6cd085584268d55d4a880fe">More...</a><br /></td></tr>
-<tr class="separator:a89bc008db6cd085584268d55d4a880fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71498cbc35dfeb3c4302b4dbd8a1b77a"><td class="memItemLeft" align="right" valign="top">std::vector&lt; uint8_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fdc__misc_8cpp.html#a71498cbc35dfeb3c4302b4dbd8a1b77a">generate_format_data</a> (size_t track_n, size_t side_n, size_t num_sector, size_t sect_len_code, size_t interleave, size_t format_type)</td></tr>
-<tr class="memdesc:a71498cbc35dfeb3c4302b4dbd8a1b77a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Format data generator. Generates format data from the given parameters.  <a href="fdc__misc_8cpp.html#a71498cbc35dfeb3c4302b4dbd8a1b77a">More...</a><br /></td></tr>
-<tr class="separator:a71498cbc35dfeb3c4302b4dbd8a1b77a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab05a48a473d48f709b2c1e9f15922484"><td class="memItemLeft" align="right" valign="top">std::vector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefdc__misc.html#ab05a48a473d48f709b2c1e9f15922484">fdc_misc::generate_interleaved_sector_list</a> (size_t num_sector, int interleave=1)</td></tr>
+<tr class="memdesc:ab05a48a473d48f709b2c1e9f15922484"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a list of interleaved sector numbers.  <a href="namespacefdc__misc.html#ab05a48a473d48f709b2c1e9f15922484">More...</a><br /></td></tr>
+<tr class="separator:ab05a48a473d48f709b2c1e9f15922484"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fe6aee900f7c5cfb26bdc1264034686"><td class="memItemLeft" align="right" valign="top">std::vector&lt; uint8_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefdc__misc.html#a0fe6aee900f7c5cfb26bdc1264034686">fdc_misc::generate_format_data</a> (size_t track_n, size_t side_n, size_t num_sector, size_t sect_len_code, size_t interleave, size_t format_type)</td></tr>
+<tr class="memdesc:a0fe6aee900f7c5cfb26bdc1264034686"><td class="mdescLeft">&#160;</td><td class="mdescRight">Format data generator. Generates format data from the given parameters.  <a href="namespacefdc__misc.html#a0fe6aee900f7c5cfb26bdc1264034686">More...</a><br /></td></tr>
+<tr class="separator:a0fe6aee900f7c5cfb26bdc1264034686"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e24870e85a705772ed2d076efd624f2"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefdc__misc.html#a6e24870e85a705772ed2d076efd624f2">fdc_misc::str2val</a> (const std::string &amp;hexstr)</td></tr>
+<tr class="separator:a6e24870e85a705772ed2d076efd624f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Miscellaneous functions for FDC lib (format data generator) </p>
@@ -112,119 +121,7 @@ Functions</h2></td></tr>
 <dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2022 </dd></dl>
 
 <p class="definition">Definition in file <a class="el" href="fdc__misc_8cpp_source.html">fdc_misc.cpp</a>.</p>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a id="a71498cbc35dfeb3c4302b4dbd8a1b77a" name="a71498cbc35dfeb3c4302b4dbd8a1b77a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a71498cbc35dfeb3c4302b4dbd8a1b77a">&#9670;&nbsp;</a></span>generate_format_data()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::vector&lt; uint8_t &gt; generate_format_data </td>
-          <td>(</td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>track_n</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>side_n</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>num_sector</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>sect_len_code</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>interleave</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>format_type</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Format data generator. Generates format data from the given parameters. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">track_n</td><td>Track number. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">side_n</td><td>Side number. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">num_sector</td><td>Number of sectors in the track (starting from 1). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">sect_len_code</td><td>Sector length code (0-3 -&gt; 128/256/512/1024). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">interleave</td><td>Interleave parameter. Meaning the distance to the next sector. 1=no interleave. 1&gt;interleave. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">format_type</td><td>0:IBM format, 1:ECMA/ISO format (default). </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>std::vector&lt;uint8_t&gt; Generated format data. </dd></dl>
-<p >IBM format</p>
-<p >ECMA/ISO format</p>
-<p >Wrong type</p>
-
-<p class="definition">Definition at line <a class="el" href="fdc__misc_8cpp_source.html#l00046">46</a> of file <a class="el" href="fdc__misc_8cpp_source.html">fdc_misc.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a89bc008db6cd085584268d55d4a880fe" name="a89bc008db6cd085584268d55d4a880fe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a89bc008db6cd085584268d55d4a880fe">&#9670;&nbsp;</a></span>generate_interleaved_sector_list()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::vector&lt; int &gt; generate_interleaved_sector_list </td>
-          <td>(</td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>num_sector</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>interleave</em> = <code>1</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Generate a list of interleaved sector numbers. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">num_sector</td><td>Number of sectors. </td></tr>
-    <tr><td class="paramname">interleave</td><td>Interleave distance to the next sector. Default=1. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>std::vector&lt;int&gt; Generated sector number. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="fdc__misc_8cpp_source.html#l00021">21</a> of file <a class="el" href="fdc__misc_8cpp_source.html">fdc_misc.cpp</a>.</p>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
