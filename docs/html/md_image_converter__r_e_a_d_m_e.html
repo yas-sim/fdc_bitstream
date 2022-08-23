@@ -89,16 +89,16 @@ $(document).ready(function(){initNavTree('md_image_converter__r_e_a_d_m_e.html',
 <div class="textblock"><p ><b>Usage:</b> </p><div class="fragment"><div class="line">image_converter -i input_file.[mfm|raw|hfe|d77] -o output_file.[mfm|d77] -n</div>
 </div><!-- fragment --><table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Option   </th><th class="markdownTableHeadNone">Description    </th></tr>
+<th class="markdownTableHeadNone">Option   </th><th class="markdownTableHeadNone">Option parameters   </th><th class="markdownTableHeadNone">Description    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>-i</code> in_file   </td><td class="markdownTableBodyNone">Specify input file. HFE, MFM, RAW and D77 are supported.    </td></tr>
+<td class="markdownTableBodyNone"><code>-i</code>   </td><td class="markdownTableBodyNone"><code>in_file</code>   </td><td class="markdownTableBodyNone">Specify input file. HFE, MFM, RAW and D77 are supported.    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>-o</code> out_file   </td><td class="markdownTableBodyNone">Specify output file. MFM and D77 are supported.    </td></tr>
+<td class="markdownTableBodyNone"><code>-o</code>   </td><td class="markdownTableBodyNone"><code>out_file</code>   </td><td class="markdownTableBodyNone">Specify output file. MFM and D77 are supported.    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>-n</code>   </td><td class="markdownTableBodyNone">Normalize pulse pitch.<br  />
+<td class="markdownTableBodyNone" colspan="2"><code>-n</code>   </td><td class="markdownTableBodyNone">Normalize pulse pitch.<br  />
 The converter will collect the statistics data of pulse pitch (pulse-to-pulse distance) for each track data and perform pitch normalization during the image format conversion process. With normalized data, the VFO operation will get stable and reading accuracy may improve.    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>-vfo</code> <code>vfo_type</code>   </td><td class="markdownTableBodyNone">Specify VFO type. This option is effective only when D77 is specified as output.<br  />
+<td class="markdownTableBodyNone"><code>-vfo</code>   </td><td class="markdownTableBodyNone"><code>vfo_type</code>   </td><td class="markdownTableBodyNone">Specify VFO type. This option is effective only when D77 is specified as output.<br  />
 0:<a class="el" href="classvfo__simple.html" title="VFO class using simple proportional error correction (P)">vfo_simple</a>, 1:<a class="el" href="classvfo__fixed.html" title="Fixed VFO class (no VFO)">vfo_fixed</a>, 2:<a class="el" href="classvfo__pid.html" title="VFO class using PID control.">vfo_pid</a>, 3:<a class="el" href="classvfo__pid2.html" title="VFO class using PID control (2)">vfo_pid2</a>, 9:<a class="el" href="classvfo__experimental.html" title="VFO class using PID control (2)">vfo_experimental</a>   </td></tr>
 </table>
 <p >Note: HFE and RAW don't support the write function, so they can't be specified as output format. <br  />
