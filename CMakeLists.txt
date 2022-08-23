@@ -14,8 +14,5 @@ add_subdirectory(disk_image)
 
 add_subdirectory(fdc_test)
 add_subdirectory(create_mfm_image)
-add_subdirectory(check_image)
-add_subdirectory(vfo_optimizer)
 add_subdirectory(image_converter)
-
 add_subdirectory(disk_analyzer)
