@@ -83,7 +83,6 @@ python kfx2mfm.py -i <kfx raw image directory>
 |`docs/html`|FDC library API document (`index.html`)|  
 |[`fdc_test`](./fdc_test/)|FDC lib test program source code. You can learn how to use `bit_stream` and `image_???` classes.|  
 |[`image_converter`](./image_converter/)|(MFM/D77/RAW/HFE) to (MFM/D77) disk image converter. The converter will take one of mfm/raw/hfe/d77 image file, translate it into a MFM data internally, and then output the data as either one of mfm/d77.|
-|[`check_image`](./check_image/)|Performs read ID for all tracks. You can specify VFO gain to check what value is the best for the image.|  
 |[`create_mfm_image`](./create_mfm_image/)|Creates an 2D/MFM disk image with regular format (ECMA/ISO).The program will create `new_image.mfm`.|  
 |[`kfx2mfm`](./kfx2mfm/)|Kryoflux `RAW` files to `MFM` disk image file converter. Kryoflux `RAW` image consists of multiple `RAW` files. Each file contains bitstream data of a track captured at the clock rate of 24MHz.|  
 |[`disk_analyzer`](./disk_analyzer/)|Simple disk image analyze tool. You can try VFO gain and fluctuator setting. This tool can visualize how VFO behaves (VFO visualizer) and check the pulse timing distribution of the disk image (histogram).|
@@ -126,48 +125,10 @@ CMD> create_mfm_image
  :  :
 === 83
 
-CMD> check_image -i new_image.mfm
-# ID list will be shown.
-
-Gain L = 8, Gain H = 12
-Start track = 0, End track = 79
-
-=== 0
- 0 00 00 01 01 fa0c OK
- 1 00 00 02 01 af5f OK
- 2 00 00 03 01 9c6e OK
- :  :  :  :  :  :    :
-15 00 00 10 01 ca4e OK
-Error rate: 0
-=== 1
- 0 00 01 01 01 cd3c OK
- 1 00 01 02 01 986f OK
- 2 00 01 03 01 ab5e OK
- :  :  :  :  :  :    :
-
-CMD> image_converter new_image.mfm new_image.d77
+CMD> image_converter -i new_image.mfm -o new_image.d77
 # new_image.d77 will be created from new_image.mfm
 
 new_image.mfm -> new_image.d77
-
-CMD> check_image -i new_image.d77
-# ID list will be shown. (the same contents as original new_image.mfm)
-
-Gain L = 8, Gain H = 12
-Start track = 0, End track = 79
-
-=== 0
- 0 00 00 01 01 fa0c OK
- 1 00 00 02 01 af5f OK
- 2 00 00 03 01 9c6e OK
- :  :  :  :  :  :    :
-15 00 00 10 01 ca4e OK
-Error rate: 0
-=== 1
- 0 00 01 01 01 cd3c OK
- 1 00 01 02 01 986f OK
- 2 00 01 03 01 ab5e OK
- :  :  :  :  :  :    :
 
 ```
 

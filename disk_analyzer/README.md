@@ -4,7 +4,8 @@
 |-|-|
 |`o`  `file_name`|Open an image file.(HFE/MFM/RAW/D77)|
 |`rt` `trk`|Read track|
-|`ri` `trk`|Read all sector IDs|
+|`vt` `trk` [`trk_e`]|Validate track(s). Performs read ID and read sector for a track.<br>If you specify 'trk_e', the command will perform track validation from 'trk' to 'trk_e'.|
+|`ri` `trk` [`trk_e`]|Read all sector IDs. Perform ID read from 'trk' to 'trk_e' if you specify 'trk_e'. Otherwise, an ID read operation will be performed for a track.|
 |`rs` `trk` `sid` `sct`|Read sector|
 |`ef` `nume` `denom`|Enable fluctuator (VFO stops at rate of nume/denom)|
 |`ef`|Disable fluctuator|
