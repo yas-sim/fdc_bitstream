@@ -12,6 +12,9 @@ public:
     double m_phase_integral;
     double m_prev_freq_error;
     double m_freq_integral;
+
+    double m_prev_pulse_pos;
+    double m_phase_diff_integral;
 public:
     void disp_vfo_status(void) override;
     void reset(void) override;

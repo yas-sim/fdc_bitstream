@@ -150,25 +150,26 @@ std::vector<size_t> get_frequent_distribution(bit_array barray) {
 }
 
 std::vector<size_t> find_peaks(const std::vector<size_t> &dist_freq) {
-    // calc moving average
-    //dist_freq.resize(dist_freq.size()+2);       // increase top boundary for moving average calculation
+    // LPF
     std::vector<size_t> avg(dist_freq.size());
+    const int filt[5] { 1,2,3,2,1 };
+    const int flt_sum = 1+2+3+2+1;
     for(int i = 0; i<dist_freq.size(); i++) {
         size_t avg_tmp = 0;
         for(int j=-2; j<=2; j++) {
             int pos=0;
             if (i+j < 0) {
-                pos= -(i+j);       // data mirroring (lower boundary)
+                pos= -(i+j);                            // data mirroring (lower boundary)
             } else if(i+j >= dist_freq.size()) {
                 pos = 2*dist_freq.size() - (i+j) - 2;   // data mirroring (upper boundary)
             } else {
                 pos = i+j;
             }
-            avg_tmp += dist_freq[pos];
+            avg_tmp += dist_freq[pos] * filt[j+2];
         }
-        avg[i] = avg_tmp / 5;
+        avg[i] = avg_tmp / flt_sum;
     }
-    //display_histogram(avg);       // for debug purpose
+    //fdc_misc::display_histogram(avg);       // for debug purpose
 
     // detect peaks
     std::vector<std::pair<size_t, size_t>> peaks;
