@@ -119,7 +119,7 @@ std::vector<uint8_t> generate_format_data(size_t track_n, size_t side_n, size_t 
 
 // ------------------------------------------------------------------------------------------
 
-void fdc_misc::display_histogram(const std::vector<size_t> &dist_array) {
+void display_histogram(const std::vector<size_t> &dist_array) {
     size_t max_count = *std::max_element(dist_array.begin(), dist_array.end());
     double scale = 100.f / static_cast<double>(max_count);
     size_t max_item = 0;
@@ -136,7 +136,7 @@ void fdc_misc::display_histogram(const std::vector<size_t> &dist_array) {
     }
 }
 
-std::vector<size_t> fdc_misc::get_frequent_distribution(bit_array barray) {
+std::vector<size_t> get_frequent_distribution(bit_array barray) {
     barray.clear_wraparound_flag();
     std::vector<size_t> freq_dist;
     do {
@@ -149,7 +149,7 @@ std::vector<size_t> fdc_misc::get_frequent_distribution(bit_array barray) {
     return freq_dist;
 }
 
-std::vector<size_t> fdc_misc::find_peaks(const std::vector<size_t> &dist_freq) {
+std::vector<size_t> find_peaks(const std::vector<size_t> &dist_freq) {
     // calc moving average
     //dist_freq.resize(dist_freq.size()+2);       // increase top boundary for moving average calculation
     std::vector<size_t> avg(dist_freq.size());
@@ -208,7 +208,7 @@ std::vector<size_t> fdc_misc::find_peaks(const std::vector<size_t> &dist_freq) {
     return result;
 }
 
-std::vector<size_t> fdc_misc::convert_to_dist_array(bit_array track) {
+std::vector<size_t> convert_to_dist_array(bit_array track) {
     track.clear_wraparound_flag();
     std::vector<size_t> dist_array;
     do {
@@ -219,7 +219,7 @@ std::vector<size_t> fdc_misc::convert_to_dist_array(bit_array track) {
 }
 
 
-void fdc_misc::dump_buf(uint8_t* ptr, size_t size, bool line_feed /*= true*/) {
+void dump_buf(uint8_t* ptr, size_t size, bool line_feed /*= true*/) {
     std::ios::fmtflags flags_saved = std::cout.flags();
     for (size_t i = 0; i < size; i++) {
         std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(ptr[i]) << " ";
@@ -231,7 +231,7 @@ void fdc_misc::dump_buf(uint8_t* ptr, size_t size, bool line_feed /*= true*/) {
     std::cout.flags(flags_saved);
 }
 
-void fdc_misc::bit_dump(const uint64_t data, size_t bit_width, size_t spacing /*= 0*/, bool line_feed /*= true*/) {
+void bit_dump(const uint64_t data, size_t bit_width, size_t spacing /*= 0*/, bool line_feed /*= true*/) {
     size_t count = 0;
     for (uint64_t bit_pos = 1 << (bit_width - 1); bit_pos != 0; bit_pos >>= 1) {
         std::cout << ((data & bit_pos) ? 1 : 0);
@@ -247,7 +247,7 @@ void fdc_misc::bit_dump(const uint64_t data, size_t bit_width, size_t spacing /*
     }
 }
 
-void fdc_misc::bit_dump(bit_array &data, size_t bit_width /*= 0*/, size_t spacing /*= 0*/, bool line_feed /*=true*/) {
+void bit_dump(bit_array &data, size_t bit_width /*= 0*/, size_t spacing /*= 0*/, bool line_feed /*=true*/) {
     size_t count = 0;
     size_t length = (bit_width == 0) ? data.get_length() : bit_width;
     for (uint64_t i = 0; i < length; length++) {
@@ -264,7 +264,7 @@ void fdc_misc::bit_dump(bit_array &data, size_t bit_width /*= 0*/, size_t spacin
     }
 }
 
-void fdc_misc::display_sector_data(const fdc_bitstream::sector_data &sect_data) {
+void display_sector_data(const fdc_bitstream::sector_data &sect_data) {
     std::ios::fmtflags flags_saved = std::cout.flags();
     std::cout << std::dec << std::setw(4) << std::setfill(' ');
     std::cout << sect_data.data.size() << " ";
@@ -277,7 +277,7 @@ void fdc_misc::display_sector_data(const fdc_bitstream::sector_data &sect_data) 
     std::cout.flags(flags_saved);
 }
 
-void fdc_misc::display_id(const fdc_bitstream::id_field &id) {
+void display_id(const fdc_bitstream::id_field &id) {
     std::ios::fmtflags flags_saved = std::cout.flags();
     std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(id.C) << " ";
     std::cout << std::setw(2) << static_cast<int>(id.H) << " ";
@@ -288,7 +288,7 @@ void fdc_misc::display_id(const fdc_bitstream::id_field &id) {
     std::cout.flags(flags_saved);
 }
 
-void fdc_misc::display_id_list(const std::vector<fdc_bitstream::id_field> &id_fields) {
+void display_id_list(const std::vector<fdc_bitstream::id_field> &id_fields) {
     std::ios::fmtflags flags_saved = std::cout.flags();
     std::cout << std::hex << std::setw(2) << std::setfill('0');
     for (int i = 0; i < id_fields.size(); i++) {
