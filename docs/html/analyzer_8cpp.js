@@ -9,7 +9,7 @@ var analyzer_8cpp =
     [ "cmd_help", "analyzer_8cpp.html#a2385163335a35d89c5cb03a6adbfcce0", null ],
     [ "cmd_histogram", "analyzer_8cpp.html#aed3fa9b98867c728b38b464f0f0fd6a9", null ],
     [ "cmd_open_image", "analyzer_8cpp.html#acc00451714bac781ede39bea96a9fd8a", null ],
-    [ "cmd_read_id", "analyzer_8cpp.html#a87f162b9b0f6e9516d173510464cf7d6", null ],
+    [ "cmd_read_id", "analyzer_8cpp.html#a517d06f11bba3eff49330e70afad8fc9", null ],
     [ "cmd_read_sector", "analyzer_8cpp.html#aba9395354fa51bdfb99d45584ba7fb79", null ],
     [ "cmd_read_track", "analyzer_8cpp.html#aa89878b60f62aacb30f8608e4c5f1d02", null ],
     [ "cmd_reset_vfo", "analyzer_8cpp.html#aad770eab5c3e1122099a06418ecf823f", null ],
