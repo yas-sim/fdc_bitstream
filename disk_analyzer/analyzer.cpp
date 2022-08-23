@@ -183,18 +183,21 @@ void cmd_read_track(size_t track_n) {
     dump_buf(read_data.data(), read_data.size());
 }
 
-void cmd_read_id(size_t track_n) {
+void cmd_read_id(size_t track_n, size_t track_end_n = -1) {
     if(is_image_ready()==false) {
         std::cout << "Disk image is not ready." << std::endl;
         return;
     }
-    std::cout << "Read ID (" << track_n << ")" << std::endl;
-    bit_array track_stream;
-    std::vector<fdc_bitstream::id_field> read_data;
-    track_stream = disk_img->get_track_data(track_n);
-    fdc->set_track_data(track_stream);
-    read_data = fdc->read_all_idam();
-    display_id_list(read_data);
+    if (track_end_n == -1) track_end_n = track_n;
+    for(size_t trk_n=track_n; trk_n <= track_end_n; trk_n++) {
+        std::cout << "Read ID (" << trk_n << ")" << std::endl;
+        bit_array track_stream;
+        std::vector<fdc_bitstream::id_field> read_data;
+        track_stream = disk_img->get_track_data(trk_n);
+        fdc->set_track_data(track_stream);
+        read_data = fdc->read_all_idam();
+        display_id_list(read_data);
+    }
 }
 
 void cmd_set_gain(double gain_l, double gain_h) {
@@ -413,7 +416,7 @@ void cmd_help(void) {
     "*** Command list\n"
     "o  file_name      Open an image file. (.raw, .mfm, .hfe, .d77)\n"
     "rt trk            Read track\n"
-    "ri trk            Read all sector IDs\n"
+    "ri trk [trk_e]    Read all sector IDs. Perform ID read from 'trk' to 'trk_e' if you specify trk_e. Otherwise, an ID read operation will be performed for a track.\n"
     "rs trk sid sct    Read sector\n"
     "ef sus_radio      Enable fluctuator (VFO stops operation at rate of sus_ratio (0.0-1.0))\n"
     "ef                Disable fluctuator\n"
@@ -474,8 +477,9 @@ int main(int argc, char* argv[]) {
         else if(args[0] == "rt" && args.size()>=2) {
             cmd_read_track(str2val(args[1]));
         } 
-        else if(args[0] == "ri" && args.size()>=2) {
-            cmd_read_id(str2val(args[1]));
+        else if(args[0] == "ri") {
+            if(args.size()==2) cmd_read_id(str2val(args[1]), -1);
+            if(args.size()==3) cmd_read_id(str2val(args[1]), str2val(args[2]));
         } 
         else if(args[0] == "rs" && args.size()>=4) {
             cmd_read_sector(str2val(args[1]), str2val(args[2]), str2val(args[3]));
