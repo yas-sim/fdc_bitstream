@@ -19,7 +19,7 @@ var searchData=
   ['fdc_5fvfo_5fdef_2eh_16',['fdc_vfo_def.h',['../fdc__vfo__def_8h.html',1,'']]],
   ['fill_17',['fill',['../classbyte__array.html#a1eb63bbeb65665d3744493cb6868d4bd',1,'byte_array::fill(size_t pos, size_t count, uint8_t val)'],['../classbyte__array.html#a1eb63bbeb65665d3744493cb6868d4bd',1,'byte_array::fill(size_t pos, size_t count, uint8_t val)']]],
   ['fill_5fstream_18',['fill_stream',['../classbit__array.html#a36cdaff5e771ccbe45e63a691730ba12',1,'bit_array']]],
-  ['find_5fpeaks_19',['find_peaks',['../image__converter_8cpp.html#a703a21d0c2e37bb59adb3f053d76623e',1,'find_peaks():&#160;image_converter.cpp'],['../namespacefdc__misc.html#af317806a4515795d7a7926d150fd1853',1,'fdc_misc::find_peaks()']]],
+  ['find_5fpeaks_19',['find_peaks',['../namespacefdc__misc.html#a6aad255a9b3a1b84bb91a642859e854b',1,'fdc_misc::find_peaks()'],['../image__converter_8cpp.html#a703a21d0c2e37bb59adb3f053d76623e',1,'find_peaks():&#160;image_converter.cpp']]],
   ['float_20',['float',['../namespacekfx2mfm.html#a5bf69425fee987e13c7a6c356784b89d',1,'kfx2mfm']]],
   ['floppy_5f2d_21',['FLOPPY_2D',['../fdc__defs_8h.html#a99c5ff7e5199a13ca4884062b413d68fa048b9b8231a2e07d36aed7acd46a0cd0',1,'fdc_defs.h']]],
   ['floppy_5f2dd_22',['FLOPPY_2DD',['../fdc__defs_8h.html#a99c5ff7e5199a13ca4884062b413d68fa3a51151130f155d99f8482dccae69e7a',1,'fdc_defs.h']]],
