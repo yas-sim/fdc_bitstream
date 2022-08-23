@@ -1,21 +1,21 @@
 # Simple disk image analyzer tool  
 
-|Command|Description|
-|-|-|
-|`o`  `file_name`|Open an image file.(HFE/MFM/RAW/D77)|
-|`rt` `trk`|Read track|
-|`vt` `trk` [`trk_e`]|Validate track(s). Performs read ID and read sector for a track.<br>If you specify 'trk_e', the command will perform track validation from 'trk' to 'trk_e'.|
-|`ri` `trk` [`trk_e`]|Read all sector IDs. Perform ID read from 'trk' to 'trk_e' if you specify 'trk_e'. Otherwise, an ID read operation will be performed for a track.|
-|`rs` `trk` `sid` `sct`|Read sector|
-|`ef` `nume` `denom`|Enable fluctuator (VFO stops at rate of nume/denom)|
-|`ef`|Disable fluctuator|
-|`gain` `gl` `gh`|Set VFO gain (low=gl, high=gh)|
-|`vfo`|Display current VFO parameters|
-|`vv` `trk` [`vfo_type`]|VFO visualizer. Read 5,000 pulses from the top of a track using specified type of VFO.|
-|`sv` `vfo_type`|Select VFO type.|
+|Command|Parameters|Description|
+|-|-|-|
+|`o`|`file_name`|Open an image file.(HFE/MFM/RAW/D77)|
+|`rt`|`trk`|Read track|
+|`vt`|`trk` [`trk_e`]|Validate track(s). Performs read ID and read sector for a track.<br>If you specify 'trk_e', the command will perform track validation from 'trk' to 'trk_e'.|
+|`ri`|`trk` [`trk_e`]|Read all sector IDs. Perform ID read from 'trk' to 'trk_e' if you specify 'trk_e'. Otherwise, an ID read operation will be performed for a track.|
+|`rs`|`trk` `sid` `sct`|Read sector|
+|`ef`|`rate`|Enable fluctuator (VFO stops at rate of `rate(0.0-1.0)`|
+|`ef`||Disable fluctuator|
+|`gain`|`gl` `gh`|Set VFO gain (low=gl, high=gh)|
+|`vfo`||Display current VFO parameters|
+|`vv`|`trk` [`vfo_type`]|VFO visualizer. Read 5,000 pulses from the top of a track using specified type of VFO.|
+|`sv`|`vfo_type`|Select VFO type.|
 |`rv`|(soft) reset VFO|
-|`histogram` `trk`|Display histogram of data pulse distances in a track|
-|`q`|Quit analyzer|
+|`histogram`|`trk`|Display histogram of data pulse distances in a track|
+|`q`||Quit analyzer|
 * Note1: The number starting with '$' will be handled as hexadecimal value (e.g. **$f7** == **247**)  
 * Note2: **VFO type** = 0:vfo_fixed, 1:vfo_simple, 2:vfo_pid, 3:vfo_pid2, 9=experimental.  
 

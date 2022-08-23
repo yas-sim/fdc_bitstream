@@ -471,7 +471,7 @@ void cmd_help(void) {
     "ri trk [trk_e]    Read all sector IDs. Perform ID read from 'trk' to 'trk_e' if you specify trk_e.\n"
     "                  Otherwise, an ID read operation will be performed for a track.\n"
     "rs trk sid sct    Read sector\n"
-    "ef sus_radio      Enable fluctuator (VFO stops operation at rate of sus_ratio (0.0-1.0))\n"
+    "ef sus_ratio      Enable fluctuator (VFO stops operation at rate of sus_ratio (0.0-1.0))\n"
     "ef                Disable fluctuator\n"
     "gain gl gh        Set VFO gain (low=gl, high=gh)\n"
     "vfo               Display current VFO parameters\n"
