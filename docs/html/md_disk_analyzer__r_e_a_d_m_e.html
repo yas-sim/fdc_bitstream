@@ -94,26 +94,29 @@ $(document).ready(function(){initNavTree('md_disk_analyzer__r_e_a_d_m_e.html',''
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>rt</code> <code>trk</code>   </td><td class="markdownTableBodyNone">Read track    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>ri</code> <code>trk</code>   </td><td class="markdownTableBodyNone">Read all sector IDs    </td></tr>
+<td class="markdownTableBodyNone"><code>vt</code> <code>trk</code> [<code>trk_e</code>]   </td><td class="markdownTableBodyNone">Validate track(s). Performs read ID and read sector for a track.<br  />
+If you specify 'trk_e', the command will perform track validation from 'trk' to 'trk_e'.    </td></tr>
 <tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>ri</code> <code>trk</code> [<code>trk_e</code>]   </td><td class="markdownTableBodyNone">Read all sector IDs. Perform ID read from 'trk' to 'trk_e' if you specify 'trk_e'. Otherwise, an ID read operation will be performed for a track.    </td></tr>
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>rs</code> <code>trk</code> <code>sid</code> <code>sct</code>   </td><td class="markdownTableBodyNone">Read sector    </td></tr>
-<tr class="markdownTableRowOdd">
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>ef</code> <code>nume</code> <code>denom</code>   </td><td class="markdownTableBodyNone">Enable fluctuator (VFO stops at rate of nume/denom)    </td></tr>
-<tr class="markdownTableRowEven">
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>ef</code>   </td><td class="markdownTableBodyNone">Disable fluctuator    </td></tr>
-<tr class="markdownTableRowOdd">
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>gain</code> <code>gl</code> <code>gh</code>   </td><td class="markdownTableBodyNone">Set VFO gain (low=gl, high=gh)    </td></tr>
-<tr class="markdownTableRowEven">
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>vfo</code>   </td><td class="markdownTableBodyNone">Display current VFO parameters    </td></tr>
-<tr class="markdownTableRowOdd">
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>vv</code> <code>trk</code> [<code>vfo_type</code>]   </td><td class="markdownTableBodyNone">VFO visualizer. Read 5,000 pulses from the top of a track using specified type of VFO.    </td></tr>
-<tr class="markdownTableRowEven">
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>sv</code> <code>vfo_type</code>   </td><td class="markdownTableBodyNone">Select VFO type.    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>rv</code>   </td><td class="markdownTableBodyNone">(soft) reset VFO    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>histogram</code> <code>trk</code>   </td><td class="markdownTableBodyNone">Display histogram of data pulse distances in a track    </td></tr>
+<td class="markdownTableBodyNone"><code>rv</code>   </td><td class="markdownTableBodyNone">(soft) reset VFO    </td></tr>
 <tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>histogram</code> <code>trk</code>   </td><td class="markdownTableBodyNone">Display histogram of data pulse distances in a track    </td></tr>
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>q</code>   </td><td class="markdownTableBodyNone">Quit analyzer   </td></tr>
 </table>
 <ul>

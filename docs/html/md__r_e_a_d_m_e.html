@@ -206,12 +206,10 @@ Directory structure - Sample/Test/Tool programs, etc</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><a href="./image_converter/"><code>image_converter</code></a>   </td><td class="markdownTableBodyNone">(MFM/D77/RAW/HFE) to (MFM/D77) disk image converter. The converter will take one of mfm/raw/hfe/d77 image file, translate it into a MFM data internally, and then output the data as either one of mfm/d77.    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><a href="./check_image/"><code>check_image</code></a>   </td><td class="markdownTableBodyNone">Performs read ID for all tracks. You can specify VFO gain to check what value is the best for the image.    </td></tr>
-<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><a href="./create_mfm_image/"><code>create_mfm_image</code></a>   </td><td class="markdownTableBodyNone">Creates an 2D/MFM disk image with regular format (ECMA/ISO).The program will create <code>new_image.mfm</code>.    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><a href="./kfx2mfm/"><code>kfx2mfm</code></a>   </td><td class="markdownTableBodyNone">Kryoflux <code>RAW</code> files to <code>MFM</code> disk image file converter. Kryoflux <code>RAW</code> image consists of multiple <code>RAW</code> files. Each file contains bitstream data of a track captured at the clock rate of 24MHz.    </td></tr>
 <tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a href="./kfx2mfm/"><code>kfx2mfm</code></a>   </td><td class="markdownTableBodyNone">Kryoflux <code>RAW</code> files to <code>MFM</code> disk image file converter. Kryoflux <code>RAW</code> image consists of multiple <code>RAW</code> files. Each file contains bitstream data of a track captured at the clock rate of 24MHz.    </td></tr>
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><a href="./disk_analyzer/"><code>disk_analyzer</code></a>   </td><td class="markdownTableBodyNone">Simple disk image analyze tool. You can try VFO gain and fluctuator setting. This tool can visualize how VFO behaves (VFO visualizer) and check the pulse timing distribution of the disk image (histogram).   </td></tr>
 </table>
 <h1><a class="anchor" id="autotoc_md27"></a>
@@ -245,48 +243,10 @@ Command line examples for sample programs and tools.</h1>
 <div class="line"> :  :</div>
 <div class="line">=== 83</div>
 <div class="line"> </div>
-<div class="line">CMD&gt; check_image -i new_image.mfm</div>
-<div class="line"># ID list will be shown.</div>
-<div class="line"> </div>
-<div class="line">Gain L = 8, Gain H = 12</div>
-<div class="line">Start track = 0, End track = 79</div>
-<div class="line"> </div>
-<div class="line">=== 0</div>
-<div class="line"> 0 00 00 01 01 fa0c OK</div>
-<div class="line"> 1 00 00 02 01 af5f OK</div>
-<div class="line"> 2 00 00 03 01 9c6e OK</div>
-<div class="line"> :  :  :  :  :  :    :</div>
-<div class="line">15 00 00 10 01 ca4e OK</div>
-<div class="line">Error rate: 0</div>
-<div class="line">=== 1</div>
-<div class="line"> 0 00 01 01 01 cd3c OK</div>
-<div class="line"> 1 00 01 02 01 986f OK</div>
-<div class="line"> 2 00 01 03 01 ab5e OK</div>
-<div class="line"> :  :  :  :  :  :    :</div>
-<div class="line"> </div>
-<div class="line">CMD&gt; image_converter new_image.mfm new_image.d77</div>
+<div class="line">CMD&gt; image_converter -i new_image.mfm -o new_image.d77</div>
 <div class="line"># new_image.d77 will be created from new_image.mfm</div>
 <div class="line"> </div>
 <div class="line">new_image.mfm -&gt; new_image.d77</div>
-<div class="line"> </div>
-<div class="line">CMD&gt; check_image -i new_image.d77</div>
-<div class="line"># ID list will be shown. (the same contents as original new_image.mfm)</div>
-<div class="line"> </div>
-<div class="line">Gain L = 8, Gain H = 12</div>
-<div class="line">Start track = 0, End track = 79</div>
-<div class="line"> </div>
-<div class="line">=== 0</div>
-<div class="line"> 0 00 00 01 01 fa0c OK</div>
-<div class="line"> 1 00 00 02 01 af5f OK</div>
-<div class="line"> 2 00 00 03 01 9c6e OK</div>
-<div class="line"> :  :  :  :  :  :    :</div>
-<div class="line">15 00 00 10 01 ca4e OK</div>
-<div class="line">Error rate: 0</div>
-<div class="line">=== 1</div>
-<div class="line"> 0 00 01 01 01 cd3c OK</div>
-<div class="line"> 1 00 01 02 01 986f OK</div>
-<div class="line"> 2 00 01 03 01 ab5e OK</div>
-<div class="line"> :  :  :  :  :  :    :</div>
 </div><!-- fragment --><hr  />
  <h1><a class="anchor" id="autotoc_md33"></a>
 MFM image data format:</h1>
