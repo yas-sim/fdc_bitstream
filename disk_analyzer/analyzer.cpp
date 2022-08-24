@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include <iomanip>
 #include <string>
 #include <sstream>
@@ -26,6 +27,43 @@ size_t g_data_bit_rate = 0;
 size_t g_spindle_time_ns = 0;
 size_t g_max_track_number = 0;
 
+/*
+#define FOREGROUND_BLUE      0x0001 // text color contains blue.
+#define FOREGROUND_GREEN     0x0002 // text color contains green.
+#define FOREGROUND_RED       0x0004 // text color contains red.
+#define FOREGROUND_INTENSITY 0x0008 // text color is intensified.
+#define BACKGROUND_BLUE      0x0010 // background color contains blue.
+#define BACKGROUND_GREEN     0x0020 // background color contains green.
+#define BACKGROUND_RED       0x0040 // background color contains red.
+#define BACKGROUND_INTENSITY 0x0080 // background color is intensified.
+#define COMMON_LVB_LEADING_BYTE    0x0100 // Leading Byte of DBCS
+#define COMMON_LVB_TRAILING_BYTE   0x0200 // Trailing Byte of DBCS
+#define COMMON_LVB_GRID_HORIZONTAL 0x0400 // DBCS: Grid attribute: top horizontal.
+#define COMMON_LVB_GRID_LVERTICAL  0x0800 // DBCS: Grid attribute: left vertical.
+#define COMMON_LVB_GRID_RVERTICAL  0x1000 // DBCS: Grid attribute: right vertical.
+#define COMMON_LVB_REVERSE_VIDEO   0x4000 // DBCS: Reverse fore/back ground attribute.
+#define COMMON_LVB_UNDERSCORE      0x8000 // DBCS: Underscore.*/
+
+#ifdef _WIN32
+#include <windows.h>
+void color(size_t col) {
+    if(col>7) col=7;
+    size_t flags = FOREGROUND_INTENSITY;
+    if (col & 0b0001) flags |= FOREGROUND_INTENSITY | FOREGROUND_BLUE;
+    if (col & 0b0010) flags |= FOREGROUND_INTENSITY | FOREGROUND_RED;
+    if (col & 0b0100) flags |= FOREGROUND_INTENSITY | FOREGROUND_GREEN;
+    HANDLE console_handle = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(console_handle, flags);
+}
+#else
+void color(size_t col) {
+    const size_t col_tbl[8] { 40, 44, 41, 45, 42, 36, 43, 47 };
+    if(col>7) col=7;
+    std::stringstream ss;
+    ss << "\e[" << std::dec << col_tbl[col] << "m";
+    std::cout << ss.str();
+}
+#endif
 
 void disp_status(void) {
     std::cout << "Gain L:" << g_gain_l << ", Gain H:" << g_gain_h << std::endl;
@@ -71,7 +109,9 @@ disk_image* create_object_by_ext(std::string ext) {
 void cmd_open_image(std::string file_name) {
     std::string ext = get_file_extension(file_name);
     if(check_extension(ext) == false) {
+        color(2);
         std::cout << "Unsupported file extension." << std::endl;
+        color(7);
         return;
     }
     disk_img = create_object_by_ext(ext);
@@ -215,9 +255,10 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=99) {
     vfo->set_gain_mode(vfo_base::gain_state::low);
     track_stream.set_stream_pos(0);
 
-    double scale = 50.f / (props.m_sampling_rate / props.m_data_bit_rate);
+    double scale = 50.f / (vfo->m_cell_size_ref);
 
     double dist = 0.f;
+    size_t irregular_pulse_count = 0;
     for(size_t i=0; i<5000; i++) {
         dist += static_cast<double>(track_stream.distance_to_next_pulse());
         dist -= std::floor(dist / vfo->m_cell_size) * vfo->m_cell_size;
@@ -226,7 +267,7 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=99) {
         //}
 
         // visualize
-        std::string line = std::string(100, ' ');
+        std::string line = std::string(50 * 1.3, ' ');
         size_t win_st = (vfo->m_window_ofst) * scale;
         size_t win_en = (vfo->m_window_ofst+vfo->m_window_size) * scale;
         for(size_t x = win_st; x < win_en; x++) {
@@ -238,12 +279,22 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=99) {
         } else {
             line[0] = '*';
         }
-        std::cout << std::setw(6) << i << " >" << line << std::endl;
+        std::cout << std::setw(6) << i << " >" << line;
+        if(dist < vfo->m_window_ofst || dist > vfo->m_window_ofst + vfo->m_window_size) {
+            color(6);
+            std::cout << "*** IRREGULAR PULSE DETECTED ***";
+            irregular_pulse_count++;
+            color(7);
+        }
+        std::cout << std::endl;
 
         // run VFO
         dist = vfo->calc(dist);
     }
     vfo->disp_vfo_status();
+    color(4);
+    std::cout << irregular_pulse_count << " irregular pulse(s) detected." << std::endl;
+    color(7);
 
     delete vfo;
 }
