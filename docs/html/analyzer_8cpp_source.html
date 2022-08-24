@@ -145,7 +145,7 @@ $(document).ready(function(){initNavTree('analyzer_8cpp_source.html',''); initRe
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>}</div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="preprocessor">#else</span></div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="analyzer_8cpp.html#a5e579e0ac0c4dd446666175f62041158">   59</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="analyzer_8cpp.html#a5e579e0ac0c4dd446666175f62041158">color</a>(<span class="keywordtype">size_t</span> col) {</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> col_tbl[8] { 40, 44, 41, 45, 42, 36, 43, 47 };</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> col_tbl[8] { 30, 34, 31, 35, 32, 36, 33, 37 };</div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="keywordflow">if</span>(col&gt;7) col=7;</div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    std::stringstream ss;</div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    ss &lt;&lt; <span class="stringliteral">&quot;\e[&quot;</span> &lt;&lt; std::dec &lt;&lt; col_tbl[col] &lt;&lt; <span class="stringliteral">&quot;m&quot;</span>;</div>
