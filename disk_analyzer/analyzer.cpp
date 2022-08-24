@@ -10,14 +10,6 @@
 #include <direct.h>
 #include <stdio.h>
 #include <conio.h>
-namespace abst {
-int kbhit(void) { return ::kbhit(); }
-int getch(void) { return ::getch(); }
-}
-#else
-#include <ncurses.h>
-int kbhit(void) { return ::getch(); }
-int getch(void) { return ::getch(); }
 #endif
 
 
@@ -231,17 +223,14 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=99) {
 
     double scale = (100 * 0.8f) / (vfo->m_cell_size_ref);
 
-#ifndef _WIN32
-    //"curses" related
-    initscr();
-    noecho();
-    curs_set(0);
-    cbreak();
-#endif
     double dist = 0.f;
     size_t irregular_pulse_count = 0;
     size_t count = 0;
+#ifdef _WIN32
     while(count<500000 && !track_stream.is_wraparound()) {
+#else
+    while(count<5000 && !track_stream.is_wraparound()) {
+#endif
         dist += static_cast<double>(track_stream.distance_to_next_pulse());
         dist -= std::floor(dist / vfo->m_cell_size) * vfo->m_cell_size;
 
@@ -270,15 +259,13 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=99) {
         // run VFO
         dist = vfo->calc(dist);
         count++;
+#if _WIN32
         if(kbhit()) {
             getch();
             break;
         }
-    }
-#ifndef _WIN32
-    //"curses" related
-    endwin();
 #endif
+    }
     vfo->disp_vfo_status();
     fdc_misc::color(4);
     std::cout << irregular_pulse_count << " irregular pulse(s) detected." << std::endl;
