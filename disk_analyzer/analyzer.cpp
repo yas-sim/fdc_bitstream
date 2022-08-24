@@ -5,6 +5,9 @@
 #include <vector>
 #include <algorithm>
 
+#include <stdio.h>
+#include <conio.h>
+
 #ifdef _WIN32
 #include <direct.h>
 #endif
@@ -203,11 +206,12 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=99) {
     }
     switch(vfo_sel) {
     default:
-    case VFO_TYPE_SIMPLE:       vfo = new vfo_simple();       break;
-    case VFO_TYPE_FIXED:        vfo = new vfo_fixed();        break;
-    case VFO_TYPE_PID:          vfo = new vfo_pid();          break;
-    case VFO_TYPE_PID2:         vfo = new vfo_pid2();         break;
-    case VFO_TYPE_EXPERIMANTAL: vfo = new vfo_experimental(); break;
+    case VFO_TYPE_SIMPLE:       vfo = new vfo_simple();         break;
+    case VFO_TYPE_FIXED:        vfo = new vfo_fixed();          break;
+    case VFO_TYPE_PID:          vfo = new vfo_pid();            break;
+    case VFO_TYPE_PID2:         vfo = new vfo_pid2();           break;
+    case VFO_TYPE_SIMPLE2:      vfo = new vfo_simple2();        break;
+    case VFO_TYPE_EXPERIMANTAL: vfo = new vfo_experimental();   break;
     }
 
     disk_image_base_properties props = disk_img->get_property();
@@ -216,19 +220,17 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=99) {
     vfo->set_gain_mode(vfo_base::gain_state::low);
     track_stream.set_stream_pos(0);
 
-    double scale = 50.f / (vfo->m_cell_size_ref);
+    double scale = (100 * 0.8f) / (vfo->m_cell_size_ref);
 
     double dist = 0.f;
     size_t irregular_pulse_count = 0;
-    for(size_t i=0; i<5000; i++) {
+    size_t count = 0;
+    while(count<500000 && !track_stream.is_wraparound()) {
         dist += static_cast<double>(track_stream.distance_to_next_pulse());
         dist -= std::floor(dist / vfo->m_cell_size) * vfo->m_cell_size;
-        //while(dist > vfo->m_cell_size) {
-        //    dist -= vfo->m_cell_size;
-        //}
 
         // visualize
-        std::string line = std::string(50 * 1.3, ' ');
+        std::string line = std::string(100, ' ');
         size_t win_st = (vfo->m_window_ofst) * scale;
         size_t win_en = (vfo->m_window_ofst+vfo->m_window_size) * scale;
         for(size_t x = win_st; x < win_en; x++) {
@@ -240,7 +242,7 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=99) {
         } else {
             line[0] = '*';
         }
-        std::cout << std::setw(6) << i << " >" << line;
+        std::cout << std::setw(6) << count << " >" << line;
         if(dist < vfo->m_window_ofst || dist > vfo->m_window_ofst + vfo->m_window_size) {
             fdc_misc::color(6);
             std::cout << "*** IRREGULAR PULSE DETECTED ***";
@@ -251,6 +253,11 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=99) {
 
         // run VFO
         dist = vfo->calc(dist);
+        count++;
+        if(kbhit()) {
+            getch();
+            break;
+        }
     }
     vfo->disp_vfo_status();
     fdc_misc::color(4);

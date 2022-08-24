@@ -37,11 +37,12 @@ void mfm_codec::set_vfo_type(size_t vfo_type) {
     vfo_base *new_vfo;
     switch(vfo_type) {
         default:
-        case VFO_TYPE_SIMPLE:       new_vfo = new vfo_simple();       break;
-        case VFO_TYPE_FIXED:        new_vfo = new vfo_fixed();        break;
-        case VFO_TYPE_PID:          new_vfo = new vfo_pid();          break;
-        case VFO_TYPE_PID2:         new_vfo = new vfo_pid2();         break;
-        case VFO_TYPE_EXPERIMANTAL: new_vfo = new vfo_experimental(); break;
+        case VFO_TYPE_SIMPLE:       new_vfo = new vfo_simple();         break;
+        case VFO_TYPE_FIXED:        new_vfo = new vfo_fixed();          break;
+        case VFO_TYPE_PID:          new_vfo = new vfo_pid();            break;
+        case VFO_TYPE_PID2:         new_vfo = new vfo_pid2();           break;
+        case VFO_TYPE_SIMPLE2:      new_vfo = new vfo_simple2();        break;
+        case VFO_TYPE_EXPERIMANTAL: new_vfo = new vfo_experimental();   break;
     }
     if(m_vfo != nullptr) {
         new_vfo->m_gain_h        = m_vfo->m_gain_h;

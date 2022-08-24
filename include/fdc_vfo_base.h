@@ -43,7 +43,7 @@ public:
         if(val > upper_limit) val = upper_limit;
         return val;
     }
-    virtual void set_params(size_t sampling_rate, size_t fdc_bit_rate, double data_window_ratio = 0.75f);
+    virtual void set_params(size_t sampling_rate, size_t fdc_bit_rate, double data_window_ratio = 1.f);
     virtual void set_cell_size(double cell_size);
     virtual void update_cell_params(void);
     void set_gain_val(double gain_l, double gain_h);
@@ -55,4 +55,5 @@ public:
 #include "vfo_simple.h"
 #include "vfo_pid.h"
 #include "vfo_pid2.h"
+#include "vfo_simple2.h"
 #include "vfo_experimental.h"

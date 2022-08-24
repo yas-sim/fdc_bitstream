@@ -51,7 +51,7 @@ void vfo_experimental::soft_reset(void) {
  *  Freq. correction : change bit cell size by accumlated (integrated) error.
  */
 double vfo_experimental::calc(double pulse_pos) {
-
+#if 0
     // compare the position of the current and previous pulses in the bit cell (phase_diff -=slow freq, +=fast freq)
     double phase_diff = m_prev_pulse_pos - pulse_pos;
     // phase correction. assuming phase difference is less than 180deg.
@@ -63,24 +63,26 @@ double vfo_experimental::calc(double pulse_pos) {
 
     // Cell size adjustment == frequency correction
     m_phase_diff_integral += phase_diff;
-    double new_cell_size = m_cell_size_ref - (m_phase_diff_integral * 0.01f) * m_current_gain;        // 'I' only control
+    double new_cell_size = m_cell_size_ref + (m_phase_diff_integral * 0.02f) * m_current_gain;
     m_prev_pulse_pos = pulse_pos;
-
-#if 1
-    // Data pulse position adjustment == phase correction
-    double phase_error = m_cell_center - pulse_pos;
-    constexpr double phase_error_limitter = 0.5f;
-    phase_error = limit(phase_error, -m_cell_size_ref * phase_error_limitter, 
-                                      m_cell_size_ref * phase_error_limitter);
-    //m_phase_integral += phase_error;
-    //double phase_err_diff =  phase_error - m_prev_phase_error;
-    double phase_correction = (phase_error * 0.25f /*- phase_err_diff * 0.02f - m_phase_integral * 0.002f*/) * m_current_gain;  // PI control (no D element)
-    constexpr double phase_correction_limitter = 0.125f;
-    phase_correction = limit(phase_correction, -m_cell_size_ref * phase_correction_limitter, 
-                                                m_cell_size_ref * phase_correction_limitter);
-    pulse_pos += phase_correction;
-    m_prev_phase_error = phase_error;
 #endif
+
+    double phase_diff = m_cell_center - pulse_pos;
+    double new_cell_size = m_cell_size - phase_diff * 0.01f * m_current_gain;
+
+    // Data pulse position adjustment == phase correction
+    //double phase_error = m_cell_center - pulse_pos;
+    //constexpr double phase_error_limitter = 0.5f;
+    //phase_error = limit(phase_error, -m_cell_size_ref * phase_error_limitter, 
+    //                                  m_cell_size_ref * phase_error_limitter);
+    //double phase_correction = (phase_error * 0.5f) * m_current_gain;
+    //constexpr double phase_correction_limitter = 0.25f;
+    //phase_correction = limit(phase_correction, -m_cell_size_ref * phase_correction_limitter, 
+    //                                            m_cell_size_ref * phase_correction_limitter);
+    //pulse_pos += phase_correction;
+    //m_prev_phase_error = phase_error;
+    pulse_pos = m_cell_center;      // fixed
+
     set_cell_size(new_cell_size);
 
     return pulse_pos;
