@@ -148,6 +148,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a7b22c1fcf0513e6ec404dd3e5326bd08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a80bcb135112ed752b8f7131828b8f9ca"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdisk__image.html#a80bcb135112ed752b8f7131828b8f9ca">set_vfo_type</a> (size_t vfo_type)</td></tr>
 <tr class="separator:a80bcb135112ed752b8f7131828b8f9ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af73e5c8b412e92785102f738fe11fe4c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdisk__image.html#af73e5c8b412e92785102f738fe11fe4c">set_gain</a> (double gain_l, double gain_h)</td></tr>
+<tr class="separator:af73e5c8b412e92785102f738fe11fe4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbc335a4e8682e414df97d5409bbd263"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdisk__image.html#adbc335a4e8682e414df97d5409bbd263">verbose</a> (bool verbose_flag)</td></tr>
+<tr class="separator:adbc335a4e8682e414df97d5409bbd263"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -570,6 +574,46 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="af73e5c8b412e92785102f738fe11fe4c" name="af73e5c8b412e92785102f738fe11fe4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af73e5c8b412e92785102f738fe11fe4c">&#9670;&nbsp;</a></span>set_gain()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void disk_image::set_gain </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>gain_l</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>gain_h</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented in <a class="el" href="classdisk__image__d77.html#ab34df4df5edb71a41074b6c05ac9668c">disk_image_d77</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="image__base_8h_source.html#l00078">78</a> of file <a class="el" href="image__base_8h_source.html">image_base.h</a>.</p>
+
+</div>
+</div>
 <a id="a13a1a7535d9aeaed35bd2271c49e9eaf" name="a13a1a7535d9aeaed35bd2271c49e9eaf"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a13a1a7535d9aeaed35bd2271c49e9eaf">&#9670;&nbsp;</a></span>set_property()</h2>
 
@@ -680,9 +724,39 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented in <a class="el" href="classdisk__image__d77.html#a48c89ababe820663d710d791a9ad93b5">disk_image_d77</a>.</p>
+<p>Reimplemented in <a class="el" href="classdisk__image__d77.html#a7dde67235c9e6f1f692b84fc98634e30">disk_image_d77</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="image__base_8h_source.html#l00077">77</a> of file <a class="el" href="image__base_8h_source.html">image_base.h</a>.</p>
+
+</div>
+</div>
+<a id="adbc335a4e8682e414df97d5409bbd263" name="adbc335a4e8682e414df97d5409bbd263"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adbc335a4e8682e414df97d5409bbd263">&#9670;&nbsp;</a></span>verbose()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void disk_image::verbose </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>verbose_flag</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented in <a class="el" href="classdisk__image__d77.html#a513aa60c5c3adccc05185d995d915ed8">disk_image_d77</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="image__base_8h_source.html#l00079">79</a> of file <a class="el" href="image__base_8h_source.html">image_base.h</a>.</p>
 
 </div>
 </div>

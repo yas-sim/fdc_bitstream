@@ -5,6 +5,6 @@ var image__converter_8cpp =
     [ "get_file_base", "image__converter_8cpp.html#aa94c4f1edd8a9fbabdc898aa5e31d0a4", null ],
     [ "get_file_extension", "image__converter_8cpp.html#a524c24db4867f0a9c4dfb322f45a4911", null ],
     [ "main", "image__converter_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97", null ],
-    [ "normalize_track", "image__converter_8cpp.html#aa377f0381bdb84f2d9da7374e236e26d", null ],
+    [ "normalize_track", "image__converter_8cpp.html#a60b530e94742b10ccd86f68529ae8c0c", null ],
     [ "usage", "image__converter_8cpp.html#a6a0e715c3ffeb178d7d8e0780da368f3", null ]
 ];
