@@ -12,7 +12,7 @@ var classvfo__base =
     [ "set_cell_size", "classvfo__base.html#a50ae55d714678f1141cb342fd6c66ae4", null ],
     [ "set_gain_mode", "classvfo__base.html#ad97957733090f702b16fffc219663298", null ],
     [ "set_gain_val", "classvfo__base.html#af07be349d99166c0f2512c125a60036a", null ],
-    [ "set_params", "classvfo__base.html#ac94d1b943488393bfa6d09441e11495a", null ],
+    [ "set_params", "classvfo__base.html#ad15123b7fe61430513248c527eb890e9", null ],
     [ "soft_reset", "classvfo__base.html#ae137ed93a8d85d8aaa91b3b5f2f897cd", null ],
     [ "update_cell_params", "classvfo__base.html#ace78f6cbe08d7dc05cabea35880d2015", null ],
     [ "m_cell_center", "classvfo__base.html#ad9c7e17252bb90d8c72462b6a10a2b2b", null ],

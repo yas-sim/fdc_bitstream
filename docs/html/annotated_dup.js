@@ -25,5 +25,6 @@ var annotated_dup =
     [ "vfo_fixed", "classvfo__fixed.html", "classvfo__fixed" ],
     [ "vfo_pid", "classvfo__pid.html", "classvfo__pid" ],
     [ "vfo_pid2", "classvfo__pid2.html", "classvfo__pid2" ],
-    [ "vfo_simple", "classvfo__simple.html", "classvfo__simple" ]
+    [ "vfo_simple", "classvfo__simple.html", "classvfo__simple" ],
+    [ "vfo_simple2", "classvfo__simple2.html", "classvfo__simple2" ]
 ];

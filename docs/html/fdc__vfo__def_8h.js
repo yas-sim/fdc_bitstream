@@ -8,5 +8,6 @@ var fdc__vfo__def_8h =
     [ "VFO_TYPE_FIXED", "fdc__vfo__def_8h.html#af6950cea16f50ba0293f8068f9ae8471", null ],
     [ "VFO_TYPE_PID", "fdc__vfo__def_8h.html#a5ccbb519d304b4d889649ca00bc718c9", null ],
     [ "VFO_TYPE_PID2", "fdc__vfo__def_8h.html#a37e257be22cce2d11c184cc5d1982940", null ],
-    [ "VFO_TYPE_SIMPLE", "fdc__vfo__def_8h.html#a975cb9998a5e9e768428c523cf4b7393", null ]
+    [ "VFO_TYPE_SIMPLE", "fdc__vfo__def_8h.html#a975cb9998a5e9e768428c523cf4b7393", null ],
+    [ "VFO_TYPE_SIMPLE2", "fdc__vfo__def_8h.html#a03ef2f15c53e694619d2b52cda3c4855", null ]
 ];
