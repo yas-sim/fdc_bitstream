@@ -24,7 +24,7 @@ var searchData=
   ['cmd_5fset_5fgain_21',['cmd_set_gain',['../analyzer_8cpp.html#ab74471106683d8e31f644d80b462718f',1,'analyzer.cpp']]],
   ['cmd_5fvalidate_5ftrack_22',['cmd_validate_track',['../analyzer_8cpp.html#a9291d3f436338b013e2adf1e51637558',1,'analyzer.cpp']]],
   ['cmd_5fvisualize_5fvfo_23',['cmd_visualize_vfo',['../analyzer_8cpp.html#aa62a976233956c07c79d3d5cf6c62789',1,'analyzer.cpp']]],
-  ['color_24',['color',['../analyzer_8cpp.html#a5e579e0ac0c4dd446666175f62041158',1,'analyzer.cpp']]],
+  ['color_24',['color',['../namespacefdc__misc.html#a3f403b4f1144b3106dc763a1191794cb',1,'fdc_misc']]],
   ['common_2ecpp_25',['common.cpp',['../common_8cpp.html',1,'']]],
   ['common_2eh_26',['common.h',['../common_8h.html',1,'']]],
   ['convert_5fto_5fdist_5farray_27',['convert_to_dist_array',['../namespacefdc__misc.html#a5b0963a78621d86811f116749eb96c65',1,'fdc_misc']]],
