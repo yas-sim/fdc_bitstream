@@ -147,5 +147,8 @@ void disk_image_d77::write(const std::string file_name) {
         output_image.m_disk_data.push_back(d77_trk);
     }
     output_image.write(file_name);
+    if(m_verbose) {
+        std::cout << std::endl;
+    }
     std::cout.flags(flags_saved);
 }
