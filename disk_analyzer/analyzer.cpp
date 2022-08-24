@@ -57,7 +57,7 @@ void color(size_t col) {
 }
 #else
 void color(size_t col) {
-    const size_t col_tbl[8] { 40, 44, 41, 45, 42, 36, 43, 47 };
+    const size_t col_tbl[8] { 30, 34, 31, 35, 32, 36, 33, 37 };
     if(col>7) col=7;
     std::stringstream ss;
     ss << "\e[" << std::dec << col_tbl[col] << "m";
