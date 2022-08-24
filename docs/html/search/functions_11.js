@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['unset_5ftrack_5fdata_0',['unset_track_data',['../classmfm__codec.html#a1e71d92dfcbb6624e8a96847625f0755',1,'mfm_codec']]],
-  ['update_5fcell_5fparams_1',['update_cell_params',['../classvfo__base.html#ace78f6cbe08d7dc05cabea35880d2015',1,'vfo_base']]],
-  ['update_5fparameters_2',['update_parameters',['../classmfm__codec.html#ab9e990407f98e4f7fe1f13d814d1757d',1,'mfm_codec']]],
-  ['usage_3',['usage',['../image__converter_8cpp.html#a6a0e715c3ffeb178d7d8e0780da368f3',1,'image_converter.cpp']]]
+  ['verbose_0',['verbose',['../classdisk__image.html#adbc335a4e8682e414df97d5409bbd263',1,'disk_image::verbose()'],['../classdisk__image__d77.html#a513aa60c5c3adccc05185d995d915ed8',1,'disk_image_d77::verbose()']]],
+  ['vfo_5fbase_1',['vfo_base',['../classvfo__base.html#afdac4498005556ac7d185c5ff80101ca',1,'vfo_base']]],
+  ['vfo_5fpid_2',['vfo_pid',['../classvfo__pid.html#a6e35d9f93526d4c489a2003fcab84886',1,'vfo_pid']]]
 ];
