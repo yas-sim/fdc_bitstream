@@ -15,6 +15,7 @@ var analyzer_8cpp =
     [ "cmd_set_gain", "analyzer_8cpp.html#ab74471106683d8e31f644d80b462718f", null ],
     [ "cmd_validate_track", "analyzer_8cpp.html#a9291d3f436338b013e2adf1e51637558", null ],
     [ "cmd_visualize_vfo", "analyzer_8cpp.html#aa62a976233956c07c79d3d5cf6c62789", null ],
+    [ "color", "analyzer_8cpp.html#a5e579e0ac0c4dd446666175f62041158", null ],
     [ "create_object_by_ext", "analyzer_8cpp.html#a951938f545ae411a3bbef610ffc7324d", null ],
     [ "disp_status", "analyzer_8cpp.html#ae3faf2fb649ea768d77746570ff8b498", null ],
     [ "get_file_base", "analyzer_8cpp.html#aa94c4f1edd8a9fbabdc898aa5e31d0a4", null ],
