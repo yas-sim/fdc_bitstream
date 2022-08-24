@@ -41,8 +41,8 @@ void disk_image_raw::read(const std::string file_name) {
                 if (items[0] == "**TRACK_RANGE") {
                 }
                 else if (items[0] == "**TRACK_READ") {
-                    cylinder = atoi(items[1].c_str());
-                    side = atoi(items[2].c_str());
+                    cylinder = std::stoi(items[1]);
+                    side     = std::stoi(items[2]);
                     track_data.clear_array();
                     bit_pos = 0;
                     read_track_mode = true;
@@ -59,8 +59,10 @@ void disk_image_raw::read(const std::string file_name) {
                 else if (items[0] == "**DRIVE_TYPE") {
                 }
                 else if (items[0] == "**SPIN_SPD") {
+                    m_base_prop.m_spindle_time_ns = std::stod(items[1]) * 1e9;
                 }
                 else if (items[0] == "**OVERLAP") {
+                    m_overlap = std::stoi(items[1]);
                 }
             }
         }

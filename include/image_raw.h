@@ -10,8 +10,9 @@
 
 class disk_image_raw : public disk_image {
 private:
+    size_t  m_overlap;
 public:
-    disk_image_raw() : disk_image() {};
+    disk_image_raw() : disk_image(), m_overlap() {};
 
     void read(const std::string raw_file_name) override;
     void write(const std::string raw_file_name) override { assert(false); }

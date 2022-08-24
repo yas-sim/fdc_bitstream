@@ -69,11 +69,11 @@ double vfo_experimental::calc(double pulse_pos) {
 #if 1
     // Data pulse position adjustment == phase correction
     double phase_error = m_cell_center - pulse_pos;
-    constexpr double phase_error_limitter = 0.25f;
+    constexpr double phase_error_limitter = 0.5f;
     phase_error = limit(phase_error, -m_cell_size_ref * phase_error_limitter, 
                                       m_cell_size_ref * phase_error_limitter);
-    m_phase_integral += phase_error;
-    double phase_err_diff =  phase_error - m_prev_phase_error;
+    //m_phase_integral += phase_error;
+    //double phase_err_diff =  phase_error - m_prev_phase_error;
     double phase_correction = (phase_error * 0.25f /*- phase_err_diff * 0.02f - m_phase_integral * 0.002f*/) * m_current_gain;  // PI control (no D element)
     constexpr double phase_correction_limitter = 0.125f;
     phase_correction = limit(phase_correction, -m_cell_size_ref * phase_correction_limitter, 

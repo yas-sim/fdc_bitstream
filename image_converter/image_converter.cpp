@@ -22,7 +22,7 @@ void usage(std::string cmd_name) {
                  "                 This will make the disk image data easy to read." << std::endl;
     std::cout << "-vfo vfo_type  : Select type of VFO (" VFO_TYPE_DESC_STR "). Effective only for D77." << std::endl;
     std::cout << "-gain low high : VFO gain setting. Effective only for D77.  e.g. -gain 1.0 2.0" << std::endl;
-    std::cout << "-v             : Verbose mode."
+    std::cout << "-v             : Verbose mode." << std::endl;
 }
 
 std::string get_file_base(std::string file_name) {
