@@ -235,8 +235,11 @@ $(document).ready(function(){initNavTree('image__d77_8cpp_source.html',''); init
 <div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>        output_image.<a class="code hl_variable" href="classd77img.html#a37aab366e27de174c1f78e030af28437">m_disk_data</a>.push_back(d77_trk);</div>
 <div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    }</div>
 <div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    output_image.<a class="code hl_function" href="classd77img.html#a29d3b741051f92e9a03a9cdc69e7d790">write</a>(file_name);</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    std::cout.flags(flags_saved);</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>}</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    <span class="keywordflow">if</span>(m_verbose) {</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>        std::cout &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    }</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    std::cout.flags(flags_saved);</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>}</div>
 <div class="ttc" id="aanalyzer_8cpp_html_a172eac6ed2a0db501d9220c1fa1c75c5"><div class="ttname"><a href="analyzer_8cpp.html#a172eac6ed2a0db501d9220c1fa1c75c5">fdc</a></div><div class="ttdeci">fdc_bitstream * fdc</div><div class="ttdef"><b>Definition:</b> <a href="analyzer_8cpp_source.html#l00019">analyzer.cpp:19</a></div></div>
 <div class="ttc" id="aclassbit__array_html"><div class="ttname"><a href="classbit__array.html">bit_array</a></div><div class="ttdef"><b>Definition:</b> <a href="bit__array_8h_source.html#l00008">bit_array.h:9</a></div></div>
 <div class="ttc" id="aclassbit__array_html_a4e2e12feb739995bca487fa805baeedc"><div class="ttname"><a href="classbit__array.html#a4e2e12feb739995bca487fa805baeedc">bit_array::clear_array</a></div><div class="ttdeci">void clear_array(void)</div><div class="ttdoc">Clear bit array data. The length of the array will be 0.</div><div class="ttdef"><b>Definition:</b> <a href="bit__array_8cpp_source.html#l00049">bit_array.cpp:49</a></div></div>
