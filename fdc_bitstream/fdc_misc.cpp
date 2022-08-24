@@ -120,6 +120,7 @@ std::vector<uint8_t> generate_format_data(size_t track_n, size_t side_n, size_t 
 // ------------------------------------------------------------------------------------------
 
 void display_histogram(const std::vector<size_t> &dist_array) {
+    std::ios::fmtflags flags_saved = std::cout.flags();
     size_t max_count = *std::max_element(dist_array.begin(), dist_array.end());
     double scale = 100.f / static_cast<double>(max_count);
     size_t max_item = 0;
@@ -134,6 +135,7 @@ void display_histogram(const std::vector<size_t> &dist_array) {
         size_t bar_length = static_cast<size_t>(static_cast<double>(dist_array[i]) * scale); // normalize
         std::cout << std::string(bar_length, '*') << std::endl;
     }
+    std::cout.flags(flags_saved);
 }
 
 std::vector<size_t> get_frequent_distribution(bit_array barray) {
@@ -239,6 +241,7 @@ void dump_buf(uint8_t* ptr, size_t size, bool line_feed /*= true*/) {
 }
 
 void bit_dump(const uint64_t data, size_t bit_width, size_t spacing /*= 0*/, bool line_feed /*= true*/) {
+    std::ios::fmtflags flags_saved = std::cout.flags();
     size_t count = 0;
     for (uint64_t bit_pos = 1 << (bit_width - 1); bit_pos != 0; bit_pos >>= 1) {
         std::cout << ((data & bit_pos) ? 1 : 0);
@@ -252,9 +255,11 @@ void bit_dump(const uint64_t data, size_t bit_width, size_t spacing /*= 0*/, boo
     if (line_feed == true) {
         std::cout << std::endl;
     }
+    std::cout.flags(flags_saved);
 }
 
 void bit_dump(bit_array &data, size_t bit_width /*= 0*/, size_t spacing /*= 0*/, bool line_feed /*=true*/) {
+    std::ios::fmtflags flags_saved = std::cout.flags();
     size_t count = 0;
     size_t length = (bit_width == 0) ? data.get_length() : bit_width;
     for (uint64_t i = 0; i < length; length++) {
@@ -269,7 +274,9 @@ void bit_dump(bit_array &data, size_t bit_width /*= 0*/, size_t spacing /*= 0*/,
     if (line_feed == true) {
         std::cout << std::endl;
     }
+    std::cout.flags(flags_saved);
 }
+
 
 void display_sector_data(const fdc_bitstream::sector_data &sect_data) {
     std::ios::fmtflags flags_saved = std::cout.flags();

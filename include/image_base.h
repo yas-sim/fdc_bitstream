@@ -75,4 +75,6 @@ public:
     inline size_t get_sampling_rate(void)    { return m_base_prop.m_sampling_rate; }
 
     virtual void set_vfo_type(size_t vfo_type) {};
+    virtual void set_gain(double gain_l, double gain_h) {};
+    virtual void verbose(bool verbose_flag) {};
 };

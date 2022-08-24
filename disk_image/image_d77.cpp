@@ -96,6 +96,7 @@ void disk_image_d77::read(const std::string file_name) {
 }
 
 void disk_image_d77::write(const std::string file_name) {
+    std::ios::fmtflags flags_saved = std::cout.flags();
     fdc_bitstream fdc;
     d77img output_image;
 
@@ -105,12 +106,18 @@ void disk_image_d77::write(const std::string file_name) {
     output_image.m_disk_size = 0;
 
     for (size_t track_n = 0; track_n <= m_base_prop.m_max_track_number; track_n++) {
+        if(m_verbose) {
+            std::cout << std::setw(4) << std::dec << track_n << ":";
+        }
         d77img::track_data d77_trk;
         bit_array mfm_trk = m_track_data[track_n];
         fdc.set_track_data(mfm_trk);
         fdc.set_pos(0);
         fdc.set_vfo_type(m_vfo_type);
+        fdc.set_vfo_gain_val(m_gain_l, m_gain_h);
         std::vector<fdc_bitstream::id_field> id_list = fdc.read_all_idam();
+        size_t sector_good = 0;
+        size_t sector_bad = 0;
         for (size_t sect_n = 0; sect_n < id_list.size(); sect_n++) {
             d77img::sector_data sect_dt;
             sect_dt.m_C = id_list[sect_n].C;
@@ -125,12 +132,20 @@ void disk_image_d77::write(const std::string file_name) {
             sect_dt.m_sector_data = read_sect.data;
             sect_dt.m_sector_data_length = read_sect.data.size();
             d77_trk.push_back(sect_dt);
+            if (sect_dt.m_status == 0x00) {
+                sector_good++;
+            } else {
+                sector_bad++;
+            }
+        }
+        if(m_verbose) {
+            std::cout << std::setw(4) << std::dec << (sector_good+sector_bad) << "/" << std::setw(4) << sector_good << "  ";
+            if(track_n % 5 == 4) {
+                std::cout << std::endl;
+            }
         }
         output_image.m_disk_data.push_back(d77_trk);
     }
     output_image.write(file_name);
-}
-
-void disk_image_d77::set_vfo_type(const size_t vfo_type) {
-    m_vfo_type = vfo_type;
+    std::cout.flags(flags_saved);
 }

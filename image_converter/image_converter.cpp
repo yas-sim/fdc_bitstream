@@ -15,12 +15,14 @@
 
 void usage(std::string cmd_name) {
     std::cout << cmd_name << "-i input_file -o output_file [-n]" << std::endl;
-    std::cout << "Input file : hfe, mfm, raw, d77" << std::endl;
-    std::cout << "Output file: mfm, d77" << std::endl;
-    std::cout << "-n            : Normalize pulse pitch. Get statistic data of pulse-to-pulse distance \n"
-                 "                distribution in a track and align bit position with standard bit cell pitch.\n"
-                 "                This will make the disk image data easy to read." << std::endl;
-    std::cout << "-vfo vfo_type : Select type of VFO (" VFO_TYPE_DESC_STR ")" << std::endl;
+    std::cout << "Input file     : hfe, mfm, raw, d77" << std::endl;
+    std::cout << "Output file    : mfm, d77" << std::endl;
+    std::cout << "-n             : Normalize pulse pitch. Get statistic data of pulse-to-pulse distance \n"
+                 "                 distribution in a track and align bit position with standard bit cell pitch.\n"
+                 "                 This will make the disk image data easy to read." << std::endl;
+    std::cout << "-vfo vfo_type  : Select type of VFO (" VFO_TYPE_DESC_STR "). Effective only for D77." << std::endl;
+    std::cout << "-gain low high : VFO gain setting. Effective only for D77.  e.g. -gain 1.0 2.0" << std::endl;
+    std::cout << "-v             : Verbose mode."
 }
 
 std::string get_file_base(std::string file_name) {
@@ -55,10 +57,12 @@ disk_image* create_object_by_ext(std::string ext) {
 
 
 
-std::vector<bit_array> normalize_track(std::vector<bit_array> tracks, size_t sampling_rate, size_t bit_rate) {
-    std::cout << "=== Pulse pitch normalize ===" << std::endl;
-    std::cout << "Sampling rate : " << sampling_rate / 1e6 << " MHz" << std::endl;
-    std::cout << "Data bit rate : " << bit_rate / 1e3 << " Kbits/sec" << std::endl;
+std::vector<bit_array> normalize_track(std::vector<bit_array> tracks, size_t sampling_rate, size_t bit_rate, bool verbose=false) {
+    if(verbose) {
+        std::cout << "=== Pulse pitch normalize ===" << std::endl;
+        std::cout << "Sampling rate : " << sampling_rate / 1e6 << " MHz" << std::endl;
+        std::cout << "Data bit rate : " << bit_rate / 1e3 << " Kbits/sec" << std::endl;
+    }
     double cell_size_std = static_cast<double>(sampling_rate) / static_cast<double>(bit_rate);
 
     std::vector<bit_array> res;
@@ -68,7 +72,9 @@ std::vector<bit_array> normalize_track(std::vector<bit_array> tracks, size_t sam
         bit_array normalized;
         normalized.clear_array();
         if(trk.get_length() > 0) {
-            std::cout << "Track " << std::setw(3) << i << " - ";
+            if (verbose) {
+                std::cout << "Track " << std::setw(3) << i << " - ";
+            }
             std::vector<size_t> freq_dist = fdc_misc::get_frequent_distribution(trk);   // convert track data into frequency-distribution data
             //display_histogram(freq_dist);
             std::vector<size_t> peaks = fdc_misc::find_peaks(freq_dist);                // find peaks from the frequency-distribution data
@@ -79,9 +85,10 @@ std::vector<bit_array> normalize_track(std::vector<bit_array> tracks, size_t sam
                 cell_size = cell_size_std;      // to avoid 0div
             }
             double scale = cell_size_std / cell_size;
-            std::cout << "Scale : " << std::fixed << std::setprecision(5) << scale;
-            std::cout << ", Peaks : (" << peaks[0] << ", " << peaks[1] << ", " << peaks[2] << ")" << std::endl;
-
+            if(verbose) {
+                std::cout << "Scale : " << std::fixed << std::setprecision(5) << scale;
+                std::cout << ", Peaks : (" << peaks[0] << ", " << peaks[1] << ", " << peaks[2] << ")" << std::endl;
+            }
             std::vector<size_t> dist_array = fdc_misc::convert_to_dist_array(trk);
             double curr_pos = 0.f;
             for(auto it = dist_array.begin(); it != dist_array.end(); ++it) {
@@ -105,6 +112,9 @@ int main(int argc, char* argv[]) {
     std::string output_file_name;
     bool normalize = false;
     size_t vfo_type = VFO_TYPE_DEFAULT;
+    double gain_l = 1.f;
+    double gain_h = 2.f;
+    bool verbose = false;
 
 	for(auto it = cmd_opts.begin(); it != cmd_opts.end(); ++it) {
 		if(*it == "-i" && it+1 != cmd_opts.end()) {
@@ -115,6 +125,11 @@ int main(int argc, char* argv[]) {
             normalize = true;
         } else if(*it == "-vfo" && it+1 != cmd_opts.end()) {
             vfo_type = std::stoi(*(++it));
+        } else if(*it == "-gain" && it+1 != cmd_opts.end() && it+2 != cmd_opts.end()) {
+            gain_l = std::stod(*(++it));
+            gain_h = std::stod(*(++it));
+        } else if(*it == "-v") {
+            verbose = true;
         }
     }
 
@@ -152,13 +167,20 @@ int main(int argc, char* argv[]) {
     size_t sampling_rate = in_image->get_sampling_rate();
     size_t bit_rate = in_image->get_data_bit_rate();
     if(normalize) {
-        all_trk = normalize_track(all_trk, sampling_rate, bit_rate);
+        all_trk = normalize_track(all_trk, sampling_rate, bit_rate, verbose);
     }
 
     out_image->set_track_data_all(all_trk);
     if(output_ext == "d77") {
-        out_image->set_vfo_type(vfo_type);      // only for D77 output
+        // only for D77 output
+        out_image->set_vfo_type(vfo_type);      
+        if(verbose) {
+            std::cout << "Gain L=" << gain_l << " , Gain H=" << gain_h << std::endl;
+        }
+        out_image->set_gain(gain_l, gain_h);
+        out_image->verbose(verbose);
     }
+
     out_image->write(output_file_name);
 
     std::cout << input_file_name << " -> " << output_file_name << std::endl;
