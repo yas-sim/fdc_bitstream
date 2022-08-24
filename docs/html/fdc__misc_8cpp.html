@@ -94,6 +94,8 @@ $(document).ready(function(){initNavTree('fdc__misc_8cpp.html',''); initResizabl
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;algorithm&gt;</code><br />
 <code>#include &quot;<a class="el" href="fdc__misc_8h_source.html">fdc_misc.h</a>&quot;</code><br />
+<code>#include &lt;iostream&gt;</code><br />
+<code>#include &lt;sstream&gt;</code><br />
 </div>
 <p><a href="fdc__misc_8cpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -104,14 +106,16 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a3f403b4f1144b3106dc763a1191794cb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefdc__misc.html#a3f403b4f1144b3106dc763a1191794cb">fdc_misc::color</a> (size_t col)</td></tr>
+<tr class="separator:a3f403b4f1144b3106dc763a1191794cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab05a48a473d48f709b2c1e9f15922484"><td class="memItemLeft" align="right" valign="top">std::vector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefdc__misc.html#ab05a48a473d48f709b2c1e9f15922484">fdc_misc::generate_interleaved_sector_list</a> (size_t num_sector, int interleave=1)</td></tr>
 <tr class="memdesc:ab05a48a473d48f709b2c1e9f15922484"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a list of interleaved sector numbers.  <a href="namespacefdc__misc.html#ab05a48a473d48f709b2c1e9f15922484">More...</a><br /></td></tr>
 <tr class="separator:ab05a48a473d48f709b2c1e9f15922484"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0fe6aee900f7c5cfb26bdc1264034686"><td class="memItemLeft" align="right" valign="top">std::vector&lt; uint8_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefdc__misc.html#a0fe6aee900f7c5cfb26bdc1264034686">fdc_misc::generate_format_data</a> (size_t track_n, size_t side_n, size_t num_sector, size_t sect_len_code, size_t interleave, size_t format_type)</td></tr>
 <tr class="memdesc:a0fe6aee900f7c5cfb26bdc1264034686"><td class="mdescLeft">&#160;</td><td class="mdescRight">Format data generator. Generates format data from the given parameters.  <a href="namespacefdc__misc.html#a0fe6aee900f7c5cfb26bdc1264034686">More...</a><br /></td></tr>
 <tr class="separator:a0fe6aee900f7c5cfb26bdc1264034686"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00d231064452ba6fcc44508c5e83a921"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefdc__misc.html#a00d231064452ba6fcc44508c5e83a921">fdc_misc::display_histogram</a> (const std::vector&lt; size_t &gt; &amp;dist_array)</td></tr>
-<tr class="separator:a00d231064452ba6fcc44508c5e83a921"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa067bacfb72b6cddf8546c935c761c63"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefdc__misc.html#aa067bacfb72b6cddf8546c935c761c63">fdc_misc::display_histogram</a> (const std::vector&lt; size_t &gt; &amp;dist_array, bool color_flag)</td></tr>
+<tr class="separator:aa067bacfb72b6cddf8546c935c761c63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8dcf7c79b6e4a994f0ffec30c8e15f38"><td class="memItemLeft" align="right" valign="top">std::vector&lt; size_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefdc__misc.html#a8dcf7c79b6e4a994f0ffec30c8e15f38">fdc_misc::get_frequent_distribution</a> (<a class="el" href="classbit__array.html">bit_array</a> barray)</td></tr>
 <tr class="separator:a8dcf7c79b6e4a994f0ffec30c8e15f38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6aad255a9b3a1b84bb91a642859e854b"><td class="memItemLeft" align="right" valign="top">std::vector&lt; size_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefdc__misc.html#a6aad255a9b3a1b84bb91a642859e854b">fdc_misc::find_peaks</a> (const std::vector&lt; size_t &gt; &amp;dist_freq)</td></tr>
@@ -124,12 +128,12 @@ Functions</h2></td></tr>
 <tr class="separator:ae2905d466d531fd2930e149911811a21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a86e39ef99d93eace245233be99ef3b9f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefdc__misc.html#a86e39ef99d93eace245233be99ef3b9f">fdc_misc::bit_dump</a> (<a class="el" href="classbit__array.html">bit_array</a> &amp;data, size_t bit_width, size_t spacing, bool line_feed)</td></tr>
 <tr class="separator:a86e39ef99d93eace245233be99ef3b9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae262894b20a3a074386305bcad119849"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefdc__misc.html#ae262894b20a3a074386305bcad119849">fdc_misc::display_sector_data</a> (const <a class="el" href="structfdc__bitstream_1_1sector__data.html">fdc_bitstream::sector_data</a> &amp;sect_data)</td></tr>
-<tr class="separator:ae262894b20a3a074386305bcad119849"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a20dce2ddfeed9bcacabe794d709809"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefdc__misc.html#a0a20dce2ddfeed9bcacabe794d709809">fdc_misc::display_id</a> (const <a class="el" href="structfdc__bitstream_1_1id__field.html">fdc_bitstream::id_field</a> &amp;id)</td></tr>
-<tr class="separator:a0a20dce2ddfeed9bcacabe794d709809"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc810c154da397c72646f82e17c31857"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefdc__misc.html#acc810c154da397c72646f82e17c31857">fdc_misc::display_id_list</a> (const std::vector&lt; <a class="el" href="structfdc__bitstream_1_1id__field.html">fdc_bitstream::id_field</a> &gt; &amp;id_fields)</td></tr>
-<tr class="separator:acc810c154da397c72646f82e17c31857"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8f51625ce05f0d72cef06a5f6fd3a1d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefdc__misc.html#ad8f51625ce05f0d72cef06a5f6fd3a1d">fdc_misc::display_sector_data</a> (const <a class="el" href="structfdc__bitstream_1_1sector__data.html">fdc_bitstream::sector_data</a> &amp;sect_data, bool color_flag)</td></tr>
+<tr class="separator:ad8f51625ce05f0d72cef06a5f6fd3a1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5bc8870b973af57feaee62054c1b3ca4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefdc__misc.html#a5bc8870b973af57feaee62054c1b3ca4">fdc_misc::display_id</a> (const <a class="el" href="structfdc__bitstream_1_1id__field.html">fdc_bitstream::id_field</a> &amp;id, bool color_flag)</td></tr>
+<tr class="separator:a5bc8870b973af57feaee62054c1b3ca4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04c8c1858bcc049a70ace832da35a2db"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefdc__misc.html#a04c8c1858bcc049a70ace832da35a2db">fdc_misc::display_id_list</a> (const std::vector&lt; <a class="el" href="structfdc__bitstream_1_1id__field.html">fdc_bitstream::id_field</a> &gt; &amp;id_fields, bool color_flag)</td></tr>
+<tr class="separator:a04c8c1858bcc049a70ace832da35a2db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e24870e85a705772ed2d076efd624f2"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefdc__misc.html#a6e24870e85a705772ed2d076efd624f2">fdc_misc::str2val</a> (const std::string &amp;hexstr)</td></tr>
 <tr class="separator:a6e24870e85a705772ed2d076efd624f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
