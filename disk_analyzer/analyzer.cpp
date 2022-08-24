@@ -1,5 +1,4 @@
 #include <iostream>
-#include <sstream>
 #include <iomanip>
 #include <string>
 #include <sstream>
@@ -26,44 +25,6 @@ size_t g_sampling_rate = 0;
 size_t g_data_bit_rate = 0;
 size_t g_spindle_time_ns = 0;
 size_t g_max_track_number = 0;
-
-/*
-#define FOREGROUND_BLUE      0x0001 // text color contains blue.
-#define FOREGROUND_GREEN     0x0002 // text color contains green.
-#define FOREGROUND_RED       0x0004 // text color contains red.
-#define FOREGROUND_INTENSITY 0x0008 // text color is intensified.
-#define BACKGROUND_BLUE      0x0010 // background color contains blue.
-#define BACKGROUND_GREEN     0x0020 // background color contains green.
-#define BACKGROUND_RED       0x0040 // background color contains red.
-#define BACKGROUND_INTENSITY 0x0080 // background color is intensified.
-#define COMMON_LVB_LEADING_BYTE    0x0100 // Leading Byte of DBCS
-#define COMMON_LVB_TRAILING_BYTE   0x0200 // Trailing Byte of DBCS
-#define COMMON_LVB_GRID_HORIZONTAL 0x0400 // DBCS: Grid attribute: top horizontal.
-#define COMMON_LVB_GRID_LVERTICAL  0x0800 // DBCS: Grid attribute: left vertical.
-#define COMMON_LVB_GRID_RVERTICAL  0x1000 // DBCS: Grid attribute: right vertical.
-#define COMMON_LVB_REVERSE_VIDEO   0x4000 // DBCS: Reverse fore/back ground attribute.
-#define COMMON_LVB_UNDERSCORE      0x8000 // DBCS: Underscore.*/
-
-#ifdef _WIN32
-#include <windows.h>
-void color(size_t col) {
-    if(col>7) col=7;
-    size_t flags = FOREGROUND_INTENSITY;
-    if (col & 0b0001) flags |= FOREGROUND_INTENSITY | FOREGROUND_BLUE;
-    if (col & 0b0010) flags |= FOREGROUND_INTENSITY | FOREGROUND_RED;
-    if (col & 0b0100) flags |= FOREGROUND_INTENSITY | FOREGROUND_GREEN;
-    HANDLE console_handle = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(console_handle, flags);
-}
-#else
-void color(size_t col) {
-    const size_t col_tbl[8] { 30, 34, 31, 35, 32, 36, 33, 37 };
-    if(col>7) col=7;
-    std::stringstream ss;
-    ss << "\e[" << std::dec << col_tbl[col] << "m";
-    std::cout << ss.str();
-}
-#endif
 
 void disp_status(void) {
     std::cout << "Gain L:" << g_gain_l << ", Gain H:" << g_gain_h << std::endl;
@@ -109,9 +70,9 @@ disk_image* create_object_by_ext(std::string ext) {
 void cmd_open_image(std::string file_name) {
     std::string ext = get_file_extension(file_name);
     if(check_extension(ext) == false) {
-        color(2);
+        fdc_misc::color(2);
         std::cout << "Unsupported file extension." << std::endl;
-        color(7);
+        fdc_misc::color(7);
         return;
     }
     disk_img = create_object_by_ext(ext);
@@ -158,7 +119,7 @@ void cmd_read_id(size_t track_n, size_t track_end_n = -1) {
         track_stream = disk_img->get_track_data(trk_n);
         fdc->set_track_data(track_stream);
         read_data = fdc->read_all_idam();
-        fdc_misc::display_id_list(read_data);
+        fdc_misc::display_id_list(read_data, true);
     }
 }
 
@@ -184,8 +145,8 @@ void cmd_validate_track(size_t track_n, size_t track_end_n = -1) {
         std::cout << "  #: CC HH RR NN --- ID CRC ---  SIZE" << std::endl;
         for(size_t i = 0; i < id_data.size(); i++) {
             std::cout << std::setw(3) << std::setfill(' ') << i+1 << ": ";
-            fdc_misc::display_id(id_data[i]);
-            fdc_misc::display_sector_data(sect_data[i]);
+            fdc_misc::display_id(id_data[i], true);
+            fdc_misc::display_sector_data(sect_data[i], true);
             std::cout << std::endl;
         }        
     }
@@ -281,10 +242,10 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=99) {
         }
         std::cout << std::setw(6) << i << " >" << line;
         if(dist < vfo->m_window_ofst || dist > vfo->m_window_ofst + vfo->m_window_size) {
-            color(6);
+            fdc_misc::color(6);
             std::cout << "*** IRREGULAR PULSE DETECTED ***";
             irregular_pulse_count++;
-            color(7);
+            fdc_misc::color(7);
         }
         std::cout << std::endl;
 
@@ -292,9 +253,9 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=99) {
         dist = vfo->calc(dist);
     }
     vfo->disp_vfo_status();
-    color(4);
+    fdc_misc::color(4);
     std::cout << irregular_pulse_count << " irregular pulse(s) detected." << std::endl;
-    color(7);
+    fdc_misc::color(7);
 
     delete vfo;
 }
@@ -330,7 +291,7 @@ void cmd_histogram(size_t track_n) {
 
     // display histogram
     std::cout << "#clocks  #pulses" << std::endl;
-    fdc_misc::display_histogram(dist_array);
+    fdc_misc::display_histogram(dist_array, true);
 
     // find distribution peaks
     std::vector<size_t> peaks = fdc_misc::find_peaks(dist_array);
@@ -451,7 +412,7 @@ int main(int argc, char* argv[]) {
         else if(args[0] == "histogram" && args.size()>=2) {
             cmd_histogram(fdc_misc::str2val(args[1]));            
         }
-        else if(args[0] == "h") {
+        else if(args[0] == "h" || args[0]=="help" || args[0]=="?") {
             cmd_help();
         }
         prev_cmd = cmd_line;

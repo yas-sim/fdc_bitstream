@@ -15,6 +15,29 @@
 
 namespace fdc_misc {
 
+#ifdef _WIN32
+#include <windows.h>
+void color(size_t col) {
+    if(col>7) col=7;
+    size_t flags = FOREGROUND_INTENSITY;
+    if (col & 0b0001) flags |= FOREGROUND_INTENSITY | FOREGROUND_BLUE;
+    if (col & 0b0010) flags |= FOREGROUND_INTENSITY | FOREGROUND_RED;
+    if (col & 0b0100) flags |= FOREGROUND_INTENSITY | FOREGROUND_GREEN;
+    HANDLE console_handle = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(console_handle, flags);
+}
+#else
+#include <iostream>
+#include <sstream>
+void color(size_t col) {
+    const size_t col_tbl[8] { 30, 34, 31, 35, 32, 36, 33, 37 };
+    if(col>7) col=7;
+    std::stringstream ss;
+    ss << "\e[" << std::dec << col_tbl[col] << "m";
+    std::cout << ss.str();
+}
+#endif
+
 /**
  * @brief Generate a list of interleaved sector numbers.
  * 
@@ -119,7 +142,7 @@ std::vector<uint8_t> generate_format_data(size_t track_n, size_t side_n, size_t 
 
 // ------------------------------------------------------------------------------------------
 
-void display_histogram(const std::vector<size_t> &dist_array) {
+void display_histogram(const std::vector<size_t> &dist_array, bool color_flag) {
     std::ios::fmtflags flags_saved = std::cout.flags();
     size_t max_count = *std::max_element(dist_array.begin(), dist_array.end());
     double scale = 100.f / static_cast<double>(max_count);
@@ -133,7 +156,9 @@ void display_histogram(const std::vector<size_t> &dist_array) {
         std::cout << std::setw(4) << std::setfill(' ') << i << " : ";
         std::cout << std::setw(8) << std::setfill(' ') << dist_array[i] << " : ";
         size_t bar_length = static_cast<size_t>(static_cast<double>(dist_array[i]) * scale); // normalize
+        if (color_flag) color(4);
         std::cout << std::string(bar_length, '*') << std::endl;
+        if (color_flag) color(7);
     }
     std::cout.flags(flags_saved);
 }
@@ -278,36 +303,64 @@ void bit_dump(bit_array &data, size_t bit_width /*= 0*/, size_t spacing /*= 0*/,
 }
 
 
-void display_sector_data(const fdc_bitstream::sector_data &sect_data) {
+void display_sector_data(const fdc_bitstream::sector_data &sect_data, bool color_flag) {
     std::ios::fmtflags flags_saved = std::cout.flags();
     std::cout << std::dec << std::setw(4) << std::setfill(' ');
+    if(color_flag && sect_data.data.size()==0) {
+        color(2);
+    }
     std::cout << sect_data.data.size() << " ";
-    std::cout << (sect_data.dam_type ? "DDAM " : "DAM  ");
-    std::cout << (sect_data.crc_sts ? "DT-CRC_ERR " : "DT-CRC OK  ");
-    std::cout << (sect_data.record_not_found ? "RNF_ERR " : "RNF_OK  ");
+    color(7);
+    if(sect_data.dam_type) {
+        if(color_flag) color(3);
+        std::cout << "DDAM ";
+        color(7);
+    } else {
+        std::cout << "DAM  ";
+    }
+    if(sect_data.crc_sts) {
+        if(color_flag) color(2);
+        std::cout << "DT-CRC_ERR ";
+        color(7);
+     } else {
+        std::cout << "DT-CRC OK  ";
+     }
+    if(sect_data.record_not_found) { 
+        if(color_flag) color(2);
+        std::cout << "RNF_ERR ";
+        color(7);
+    } else {
+        std::cout << "RNF_OK  ";
+    }
     std::cout << std::dec << std::setw(8);
     std::cout << "IDAM_POS=" << std::setw(8) << sect_data.id_pos << " ";
     std::cout << "DAM_POS="  << std::setw(8) << sect_data.data_pos << " ";
     std::cout.flags(flags_saved);
 }
 
-void display_id(const fdc_bitstream::id_field &id) {
+void display_id(const fdc_bitstream::id_field &id, bool color_flag) {
     std::ios::fmtflags flags_saved = std::cout.flags();
     std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(id.C) << " ";
     std::cout << std::setw(2) << static_cast<int>(id.H) << " ";
     std::cout << std::setw(2) << static_cast<int>(id.R) << " ";
     std::cout << std::setw(2) << static_cast<int>(id.N) << " ";
     std::cout << std::setw(4) << static_cast<int>(id.crc_val) << " ";
-    std::cout << (id.crc_sts ? "ID-CRC_ERR " : "ID-CRC_OK  ");
+    if (id.crc_sts) { 
+        if (color_flag) color(2);
+        std::cout << "ID-CRC_ERR ";
+        color(7);
+    } else {
+        std::cout << "ID-CRC_OK  ";
+    }
     std::cout.flags(flags_saved);
 }
 
-void display_id_list(const std::vector<fdc_bitstream::id_field> &id_fields) {
+void display_id_list(const std::vector<fdc_bitstream::id_field> &id_fields, bool color_flag) {
     std::ios::fmtflags flags_saved = std::cout.flags();
     std::cout << std::hex << std::setw(2) << std::setfill('0');
     for (int i = 0; i < id_fields.size(); i++) {
-        std::cout << std::dec << std::setw(2) << std::setfill(' ') << i << " ";
-        display_id(id_fields[i]);
+        std::cout << std::dec << std::setw(2) << std::setfill(' ') << i+1 << " ";
+        display_id(id_fields[i], color_flag);
         std::cout << std::endl;
     }
     std::cout.flags(flags_saved);
