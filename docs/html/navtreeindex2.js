@@ -1,5 +1,10 @@
 var NAVTREEINDEX2 =
 {
+<<<<<<< HEAD
+=======
+"image__converter_2byte__array_8h_source.html":[12,0,5,0],
+"image__converter_8cpp.html":[12,0,5,1],
+>>>>>>> da8efd4b83be3a0656e6fb3c53286fc0d8b6bc12
 "image__converter_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97":[12,0,5,1,4],
 "image__converter_8cpp.html#a524c24db4867f0a9c4dfb322f45a4911":[12,0,5,1,3],
 "image__converter_8cpp.html#a60b530e94742b10ccd86f68529ae8c0c":[12,0,5,1,5],

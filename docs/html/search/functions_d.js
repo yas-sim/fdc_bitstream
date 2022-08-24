@@ -1,5 +1,6 @@
 var searchData=
 [
+<<<<<<< HEAD
   ['read_0',['read',['../classdisk__image.html#a85d235a1ae58907960f50d760deeaf4f',1,'disk_image::read()'],['../classdisk__image__d77.html#a81da4b9e5d0b7c3036695772b9144e5b',1,'disk_image_d77::read()'],['../classdisk__image__hfe.html#aeadca366b024fe3633d681dd217b4e44',1,'disk_image_hfe::read()'],['../classdisk__image__mfm.html#a0eaa3b808cd84c53d17108c9dbb03491',1,'disk_image_mfm::read()'],['../classdisk__image__raw.html#ae39818fee995a4cc9797bfb842f23277',1,'disk_image_raw::read()'],['../classd77img.html#ae8662679fabbacdf84a2103e2e565bec',1,'d77img::read()']]],
   ['read_5fall_5fidam_1',['read_all_idam',['../classfdc__bitstream.html#a0afb22e2181670e2b83134a690c4ea3d',1,'fdc_bitstream']]],
   ['read_5fbit_5fds_2',['read_bit_ds',['../classmfm__codec.html#a04e612265044876b9af9216696fdcb99',1,'mfm_codec']]],
@@ -15,4 +16,10 @@ var searchData=
   ['reset_5fsync_5fmode_12',['reset_sync_mode',['../classmfm__codec.html#a8e4002d3d156c205177e4c880ab7cfbd',1,'mfm_codec']]],
   ['reset_5fvfo_13',['reset_vfo',['../classfdc__bitstream.html#aa65a0039ff046d0aa3be55ae2e557416',1,'fdc_bitstream::reset_vfo()'],['../classmfm__codec.html#a795da9ac3953874a82e689c269f27e61',1,'mfm_codec::reset_vfo()']]],
   ['resize_14',['resize',['../classbit__array.html#a4717da9efaf23b2bcb74e17a0560c53b',1,'bit_array']]]
+=======
+  ['open_0',['open',['../classkfx2mfm_1_1_k_f_x__stream.html#ac1cceba240a1233c8b7f72ef0a25e9bc',1,'kfx2mfm::KFX_stream']]],
+  ['open_5fbinary_5ffile_1',['open_binary_file',['../classdisk__image.html#a4fdc06a7d330106b3432c70c3da4ab52',1,'disk_image']]],
+  ['open_5ftext_5ffile_2',['open_text_file',['../classdisk__image.html#aa2fbdcb556ce5ac6f9970ed65945a815',1,'disk_image']]],
+  ['operator_3d_3',['operator=',['../classbyte__array.html#a5a691f1423f88374a30a1f72747a664b',1,'byte_array::operator=()'],['../classdisk__image__hfe.html#aff37ad9f5d4a1608ca8d549914b48b90',1,'disk_image_hfe::operator=()'],['../classdisk__image__mfm.html#af6bf880a161cb153325b538901de0c52',1,'disk_image_mfm::operator=()'],['../classdisk__image__raw.html#a81971da1c0a98da2653eb6e299b06115',1,'disk_image_raw::operator=()']]]
+>>>>>>> da8efd4b83be3a0656e6fb3c53286fc0d8b6bc12
 ];
