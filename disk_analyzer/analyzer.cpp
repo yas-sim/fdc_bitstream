@@ -5,12 +5,21 @@
 #include <vector>
 #include <algorithm>
 
-#include <stdio.h>
-#include <conio.h>
 
 #ifdef _WIN32
 #include <direct.h>
+#include <stdio.h>
+#include <conio.h>
+namespace abst {
+int kbhit(void) { return ::kbhit(); }
+int getch(void) { return ::getch(); }
+}
+#else
+#include <ncurses.h>
+int kbhit(void) { return ::getch(); }
+int getch(void) { return ::getch(); }
 #endif
+
 
 #include "fdc_bitstream.h"
 
@@ -222,6 +231,13 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=99) {
 
     double scale = (100 * 0.8f) / (vfo->m_cell_size_ref);
 
+#ifndef _WIN32
+    //"curses" related
+    initscr();
+    noecho();
+    curs_set(0);
+    cbreak();
+#endif
     double dist = 0.f;
     size_t irregular_pulse_count = 0;
     size_t count = 0;
@@ -259,6 +275,10 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=99) {
             break;
         }
     }
+#ifndef _WIN32
+    //"curses" related
+    endwin();
+#endif
     vfo->disp_vfo_status();
     fdc_misc::color(4);
     std::cout << irregular_pulse_count << " irregular pulse(s) detected." << std::endl;
