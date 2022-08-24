@@ -17,7 +17,7 @@ private:
     inline uint8_t to_bit_pos(size_t bit_pos) { return 1 << (bit_pos & 0x07); }
 public:
 
-    bit_array() : m_stream_pos(0),m_wraparound(false) {
+    bit_array() : m_stream_pos(), m_wraparound(false), m_bit_length() {
         m_array_data.clear();
     }
 

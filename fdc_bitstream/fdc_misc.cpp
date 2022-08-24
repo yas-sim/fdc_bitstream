@@ -157,15 +157,15 @@ std::vector<size_t> find_peaks(const std::vector<size_t> &dist_freq) {
     for(int i = 0; i<dist_freq.size(); i++) {
         size_t avg_tmp = 0;
         for(int j=-2; j<=2; j++) {
-            int pos=0;
+            size_t dt=0;
             if (i+j < 0) {
-                pos= -(i+j);                            // data mirroring (lower boundary)
+                dt = 0;
             } else if(i+j >= dist_freq.size()) {
-                pos = 2*dist_freq.size() - (i+j) - 2;   // data mirroring (upper boundary)
+                dt = 0;
             } else {
-                pos = i+j;
+                dt = dist_freq[i+j];
             }
-            avg_tmp += dist_freq[pos] * filt[j+2];
+            avg_tmp += dt * filt[j+2];
         }
         avg[i] = avg_tmp / flt_sum;
     }
@@ -175,7 +175,7 @@ std::vector<size_t> find_peaks(const std::vector<size_t> &dist_freq) {
     std::vector<std::pair<size_t, size_t>> peaks;
     bool flat_peak = false;
     size_t lower_edge = 0;
-    for(size_t i=1; i<avg.size()-1-1; i++) {
+    for(size_t i=1; i<avg.size()-1; i++) {
         if(avg[i-1] < avg[i] && avg[i+1] < avg[i]) {    // a sharp peak
             peaks.push_back(std::pair<size_t, size_t>(i, avg[i]));
             flat_peak = false;
@@ -191,12 +191,18 @@ std::vector<size_t> find_peaks(const std::vector<size_t> &dist_freq) {
             flat_peak = false;
         }
     }
+    if(flat_peak==true) {
+        size_t tmp = (avg.size()-1 + lower_edge) / 2;
+        peaks.push_back(std::pair<size_t, size_t>(tmp, avg[tmp]));
+    }
 
     // sort peaks by value (frequency)
     std::sort(peaks.begin(), peaks.end(), [](const std::pair<size_t, size_t> &left, const std::pair<size_t, size_t> &right) { return left.second > right.second; });
 
     if (peaks.size()<3) {
-        peaks.resize(3);
+        for(size_t i=0; i<3-peaks.size(); i++) {
+            peaks.push_back(std::pair<size_t, size_t>(9999,1));     // stuff dummy
+        }
     }
     std::vector<size_t> result;
     for(auto it=peaks.begin(); it != peaks.begin()+3; ++it) {

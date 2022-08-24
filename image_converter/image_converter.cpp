@@ -11,6 +11,7 @@
 #include "image_d77.h"
 #include "bit_array.h"
 #include "fdc_vfo_def.h"
+#include "fdc_misc.h"
 
 void usage(std::string cmd_name) {
     std::cout << cmd_name << "-i input_file -o output_file [-n]" << std::endl;
@@ -54,92 +55,6 @@ disk_image* create_object_by_ext(std::string ext) {
 
 
 
-void display_histogram(std::vector<size_t> dist_array) {
-    size_t max_count = *std::max_element(dist_array.begin(), dist_array.end());
-    double scale = 100.f / static_cast<double>(max_count);
-    size_t max_item = 0;
-    for(size_t i=0; i<dist_array.size(); i++) {
-        if (dist_array[i] != 0) max_item = i;
-    }
-
-    // display histogram
-    for(size_t i=0; i<=max_item; i++) {
-        std::cout << std::setw(4) << std::setfill(' ') << i << " : ";
-        std::cout << std::setw(8) << std::setfill(' ') << dist_array[i] << " : ";
-        size_t bar_length = static_cast<size_t>(static_cast<double>(dist_array[i]) * scale); // normalize
-        std::cout << std::string(bar_length, '*') << std::endl;
-    }
-}
-
-
-std::vector<size_t> get_frequent_distribution(bit_array barray) {
-    barray.clear_wraparound_flag();
-    std::vector<size_t> freq_dist;
-    do {
-        size_t dist = barray.distance_to_next_pulse();
-        if(freq_dist.size() <= dist) {
-            freq_dist.resize(dist+1);
-        }
-        freq_dist[dist]++;
-    } while(!barray.is_wraparound());
-    return freq_dist;
-}
-
-std::vector<size_t> find_peaks(std::vector<size_t> vec) {
-    // calc moving average
-    vec.resize(vec.size()+2);       // increase top boundary for moving average calculation
-    std::vector<size_t> avg(vec.size());
-    for(size_t i = 2; i<vec.size()-2-1; i++) {
-        size_t avg_tmp = 0;
-        for(int j=-2; j<=2; j++) {
-            avg_tmp += vec[i+j];
-        }
-        avg[i] = avg_tmp / 5;
-    }
-    //display_histogram(avg);       // for debug purpose
-
-    // detect peaks
-    std::vector<std::pair<size_t, size_t>> peaks;
-    for(size_t i=1; i<avg.size()-1-1; i++) {
-        if(avg[i-1]<avg[i] && avg[i+1]<avg[i]) {    // peak
-            peaks.push_back(std::pair<size_t, size_t>(i, avg[i]));
-        }
-    }
-
-    // sort peaks
-    std::sort(peaks.begin(), peaks.end(), [](const std::pair<size_t, size_t> &left, const std::pair<size_t, size_t> &right) 
-                                                { return left.second > right.second; });
-
-    // Display sort result
-    //for(auto it=peaks.begin(); it != peaks.end(); ++it) {
-    //    std::cout << (*it).first << "," << (*it).second << std::endl;
-    //}
-
-    if (peaks.size()<3) {
-        peaks.resize(3);
-    }
-    std::vector<size_t> result;
-    for(auto it=peaks.begin(); it != peaks.begin()+3; ++it) {
-        result.push_back((*it).first);
-    }
-
-    std::sort(result.begin(), result.end(), [](const size_t &left, const size_t &right) 
-                                                { return left < right; });
-
-    return result;
-}
-
-std::vector<size_t> convert_to_dist_array(bit_array track) {
-    track.clear_wraparound_flag();
-    std::vector<size_t> dist_array;
-    do {
-        size_t dist = track.distance_to_next_pulse();
-        dist_array.push_back(dist);
-    } while(!track.is_wraparound());
-    return dist_array;
-}
-
-
 std::vector<bit_array> normalize_track(std::vector<bit_array> tracks, size_t sampling_rate, size_t bit_rate) {
     std::cout << "=== Pulse pitch normalize ===" << std::endl;
     std::cout << "Sampling rate : " << sampling_rate / 1e6 << " MHz" << std::endl;
@@ -154,9 +69,9 @@ std::vector<bit_array> normalize_track(std::vector<bit_array> tracks, size_t sam
         normalized.clear_array();
         if(trk.get_length() > 0) {
             std::cout << "Track " << std::setw(3) << i << " - ";
-            std::vector<size_t> freq_dist = get_frequent_distribution(trk);   // convert track data into frequency-distribution data
+            std::vector<size_t> freq_dist = fdc_misc::get_frequent_distribution(trk);   // convert track data into frequency-distribution data
             //display_histogram(freq_dist);
-            std::vector<size_t> peaks = find_peaks(freq_dist);                // find peaks from the frequency-distribution data
+            std::vector<size_t> peaks = fdc_misc::find_peaks(freq_dist);                // find peaks from the frequency-distribution data
             double cell_size;
             if(peaks[0] != 0) {
                 cell_size = static_cast<double>(peaks[0]) / 2.f;
@@ -167,7 +82,7 @@ std::vector<bit_array> normalize_track(std::vector<bit_array> tracks, size_t sam
             std::cout << "Scale : " << std::fixed << std::setprecision(5) << scale;
             std::cout << ", Peaks : (" << peaks[0] << ", " << peaks[1] << ", " << peaks[2] << ")" << std::endl;
 
-            std::vector<size_t> dist_array = convert_to_dist_array(trk);
+            std::vector<size_t> dist_array = fdc_misc::convert_to_dist_array(trk);
             double curr_pos = 0.f;
             for(auto it = dist_array.begin(); it != dist_array.end(); ++it) {
                 curr_pos += (*it) * scale;
