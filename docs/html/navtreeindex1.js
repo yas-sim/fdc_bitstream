@@ -1,7 +1,5 @@
 var NAVTREEINDEX1 =
 {
-"classmfm__codec.html#a76e0d671d39edf4b49c873bcea27cc9d":[11,0,13,31],
-"classmfm__codec.html#a795da9ac3953874a82e689c269f27e61":[11,0,13,19],
 "classmfm__codec.html#a7ec8c201ba54bd792dde68bcdd19bd1b":[11,0,13,29],
 "classmfm__codec.html#a7fbb1e0c05477582cdc7cf99a5ec2799":[11,0,13,27],
 "classmfm__codec.html#a8e4002d3d156c205177e4c880ab7cfbd":[11,0,13,18],
@@ -250,10 +248,16 @@ var NAVTREEINDEX1 =
 "image__base_8h.html":[12,0,6,8],
 "image__base_8h_source.html":[12,0,6,8],
 <<<<<<< HEAD
+<<<<<<< HEAD
 "image__converter_2byte__array_8h.html":[12,0,5,0],
 "image__converter_2byte__array_8h_source.html":[12,0,5,0],
 "image__converter_8cpp.html":[12,0,5,1]
 =======
 "image__converter_2byte__array_8h.html":[12,0,5,0]
 >>>>>>> da8efd4b83be3a0656e6fb3c53286fc0d8b6bc12
+=======
+"image__converter_2byte__array_8h.html":[12,0,5,0],
+"image__converter_2byte__array_8h_source.html":[12,0,5,0],
+"image__converter_8cpp.html":[12,0,5,1]
+>>>>>>> b879c5cc278816312bb3267281c5c2e775f3d676
 };
