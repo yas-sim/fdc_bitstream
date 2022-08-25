@@ -79,25 +79,25 @@ std::vector<uint8_t> fdc_bitstream::read_track(void) {
 * @brief Read track. Reads track data with missing clock information. (debug/analyze purpose)
 * 
 * @param[in] none
-* @return std::pair<std::vector<uint8_t>, std::vector<bool>> Read track data (Decoded MFM data) and missing clock mark
+* @return std::vector<std::vector<size_t>> Read track data (Decoded MFM data) missing clock mark, and bit position [[mfm,mc,pos],[mfm,mc,pos],...]
 */
-std::pair<std::vector<uint8_t>, std::vector<uint8_t>> fdc_bitstream::read_track_ex(void) {
+std::vector<std::vector<size_t>> fdc_bitstream::read_track_ex(void) {   
+    std::vector<std::vector<size_t>> res;
+    size_t pos;
     uint8_t read_data;
     bool missing_clock;
-    std::vector<uint8_t> track_data;
-    std::vector<uint8_t> mc_data;
-    if (m_codec.is_track_ready() == false) return std::pair<std::vector<uint8_t>, std::vector<uint8_t>>();
+    if (m_codec.is_track_ready() == false) return std::vector<std::vector<size_t>>();
 
     m_codec.clear_wraparound();
     while (m_codec.is_wraparound() == false) {
+        pos = m_codec.get_pos();
         m_codec.mfm_read_byte(read_data, missing_clock, false, false);
 #ifdef DEBUG
         std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(read_data) << " ";
 #endif
-        track_data.push_back(read_data);
-        mc_data.push_back(missing_clock?1:0);
+        res.push_back(std::vector<size_t>{static_cast<size_t>(read_data), static_cast<size_t>(missing_clock?1:0), pos});
     }
-    return std::pair<std::vector<uint8_t>, std::vector<uint8_t>>(track_data, mc_data);
+    return res;
 }
 
 

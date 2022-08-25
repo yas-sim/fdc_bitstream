@@ -123,13 +123,14 @@ void cmd_read_track(size_t track_n) {
         return;
     }
     bit_array track_stream;
-    std::pair<std::vector<uint8_t>, std::vector<uint8_t>> read_data;
+    std::vector<std::vector<size_t>> read_data;
     track_stream = disk_img->get_track_data(track_n);
     fdc->set_track_data(track_stream);
     read_data = fdc->read_track_ex();
     constexpr size_t cols = 32;
     constexpr size_t rows = 16;
-    fdc_misc::dump_buf(read_data.first.data(), read_data.first.size(), true, cols, rows, true, read_data.second.data());
+    //fdc_misc::dump_buf(read_data.first.data(), read_data.first.size(), true, cols, rows, true, read_data.second.data());
+    fdc_misc::dump_buf2(read_data);
 }
 
 void cmd_read_id(size_t track_n, size_t track_end_n = -1) {

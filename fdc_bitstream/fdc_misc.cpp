@@ -281,6 +281,39 @@ void dump_buf(uint8_t* ptr, size_t size, bool line_feed/*=true*/, size_t cols/*=
     std::cout.flags(flags_saved);
 }
 
+// Specialized dump function for 'tr' command in analyzer
+void fdc_misc::dump_buf2(const std::vector<std::vector<size_t>> &data) {
+    std::ios::fmtflags flags_saved = std::cout.flags();
+    size_t row_count = 0;
+    constexpr size_t rows = 16;
+    constexpr size_t cols = 32;
+    for (size_t i=0; i<data.size(); i++) {
+        size_t dt = data[i][0];
+        size_t mc = data[i][1];
+        size_t pos = data[i][2];
+        if (i % cols == 0) {
+            if (row_count % rows == 0) {
+                std::cout << std::endl << "-OFST- : -BitPos- : ";
+                for(size_t j=0; j<cols; j++) {
+                    std::cout << std::hex << std::setw(2) << std::setfill('0') << j << " ";
+                }
+                std::cout << std::endl << std::string(9 + 3*cols, '-') << std::endl;;
+            }
+            std::cout << std::hex << std::setw(6) << std::setfill('0') << i << " : ";   // ofst adrs
+            std::cout << std::dec << std::setw(8) << std::setfill(' ') << pos << " : "; // bit pos
+        }
+        if(mc != 0) color(4);
+        std::cout << std::hex << std::setw(2) << std::setfill('0') << dt << " ";
+        color(7);
+        if (i % cols == cols-1) {
+            std::cout << std::endl;
+            row_count++;
+        }
+    }
+    std::cout << std::endl;
+    std::cout.flags(flags_saved);
+}
+
 void bit_dump(const uint64_t data, size_t bit_width, size_t spacing /*= 0*/, bool line_feed /*= true*/) {
     std::ios::fmtflags flags_saved = std::cout.flags();
     size_t count = 0;
