@@ -77,6 +77,12 @@ python kfx2mfm.py -i <kfx raw image directory>
 ```  
 ![Kryoflux](https://kryoflux.com/images/kf_board_250.jpg)
 
+
+## Disk image analyzer   
+The `analyzer` is a powerful tool to inspect, validate and manipulate the  disk image data.  
+The analyzer has lot of feature to inspect and analyze the quality of the captured image data.  
+Please refer to the [README.md](./disk_analyzer/README.md) for details.  
+![analyzer](./resources/track_dump.png)
 ---
 
 ## Directory structure - Libraries 
