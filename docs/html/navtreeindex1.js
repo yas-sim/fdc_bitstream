@@ -247,17 +247,7 @@ var NAVTREEINDEX1 =
 "image__base_8cpp_source.html":[12,0,2,3],
 "image__base_8h.html":[12,0,6,8],
 "image__base_8h_source.html":[12,0,6,8],
-<<<<<<< HEAD
-<<<<<<< HEAD
 "image__converter_2byte__array_8h.html":[12,0,5,0],
 "image__converter_2byte__array_8h_source.html":[12,0,5,0],
 "image__converter_8cpp.html":[12,0,5,1]
-=======
-"image__converter_2byte__array_8h.html":[12,0,5,0]
->>>>>>> da8efd4b83be3a0656e6fb3c53286fc0d8b6bc12
-=======
-"image__converter_2byte__array_8h.html":[12,0,5,0],
-"image__converter_2byte__array_8h_source.html":[12,0,5,0],
-"image__converter_8cpp.html":[12,0,5,1]
->>>>>>> b879c5cc278816312bb3267281c5c2e775f3d676
 };
