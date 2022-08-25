@@ -19,7 +19,7 @@ var classfdc__bitstream =
     [ "read_all_idam", "classfdc__bitstream.html#a0afb22e2181670e2b83134a690c4ea3d", null ],
     [ "read_data", "classfdc__bitstream.html#a19159752b4c24f253f7f44709e1bfd61", null ],
     [ "read_id", "classfdc__bitstream.html#a285e12ca70b10ad1c3f9b65a2cb4e64d", null ],
-    [ "read_sector", "classfdc__bitstream.html#a6976607e1c1803150b21cd769f8582b4", null ],
+    [ "read_sector", "classfdc__bitstream.html#ad2debff4c59f8316d4230aa6c432c0f6", null ],
     [ "read_sector_body", "classfdc__bitstream.html#a42bb01639507122176863e47edf08dc8", null ],
     [ "read_track", "classfdc__bitstream.html#abea60a7ed3b79255840fac28a5a20c02", null ],
     [ "reset_vfo", "classfdc__bitstream.html#aa65a0039ff046d0aa3be55ae2e557416", null ],
@@ -31,7 +31,7 @@ var classfdc__bitstream =
     [ "set_vfo_type", "classfdc__bitstream.html#a680609b74cbcd5de7348591a90f6a784", null ],
     [ "soft_reset_vfo", "classfdc__bitstream.html#a072d35a6d440b6e4b36c6b5908673dd7", null ],
     [ "write_data", "classfdc__bitstream.html#aa56d06aee0676001c3b245c144f12a6b", null ],
-    [ "write_sector", "classfdc__bitstream.html#ad0bdceff0d3161a201a24a2e73aabbb6", null ],
+    [ "write_sector", "classfdc__bitstream.html#a63430289ba0a1440edc18ec23f33a712", null ],
     [ "write_sector_body", "classfdc__bitstream.html#a71da61708327f7e3d2796daddec1b8b9", null ],
     [ "write_track", "classfdc__bitstream.html#aebcc3997b1a78dfe74a32dd0c5ae6bf8", null ]
 ];
