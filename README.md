@@ -90,11 +90,11 @@ python kfx2mfm.py -i <kfx raw image directory>
 |Directory|Description|  
 |---|---|  
 |`docs/html`|FDC library API document (`index.html`)|  
-|[`fdc_test`](./fdc_test/)|FDC lib test program source code. You can learn how to use `bit_stream` and `image_???` classes.|  
+|[`disk_analyzer`](./disk_analyzer/)|Disk image analyze tool. You can try VFO gain and fluctuator setting. This tool can visualize how VFO behaves (VFO visualizer) and check the pulse timing distribution of the disk image (histogram).<br>Also, the analyzer has track data trimming feature so that you can cut out the desired portion from the track. The trimming function can be used to remove unnecessary (or excessive) track data overlapping.|
 |[`image_converter`](./image_converter/)|(MFM/D77/RAW/HFE) to (MFM/D77) disk image converter. The converter will take one of mfm/raw/hfe/d77 image file, translate it into a MFM data internally, and then output the data as either one of mfm/d77.|
-|[`create_mfm_image`](./create_mfm_image/)|Creates an 2D/MFM disk image with regular format (ECMA/ISO).The program will create `new_image.mfm`.|  
 |[`kfx2mfm`](./kfx2mfm/)|Kryoflux `RAW` files to `MFM` disk image file converter. Kryoflux `RAW` image consists of multiple `RAW` files. Each file contains bitstream data of a track captured at the clock rate of 24MHz.|  
-|[`disk_analyzer`](./disk_analyzer/)|Simple disk image analyze tool. You can try VFO gain and fluctuator setting. This tool can visualize how VFO behaves (VFO visualizer) and check the pulse timing distribution of the disk image (histogram).|
+|[`create_mfm_image`](./create_mfm_image/)|Creates an 2D/MFM disk image with regular format (ECMA/ISO).The program will create `new_image.mfm`.|  
+|[`fdc_test`](./fdc_test/)|FDC lib test program source code. You can learn how to use `bit_stream` and `image_???` classes.|  
 
 ## How to build the test program and tools
 
