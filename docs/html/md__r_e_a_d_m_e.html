@@ -198,8 +198,14 @@ Kryoflux RAW to MFM format converter</h1>
 <li>How to run: <div class="fragment"><div class="line">python kfx2mfm.py -i &lt;kfx raw image directory&gt;</div>
 </div><!-- fragment --> <img src="https://kryoflux.com/images/kf_board_250.jpg" alt="Kryoflux" class="inline"/></li>
 </ul>
+<h1><a class="anchor" id="autotoc_md23"></a>
+Disk image analyzer</h1>
+<p >The <code>analyzer</code> is a powerful tool to inspect, validate and manipulate the disk image data. <br  />
+ The analyzer has lot of feature to inspect and analyze the quality of the captured image data. <br  />
+ Please refer to the <a class="el" href="md_disk_analyzer__r_e_a_d_m_e.html">README.md</a> for details. <br  />
+ <img src="./resources/track_dump.png" alt="analyzer" class="inline"/></p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md24"></a>
+<h1><a class="anchor" id="autotoc_md25"></a>
 Directory structure - Libraries</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -211,7 +217,7 @@ Directory structure - Libraries</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>include</code>   </td><td class="markdownTableBodyNone">C++ header files for the FDC library   </td></tr>
 </table>
-<h1><a class="anchor" id="autotoc_md25"></a>
+<h1><a class="anchor" id="autotoc_md26"></a>
 Directory structure - Sample/Test/Tool programs, etc</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -230,7 +236,7 @@ Also, the analyzer has track data trimming feature so that you can cut out the d
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><a href="./fdc_test/"><code>fdc_test</code></a>   </td><td class="markdownTableBodyNone">FDC lib test program source code. You can learn how to use <code>bit_stream</code> and <code>image_???</code> classes.   </td></tr>
 </table>
-<h1><a class="anchor" id="autotoc_md26"></a>
+<h1><a class="anchor" id="autotoc_md27"></a>
 How to build the test program and tools</h1>
 <p >Build tested on Windows 11 (MSVC), and Linux (Ubuntu20, gcc). <br  />
  </p><div class="fragment"><div class="line">mkdir build</div>
@@ -238,7 +244,7 @@ How to build the test program and tools</h1>
 <div class="line">cmake ..</div>
 <div class="line">cmake --build .</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md28"></a>
+<h1><a class="anchor" id="autotoc_md29"></a>
 &lt;em&gt;Intentional&lt;/em&gt; fluctuation mechanism - for timing sensitive copy-protection data reproduction</h1>
 <p >The actual floppy drive has a lot of elements that may introduce read data instability, such as spindle motor speed fluctuation, and bit pulse discontinuity by writing new data. Some copy-protect techniques intentionally cause those unstable read data at the desired point, and check whether the floppy disk is a genuine one or not by reading the unstable points several times. Most floppy image format preserves decoded MFM data, and it is impossible to reproduce this kind of copy-protect data because the data in the image is deterministic, and no timing variation happens. To reproduce such timing-dependent copy-protection data, the MFM and RAW disk image format capture the floppy drive read data at the x8 sampling rate (4MHz) of the 2D/MFM FDC bit rate (500KHz). The MFM and RAW format can preserve even irregular pulses, and therefore it can reproduce timing-sensitive copy-protection data. <br  />
 </p>
@@ -251,7 +257,7 @@ How to build the test program and tools</h1>
 </p>
 <p ><img src="resources/corocoro.png" alt="" class="inline"/></p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md30"></a>
+<h1><a class="anchor" id="autotoc_md31"></a>
 Command line examples for sample programs and tools.</h1>
 <div class="fragment"><div class="line">CMD&gt; create_mfm_image</div>
 <div class="line"># &#39;new_image.mfm&#39; will be created.</div>
@@ -266,7 +272,7 @@ Command line examples for sample programs and tools.</h1>
 <div class="line"> </div>
 <div class="line">new_image.mfm -&gt; new_image.d77</div>
 </div><!-- fragment --><hr  />
- <h1><a class="anchor" id="autotoc_md32"></a>
+ <h1><a class="anchor" id="autotoc_md33"></a>
 MFM image data format:</h1>
 <p >The default sampling rate for the MFM format is 4MHz. The data rate of the 2D/MFM format disk is 500KHz. This means, one bit cell will be recorded with eight bits of data in the MFM format. <br  />
 </p>

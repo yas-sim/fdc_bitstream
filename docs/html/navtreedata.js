@@ -53,12 +53,13 @@ var NAVTREE =
       [ "How to integrate the fdc_bitstream library with your program", "md__r_e_a_d_m_e.html#autotoc_md19", null ],
       [ "(Simple) Multi format converter", "md__r_e_a_d_m_e.html#autotoc_md21", null ],
       [ "Kryoflux RAW to MFM format converter", "md__r_e_a_d_m_e.html#autotoc_md22", null ],
-      [ "Directory structure - Libraries", "md__r_e_a_d_m_e.html#autotoc_md24", null ],
-      [ "Directory structure - Sample/Test/Tool programs, etc", "md__r_e_a_d_m_e.html#autotoc_md25", null ],
-      [ "How to build the test program and tools", "md__r_e_a_d_m_e.html#autotoc_md26", null ],
-      [ "<em>Intentional</em> fluctuation mechanism - for timing sensitive copy-protection data reproduction", "md__r_e_a_d_m_e.html#autotoc_md28", null ],
-      [ "Command line examples for sample programs and tools.", "md__r_e_a_d_m_e.html#autotoc_md30", null ],
-      [ "MFM image data format:", "md__r_e_a_d_m_e.html#autotoc_md32", null ]
+      [ "Disk image analyzer", "md__r_e_a_d_m_e.html#autotoc_md23", null ],
+      [ "Directory structure - Libraries", "md__r_e_a_d_m_e.html#autotoc_md25", null ],
+      [ "Directory structure - Sample/Test/Tool programs, etc", "md__r_e_a_d_m_e.html#autotoc_md26", null ],
+      [ "How to build the test program and tools", "md__r_e_a_d_m_e.html#autotoc_md27", null ],
+      [ "<em>Intentional</em> fluctuation mechanism - for timing sensitive copy-protection data reproduction", "md__r_e_a_d_m_e.html#autotoc_md29", null ],
+      [ "Command line examples for sample programs and tools.", "md__r_e_a_d_m_e.html#autotoc_md31", null ],
+      [ "MFM image data format:", "md__r_e_a_d_m_e.html#autotoc_md33", null ]
     ] ],
     [ "Deprecated List", "deprecated.html", null ],
     [ "Namespaces", "namespaces.html", [
