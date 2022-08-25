@@ -249,41 +249,48 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=99) {
 
     double scale = (100 * 0.8f) / (vfo->m_cell_size_ref);
 
-    double dist = 0.f;
+    double dist = -1.f;
     size_t irregular_pulse_count = 0;
     size_t count = 0;
+    bool irregular = false;
+
 #ifdef _WIN32
     while(count<500000 && !track_stream.is_wraparound()) {
 #else
     while(count<5000 && !track_stream.is_wraparound()) {
 #endif
-        dist += static_cast<double>(track_stream.distance_to_next_pulse());
-        dist -= std::floor(dist / vfo->m_cell_size) * vfo->m_cell_size;
+        irregular = false;
 
-        // visualize
         std::string line = std::string(100, ' ');
         size_t win_st = (vfo->m_window_ofst) * scale;
         size_t win_en = (vfo->m_window_ofst+vfo->m_window_size) * scale;
-        for(size_t x = win_st; x < win_en; x++) {
-            line[x] = '-';
-        }
+        for(size_t x = win_st; x < win_en; x++) line[x] = '-';
         line[vfo->m_cell_size * scale] = '<';
-        if(dist>=0.f) {
-            line[dist * scale] = 'P';
-        } else {
-            line[0] = '*';
-        }
+
+        do {
+            if (dist < vfo->m_cell_size) {
+                // visualize
+                if(dist>=0.f) line[dist * scale] = 'P';
+                else          line[0]            = '*';
+                if(dist < vfo->m_window_ofst || dist > vfo->m_window_ofst + vfo->m_window_size) {
+                    irregular = true;
+                    irregular_pulse_count++;
+                }
+                // run VFO
+                dist = vfo->calc(dist);
+                dist += static_cast<double>(track_stream.distance_to_next_pulse());
+            }
+        } while (dist < vfo->m_cell_size);
+        dist -= vfo->m_cell_size;
+
         std::cout << std::setw(6) << count << " >" << line;
-        if(dist < vfo->m_window_ofst || dist > vfo->m_window_ofst + vfo->m_window_size) {
+        if(irregular) {
             fdc_misc::color(6);
             std::cout << "*** IRREGULAR PULSE DETECTED ***";
             irregular_pulse_count++;
             fdc_misc::color(7);
         }
         std::cout << std::endl;
-
-        // run VFO
-        dist = vfo->calc(dist);
         count++;
 #if _WIN32
         if(kbhit()) {
@@ -302,7 +309,7 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=99) {
 
 
 void cmd_select_vfo(size_t vfo_type) {
-    if (vfo_type>3 && vfo_type !=9) {
+    if (vfo_type>4 && vfo_type !=9) {
         std::cout << "wrong VFO type. (" VFO_TYPE_DESC_STR ")" << std::endl;
         return;
     }

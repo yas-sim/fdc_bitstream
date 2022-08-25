@@ -253,11 +253,14 @@ std::vector<size_t> convert_to_dist_array(bit_array track) {
 }
 
 
-void dump_buf(uint8_t* ptr, size_t size, bool line_feed /*= true*/) {
+void dump_buf(uint8_t* ptr, size_t size, bool line_feed /*= true*/, size_t line_length /*=64*/, bool disp_ofst/*=false*/) {
     std::ios::fmtflags flags_saved = std::cout.flags();
     for (size_t i = 0; i < size; i++) {
+        if (disp_ofst && i % line_length == 0) {
+            std::cout << std::hex << std::setw(6) << std::setfill('0') << i << " : ";
+        }
         std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(ptr[i]) << " ";
-        if (i % 64 == 63) {
+        if (i % line_length == line_length-1) {
             std::cout << std::endl;
         }
     }

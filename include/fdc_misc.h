@@ -20,7 +20,7 @@ std::vector<size_t> get_frequent_distribution(bit_array barray);
 std::vector<size_t> find_peaks(const std::vector<size_t> &vec);
 std::vector<size_t> convert_to_dist_array(bit_array track);
 
-void dump_buf(uint8_t* ptr, size_t size, bool line_feed = true);
+void dump_buf(uint8_t* ptr, size_t size, bool line_feed=true, size_t line_length=64, bool disp_ofst=false);
 void bit_dump(const uint64_t data, size_t bit_width, size_t spacing = 0, bool line_feed = true);
 void bit_dump(bit_array &data, size_t bit_width = 0, size_t spacing = 0, bool line_feed = true);
 void display_sector_data(const fdc_bitstream::sector_data &sect_data, bool color_flag=false);
