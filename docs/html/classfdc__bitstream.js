@@ -22,6 +22,7 @@ var classfdc__bitstream =
     [ "read_sector", "classfdc__bitstream.html#ad2debff4c59f8316d4230aa6c432c0f6", null ],
     [ "read_sector_body", "classfdc__bitstream.html#a42bb01639507122176863e47edf08dc8", null ],
     [ "read_track", "classfdc__bitstream.html#abea60a7ed3b79255840fac28a5a20c02", null ],
+    [ "read_track_ex", "classfdc__bitstream.html#a7801a8d9cb4aa2ba4fbd2b0d49575656", null ],
     [ "reset_vfo", "classfdc__bitstream.html#aa65a0039ff046d0aa3be55ae2e557416", null ],
     [ "set_fdc_params", "classfdc__bitstream.html#a5e607ac3f28e6e9b15a60c69f4b11376", null ],
     [ "set_pos", "classfdc__bitstream.html#a028dd1120ce703253589a87186ec5ec3", null ],

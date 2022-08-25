@@ -118,10 +118,16 @@ Functions</h2></td></tr>
 <tr class="separator:a951938f545ae411a3bbef610ffc7324d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc00451714bac781ede39bea96a9fd8a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="analyzer_8cpp.html#acc00451714bac781ede39bea96a9fd8a">cmd_open_image</a> (std::string file_name)</td></tr>
 <tr class="separator:acc00451714bac781ede39bea96a9fd8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3229715d7f9f05444403973e39352e2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="analyzer_8cpp.html#aa3229715d7f9f05444403973e39352e2">cmd_write_image</a> (std::string file_name)</td></tr>
+<tr class="separator:aa3229715d7f9f05444403973e39352e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa89878b60f62aacb30f8608e4c5f1d02"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="analyzer_8cpp.html#aa89878b60f62aacb30f8608e4c5f1d02">cmd_read_track</a> (size_t track_n)</td></tr>
 <tr class="separator:aa89878b60f62aacb30f8608e4c5f1d02"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a517d06f11bba3eff49330e70afad8fc9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="analyzer_8cpp.html#a517d06f11bba3eff49330e70afad8fc9">cmd_read_id</a> (size_t track_n, size_t track_end_n=-1)</td></tr>
 <tr class="separator:a517d06f11bba3eff49330e70afad8fc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2556d314120aa9bf447f962736035fcd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="analyzer_8cpp.html#a2556d314120aa9bf447f962736035fcd">trim_track</a> (<a class="el" href="classbit__array.html">bit_array</a> &amp;in_array, <a class="el" href="classbit__array.html">bit_array</a> &amp;out_array, size_t start_byte, size_t end_byte)</td></tr>
+<tr class="separator:a2556d314120aa9bf447f962736035fcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a731d13bfd321c57fa37d72c5d20f5732"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="analyzer_8cpp.html#a731d13bfd321c57fa37d72c5d20f5732">cmd_trim_track</a> (size_t track_n, size_t start_byte, size_t end_byte)</td></tr>
+<tr class="separator:a731d13bfd321c57fa37d72c5d20f5732"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9291d3f436338b013e2adf1e51637558"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="analyzer_8cpp.html#a9291d3f436338b013e2adf1e51637558">cmd_validate_track</a> (size_t track_n, size_t track_end_n=-1)</td></tr>
 <tr class="separator:a9291d3f436338b013e2adf1e51637558"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab74471106683d8e31f644d80b462718f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="analyzer_8cpp.html#ab74471106683d8e31f644d80b462718f">cmd_set_gain</a> (double gain_l, double gain_h)</td></tr>
@@ -165,8 +171,8 @@ Variables</h2></td></tr>
 <tr class="separator:a6ee28f047f8a6b4960c2302995211fed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a816014ce0a6867c5e998b3a2bc484fd9"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="analyzer_8cpp.html#a816014ce0a6867c5e998b3a2bc484fd9">g_spindle_time_ns</a> = 0</td></tr>
 <tr class="separator:a816014ce0a6867c5e998b3a2bc484fd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae335ea5161b2d93effdc46531f885afb"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="analyzer_8cpp.html#ae335ea5161b2d93effdc46531f885afb">g_max_track_number</a> = 0</td></tr>
-<tr class="separator:ae335ea5161b2d93effdc46531f885afb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0e60437b1a84d3d9d2c0783f686c2da"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="analyzer_8cpp.html#af0e60437b1a84d3d9d2c0783f686c2da">g_number_of_tracks</a> = 0</td></tr>
+<tr class="separator:af0e60437b1a84d3d9d2c0783f686c2da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ae7ebf12a2d3a5b98e12304a5f7fdaf89" name="ae7ebf12a2d3a5b98e12304a5f7fdaf89"></a>
@@ -205,7 +211,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00215">215</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00287">287</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -225,7 +231,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00219">219</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00291">291</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -245,7 +251,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00210">210</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00282">282</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -265,7 +271,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00356">356</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00428">428</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -285,7 +291,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00325">325</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00397">397</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -335,7 +341,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00113">113</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00135">135</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -365,7 +371,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00167">167</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00239">239</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -385,7 +391,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00100">100</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00120">120</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -405,7 +411,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00320">320</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00392">392</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -425,7 +431,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00311">311</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00383">383</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -455,7 +461,43 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00159">159</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00231">231</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a731d13bfd321c57fa37d72c5d20f5732" name="a731d13bfd321c57fa37d72c5d20f5732"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a731d13bfd321c57fa37d72c5d20f5732">&#9670;&nbsp;</a></span>cmd_trim_track()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cmd_trim_track </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>track_n</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>start_byte</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>end_byte</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00178">178</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -485,7 +527,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00130">130</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00202">202</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -515,7 +557,27 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00223">223</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00295">295</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aa3229715d7f9f05444403973e39352e2" name="aa3229715d7f9f05444403973e39352e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa3229715d7f9f05444403973e39352e2">&#9670;&nbsp;</a></span>cmd_write_image()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cmd_write_image </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>file_name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00100">100</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -645,7 +707,49 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00384">384</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00460">460</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a2556d314120aa9bf447f962736035fcd" name="a2556d314120aa9bf447f962736035fcd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2556d314120aa9bf447f962736035fcd">&#9670;&nbsp;</a></span>trim_track()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void trim_track </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classbit__array.html">bit_array</a> &amp;&#160;</td>
+          <td class="paramname"><em>in_array</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classbit__array.html">bit_array</a> &amp;&#160;</td>
+          <td class="paramname"><em>out_array</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>start_byte</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>end_byte</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00152">152</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -730,14 +834,14 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="ae335ea5161b2d93effdc46531f885afb" name="ae335ea5161b2d93effdc46531f885afb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae335ea5161b2d93effdc46531f885afb">&#9670;&nbsp;</a></span>g_max_track_number</h2>
+<a id="af0e60437b1a84d3d9d2c0783f686c2da" name="af0e60437b1a84d3d9d2c0783f686c2da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0e60437b1a84d3d9d2c0783f686c2da">&#9670;&nbsp;</a></span>g_number_of_tracks</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">size_t g_max_track_number = 0</td>
+          <td class="memname">size_t g_number_of_tracks = 0</td>
         </tr>
       </table>
 </div><div class="memdoc">
