@@ -219,15 +219,16 @@ Directory structure - Sample/Test/Tool programs, etc</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>docs/html</code>   </td><td class="markdownTableBodyNone">FDC library API document (<code>index.html</code>)    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><a href="./fdc_test/"><code>fdc_test</code></a>   </td><td class="markdownTableBodyNone">FDC lib test program source code. You can learn how to use <code>bit_stream</code> and <code>image_???</code> classes.    </td></tr>
+<td class="markdownTableBodyNone"><a href="./disk_analyzer/"><code>disk_analyzer</code></a>   </td><td class="markdownTableBodyNone">Disk image analyze tool. You can try VFO gain and fluctuator setting. This tool can visualize how VFO behaves (VFO visualizer) and check the pulse timing distribution of the disk image (histogram).<br  />
+Also, the analyzer has track data trimming feature so that you can cut out the desired portion from the track. The trimming function can be used to remove unnecessary (or excessive) track data overlapping.    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><a href="./image_converter/"><code>image_converter</code></a>   </td><td class="markdownTableBodyNone">(MFM/D77/RAW/HFE) to (MFM/D77) disk image converter. The converter will take one of mfm/raw/hfe/d77 image file, translate it into a MFM data internally, and then output the data as either one of mfm/d77.    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><a href="./create_mfm_image/"><code>create_mfm_image</code></a>   </td><td class="markdownTableBodyNone">Creates an 2D/MFM disk image with regular format (ECMA/ISO).The program will create <code>new_image.mfm</code>.    </td></tr>
-<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><a href="./kfx2mfm/"><code>kfx2mfm</code></a>   </td><td class="markdownTableBodyNone">Kryoflux <code>RAW</code> files to <code>MFM</code> disk image file converter. Kryoflux <code>RAW</code> image consists of multiple <code>RAW</code> files. Each file contains bitstream data of a track captured at the clock rate of 24MHz.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a href="./create_mfm_image/"><code>create_mfm_image</code></a>   </td><td class="markdownTableBodyNone">Creates an 2D/MFM disk image with regular format (ECMA/ISO).The program will create <code>new_image.mfm</code>.    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><a href="./disk_analyzer/"><code>disk_analyzer</code></a>   </td><td class="markdownTableBodyNone">Simple disk image analyze tool. You can try VFO gain and fluctuator setting. This tool can visualize how VFO behaves (VFO visualizer) and check the pulse timing distribution of the disk image (histogram).   </td></tr>
+<td class="markdownTableBodyNone"><a href="./fdc_test/"><code>fdc_test</code></a>   </td><td class="markdownTableBodyNone">FDC lib test program source code. You can learn how to use <code>bit_stream</code> and <code>image_???</code> classes.   </td></tr>
 </table>
 <h1><a class="anchor" id="autotoc_md26"></a>
 How to build the test program and tools</h1>
