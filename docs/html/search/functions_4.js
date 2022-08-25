@@ -19,5 +19,5 @@ var searchData=
   ['display_5fsector_5fdata_16',['display_sector_data',['../namespacefdc__misc.html#ad8f51625ce05f0d72cef06a5f6fd3a1d',1,'fdc_misc']]],
   ['distance_5fto_5fnext_5fpulse_17',['distance_to_next_pulse',['../classbit__array.html#ac31fb571ac2a69c8426a10d83587cae9',1,'bit_array']]],
   ['dump_18',['dump',['../classbit__array.html#aa143fb112e7c08d70df3c8b541c6aa4c',1,'bit_array']]],
-  ['dump_5fbuf_19',['dump_buf',['../namespacefdc__misc.html#a167757e80a5e59bd10695c73cce580c0',1,'fdc_misc::dump_buf()'],['../common_8cpp.html#a00e068b3e6a53ba319bdc7cb0198e089',1,'dump_buf(uint8_t *ptr, size_t size, bool line_feed=true):&#160;common.cpp'],['../common_8h.html#a00e068b3e6a53ba319bdc7cb0198e089',1,'dump_buf(uint8_t *ptr, size_t size, bool line_feed=true):&#160;common.cpp']]]
+  ['dump_5fbuf_19',['dump_buf',['../namespacefdc__misc.html#a88cc0b6dbc128610eaa0ad1a056ad382',1,'fdc_misc::dump_buf()'],['../common_8cpp.html#a00e068b3e6a53ba319bdc7cb0198e089',1,'dump_buf(uint8_t *ptr, size_t size, bool line_feed=true):&#160;common.cpp'],['../common_8h.html#a00e068b3e6a53ba319bdc7cb0198e089',1,'dump_buf(uint8_t *ptr, size_t size, bool line_feed=true):&#160;common.cpp']]]
 ];

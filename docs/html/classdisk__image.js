@@ -12,7 +12,7 @@ var classdisk__image =
     [ "get_track_data", "classdisk__image.html#a94db63dc2ae8d400627d9e27639586ba", null ],
     [ "get_track_data_all", "classdisk__image.html#a6395d145142491d8e87b169f97401fea", null ],
     [ "is_ready", "classdisk__image.html#aa063827886602494f9cdf10bec0ff9d8", null ],
-    [ "media_max_track_number", "classdisk__image.html#ad155509a0789029f661051d408a959e0", null ],
+    [ "media_number_of_tracks", "classdisk__image.html#ab987258f31dcb683c999fd402e42cc49", null ],
     [ "open_binary_file", "classdisk__image.html#a4fdc06a7d330106b3432c70c3da4ab52", null ],
     [ "open_text_file", "classdisk__image.html#aa2fbdcb556ce5ac6f9970ed65945a815", null ],
     [ "read", "classdisk__image.html#a85d235a1ae58907960f50d760deeaf4f", null ],
