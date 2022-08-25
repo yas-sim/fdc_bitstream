@@ -30,5 +30,5 @@ var searchData=
   ['distance_5fto_5fnext_5fpulse_27',['distance_to_next_pulse',['../classbit__array.html#ac31fb571ac2a69c8426a10d83587cae9',1,'bit_array']]],
   ['dnu_28',['dnu',['../structpicfileformatheader__.html#a4e4b71295695999ae39fcc31d964c96e',1,'picfileformatheader_']]],
   ['dump_29',['dump',['../classbit__array.html#aa143fb112e7c08d70df3c8b541c6aa4c',1,'bit_array']]],
-  ['dump_5fbuf_30',['dump_buf',['../namespacefdc__misc.html#a9fcf27391e9ce1b5b98790dc367465b2',1,'fdc_misc::dump_buf()'],['../common_8cpp.html#a00e068b3e6a53ba319bdc7cb0198e089',1,'dump_buf(uint8_t *ptr, size_t size, bool line_feed=true):&#160;common.cpp'],['../common_8h.html#a00e068b3e6a53ba319bdc7cb0198e089',1,'dump_buf(uint8_t *ptr, size_t size, bool line_feed=true):&#160;common.cpp']]]
+  ['dump_5fbuf_30',['dump_buf',['../namespacefdc__misc.html#a167757e80a5e59bd10695c73cce580c0',1,'fdc_misc::dump_buf()'],['../common_8cpp.html#a00e068b3e6a53ba319bdc7cb0198e089',1,'dump_buf(uint8_t *ptr, size_t size, bool line_feed=true):&#160;common.cpp'],['../common_8h.html#a00e068b3e6a53ba319bdc7cb0198e089',1,'dump_buf(uint8_t *ptr, size_t size, bool line_feed=true):&#160;common.cpp']]]
 ];
