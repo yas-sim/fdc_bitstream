@@ -28,7 +28,7 @@ size_t g_vfo_type = VFO_TYPE_DEFAULT;
 size_t g_sampling_rate = 0;
 size_t g_data_bit_rate = 0;
 size_t g_spindle_time_ns = 0;
-size_t g_max_track_number = 0;
+size_t g_number_of_tracks = 0;
 
 void disp_status(void) {
     std::cout << "Gain L:" << g_gain_l << ", Gain H:" << g_gain_h << std::endl;
@@ -83,7 +83,7 @@ void cmd_open_image(std::string file_name) {
     disk_img->read(file_name);
 
     disk_image_base_properties props = disk_img->get_property();
-    std::cout << "Max Track num : " << props.m_max_track_number << std::endl;
+    std::cout << "Track num     : " << props.m_number_of_tracks << std::endl;
     std::cout << "Spindle speed : " << props.m_spindle_time_ns / 1e6 << " [ms/rotation]" << std::endl;
     std::cout << "Sampling rate : " << props.m_sampling_rate / 1e6 << " [Msamples/sec]" << std::endl;
     std::cout << "Data bit rate : " << props.m_data_bit_rate / 1e3 << " [Kbit/sec]" << std::endl;
@@ -94,7 +94,27 @@ void cmd_open_image(std::string file_name) {
     g_sampling_rate = props.m_sampling_rate;
     g_data_bit_rate = props.m_data_bit_rate;
     g_spindle_time_ns = props.m_spindle_time_ns;
-    g_max_track_number = props.m_max_track_number;
+    g_number_of_tracks = props.m_number_of_tracks;
+}
+
+void cmd_write_image(std::string file_name) {
+    std::string ext = get_file_extension(file_name);
+    if (ext != "mfm" && ext != "d77") {
+        fdc_misc::color(2);
+        std::cout << "Unsupported file extension." << std::endl;
+        fdc_misc::color(7);
+        return;        
+    }
+    disk_image_base_properties props;
+    props.m_sampling_rate = g_sampling_rate;
+    props.m_data_bit_rate = g_data_bit_rate;
+    props.m_spindle_time_ns = g_spindle_time_ns;
+    props.m_number_of_tracks = g_number_of_tracks;
+    disk_image *out_img = create_object_by_ext(ext);
+    out_img->set_property(props);
+    out_img->set_track_data_all(disk_img->get_track_data_all());
+    out_img->write(file_name);
+    delete out_img;
 }
 
 void cmd_read_track(size_t track_n) {
@@ -129,8 +149,54 @@ void cmd_read_id(size_t track_n, size_t track_end_n = -1) {
     }
 }
 
-void cmd_trim_track(size_t start_p, size_t end_p) {
+void trim_track(bit_array &in_array, bit_array &out_array, size_t start_byte, size_t end_byte) {
+    constexpr size_t err = 99999999;
+    size_t start_pos=err, end_pos=err, prev_pos;
+    size_t read_count = 0;
+    fdc->set_track_data(in_array);
+    fdc->set_pos(0);
+    uint8_t dt;
+    bool mc;
+    do {
+        prev_pos = fdc->get_pos();
+        fdc->read_data(dt, mc, false, false);
+        read_count++;
+        if(read_count == start_byte) start_pos = prev_pos;
+        if(read_count == end_byte)   end_pos   = fdc->get_pos();
+    } while(!fdc->is_wraparound());
+    if(start_pos == err || end_pos == err) {
+        std::cout << "Could not find start or end position." << std::endl;
+        return;
+    }
+    out_array.clear_array();
+    in_array.set_stream_pos(start_pos);
+    for(size_t pos = start_pos; pos<end_pos; pos++) {
+        out_array.write_stream(in_array.read_stream(), true);
+    }
+}
 
+void cmd_trim_track(size_t track_n, size_t start_byte, size_t end_byte) {
+    if(is_image_ready()==false) {
+        std::cout << "Disk image is not ready." << std::endl;
+        return;
+    }
+    size_t track_n_s, track_n_e;
+    if (track_n == 65535) { // target = all track
+        track_n_s = 0;
+        track_n_e = disk_img->get_number_of_tracks()-1;
+    } else {
+        track_n_s = track_n_e = track_n;
+    }
+
+    for(size_t trk_n = track_n_s; trk_n <= track_n_e; trk_n++) {
+        bit_array track_stream = disk_img->get_track_data(trk_n);
+        bit_array track_trimmed;
+        track_trimmed.clear_array();
+        trim_track(track_stream, track_trimmed, start_byte, end_byte);
+
+        disk_img->set_track_data(trk_n, track_trimmed);
+        std::cout << "Track " << trk_n << " : Trimmed down track data from " << std::dec << track_stream.get_length() << "b to " << track_trimmed.get_length() << "b." << std::endl;
+    }
 }
 
 void cmd_validate_track(size_t track_n, size_t track_end_n = -1) {
@@ -363,10 +429,14 @@ void cmd_help(void) {
     std::cout <<
     "*** Command list\n"
     "o  file_name      Open an image file. (.raw, .mfm, .hfe, .d77)\n"
+    "w  file_name      Write an image file. (mfm, d77)\n"
     "rt trk            Read track\n"
     "vt trk [trk_e]    Validate track(s). Performs read ID and read sector for a track.\n"
     "                  If you specify 'trk_e', the command will perform track validation\n"
     "                  from 'trk' to 'trk_e'.\n"
+    "tt trk [s_byte] [e_byte]  Trim track. Cut out the track data starting from 's_byte' to 'e_byte'. \n"
+    "                  The 's_byte' and 'e_byte' can be specified in byte position in the track dump.\n"
+    "                  If '*' is specified as 'trk', all tracks will be trimmed.\n"
     "ri trk [trk_e]    Read all sector IDs. Perform ID read from 'trk' to 'trk_e' if you specify trk_e.\n"
     "                  Otherwise, an ID read operation will be performed for a track.\n"
     "rs trk sid sct    Read sector\n"
@@ -382,7 +452,7 @@ void cmd_help(void) {
     "q                 Quit analyzer\n"
     "\n"
     "Note1: The number starting with '$' will be handled as hexadecimal value (e.g. $f7)\n"
-    "Note2: VFO type = 0:vfo_fixed, 1:vfo_simple, 2:vfo_pid, 3:vfo_pid2, 9=experimental\n"
+    "Note2: VFO type = 0:vfo_fixed, 1:vfo_simple, 2:vfo_pid, 3:vfo_pid2, 4:vfo_simple2(default) 9=experimental\n"
     << std::endl;
 }
 // -------------------------------------------------------------------------
@@ -425,7 +495,10 @@ int main(int argc, char* argv[]) {
 
         if(args[0] == "o" && args.size()>=2) {
             cmd_open_image(args[1]);
-        } 
+        }
+        else if(args[0] == "w" && args.size()>=2) {
+            cmd_write_image(args[1]);
+        }
         else if(args[0] == "rt" && args.size()>=2) {
             cmd_read_track(fdc_misc::str2val(args[1]));
         } 
@@ -471,8 +544,12 @@ int main(int argc, char* argv[]) {
         else if(args[0] == "histogram" && args.size()>=2) {
             cmd_histogram(fdc_misc::str2val(args[1]));            
         }
-        else if(args[0] == "tt" && args.size()>=3) {
-            cmd_trim_track(fdc_misc::str2val(args[1]), fdc_misc::str2val(args[2]));
+        else if(args[0] == "tt" && args.size()>=4) {
+            if(args[1] == "*") {
+                cmd_trim_track(65535, fdc_misc::str2val(args[2]), fdc_misc::str2val(args[3]));  // trim all tracks
+            } else {
+                cmd_trim_track(fdc_misc::str2val(args[1]), fdc_misc::str2val(args[2]), fdc_misc::str2val(args[3]));
+            }
         }
         else if(args[0] == "h" || args[0]=="help" || args[0]=="?") {
             cmd_help();

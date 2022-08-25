@@ -284,7 +284,7 @@ bool mfm_codec::mfm_read_byte(uint8_t& data, bool& missing_clock, bool ignore_mi
         }
         m_bit_stream = (m_bit_stream << 1) | bit_data;
 
-        if (ignore_missing_clock == false) {
+        if (ignore_missing_clock == false && (decode_count & 0b01u)==0) {  // Ignore MC on clock phase
             if ((m_bit_stream & 0x0ffffu) == m_missing_clock_a1) {      // Missing clock 0xA1 pattern
                 data = 0xa1;
                 missing_clock = true;

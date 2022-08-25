@@ -18,9 +18,9 @@ public:
 
 class disk_image_base_properties {
 public:
-    disk_image_base_properties() : m_max_track_number(0), m_spindle_time_ns(0), m_sampling_rate(0), m_data_bit_rate(0) {};
+    disk_image_base_properties() : m_number_of_tracks(0), m_spindle_time_ns(0), m_sampling_rate(0), m_data_bit_rate(0) {};
 
-    size_t      m_max_track_number;
+    size_t      m_number_of_tracks;
     /** Spindle rotation time [ns] */
     size_t      m_spindle_time_ns;
     /** Disk image sampling frequency [Hz] */
@@ -53,7 +53,7 @@ public:
     bit_array get_track_data(const size_t track_number);
     void set_track_data(const size_t track_number, const bit_array track_data);
 
-    size_t media_max_track_number(const media_type mtype);
+    size_t media_number_of_tracks(const media_type mtype);
 
     inline bool is_ready(void) { return m_track_data_is_set; };
 
@@ -69,7 +69,7 @@ public:
         }
     }
 
-    inline size_t get_number_of_tracks(void) { return m_base_prop.m_max_track_number; }
+    inline size_t get_number_of_tracks(void) { return m_base_prop.m_number_of_tracks; }
     inline size_t get_spindle_time_ns(void)  { return m_base_prop.m_spindle_time_ns; }
     inline size_t get_data_bit_rate(void)    { return m_base_prop.m_data_bit_rate; }
     inline size_t get_sampling_rate(void)    { return m_base_prop.m_sampling_rate; }

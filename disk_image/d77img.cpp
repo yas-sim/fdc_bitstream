@@ -61,6 +61,7 @@ void d77img::read(const std::string& file_name) {
     m_disk_data.clear();
     m_disk_data.resize(164);
 
+    size_t last_track = 0;
     for (size_t track = 0; track < 164; track++) {
         size_t track_offset = image_data.get_dword_le(0x20 + track * 4);
         if (track_offset != 0) {
@@ -79,6 +80,7 @@ void d77img::read(const std::string& file_name) {
                 sect.m_sector_data        = image_data.get_block(track_offset + 0x10, (128 << (sect.m_N & 3)));
                 num_sect = sect.m_num_sectors;
                 m_disk_data[track].push_back(sect);
+                last_track = track;
 
                 track_offset += 0x10 + sect.m_sector_data_length;
 
@@ -86,6 +88,7 @@ void d77img::read(const std::string& file_name) {
         }
     }
     ifs.close();
+    m_disk_data.resize(last_track+1);    
 }
 
 void d77img::write(std::string file_name) {

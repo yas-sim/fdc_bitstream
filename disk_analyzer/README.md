@@ -3,17 +3,20 @@
 |Command|Parameters|Description|
 |-|-|-|
 |`o`|`file_name`|Open an image file.(HFE/MFM/RAW/D77)|
-|`rt`|`trk`|Read track|
-|`vt`|`trk` [`trk_e`]|Validate track(s). Performs read ID and read sector for a track.<br>If you specify 'trk_e', the command will perform track validation from 'trk' to 'trk_e'.|
-|`ri`|`trk` [`trk_e`]|Read all sector IDs. Perform ID read from 'trk' to 'trk_e' if you specify 'trk_e'. Otherwise, an ID read operation will be performed for a track.|
-|`rs`|`trk` `sid` `sct`|Read sector|
+|`w`|`file_name`|Write an image file. (MFM, D77)|
+|`rt`|`trk`|Read track<br>The data in green color indicates that the data has '**missing-clock**' bit pattern.|
+|`vt`|`trk` [`trk_e`]|Validate track(s).<br>Performs read ID and read sector for a track.<br>If you specify 'trk_e', the command will perform track validation from 'trk' to 'trk_e'.|
+|`tt`|`trk` [`s_byte`] [`e_byte`]|Trim track.<br>Cut out the track data starting from 's_byte' to 'e_byte'.<br>The 's_byte' and 'e_byte' can be specified in byte position in the track dump.<br>If '*' is specified as 'trk', all tracks will be trimmed.|
+|`ri`|`trk` [`trk_e`]|Read all sector IDs.<br>Perform ID read from 'trk' to 'trk_e' if you specify 'trk_e'. Otherwise, an ID read operation will be performed for a track.|
+|`rs`|`trk` `sct`|Read sector 1.<br>Read a sector from track=trk with CHR==(trk/2, trk%2, sct).|
+|`rs`|`trk` `#sct`|Read sector 2.<br>Read a sector from track=trk with sector index #. The sector index # starts from 1 and #1 means the first sector after the index hole.<br>e.g. rs 0 #5 => The 5th sector in track 0.|
 |`ef`|`rate`|Enable fluctuator (VFO stops at rate of `rate(0.0-1.0)`|
 |`ef`||Disable fluctuator|
 |`gain`|`gl` `gh`|Set VFO gain (low=gl, high=gh)|
 |`vfo`||Display current VFO parameters|
-|`vv`|`trk` [`vfo_type`]|VFO visualizer. Read 5,000 pulses from the top of a track using specified type of VFO.|
+|`vv`|`trk` [`vfo_type`]|VFO visualizer.<br>Read data pulses from the top of a track using specified type of VFO.|
 |`sv`|`vfo_type`|Select VFO type.|
-|`rv`|(soft) reset VFO|
+|`rv`||(soft) reset VFO<br>Initializes VFO parameters.|
 |`histogram`|`trk`|Display histogram of data pulse distances in a track|
 |`q`||Quit analyzer|
 * Note1: The number starting with '$' will be handled as hexadecimal value (e.g. **$f7** == **247**)  
@@ -32,37 +35,109 @@ ef              Disable fluctuator
 gain gl gh      Set VFO gain (low=gl, high=gh)
 
 CMD(1) > o disk.raw
+Track num     : 80
+Spindle speed : 199.698 [ms/rotation]
+Sampling rate : 4 [Msamples/sec]
+Data bit rate : 500 [Kbit/sec]
+-- vfo_base --
+Cell_size : 8
+Cell_size_ref : 8
+Window ratio  : 0.9
+Window size   : 7.2
+Windoe offset : 0.4
+Gain (Low)    : 1
+Gain (High)   : 2
+Current gain  : 1
+-- vfo_simple2 --
 CMD(2) > ri 0
- 0 00 00 01 01 fa0c OK
- 1 00 00 02 01 af5f OK
- 2 00 00 03 01 9c6e OK
- 3 00 00 04 01 05f9 OK
- 4 00 00 05 01 36c8 OK
- 5 00 00 06 01 639b OK
- 6 00 00 07 01 50aa OK
- 7 00 00 08 01 4094 OK
- 8 00 00 09 01 73a5 OK
- 9 00 00 0a 01 26f6 OK
-10 00 00 0b 01 15c7 OK
-11 00 00 0c 01 8c50 OK
-12 00 00 0d 01 bf61 OK
-13 00 00 0e 01 ea32 OK
-14 00 00 0f 01 d903 OK
-15 00 00 10 01 ca4e OK
-CMD(3) > rs 0 0 1
-1a 50 86 fd 1f 8b 0d 0f 8e 01 1a c6 0f ad 9f fb fa 6c 02 6c 05 5a 26 f5 20 08 0a 00 02 00 00 02 00 00 1a 50 0c 0f 17 00 cc 17 00 e1 10 8e 02 ef 8e 0b df ce c0 00 17 04 99 8e c0 00 17 05 60 17
-03 5f 86 05 17 01 22 17 01 01 10 8e 01 d5 8e 10 00 17 03 62 8e 10 00 17 01 23 10 8e 01 e1 8e 10 00 17 03 52 8e 10 00 17 01 13 ce 40 44 17 01 40 10 8e 01 db 8e 10 00 17 03 3c 8e 10 00 17 00 fd
-ce 40 00 17 01 2a 86 04 17 00 de 86 06 17 00 d9 86 04 b7 fd 02 30 8d 05 61 bf ff f8 4f b7 06 f8 17 06 b2 1c ef 17 01 6b 17 06 58 10 8e 01 ed 8e 80 00 17 03 01 10 8e 0c 00 8e 80 00 ce c0 00 17
-01 14 10 8e 01 e7 8e 80 00 17 02 ea b6 01 f3 f6 02 4a 7e 80 00 41 54 54 4c 45 31 41 54 54 4c 45 32 41 54 54 4c 45 33 41 50 52 47 20 20 41 53 42 50 20 20 ff 00 8e fd 15 86 04 a7 84 a6 01 6f 84
+Read ID (0)
+ 1 00 00 01 01 fa0c ID-CRC_OK
+ 2 00 00 02 01 af5f ID-CRC_OK
+ 3 00 00 03 01 9c6e ID-CRC_OK
+ 4 00 00 04 01 05f9 ID-CRC_OK
+ 5 00 00 05 01 36c8 ID-CRC_OK
+ 6 00 00 06 01 639b ID-CRC_OK
+ 7 00 00 07 01 50aa ID-CRC_OK
+ 8 00 00 08 01 4094 ID-CRC_OK
+ 9 00 00 09 01 73a5 ID-CRC_OK
+10 00 00 0a 01 26f6 ID-CRC_OK
+11 00 00 0b 01 15c7 ID-CRC_OK
+12 00 00 0c 01 8c50 ID-CRC_OK
+13 00 00 0d 01 bf61 ID-CRC_OK
+14 00 00 0e 01 ea32 ID-CRC_OK
+15 00 00 0f 01 d903 ID-CRC_OK
+16 00 00 10 01 ca4e ID-CRC_OK
+CMD(3) > rs 0 1
+Sector read : 0, 1
 
-CRC DAM  RNF --ID_POS-- --DAM_POS- SIZE
-OK  DAM  OK  0000013682 0000019508 256
+-OFST- : 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f
+---------------------------------------------------------
+000000 : 00 01 e9 c8 ba e9 00 00 00 00 00 00 00 12 00 00
+000010 : 34 7e 86 fd 1f 8b 86 80 97 1d b6 01 02 97 1c 86
+000020 : 0a 97 18 8d 70 4f 97 19 b6 01 01 97 1b 8d 5f 86
+000030 : 1e 97 18 8d 60 b6 01 03 97 19 8e 06 18 5f 34 04
+000040 : 8d 4c 8d 58 8d 0d 8d 46 35 04 5c c1 3d 27 2a 34
+000050 : 04 20 f1 b6 01 05 97 1a 86 c0 97 18 d6 1f 2a 06
+000060 : 96 1b a7 80 20 f6 c5 40 27 f2 96 18 5f ed 81 39
+000070 : 10 8e 00 7b 31 3f 26 fc 39 8d 13 8d 08 8d 24 bf
+000080 : 01 08 6e 89 ff 10 8e 00 01 31 3f 26 fc 39 d6 18
+000090 : c5 81 26 fa 39 d6 1f c5 40 27 fa 39 d6 18 c5 02
+0000a0 : 27 fa 39 b6 01 05 97 1a 86 80 97 18 d6 1f 2a 06
+0000b0 : 96 1b a7 80 20 f6 c5 40 27 f2 d6 18 26 03 8d b0
+0000c0 : 39 f7 01 00 39 86 01 b7 ff e1 86 28 b1 0e 00 26
+0000d0 : 05 35 7e 39 10 12 35 7e 16 ff 35 e9 e9 e9 e9 12
+0000e0 : 17 ff 2d 8e 0d f8 39 e9 e9 e9 e9 e9 e9 e9 e9 e9
+0000f0 : e9 e9 e9 e9 e9 e9 e9 e9 e9 e9 e9 e9 e9 e9 e9 e9
+
+CRC DAM  RNF ----ID_POS ---DAM_POS ---END_POS ---TIME(ms) SIZE
+OK  DAM  OK       20619      26431      59630    9.75275 256
 CMD(4) > rt 0
-9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c
-9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 9c 00 00 00 00 00 00 00 00 00 00 00 01 c2 a1 a1 a1 fe 00 00 01 01 fa 0c 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e
-4e 4e 4e 4e 4e 4e 4e 4e 00 00 00 00 00 00 00 00 00 00 00 00 02 c2 a1 a1 a1 fb 1a 50 86 fd 1f 8b 0d 0f 8e 01 1a c6 0f ad 9f fb fa 6c 02 6c 05 5a 26 f5 20 08 0a 00 02 00 00 02 00 00 1a 50 0c 0f
-  :     :     :     :
-00 00 00 00 00 00 00 e1 22 4e 08 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 7f ff ff
+
+-OFST- : 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f
+---------------------------------------------------------------------------------------------------------
+000000 : b9 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39
+000020 : 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39
+000040 : 39 39 39 39 39 39 39 39 39 39 39 39 39 39 39 38 00 00 00 00 00 00 00 00 00 00 00 03 c2 c2 c2 fc
+000060 : 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e
+000080 : 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 00 00 00 00 00 00 00 00 00 00 00 00 a1 a1
+0000a0 : a1 fe 00 00 01 01 fa 0c 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 00 00
+0000c0 : 00 00 00 00 00 00 00 00 00 00 00 14 a1 a1 a1 fb 00 01 e9 c8 ba e9 00 00 00 00 00 00 00 12 00 00
+0000e0 : 34 7e 86 fd 1f 8b 86 80 97 1d b6 01 02 97 1c 86 0a 97 18 8d 70 4f 97 19 b6 01 01 97 1b 8d 5f 86
+000100 : 1e 97 18 8d 60 b6 01 03 97 19 8e 06 18 5f 34 04 8d 4c 8d 58 8d 0d 8d 46 35 04 5c c1 3d 27 2a 34
+000120 : 04 20 f1 b6 01 05 97 1a 86 c0 97 18 d6 1f 2a 06 96 1b a7 80 20 f6 c5 40 27 f2 96 18 5f ed 81 39
+000140 : 10 8e 00 7b 31 3f 26 fc 39 8d 13 8d 08 8d 24 bf 01 08 6e 89 ff 10 8e 00 01 31 3f 26 fc 39 d6 18
+000160 : c5 81 26 fa 39 d6 1f c5 40 27 fa 39 d6 18 c5 02 27 fa 39 b6 01 05 97 1a 86 80 97 18 d6 1f 2a 06
+000180 : 96 1b a7 80 20 f6 c5 40 27 f2 d6 18 26 03 8d b0 39 f7 01 00 39 86 01 b7 ff e1 86 28 b1 0e 00 26
+0001a0 : 05 35 7e 39 10 12 35 7e 16 ff 35 e9 e9 e9 e9 12 17 ff 2d 8e 0d f8 39 e9 e9 e9 e9 e9 e9 e9 e9 e9
+0001c0 : e9 e9 e9 e9 e9 e9 e9 e9 e9 e9 e9 e9 e9 e9 e9 e9 80 d0 fe e4 e4 e4 e4 e4 e4 e4 e4 e4 e4 e4 e4 e4
+0001e0 : e4 e4 e4 e4 e4 e4 e4 e4 e4 e4 e4 e4 e4 e4 e4 e4 e4 e4 e4 e4 e4 e4 e4 e4 e4 e4 e4 e4 e4 e4 e4 e4
+
+-OFST- : 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f
+---------------------------------------------------------------------------------------------------------
+000200 : e4 e4 e4 e4 e4 e4 e0 00 00 00 00 00 00 00 00 00 00 00 0a a1 a1 a1 fe 00 00 02 01 af 5f 4e 4e 4e
+000220 : 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 00 00 00 00 00 00 00 00 00 00 00 00 a1
+  :                 :                 :                   :                   :                 :
+CMD(5) > vt 0
+
+Track 0
+  #: CC HH RR NN --- ID CRC ---  SIZE
+  1: 00 00 01 01 fa0c ID-CRC_OK   256 DAM  DT-CRC OK  RNF_OK  IDAM_POS=   20619 DAM_POS=   26431
+  2: 00 00 02 01 af5f ID-CRC_OK   256 DAM  DT-CRC OK  RNF_OK  IDAM_POS=   68278 DAM_POS=   73917
+  3: 00 00 03 01 9c6e ID-CRC_OK   256 DAM  DT-CRC OK  RNF_OK  IDAM_POS=  115946 DAM_POS=  121579
+  4: 00 00 04 01 05f9 ID-CRC_OK   256 DAM  DT-CRC OK  RNF_OK  IDAM_POS=  163526 DAM_POS=  169160
+  5: 00 00 05 01 36c8 ID-CRC_OK   256 DAM  DT-CRC OK  RNF_OK  IDAM_POS=  211097 DAM_POS=  216727
+  6: 00 00 06 01 639b ID-CRC_OK   256 DAM  DT-CRC OK  RNF_OK  IDAM_POS=  258703 DAM_POS=  264337
+  7: 00 00 07 01 50aa ID-CRC_OK   256 DAM  DT-CRC OK  RNF_OK  IDAM_POS=  306179 DAM_POS=  311796
+  8: 00 00 08 01 4094 ID-CRC_OK   256 DAM  DT-CRC OK  RNF_OK  IDAM_POS=  353669 DAM_POS=  359291
+  9: 00 00 09 01 73a5 ID-CRC_OK   256 DAM  DT-CRC OK  RNF_OK  IDAM_POS=  401205 DAM_POS=  406815
+ 10: 00 00 0a 01 26f6 ID-CRC_OK   256 DAM  DT-CRC OK  RNF_OK  IDAM_POS=  448721 DAM_POS=  454345
+ 11: 00 00 0b 01 15c7 ID-CRC_OK   256 DAM  DT-CRC OK  RNF_OK  IDAM_POS=  496261 DAM_POS=  501888
+ 12: 00 00 0c 01 8c50 ID-CRC_OK   256 DAM  DT-CRC OK  RNF_OK  IDAM_POS=  543992 DAM_POS=  549641
+ 13: 00 00 0d 01 bf61 ID-CRC_OK   256 DAM  DT-CRC OK  RNF_OK  IDAM_POS=  591645 DAM_POS=  597277
+ 14: 00 00 0e 01 ea32 ID-CRC_OK   256 DAM  DT-CRC OK  RNF_OK  IDAM_POS=  639250 DAM_POS=  644907
+ 15: 00 00 0f 01 d903 ID-CRC_OK   256 DAM  DT-CRC OK  RNF_OK  IDAM_POS=  687021 DAM_POS=  692656
+ 16: 00 00 10 01 ca4e ID-CRC_OK   256 DAM  DT-CRC OK  RNF_OK  IDAM_POS=  734632 DAM_POS=  740285
+
 ```
 * Histogram  
 	* Shows distribution of the pulse-to-pulse distance in a track.  

@@ -10,10 +10,21 @@ void disk_image_d77::read(const std::string file_name) {
     m_track_data_is_set = false;
     d77img input_image;
     input_image.read(file_name);
-    m_base_prop.m_max_track_number = 0;
+    m_base_prop.m_number_of_tracks = 0;
     m_base_prop.m_spindle_time_ns = (60*1e9)/300;
     m_base_prop.m_sampling_rate = 4e6;
-    m_base_prop.m_data_bit_rate = 500e3;
+    switch(input_image.m_disk_type) {
+    case 0x00: // 2D
+    case 0x10: // 2DD
+    case 0x30: // 1D
+    case 0x40: // 1DD
+    default:
+        m_base_prop.m_data_bit_rate = 500e3;
+        break;
+    case 0x20: // 2HD
+        m_base_prop.m_data_bit_rate = 1e6;
+        break;
+    }
 
     bit_array track_data;
     mfm_codec codec;
@@ -90,7 +101,7 @@ void disk_image_d77::read(const std::string file_name) {
 
         track_data = codec.get_track_data();
         m_track_data[track_n] = track_data;
-        m_base_prop.m_max_track_number = track_n;
+        m_base_prop.m_number_of_tracks = track_n+1;
     }
     m_track_data_is_set = true;
 }
@@ -105,7 +116,7 @@ void disk_image_d77::write(const std::string file_name) {
     output_image.m_disk_type = 0;       // 2D
     output_image.m_disk_size = 0;
 
-    for (size_t track_n = 0; track_n <= m_base_prop.m_max_track_number; track_n++) {
+    for (size_t track_n = 0; track_n < m_base_prop.m_number_of_tracks; track_n++) {
         if(m_verbose) {
             std::cout << std::setw(4) << std::dec << track_n << ":";
         }

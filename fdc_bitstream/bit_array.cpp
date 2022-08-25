@@ -49,6 +49,7 @@ std::vector<uint8_t> bit_array::get_array(void) {
 void bit_array::clear_array(void) {
     m_array_data.clear();
     m_bit_length = 0;
+    m_stream_pos = 0;
 }
 
 /**

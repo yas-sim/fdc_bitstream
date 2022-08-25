@@ -269,7 +269,7 @@ void dump_buf(uint8_t* ptr, size_t size, bool line_feed/*=true*/, size_t cols/*=
                 std::cout << std::hex << std::setw(6) << std::setfill('0') << i << " : ";
             }
         }
-        if (marker[i] == 1) color(4);
+        if (marker != nullptr) if(marker[i] == 1) color(4);
         std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(ptr[i]) << " ";
         color(7);
         if (i % cols == cols-1) {

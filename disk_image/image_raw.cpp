@@ -49,7 +49,7 @@ void disk_image_raw::read(const std::string file_name) {
                 }
                 else if (items[0] == "**TRACK_END") {
                     m_track_data[cylinder * 2 + side] = track_data;
-                    m_base_prop.m_max_track_number = cylinder * 2 + side;
+                    m_base_prop.m_number_of_tracks = cylinder * 2 + side + 1;
                     read_track_mode = false;
                 }
                 else if (items[0] == "**MEDIA_TYPE") {

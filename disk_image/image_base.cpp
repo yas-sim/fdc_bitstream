@@ -12,7 +12,7 @@
 
 disk_image::disk_image() : m_track_data_is_set(false) {
     m_base_prop.m_data_bit_rate = 500e3;
-    m_base_prop.m_max_track_number = 0;
+    m_base_prop.m_number_of_tracks = 0;
     m_base_prop.m_sampling_rate = 4e6;
     m_base_prop.m_spindle_time_ns = 0.2 * 1e9;
     create_empty_track_data(84);
@@ -49,7 +49,7 @@ std::ifstream disk_image::open_text_file(const std::string file_name) {
 }
 
 bit_array disk_image::get_track_data(const size_t track_number) {
-    if (track_number < m_track_data.size() && track_number <= m_base_prop.m_max_track_number) {
+    if (track_number < m_track_data.size() && track_number < m_base_prop.m_number_of_tracks) {
         return m_track_data[track_number];
     }
     else {
@@ -65,27 +65,27 @@ void disk_image::set_track_data(const size_t track_number, const bit_array track
         m_track_data.resize(track_number + 1);
     }
     m_track_data[track_number] = track_data;
-    if (m_base_prop.m_max_track_number < track_number) {
-        m_base_prop.m_max_track_number = track_number;
+    if (m_base_prop.m_number_of_tracks <= track_number) {
+        m_base_prop.m_number_of_tracks  = track_number+1;
     }
 }
 
 
-size_t disk_image::media_max_track_number(const media_type mtype) {
-    size_t max_track_number;
+size_t disk_image::media_number_of_tracks(const media_type mtype) {
+    size_t number_of_tracks;
     switch (mtype) {
     case media_type::FLOPPY_2D:
-        max_track_number = 84;
+        number_of_tracks = 84;
         break;
     case media_type::FLOPPY_2DD:
-        max_track_number = 164;
+        number_of_tracks = 164;
         break;
     case media_type::FLOPPY_2HD:
-        max_track_number = 164;
+        number_of_tracks = 164;
         break;
     default:
-        max_track_number = 0;
+        number_of_tracks = 0;
         break;
     }
-    return max_track_number;
+    return number_of_tracks;
 }
