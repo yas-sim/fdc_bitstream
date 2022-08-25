@@ -139,6 +139,11 @@ Track 0
  16: 00 00 10 01 ca4e ID-CRC_OK   256 DAM  DT-CRC OK  RNF_OK  IDAM_POS=  734632 DAM_POS=  740285
 
 ```
+
+* Track dump  
+Track dump can indicate the missing-clock* bytes with green color.   
+![trk_dmp](../resources/track_dump.png)
+
 * Histogram  
 	* Shows distribution of the pulse-to-pulse distance in a track.  
   * You can check the image quality. The more clear separation of pulse distribution, the better quality.  
