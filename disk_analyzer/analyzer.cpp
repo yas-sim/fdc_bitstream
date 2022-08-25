@@ -103,11 +103,13 @@ void cmd_read_track(size_t track_n) {
         return;
     }
     bit_array track_stream;
-    std::vector<uint8_t> read_data;
+    std::pair<std::vector<uint8_t>, std::vector<uint8_t>> read_data;
     track_stream = disk_img->get_track_data(track_n);
     fdc->set_track_data(track_stream);
-    read_data = fdc->read_track();
-    fdc_misc::dump_buf(read_data.data(), read_data.size());
+    read_data = fdc->read_track_ex();
+    constexpr size_t cols = 32;
+    constexpr size_t rows = 16;
+    fdc_misc::dump_buf(read_data.first.data(), read_data.first.size(), true, cols, rows, true, read_data.second.data());
 }
 
 void cmd_read_id(size_t track_n, size_t track_end_n = -1) {
@@ -125,6 +127,10 @@ void cmd_read_id(size_t track_n, size_t track_end_n = -1) {
         read_data = fdc->read_all_idam();
         fdc_misc::display_id_list(read_data, true);
     }
+}
+
+void cmd_trim_track(size_t start_p, size_t end_p) {
+
 }
 
 void cmd_validate_track(size_t track_n, size_t track_end_n = -1) {
@@ -193,7 +199,7 @@ void cmd_read_sector(size_t cyl, size_t rcd) {
         cyl /= 2;
     }
     read_data = fdc->read_sector(cyl, rcd);
-    fdc_misc::dump_buf(read_data.data.data(), read_data.data.size());
+    fdc_misc::dump_buf(read_data.data.data(), read_data.data.size(), true, 16, 16, true);
     size_t end_pos = fdc->get_pos();
     if (end_pos < read_data.id_pos) {
         end_pos += track_stream.get_length();       // wrap around correction
@@ -464,6 +470,9 @@ int main(int argc, char* argv[]) {
         }
         else if(args[0] == "histogram" && args.size()>=2) {
             cmd_histogram(fdc_misc::str2val(args[1]));            
+        }
+        else if(args[0] == "tt" && args.size()>=3) {
+            cmd_trim_track(fdc_misc::str2val(args[1]), fdc_misc::str2val(args[2]));
         }
         else if(args[0] == "h" || args[0]=="help" || args[0]=="?") {
             cmd_help();

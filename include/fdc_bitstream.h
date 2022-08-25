@@ -138,6 +138,7 @@ public:
     void read_data(uint8_t& data, bool& missing_clock, bool ignore_missing_clock = true, bool ignore_sync_field = true);
 
     std::vector<uint8_t> read_track(void);
+    std::pair<std::vector<uint8_t>, std::vector<uint8_t>> read_track_ex(void);
     void write_track(const std::vector<uint8_t>& track_buf);
     size_t read_id(std::vector<uint8_t>& id_field, bool& crc_error);
     std::vector<id_field> read_all_idam(void);
