@@ -168,9 +168,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:abea60a7ed3b79255840fac28a5a20c02"><td class="memItemLeft" align="right" valign="top">std::vector&lt; uint8_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#abea60a7ed3b79255840fac28a5a20c02">read_track</a> (void)</td></tr>
 <tr class="memdesc:abea60a7ed3b79255840fac28a5a20c02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read track. Reads track data from the current position until the pointer reaches to the end of the track (no wrap around).  <a href="classfdc__bitstream.html#abea60a7ed3b79255840fac28a5a20c02">More...</a><br /></td></tr>
 <tr class="separator:abea60a7ed3b79255840fac28a5a20c02"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7801a8d9cb4aa2ba4fbd2b0d49575656"><td class="memItemLeft" align="right" valign="top">std::pair&lt; std::vector&lt; uint8_t &gt;, std::vector&lt; uint8_t &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#a7801a8d9cb4aa2ba4fbd2b0d49575656">read_track_ex</a> (void)</td></tr>
-<tr class="memdesc:a7801a8d9cb4aa2ba4fbd2b0d49575656"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read track. Reads track data with missing clock information. (debug/analyze purpose)  <a href="classfdc__bitstream.html#a7801a8d9cb4aa2ba4fbd2b0d49575656">More...</a><br /></td></tr>
-<tr class="separator:a7801a8d9cb4aa2ba4fbd2b0d49575656"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad61e9e633652a6b2ca3cf1e52254485c"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; size_t &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#ad61e9e633652a6b2ca3cf1e52254485c">read_track_ex</a> (void)</td></tr>
+<tr class="memdesc:ad61e9e633652a6b2ca3cf1e52254485c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read track. Reads track data with missing clock information. (debug/analyze purpose)  <a href="classfdc__bitstream.html#ad61e9e633652a6b2ca3cf1e52254485c">More...</a><br /></td></tr>
+<tr class="separator:ad61e9e633652a6b2ca3cf1e52254485c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aebcc3997b1a78dfe74a32dd0c5ae6bf8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#aebcc3997b1a78dfe74a32dd0c5ae6bf8">write_track</a> (const std::vector&lt; uint8_t &gt; &amp;track_buf)</td></tr>
 <tr class="memdesc:aebcc3997b1a78dfe74a32dd0c5ae6bf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write track. Start writing from the current position until all data is written. The track buffer is treated as a ring buffer, so the pointer will wrap around if the write data goes over the buffer's end. Write track recognizes MB8876/FDC179x compatible special codes such as $f5, $f6, $f7, $fb, $fe, and so on.  <a href="classfdc__bitstream.html#aebcc3997b1a78dfe74a32dd0c5ae6bf8">More...</a><br /></td></tr>
 <tr class="separator:aebcc3997b1a78dfe74a32dd0c5ae6bf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -760,14 +760,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a7801a8d9cb4aa2ba4fbd2b0d49575656" name="a7801a8d9cb4aa2ba4fbd2b0d49575656"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7801a8d9cb4aa2ba4fbd2b0d49575656">&#9670;&nbsp;</a></span>read_track_ex()</h2>
+<a id="ad61e9e633652a6b2ca3cf1e52254485c" name="ad61e9e633652a6b2ca3cf1e52254485c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad61e9e633652a6b2ca3cf1e52254485c">&#9670;&nbsp;</a></span>read_track_ex()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::pair&lt; std::vector&lt; uint8_t &gt;, std::vector&lt; uint8_t &gt; &gt; fdc_bitstream::read_track_ex </td>
+          <td class="memname">std::vector&lt; std::vector&lt; size_t &gt; &gt; fdc_bitstream::read_track_ex </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -783,7 +783,7 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>std::pair&lt;std::vector&lt;uint8_t&gt;, std::vector&lt;bool&gt;&gt; Read track data (Decoded MFM data) and missing clock mark </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>std::vector&lt;std::vector&lt;size_t&gt;&gt; Read track data (Decoded MFM data) missing clock mark, and bit position [[mfm,mc,pos],[mfm,mc,pos],...] </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00084">84</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
