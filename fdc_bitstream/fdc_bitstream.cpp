@@ -466,11 +466,10 @@ void fdc_bitstream::read_data(uint8_t& data, bool& missing_clock, bool ignore_mi
 * @brief FD189x/MB8876 compatible TYPE-II READ SECTOR operation
  * 
  * @param trk Track number.
- * @param sid Side number.
  * @param sct Sector number.
  * @return fdc_bitstream::sector_data Read sector data.
  */
-fdc_bitstream::sector_data fdc_bitstream::read_sector(int trk, int sid, int sct) {
+fdc_bitstream::sector_data fdc_bitstream::read_sector(int trk, int sct) {
     size_t index_hole_count = 0;
     sector_data sect_data;
     std::vector<uint8_t> sect_id;
@@ -479,7 +478,6 @@ fdc_bitstream::sector_data fdc_bitstream::read_sector(int trk, int sid, int sct)
     bool crc_error = false;
     bool dam_type = false;
     bool record_not_found = false;
-    if (trk > 43) trk = 43;
     while (true) {
         if (is_wraparound()) {
             clear_wraparound();
@@ -521,7 +519,6 @@ fdc_bitstream::sector_data fdc_bitstream::read_sector(int trk, int sid, int sct)
  * @brief FD189x/MB8876 compatible TYPE-II WRITE SECTOR operation
  * 
  * @param trk Track number.
- * @param sid Side number.
  * @param sct Sector number.
  * @param dam_type Data address mark type (false=DAM, true=DDAM)
  * @param write_data Sector data.
@@ -529,11 +526,10 @@ fdc_bitstream::sector_data fdc_bitstream::read_sector(int trk, int sid, int sct)
  * @return true No error
  * @return false Record-not-found error 
  */
-bool fdc_bitstream::write_sector(int trk, int sid, int sct, bool dam_type, std::vector<uint8_t> &write_data, bool fluctuate) {
+bool fdc_bitstream::write_sector(int trk, int sct, bool dam_type, std::vector<uint8_t> &write_data, bool fluctuate) {
     size_t index_hole_count = 0;
     std::vector<uint8_t> sect_id;
     bool crc_error = false;
-    if (trk > 43) trk = 43;
     while (true) {
         if (is_wraparound()) {
             clear_wraparound();

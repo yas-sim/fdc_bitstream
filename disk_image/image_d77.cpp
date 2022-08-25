@@ -128,7 +128,7 @@ void disk_image_d77::write(const std::string file_name) {
             sect_dt.m_density = 0;
             sect_dt.m_num_sectors = id_list.size();
             sect_dt.m_status = id_list[sect_n].crc_sts ? 0xb0 : 0x00;  // DT-CRC error
-            fdc_bitstream::sector_data read_sect = fdc.read_sector(sect_dt.m_C, sect_dt.m_H, sect_dt.m_R);
+            fdc_bitstream::sector_data read_sect = fdc.read_sector(sect_dt.m_C, sect_dt.m_R);
             sect_dt.m_sector_data = read_sect.data;
             sect_dt.m_sector_data_length = read_sect.data.size();
             d77_trk.push_back(sect_dt);

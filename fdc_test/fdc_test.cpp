@@ -82,7 +82,7 @@ void test2() {
     for (int i = 0; i < 256; i++) sect_data_w.push_back(i);
     fdc.clear_wraparound();
     fdc.set_pos(0);
-    fdc.write_sector(0, 0, 1, false, sect_data_w);
+    fdc.write_sector(0, 1, false, sect_data_w);
 
     std::cout << "Track dump - after sector write" << std::endl;
     fdc.set_pos(0);
@@ -94,7 +94,7 @@ void test2() {
     // verify written data by reading the sector
     std::cout << "Read sector data" << std::endl;
     fdc_bitstream::sector_data sect_data_r;
-    sect_data_r = fdc.read_sector(0, 0, 1);
+    sect_data_r = fdc.read_sector(0, 1);
     dump_buf(sect_data_r.data.data(), sect_data_r.data.size());
     std::cout << std::endl;
 
@@ -124,7 +124,7 @@ void test3(void) {
 
     std::cout << "Read sector data" << std::endl;
     fdc_bitstream::sector_data sect_data_r;
-    sect_data_r = fdc.read_sector(0, 0, 1);
+    sect_data_r = fdc.read_sector(0, 1);
     dump_buf(sect_data_r.data.data(), sect_data_r.data.size());
     std::cout << std::endl;
     fdc.disp_vfo_status();
@@ -134,7 +134,7 @@ void test3(void) {
     for (int i = 1; i <= 16; i++) {
         sect_data_w.clear();
         sect_data_w.resize(256, ((i - 1) << 4 | (i - 1)));
-        bool sts = fdc.write_sector(0, 0, i, false, sect_data_w, true);  // enable fluctuator
+        bool sts = fdc.write_sector(0, i, false, sect_data_w, true);  // enable fluctuator
         if (sts == false) {
             std::cout << i << "record-not-found error" << std::endl;
         }
@@ -152,7 +152,7 @@ void test3(void) {
     for (int i = 1; i <= 16; i++) {
         std::cout << "Sector " << i << std::endl;
         fdc_bitstream::sector_data sect_data_r;
-        sect_data_r = fdc.read_sector(0, 0, i);
+        sect_data_r = fdc.read_sector(0, i);
         dump_buf(sect_data_r.data.data(), sect_data_r.data.size());
     }
     std::cout << std::endl;

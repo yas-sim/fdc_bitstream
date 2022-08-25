@@ -144,6 +144,6 @@ public:
     size_t read_sector_body(size_t sect_length_code, std::vector<uint8_t>& sect_data, bool& crc_error, bool& dam_type, bool &record_not_found, bool timeout=true);
     void write_sector_body(std::vector<uint8_t> write_data, bool dam_type, bool write_crc=true);
 
-    sector_data read_sector(int trk, int sid, int sct);
-    bool write_sector(int trk, int sid, int sct, bool dam_type, std::vector<uint8_t>& write_data, bool fluctuate=false);
+    sector_data read_sector(int trk, int sct);
+    bool write_sector(int trk, int sct, bool dam_type, std::vector<uint8_t>& write_data, bool fluctuate=false);
 };

@@ -92,7 +92,7 @@ void cmd_open_image(std::string file_name) {
     fdc->disp_vfo_status();
 
     g_sampling_rate = props.m_sampling_rate;
-    g_data_bit_rate = props.m_sampling_rate;
+    g_data_bit_rate = props.m_data_bit_rate;
     g_spindle_time_ns = props.m_spindle_time_ns;
     g_max_track_number = props.m_max_track_number;
 }
@@ -143,7 +143,7 @@ void cmd_validate_track(size_t track_n, size_t track_end_n = -1) {
         std::vector<fdc_bitstream::sector_data> sect_data;
         for(auto it = id_data.begin(); it != id_data.end(); ++it) {
             fdc_bitstream::id_field id = *it;
-            sect_data.push_back(fdc->read_sector(id.C, id.H, id.R));
+            sect_data.push_back(fdc->read_sector(id.C, id.R));
         }
         //           "  1: 00 00 01 01 fa0c ID-CRC_OK   256 DAM  DT-CRC OK  RNF_OK  IDAM_POS=    5208 DAM_POS=   10923"
         std::cout << "  #: CC HH RR NN --- ID CRC ---  SIZE" << std::endl;
@@ -164,22 +164,48 @@ void cmd_set_gain(double gain_l, double gain_h) {
     fdc->disp_vfo_status();
 }
 
-void cmd_read_sector(size_t cyl, size_t hed, size_t rcd) {
+void cmd_read_sector(size_t cyl, size_t rcd) {
     if(is_image_ready()==false) {
         std::cout << "Disk image is not ready." << std::endl;
         return;
     }
-    std::cout << "Sector read : " << cyl << ", " << hed << ", " << rcd << std::endl;
     bit_array track_stream;
     fdc_bitstream::sector_data read_data;
-    track_stream = disk_img->get_track_data(cyl * 2 + hed);
+    track_stream = disk_img->get_track_data(cyl);
     fdc->set_track_data(track_stream);
-    read_data = fdc->read_sector(cyl, hed, rcd);
+    if(rcd >= 1000) {
+        std::vector<fdc_bitstream::id_field> id_list = fdc->read_all_idam();
+        size_t sct_idx = rcd - 1000;
+        fdc_bitstream::id_field sct_id = id_list[sct_idx];
+        std::cout << "Sector read by index : (" << std::dec << sct_idx + 1 << ") " << std::hex 
+                << std::setfill('0')
+                << std::setw(2) << static_cast<int>(sct_id.C) << " " << std::setw(2) << static_cast<int>(sct_id.H) << " "
+                << std::setw(2) << static_cast<int>(sct_id.R) << " " << std::setw(2) << static_cast<int>(sct_id.N) << std::dec << std::endl;
+        size_t cell_size = g_sampling_rate / g_data_bit_rate;
+        size_t rewind = (cell_size * 16 /*1byte*/) * 16;
+        size_t pos = sct_id.pos;
+        pos = (pos >= rewind) ? pos-rewind : 0;
+        cyl = sct_id.C;
+        rcd = sct_id.R;
+        fdc->set_pos(pos); // rewind the start position a bit.
+    } else {
+        std::cout << "Sector read : " << cyl << ", " << rcd << std::endl;
+        cyl /= 2;
+    }
+    read_data = fdc->read_sector(cyl, rcd);
     fdc_misc::dump_buf(read_data.data.data(), read_data.data.size());
-    std::cout << "CRC DAM  RNF --ID_POS-- --DAM_POS- SIZE" << std::endl;
+    size_t end_pos = fdc->get_pos();
+    if (end_pos < read_data.id_pos) {
+        end_pos += track_stream.get_length();       // wrap around correction
+    }
+    double read_time = (static_cast<double>(end_pos - read_data.id_pos)*1000.f) / g_sampling_rate;
+    std::cout << "CRC DAM  RNF ----ID_POS ---DAM_POS ---END_POS ---TIME(ms) SIZE" << std::endl;
     std::cout << (read_data.crc_sts ? "ERR " : "OK  ") << (read_data.dam_type ? "DDAM " : "DAM  ") << (read_data.record_not_found ? "ERR " : "OK  ");
-    std::cout << std::setw(10) << read_data.id_pos << " " << std::setw(10) << read_data.data_pos << " " << read_data.data.size() << std::endl;
+    std::cout << std::setfill(' ');
+    std::cout << std::setw(10) << read_data.id_pos << " " << std::setw(10) << read_data.data_pos << " " << 
+        std::setw(10) << end_pos << " " << std::setw(10) << std::setprecision(10) << read_time << " " << read_data.data.size() << std::endl;
 }
+
 
 void cmd_enable_fluctuator(double vfo_suspension_rate) {
     fdc->enable_fluctuator(vfo_suspension_rate);
@@ -398,8 +424,14 @@ int main(int argc, char* argv[]) {
             if(args.size()==2) cmd_validate_track(fdc_misc::str2val(args[1]), -1);
             if(args.size()==3) cmd_validate_track(fdc_misc::str2val(args[1]), fdc_misc::str2val(args[2]));
         }
-        else if(args[0] == "rs" && args.size()>=4) {
-            cmd_read_sector(fdc_misc::str2val(args[1]), fdc_misc::str2val(args[2]), fdc_misc::str2val(args[3]));
+        else if(args[0] == "rs" && args.size()>=3) {
+            if(args[2][0] == '#') {
+                args[2].erase(args[2].begin());  // remove #
+                size_t sct_num = fdc_misc::str2val(args[2]) + 1000-1;
+                cmd_read_sector(fdc_misc::str2val(args[1]), sct_num);
+            } else {
+                cmd_read_sector(fdc_misc::str2val(args[1]), fdc_misc::str2val(args[2]));
+            }
         }
         else if(args[0] == "gain" && args.size()>=3) {
             cmd_set_gain(std::stod(args[1]), std::stod(args[2]));
