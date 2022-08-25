@@ -9,7 +9,7 @@ var namespaces_dup =
       [ "display_id", "namespacefdc__misc.html#a5bc8870b973af57feaee62054c1b3ca4", null ],
       [ "display_id_list", "namespacefdc__misc.html#a04c8c1858bcc049a70ace832da35a2db", null ],
       [ "display_sector_data", "namespacefdc__misc.html#ad8f51625ce05f0d72cef06a5f6fd3a1d", null ],
-      [ "dump_buf", "namespacefdc__misc.html#a9fcf27391e9ce1b5b98790dc367465b2", null ],
+      [ "dump_buf", "namespacefdc__misc.html#a167757e80a5e59bd10695c73cce580c0", null ],
       [ "find_peaks", "namespacefdc__misc.html#a6aad255a9b3a1b84bb91a642859e854b", null ],
       [ "generate_format_data", "namespacefdc__misc.html#a0fe6aee900f7c5cfb26bdc1264034686", null ],
       [ "generate_interleaved_sector_list", "namespacefdc__misc.html#a4f3b8803acb8d006723073e82f97d007", null ],
