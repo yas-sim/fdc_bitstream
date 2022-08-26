@@ -19,14 +19,20 @@ void disk_image_raw::read(const std::string file_name) {
     size_t cylinder = 0, side = 0;
     bit_array track_data;
     size_t bit_pos = 0;
+    constexpr uint8_t encode_base = ' ';
+    constexpr uint8_t max_length = 'z' - encode_base;
     while (std::getline(ifs, buf))
     {
         if (read_track_mode && buf[0] == '~') {         // decode bit stream data
             for (size_t i = 1; i < buf.size(); i++)
             {
-                size_t val = buf[i] - ' ';
-                bit_pos += val;
-                track_data.set(bit_pos, 1);
+                if(buf[i] != '{') {
+                    size_t val = buf[i] - encode_base;
+                    bit_pos += val;
+                    track_data.set(bit_pos, 1);
+                } else {
+                    bit_pos += max_length;                 // extend the period but no pulse.
+                }
             }
         }
         else {
