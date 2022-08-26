@@ -282,7 +282,7 @@ void dump_buf(uint8_t* ptr, size_t size, bool line_feed/*=true*/, size_t cols/*=
 }
 
 // Specialized dump function for 'tr' command in analyzer
-void fdc_misc::dump_buf2(const std::vector<std::vector<size_t>> &data) {
+void dump_buf2(const std::vector<std::vector<size_t>> &data) {
     std::ios::fmtflags flags_saved = std::cout.flags();
     size_t row_count = 0;
     constexpr size_t rows = 16;
@@ -434,4 +434,4 @@ size_t str2val(const std::string &hexstr) {
     return res;
 }
 
-}
+} // namespace fdc_misc
