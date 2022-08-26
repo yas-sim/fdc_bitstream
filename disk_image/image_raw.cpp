@@ -21,17 +21,19 @@ void disk_image_raw::read(const std::string file_name) {
     size_t bit_pos = 0;
     constexpr uint8_t encode_base = ' ';
     constexpr uint8_t max_length = 'z' - encode_base;
+    constexpr uint8_t extend_char = '{';
     while (std::getline(ifs, buf))
     {
         if (read_track_mode && buf[0] == '~') {         // decode bit stream data
             for (size_t i = 1; i < buf.size(); i++)
             {
-                if(buf[i] != '{') {
+                if(buf[i] != extend_char) {
                     size_t val = buf[i] - encode_base;
                     bit_pos += val;
                     track_data.set(bit_pos, 1);
                 } else {
-                    bit_pos += max_length;                 // extend the period but no pulse.
+                    size_t val = max_length;
+                    bit_pos += val;                 // extend the period but no pulse.
                 }
             }
         }
