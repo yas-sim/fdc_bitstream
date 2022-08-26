@@ -101,7 +101,7 @@ var NAVTREEINDEX =
 [
 "analyzer_8cpp.html",
 "classmfm__codec.html#a6e8a09604245fb10c7ab0dd49dc1ffa1",
-"image__base_8h.html"
+"image__base_8cpp_source.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

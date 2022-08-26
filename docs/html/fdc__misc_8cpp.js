@@ -9,6 +9,7 @@ var fdc__misc_8cpp =
     [ "display_id_list", "fdc__misc_8cpp.html#a04c8c1858bcc049a70ace832da35a2db", null ],
     [ "display_sector_data", "fdc__misc_8cpp.html#ad8f51625ce05f0d72cef06a5f6fd3a1d", null ],
     [ "dump_buf", "fdc__misc_8cpp.html#a88cc0b6dbc128610eaa0ad1a056ad382", null ],
+    [ "dump_buf2", "fdc__misc_8cpp.html#a84d9448c375daac4040c212fdf224f88", null ],
     [ "find_peaks", "fdc__misc_8cpp.html#a6aad255a9b3a1b84bb91a642859e854b", null ],
     [ "generate_format_data", "fdc__misc_8cpp.html#a0fe6aee900f7c5cfb26bdc1264034686", null ],
     [ "generate_interleaved_sector_list", "fdc__misc_8cpp.html#ab05a48a473d48f709b2c1e9f15922484", null ],
