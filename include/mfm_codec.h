@@ -73,6 +73,7 @@ public:
     void mfm_write_byte(uint8_t data, bool mode = false, bool write_gate = true);
     void set_pos(size_t bit_pos);
     size_t get_pos(void);
+    size_t get_real_pos(void);
 
     inline void reset_sync_mode(void) { m_sync_mode = false; }
     inline void set_sync_mode(bool sync_mode) { m_sync_mode = sync_mode; }

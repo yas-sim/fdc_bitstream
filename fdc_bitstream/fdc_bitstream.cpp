@@ -267,7 +267,7 @@ std::vector<fdc_bitstream::id_field> fdc_bitstream::read_all_idam(void) {
 * @param[in] time out enable flag (true=time out when DAM can't find in 43 bytes of data read / false = no time out)
 * @return size_t Track position of the read_sector() started reading.
 */
-size_t fdc_bitstream::read_sector_body(size_t sect_length_code, std::vector<uint8_t>& sect_data, bool& crc_error, bool& dam_type, bool &record_not_found, bool timeout) {
+size_t fdc_bitstream::read_sector_body(size_t sect_length_code, std::vector<uint8_t>& sect_data, std::vector <size_t> &pos, bool& crc_error, bool& dam_type, bool &record_not_found, bool timeout) {
     std::vector<size_t> sector_length_table{ 128, 256, 512, 1024 };
 
     sect_data.clear();
@@ -318,6 +318,7 @@ size_t fdc_bitstream::read_sector_body(size_t sect_length_code, std::vector<uint
             }
             break;
         case fdc_state::READ_SECT:
+            pos.push_back(m_codec.get_real_pos());
             m_codec.mfm_read_byte(read_data, missing_clock, true, true);
             m_crcgen.data(read_data);
             sect_data.push_back(read_data);
@@ -428,6 +429,21 @@ size_t fdc_bitstream::get_pos(void) {
     return m_codec.get_pos();
 }
 
+
+/**
+* @brief Get current position minus distance to the next pulse
+*        Current position is always at a pulse.
+*        Real position is m_codec.m_distance_to_next_pulse before the current position.
+* 
+* @param[in] track_data New track data.
+* @return none
+*/
+size_t fdc_bitstream::get_real_pos(void)
+{
+	return m_codec.get_real_pos();
+}
+
+
 /**
 * @brief Set a new track data.
 *        Set a new track data in a new bit_array.
@@ -500,6 +516,7 @@ fdc_bitstream::sector_data fdc_bitstream::read_sector(int trk, int sct) {
     sector_data sect_data;
     std::vector<uint8_t> sect_id;
     std::vector<uint8_t> sect_body_data;
+    std::vector<size_t> sect_byte_pos;
     memset(&sect_data, 0, sizeof(sector_data));
     bool crc_error = false;
     bool dam_type = false;
@@ -517,8 +534,9 @@ fdc_bitstream::sector_data fdc_bitstream::read_sector(int trk, int sct) {
         if(sect_id.size()==0) continue;                     // Failed to read ID
         if (sect_id[0] == trk && sect_id[2] == sct) {       // FD179x/MB8876 won'nt compare 'head' field
             if (crc_error == false) {
-                pos = read_sector_body(sect_id[3], sect_body_data, crc_error, dam_type, record_not_found);
+                pos = read_sector_body(sect_id[3], sect_body_data, sect_byte_pos, crc_error, dam_type, record_not_found);
                 sect_data.data_pos = pos;
+                sect_data.data_end_pos = m_codec.get_real_pos();
                 size_t distance;
                 if (sect_data.data_pos >= sect_data.id_pos) {
                     distance = pos - sect_data.id_pos;
@@ -531,6 +549,7 @@ fdc_bitstream::sector_data fdc_bitstream::read_sector(int trk, int sct) {
                 }
                 else {
                     sect_data.data = sect_body_data;
+                    sect_data.pos = sect_byte_pos;
                     sect_data.record_not_found = record_not_found;
                     sect_data.crc_sts = crc_error;
                     return sect_data;
