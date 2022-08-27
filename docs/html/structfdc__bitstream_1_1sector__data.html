@@ -96,6 +96,8 @@ $(document).ready(function(){initNavTree('structfdc__bitstream_1_1sector__data.h
 Public Attributes</h2></td></tr>
 <tr class="memitem:a5e6d7149a48a84204415aa884c3c85ce"><td class="memItemLeft" align="right" valign="top">std::vector&lt; uint8_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfdc__bitstream_1_1sector__data.html#a5e6d7149a48a84204415aa884c3c85ce">data</a></td></tr>
 <tr class="separator:a5e6d7149a48a84204415aa884c3c85ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa49a70721e3231a4dc8e08bcae4ccfb5"><td class="memItemLeft" align="right" valign="top">std::vector&lt; size_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfdc__bitstream_1_1sector__data.html#aa49a70721e3231a4dc8e08bcae4ccfb5">pos</a></td></tr>
+<tr class="separator:aa49a70721e3231a4dc8e08bcae4ccfb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a48f1c0c8be757678431897c3e0b4d111"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfdc__bitstream_1_1sector__data.html#a48f1c0c8be757678431897c3e0b4d111">dam_type</a></td></tr>
 <tr class="separator:a48f1c0c8be757678431897c3e0b4d111"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2165fa6063196f2c55ff2094259b2c4b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfdc__bitstream_1_1sector__data.html#a2165fa6063196f2c55ff2094259b2c4b">crc_sts</a></td></tr>
@@ -106,6 +108,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a2f25f01cd7afde59dd3c2283b96d6086"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1bf80c44c5306bb65e51c510a238a679"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfdc__bitstream_1_1sector__data.html#a1bf80c44c5306bb65e51c510a238a679">data_pos</a></td></tr>
 <tr class="separator:a1bf80c44c5306bb65e51c510a238a679"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45f90dcae02ac7c7c6eb6a0c3e178af5"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfdc__bitstream_1_1sector__data.html#a45f90dcae02ac7c7c6eb6a0c3e178af5">data_end_pos</a></td></tr>
+<tr class="separator:a45f90dcae02ac7c7c6eb6a0c3e178af5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Structure for sector data. </p>
@@ -125,7 +129,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p >false:DAM, true : DDAM </p>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8h_source.html#l00055">55</a> of file <a class="el" href="fdc__bitstream_8h_source.html">fdc_bitstream.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8h_source.html#l00056">56</a> of file <a class="el" href="fdc__bitstream_8h_source.html">fdc_bitstream.h</a>.</p>
 
 </div>
 </div>
@@ -141,7 +145,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8h_source.html#l00054">54</a> of file <a class="el" href="fdc__bitstream_8h_source.html">fdc_bitstream.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8h_source.html#l00055">55</a> of file <a class="el" href="fdc__bitstream_8h_source.html">fdc_bitstream.h</a>.</p>
 
 </div>
 </div>
@@ -161,6 +165,22 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a45f90dcae02ac7c7c6eb6a0c3e178af5" name="a45f90dcae02ac7c7c6eb6a0c3e178af5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45f90dcae02ac7c7c6eb6a0c3e178af5">&#9670;&nbsp;</a></span>data_end_pos</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t fdc_bitstream::sector_data::data_end_pos</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8h_source.html#l00059">59</a> of file <a class="el" href="fdc__bitstream_8h_source.html">fdc_bitstream.h</a>.</p>
+
+</div>
+</div>
 <a id="a1bf80c44c5306bb65e51c510a238a679" name="a1bf80c44c5306bb65e51c510a238a679"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1bf80c44c5306bb65e51c510a238a679">&#9670;&nbsp;</a></span>data_pos</h2>
 
@@ -173,7 +193,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8h_source.html#l00058">58</a> of file <a class="el" href="fdc__bitstream_8h_source.html">fdc_bitstream.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8h_source.html#l00059">59</a> of file <a class="el" href="fdc__bitstream_8h_source.html">fdc_bitstream.h</a>.</p>
 
 </div>
 </div>
@@ -189,7 +209,23 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8h_source.html#l00057">57</a> of file <a class="el" href="fdc__bitstream_8h_source.html">fdc_bitstream.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8h_source.html#l00058">58</a> of file <a class="el" href="fdc__bitstream_8h_source.html">fdc_bitstream.h</a>.</p>
+
+</div>
+</div>
+<a id="aa49a70721e3231a4dc8e08bcae4ccfb5" name="aa49a70721e3231a4dc8e08bcae4ccfb5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa49a70721e3231a4dc8e08bcae4ccfb5">&#9670;&nbsp;</a></span>pos</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;size_t&gt; fdc_bitstream::sector_data::pos</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8h_source.html#l00054">54</a> of file <a class="el" href="fdc__bitstream_8h_source.html">fdc_bitstream.h</a>.</p>
 
 </div>
 </div>
@@ -206,7 +242,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p >true:error </p>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8h_source.html#l00056">56</a> of file <a class="el" href="fdc__bitstream_8h_source.html">fdc_bitstream.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8h_source.html#l00057">57</a> of file <a class="el" href="fdc__bitstream_8h_source.html">fdc_bitstream.h</a>.</p>
 
 </div>
 </div>

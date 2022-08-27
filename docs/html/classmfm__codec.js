@@ -12,6 +12,7 @@ var classmfm__codec =
     [ "enable_fluctuator", "classmfm__codec.html#afc9d698a3fea62e55c99a32dff6b2a6b", null ],
     [ "enable_fluctuator", "classmfm__codec.html#aee9a740c5f3c16a9f4be58111cbd80c0", null ],
     [ "get_pos", "classmfm__codec.html#a20a1c5d9ae9c86c8d7c6d3a37def6b6c", null ],
+    [ "get_real_pos", "classmfm__codec.html#a594dd9def5259ef3e83a9708baa86fd4", null ],
     [ "get_track_data", "classmfm__codec.html#ae4f39188f6e869a13298ca04648b604d", null ],
     [ "get_track_length", "classmfm__codec.html#ae6c1802f180e9db776c345ccc96a98ba", null ],
     [ "is_track_ready", "classmfm__codec.html#a5303b45e09cb1f5accbd004dde49bfc5", null ],

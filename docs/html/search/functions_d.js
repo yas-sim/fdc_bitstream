@@ -6,7 +6,7 @@ var searchData=
   ['read_5fdata_3',['read_data',['../classfdc__bitstream.html#a19159752b4c24f253f7f44709e1bfd61',1,'fdc_bitstream']]],
   ['read_5fid_4',['read_id',['../classfdc__bitstream.html#a285e12ca70b10ad1c3f9b65a2cb4e64d',1,'fdc_bitstream']]],
   ['read_5fsector_5',['read_sector',['../classd77img.html#a5caaa93ed613d229074be543b91e293a',1,'d77img::read_sector()'],['../classfdc__bitstream.html#ad2debff4c59f8316d4230aa6c432c0f6',1,'fdc_bitstream::read_sector(int trk, int sct)']]],
-  ['read_5fsector_5fbody_6',['read_sector_body',['../classfdc__bitstream.html#a42bb01639507122176863e47edf08dc8',1,'fdc_bitstream']]],
+  ['read_5fsector_5fbody_6',['read_sector_body',['../classfdc__bitstream.html#a7f2c827e1d8cae2c34aa01aaed1fac75',1,'fdc_bitstream']]],
   ['read_5fstream_7',['read_stream',['../classbit__array.html#a75e48a992e9838b97fcfb00bb6d12e20',1,'bit_array']]],
   ['read_5ftrack_8',['read_track',['../classfdc__bitstream.html#abea60a7ed3b79255840fac28a5a20c02',1,'fdc_bitstream']]],
   ['read_5ftrack_5fex_9',['read_track_ex',['../classfdc__bitstream.html#ad61e9e633652a6b2ca3cf1e52254485c',1,'fdc_bitstream']]],

@@ -13,7 +13,7 @@ var searchData=
   ['cmd_5fhistogram_10',['cmd_histogram',['../analyzer_8cpp.html#aed3fa9b98867c728b38b464f0f0fd6a9',1,'analyzer.cpp']]],
   ['cmd_5fopen_5fimage_11',['cmd_open_image',['../analyzer_8cpp.html#acc00451714bac781ede39bea96a9fd8a',1,'analyzer.cpp']]],
   ['cmd_5fread_5fid_12',['cmd_read_id',['../analyzer_8cpp.html#a517d06f11bba3eff49330e70afad8fc9',1,'analyzer.cpp']]],
-  ['cmd_5fread_5fsector_13',['cmd_read_sector',['../analyzer_8cpp.html#acafe43dfb7319a0df705bd005f926caf',1,'analyzer.cpp']]],
+  ['cmd_5fread_5fsector_13',['cmd_read_sector',['../analyzer_8cpp.html#a51dc2cb4554c88766dd4bb957fba4bd1',1,'analyzer.cpp']]],
   ['cmd_5fread_5ftrack_14',['cmd_read_track',['../analyzer_8cpp.html#aa89878b60f62aacb30f8608e4c5f1d02',1,'analyzer.cpp']]],
   ['cmd_5freset_5fvfo_15',['cmd_reset_vfo',['../analyzer_8cpp.html#aad770eab5c3e1122099a06418ecf823f',1,'analyzer.cpp']]],
   ['cmd_5fselect_5fvfo_16',['cmd_select_vfo',['../analyzer_8cpp.html#a79dd9ad447b40a455b53d96bd36c3921',1,'analyzer.cpp']]],
