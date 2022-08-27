@@ -193,16 +193,17 @@ int mfm_codec::read_bit_ds(void) {
             if (m_distance_to_next_pulse >= m_vfo->m_window_ofst &&
                 m_distance_to_next_pulse < m_vfo->m_window_ofst + m_vfo->m_window_size) {
                 bit_reading = 1;                // regular pulse (within the data window)
+
+                // Adjust pulse phase (imitate PLL/VFO operation)
+                // Limit the PLL/VFO operation frequency and introduce fluctuation with the random generator (certain fluctuation is required to reproduce some copy protection)
+                if ((static_cast<double>(m_rnd()) / static_cast<double>(INT32_MAX)) >= m_vfo_suspension_rate) {
+                    m_distance_to_next_pulse = m_vfo->calc(m_distance_to_next_pulse);
+                }
             }
             else {
 #ifdef DEBUG
                 std::cout << '?';               // irregular pulse
 #endif
-            }
-            // Adjust pulse phase (imitate PLL/VFO operation)
-            // Limit the PLL/VFO operation frequency and introduce fluctuation with the random generator (certain fluctuation is required to reproduce some copy protection)
-            if ((static_cast<double>(m_rnd()) / static_cast<double>(INT32_MAX)) >= m_vfo_suspension_rate) {
-                m_distance_to_next_pulse = m_vfo->calc(m_distance_to_next_pulse);
             }
             size_t distance = m_track.distance_to_next_pulse();
 #if 0

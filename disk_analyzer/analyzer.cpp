@@ -276,11 +276,12 @@ void cmd_read_sector(size_t cyl, size_t rcd, bool pulse_vis) {
         // bit dump
 		for(size_t i=0; i<read_data.data.size() && i<read_data.pos.size(); ++i)
 		{
-            if(i % 8==0) {
+            if(i % 8==0) { // display standard bit cell guide (ruler)
                 size_t standard_bit_cell = g_sampling_rate / g_data_bit_rate;
                 std::cout << std::string(19, ' ');
-                for(size_t ii=0; ii<16; ii++) {
-                    std::cout << "|" << std::string(standard_bit_cell-1, '-');
+                for(size_t ii=0; ii<8; ii++) {
+                    std::cout << "|" << std::string(standard_bit_cell-1, 'c');
+                    std::cout << "|" << std::string(standard_bit_cell-1, 'D');
                 }
                 std::cout << std::endl;
             }
@@ -291,7 +292,7 @@ void cmd_read_sector(size_t cyl, size_t rcd, bool pulse_vis) {
 			std::cout << "   ";
 			for(int j=read_data.pos[i]; j<pulse_end; ++j)
 			{
-				std::cout << int(track_stream.get(j));
+				std::cout << (int(track_stream.get(j)) ? "#":".");
 			}
 			std::cout << std::endl;
 		}
