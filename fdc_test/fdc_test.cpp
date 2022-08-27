@@ -190,8 +190,9 @@ void test4(void) {
     for (int i = 0; i < 32; i++) {
         fdc.set_pos(0);
         std::vector<uint8_t> sect_data;
+        std::vector<size_t> sect_byte_pos;
         bool crc_error, dam_type, record_not_found;
-        fdc.read_sector_body(00, sect_data, crc_error, dam_type, record_not_found);
+        fdc.read_sector_body(00, sect_data, sect_byte_pos, crc_error, dam_type, record_not_found);
         std::cout << std::setw(2) <<  i + 1 << " : ";
         if(sect_data.size()>=32) {
             dump_buf(sect_data.data(), 32);

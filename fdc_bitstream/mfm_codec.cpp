@@ -412,6 +412,25 @@ size_t mfm_codec::get_pos(void) {
 }
 
 /**
+ * @brief Get real current read/write position
+ * 
+ * @return size_t Current position (unit=bits).
+ */
+size_t mfm_codec::get_real_pos(void)
+{
+    if (is_track_ready() == false) {
+        return -1;
+    }
+	size_t int_dist=size_t(m_distance_to_next_pulse);
+	if(m_track.get_stream_pos()<int_dist)
+	{
+		return -1;
+	}
+
+    return m_track.get_stream_pos()-int_dist;
+}
+
+/**
  * @brief Enable data separator fluctuator.
  *        Data separator has feature to introduce a little uncertainty to reproduce time sensitive copy protect data which relies on the ambiguity of the bit pattern.
  *        PLL will skip working at the rate of (numerator/denominator). If you set it 1/4, the PLL works at rate of 3/4 and stop at rate of 1/4.

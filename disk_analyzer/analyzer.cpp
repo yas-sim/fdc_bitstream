@@ -237,7 +237,7 @@ void cmd_set_gain(double gain_l, double gain_h) {
     fdc->disp_vfo_status();
 }
 
-void cmd_read_sector(size_t cyl, size_t rcd) {
+void cmd_read_sector(size_t cyl, size_t rcd, bool pulse_vis) {
     if(is_image_ready()==false) {
         std::cout << "Disk image is not ready." << std::endl;
         return;
@@ -266,7 +266,26 @@ void cmd_read_sector(size_t cyl, size_t rcd) {
         cyl /= 2;
     }
     read_data = fdc->read_sector(cyl, rcd);
-    fdc_misc::dump_buf(read_data.data.data(), read_data.data.size(), true, 16, 16, true);
+	if(true!=pulse_vis)
+	{
+	    fdc_misc::dump_buf(read_data.data.data(), read_data.data.size(), true, 16, 16, true);
+	}
+	else
+	{
+		for(size_t i=0; i<read_data.data.size() && i<read_data.pos.size(); ++i)
+		{
+			size_t pulse_end=(i+1<read_data.pos.size() ? read_data.pos[i+1] : read_data.data_end_pos);
+			std::cout << "+" << std::hex << std::setw(2) << i << ":";
+			std::cout << std::hex << std::setw(2) << std::setfill('0') << int(read_data.data[i]);
+			std::cout << std::dec << std::setw(10) << std::setfill(' ') << read_data.pos[i];
+			std::cout << "   ";
+			for(int j=read_data.pos[i]; j<pulse_end; ++j)
+			{
+				std::cout << int(track_stream.get(j));
+			}
+			std::cout << std::endl;
+		}
+	}
     size_t end_pos = fdc->get_pos();
     if (end_pos < read_data.id_pos) {
         end_pos += track_stream.get_length();       // wrap around correction
@@ -440,7 +459,8 @@ void cmd_help(void) {
     "                  If '*' is specified as 'trk', all tracks will be trimmed.\n"
     "ri trk [trk_e]    Read all sector IDs. Perform ID read from 'trk' to 'trk_e' if you specify trk_e.\n"
     "                  Otherwise, an ID read operation will be performed for a track.\n"
-    "rs trk sid sct    Read sector\n"
+    "rs trk sct        Read sector\n"
+    "rsp trk sct       Read sector (Visualize pulses for each byte)\n"
     "ef sus_ratio      Enable fluctuator (VFO stops operation at rate of sus_ratio (0.0-1.0))\n"
     "ef                Disable fluctuator\n"
     "gain gl gh        Set VFO gain (low=gl, high=gh)\n"
@@ -515,9 +535,18 @@ int main(int argc, char* argv[]) {
             if(args[2][0] == '#') {
                 args[2].erase(args[2].begin());  // remove #
                 size_t sct_num = fdc_misc::str2val(args[2]) + 1000-1;
-                cmd_read_sector(fdc_misc::str2val(args[1]), sct_num);
+                cmd_read_sector(fdc_misc::str2val(args[1]), sct_num, false);
             } else {
-                cmd_read_sector(fdc_misc::str2val(args[1]), fdc_misc::str2val(args[2]));
+                cmd_read_sector(fdc_misc::str2val(args[1]), fdc_misc::str2val(args[2]), false);
+            }
+        }
+        else if(args[0] == "rsp" && args.size()>=3) {
+            if(args[2][0] == '#') {
+                args[2].erase(args[2].begin());  // remove #
+                size_t sct_num = fdc_misc::str2val(args[2]) + 1000-1;
+                cmd_read_sector(fdc_misc::str2val(args[1]), sct_num, true);
+            } else {
+                cmd_read_sector(fdc_misc::str2val(args[1]), fdc_misc::str2val(args[2]), true);
             }
         }
         else if(args[0] == "gain" && args.size()>=3) {
