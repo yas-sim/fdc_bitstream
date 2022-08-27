@@ -183,9 +183,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0afb22e2181670e2b83134a690c4ea3d"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structfdc__bitstream_1_1id__field.html">id_field</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#a0afb22e2181670e2b83134a690c4ea3d">read_all_idam</a> (void)</td></tr>
 <tr class="memdesc:a0afb22e2181670e2b83134a690c4ea3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads all IDAM in the track buffer.  <a href="classfdc__bitstream.html#a0afb22e2181670e2b83134a690c4ea3d">More...</a><br /></td></tr>
 <tr class="separator:a0afb22e2181670e2b83134a690c4ea3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f2c827e1d8cae2c34aa01aaed1fac75"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#a7f2c827e1d8cae2c34aa01aaed1fac75">read_sector_body</a> (size_t sect_length_code, std::vector&lt; uint8_t &gt; &amp;sect_data, std::vector&lt; size_t &gt; &amp;pos, bool &amp;crc_error, bool &amp;dam_type, bool &amp;record_not_found, bool timeout=true)</td></tr>
-<tr class="memdesc:a7f2c827e1d8cae2c34aa01aaed1fac75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a sector. Read sector data from the next nearest DAM/DDAM mark from the current position. This function doesn't care about the sector ID and simply reads the subsequent sector data. Combine the <a class="el" href="classfdc__bitstream.html#a285e12ca70b10ad1c3f9b65a2cb4e64d" title="Read an sector ID. Start reading from the current position and read the 1st found sector ID.">read_id()</a> function to find the desired sector ID and call this function to read the sector body data.  <a href="classfdc__bitstream.html#a7f2c827e1d8cae2c34aa01aaed1fac75">More...</a><br /></td></tr>
-<tr class="separator:a7f2c827e1d8cae2c34aa01aaed1fac75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea22fe85be27f5906229422eb2c0a0b7"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#aea22fe85be27f5906229422eb2c0a0b7">read_sector_body_ex</a> (size_t sect_length_code, std::vector&lt; uint8_t &gt; &amp;sect_data, std::vector&lt; size_t &gt; &amp;pos, bool &amp;crc_error, bool &amp;dam_type, bool &amp;record_not_found, bool timeout=true)</td></tr>
+<tr class="memdesc:aea22fe85be27f5906229422eb2c0a0b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a sector body with byte position data. <br  />
+ Read sector data from the next nearest DAM/DDAM mark from the current position. This function doesn't care about the sector ID and simply reads the subsequent sector data. Combine the <a class="el" href="classfdc__bitstream.html#a285e12ca70b10ad1c3f9b65a2cb4e64d" title="Read an sector ID. Start reading from the current position and read the 1st found sector ID.">read_id()</a> function to find the desired sector ID and call this function to read the sector body data.  <a href="classfdc__bitstream.html#aea22fe85be27f5906229422eb2c0a0b7">More...</a><br /></td></tr>
+<tr class="separator:aea22fe85be27f5906229422eb2c0a0b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42bb01639507122176863e47edf08dc8"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#a42bb01639507122176863e47edf08dc8">read_sector_body</a> (size_t sect_length_code, std::vector&lt; uint8_t &gt; &amp;sect_data, bool &amp;crc_error, bool &amp;dam_type, bool &amp;record_not_found, bool timeout=true)</td></tr>
+<tr class="memdesc:a42bb01639507122176863e47edf08dc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a sector body. Read sector data from the next nearest DAM/DDAM mark from the current position. This function doesn't care about the sector ID and simply reads the subsequent sector data. Combine the <a class="el" href="classfdc__bitstream.html#a285e12ca70b10ad1c3f9b65a2cb4e64d" title="Read an sector ID. Start reading from the current position and read the 1st found sector ID.">read_id()</a> function to find the desired sector ID and call this function to read the sector body data.  <a href="classfdc__bitstream.html#a42bb01639507122176863e47edf08dc8">More...</a><br /></td></tr>
+<tr class="separator:a42bb01639507122176863e47edf08dc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a71da61708327f7e3d2796daddec1b8b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfdc__bitstream.html#a71da61708327f7e3d2796daddec1b8b9">write_sector_body</a> (std::vector&lt; uint8_t &gt; <a class="el" href="classfdc__bitstream.html#aa56d06aee0676001c3b245c144f12a6b">write_data</a>, bool dam_type, bool write_crc=true)</td></tr>
 <tr class="memdesc:a71da61708327f7e3d2796daddec1b8b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a sector. Write sector data from the current position. Please be aware that this function follows and emulates the write sequence of the FD179x/MB8876 FDC device. This means this function will skip certain bytes from the start position and then start actual data writing that includes SYNC bytes and the data address marks. To allow the user program to emulate the 'force interrupt' command of FD179x/MB8876, this function has an option not to write the CRC bytes and the last 0xff byte.  <a href="classfdc__bitstream.html#a71da61708327f7e3d2796daddec1b8b9">More...</a><br /></td></tr>
 <tr class="separator:a71da61708327f7e3d2796daddec1b8b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -424,7 +428,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>size_t Current bit position in the track buffer. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00428">428</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00452">452</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -453,7 +457,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00441">441</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00465">465</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -476,7 +480,7 @@ Public Member Functions</h2></td></tr>
 <p>Get the track data in <a class="el" href="classbit__array.html">bit_array</a>. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classbit__array.html">bit_array</a> Track dta in <a class="el" href="classbit__array.html">bit_array</a>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00471">471</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00495">495</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -610,7 +614,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00502">502</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00526">526</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -691,18 +695,86 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structfdc__bitstream_1_1sector__data.html">fdc_bitstream::sector_data</a> Read sector data. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00514">514</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00538">538</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
-<a id="a7f2c827e1d8cae2c34aa01aaed1fac75" name="a7f2c827e1d8cae2c34aa01aaed1fac75"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7f2c827e1d8cae2c34aa01aaed1fac75">&#9670;&nbsp;</a></span>read_sector_body()</h2>
+<a id="a42bb01639507122176863e47edf08dc8" name="a42bb01639507122176863e47edf08dc8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42bb01639507122176863e47edf08dc8">&#9670;&nbsp;</a></span>read_sector_body()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">size_t fdc_bitstream::read_sector_body </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>sect_length_code</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; uint8_t &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sect_data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &amp;&#160;</td>
+          <td class="paramname"><em>crc_error</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &amp;&#160;</td>
+          <td class="paramname"><em>dam_type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &amp;&#160;</td>
+          <td class="paramname"><em>record_not_found</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>timeout</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read a sector body. Read sector data from the next nearest DAM/DDAM mark from the current position. This function doesn't care about the sector ID and simply reads the subsequent sector data. Combine the <a class="el" href="classfdc__bitstream.html#a285e12ca70b10ad1c3f9b65a2cb4e64d" title="Read an sector ID. Start reading from the current position and read the 1st found sector ID.">read_id()</a> function to find the desired sector ID and call this function to read the sector body data. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">sect_length</td><td>Sector length code (0-3) </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">sect_data</td><td>Read sector data buffer </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">crc_error</td><td>CRC error flag (true=error) </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">dam_type</td><td>(true=DDAM/false=DAM) </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">record_not_found</td><td>(true=Record-not-found, false=no error) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">time</td><td>out enable flag (true=time out when DAM can't find in 43 bytes of data read / false = no time out) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>size_t Track position of the <a class="el" href="classfdc__bitstream.html#ad2debff4c59f8316d4230aa6c432c0f6" title="FD189x/MB8876 compatible TYPE-II READ SECTOR operation.">read_sector()</a> started reading. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00369">369</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aea22fe85be27f5906229422eb2c0a0b7" name="aea22fe85be27f5906229422eb2c0a0b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea22fe85be27f5906229422eb2c0a0b7">&#9670;&nbsp;</a></span>read_sector_body_ex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t fdc_bitstream::read_sector_body_ex </td>
           <td>(</td>
           <td class="paramtype">size_t&#160;</td>
           <td class="paramname"><em>sect_length_code</em>, </td>
@@ -751,11 +823,13 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Read a sector. Read sector data from the next nearest DAM/DDAM mark from the current position. This function doesn't care about the sector ID and simply reads the subsequent sector data. Combine the <a class="el" href="classfdc__bitstream.html#a285e12ca70b10ad1c3f9b65a2cb4e64d" title="Read an sector ID. Start reading from the current position and read the 1st found sector ID.">read_id()</a> function to find the desired sector ID and call this function to read the sector body data. </p>
+<p>Read a sector body with byte position data. <br  />
+ Read sector data from the next nearest DAM/DDAM mark from the current position. This function doesn't care about the sector ID and simply reads the subsequent sector data. Combine the <a class="el" href="classfdc__bitstream.html#a285e12ca70b10ad1c3f9b65a2cb4e64d" title="Read an sector ID. Start reading from the current position and read the 1st found sector ID.">read_id()</a> function to find the desired sector ID and call this function to read the sector body data. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">sect_length</td><td>Sector length code (0-3) </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">sect_data</td><td>Read sector data buffer </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pos</td><td>The start bit position of each byte (in <a class="el" href="classbit__array.html">bit_array</a> position). Ignored if the </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">crc_error</td><td>CRC error flag (true=error) </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">dam_type</td><td>(true=DDAM/false=DAM) </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">record_not_found</td><td>(true=Record-not-found, false=no error) </td></tr>
@@ -765,7 +839,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>size_t Track position of the <a class="el" href="classfdc__bitstream.html#ad2debff4c59f8316d4230aa6c432c0f6" title="FD189x/MB8876 compatible TYPE-II READ SECTOR operation.">read_sector()</a> started reading. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00270">270</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00271">271</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -928,7 +1002,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00417">417</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00441">441</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -957,7 +1031,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00454">454</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00478">478</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -1145,7 +1219,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00485">485</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00509">509</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -1208,7 +1282,7 @@ Public Member Functions</h2></td></tr>
 <dd>
 false Record-not-found error </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00574">574</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00598">598</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>
@@ -1254,7 +1328,7 @@ false Record-not-found error </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00366">366</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="fdc__bitstream_8cpp_source.html#l00390">390</a> of file <a class="el" href="fdc__bitstream_8cpp_source.html">fdc_bitstream.cpp</a>.</p>
 
 </div>
 </div>

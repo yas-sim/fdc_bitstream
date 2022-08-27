@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"classmfm__codec.html#a68e064882769149ee8594109b4d151c5":[11,0,13,21],
 "classmfm__codec.html#a6a2bd564eeda96533fd2b9f65ecf8ffb":[11,0,13,31],
 "classmfm__codec.html#a6ac57dc1c37a2395d264659f805caf39":[11,0,13,16],
 "classmfm__codec.html#a6e8a09604245fb10c7ab0dd49dc1ffa1":[11,0,13,4],
@@ -248,6 +249,5 @@ var NAVTREEINDEX1 =
 "globals_defs.html":[12,1,5],
 "globals_enum.html":[12,1,4],
 "globals_func.html":[12,1,1],
-"globals_type.html":[12,1,3],
-"globals_vars.html":[12,1,2]
+"globals_type.html":[12,1,3]
 };
