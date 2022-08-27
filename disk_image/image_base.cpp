@@ -15,7 +15,7 @@ disk_image::disk_image() : m_track_data_is_set(false) {
     m_base_prop.m_number_of_tracks = 0;
     m_base_prop.m_sampling_rate = 4e6;
     m_base_prop.m_spindle_time_ns = 0.2 * 1e9;
-    create_empty_track_data(84);
+    create_empty_track_data(164);
 }
 
 void disk_image::clear_track_data(void) {

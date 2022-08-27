@@ -158,15 +158,17 @@ void trim_track(bit_array &in_array, bit_array &out_array, size_t start_byte, si
     fdc->set_pos(0);
     uint8_t dt;
     bool mc;
+    std::cout << start_byte << " " << end_byte << std::endl;
     do {
         prev_pos = fdc->get_pos();
         fdc->read_data(dt, mc, false, false);
-        read_count++;
         if(read_count == start_byte) start_pos = prev_pos;
         if(read_count == end_byte)   end_pos   = fdc->get_pos();
+        read_count++;
     } while(!fdc->is_wraparound());
     if(start_pos == err || end_pos == err) {
         std::cout << "Could not find start or end position." << std::endl;
+        out_array = in_array;
         return;
     }
     out_array.clear_array();
@@ -213,9 +215,14 @@ void cmd_validate_track(size_t track_n, size_t track_end_n = -1) {
         track_stream = disk_img->get_track_data(trk_n);
         fdc->set_track_data(track_stream);
         id_data = fdc->read_all_idam();
+        size_t cell_size_ref = g_sampling_rate / g_data_bit_rate;
+        size_t sect_pos_ofst = (cell_size_ref * 16) * 16;
         std::vector<fdc_bitstream::sector_data> sect_data;
         for(auto it = id_data.begin(); it != id_data.end(); ++it) {
             fdc_bitstream::id_field id = *it;
+            size_t sect_pos = id.pos;
+            sect_pos = (sect_pos < sect_pos_ofst) ? 0 : sect_pos - sect_pos_ofst;
+            fdc->set_pos(sect_pos);
             sect_data.push_back(fdc->read_sector(id.C, id.R));
         }
         //           "  1: 00 00 01 01 fa0c ID-CRC_OK   256 DAM  DT-CRC OK  RNF_OK  IDAM_POS=    5208 DAM_POS=   10923"

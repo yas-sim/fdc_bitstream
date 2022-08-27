@@ -129,6 +129,8 @@ void disk_image_d77::write(const std::string file_name) {
         std::vector<fdc_bitstream::id_field> id_list = fdc.read_all_idam();
         size_t sector_good = 0;
         size_t sector_bad = 0;
+        size_t cell_size_ref = m_base_prop.m_sampling_rate / m_base_prop.m_data_bit_rate;
+        size_t sect_pos_ofst = (cell_size_ref * 16) * 16;       // sector read start position needs to be ahead a bit from the sector ID start position.
         for (size_t sect_n = 0; sect_n < id_list.size(); sect_n++) {
             d77img::sector_data sect_dt;
             sect_dt.m_C = id_list[sect_n].C;
@@ -139,6 +141,9 @@ void disk_image_d77::write(const std::string file_name) {
             sect_dt.m_density = 0;
             sect_dt.m_num_sectors = id_list.size();
             sect_dt.m_status = id_list[sect_n].crc_sts ? 0xb0 : 0x00;  // DT-CRC error
+            size_t sect_pos = id_list[sect_n].pos;
+            sect_pos = (sect_pos < sect_pos_ofst) ? 0 : sect_pos - sect_pos_ofst;
+            fdc.set_pos(sect_pos);
             fdc_bitstream::sector_data read_sect = fdc.read_sector(sect_dt.m_C, sect_dt.m_R);
             sect_dt.m_sector_data = read_sect.data;
             sect_dt.m_sector_data_length = read_sect.data.size();
