@@ -145,7 +145,8 @@ public:
     void write_track(const std::vector<uint8_t>& track_buf);
     size_t read_id(std::vector<uint8_t>& id_field, bool& crc_error);
     std::vector<id_field> read_all_idam(void);
-    size_t read_sector_body(size_t sect_length_code, std::vector<uint8_t>& sect_data, std::vector <size_t> &pos, bool& crc_error, bool& dam_type, bool &record_not_found, bool timeout=true);
+    size_t read_sector_body_ex(size_t sect_length_code, std::vector<uint8_t>& sect_data, std::vector <size_t> &pos, bool& crc_error, bool& dam_type, bool &record_not_found, bool timeout=true);
+    size_t read_sector_body(size_t sect_length_code, std::vector<uint8_t>& sect_data, bool& crc_error, bool& dam_type, bool &record_not_found, bool timeout=true);
     void write_sector_body(std::vector<uint8_t> write_data, bool dam_type, bool write_crc=true);
 
     sector_data read_sector(int trk, int sct);

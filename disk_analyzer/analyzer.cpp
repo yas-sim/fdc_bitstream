@@ -268,12 +268,22 @@ void cmd_read_sector(size_t cyl, size_t rcd, bool pulse_vis) {
     read_data = fdc->read_sector(cyl, rcd);
 	if(true!=pulse_vis)
 	{
+        // hex dump
 	    fdc_misc::dump_buf(read_data.data.data(), read_data.data.size(), true, 16, 16, true);
 	}
 	else
 	{
+        // bit dump
 		for(size_t i=0; i<read_data.data.size() && i<read_data.pos.size(); ++i)
 		{
+            if(i % 8==0) {
+                size_t standard_bit_cell = g_sampling_rate / g_data_bit_rate;
+                std::cout << std::string(19, ' ');
+                for(size_t ii=0; ii<16; ii++) {
+                    std::cout << "|" << std::string(standard_bit_cell-1, '-');
+                }
+                std::cout << std::endl;
+            }
 			size_t pulse_end=(i+1<read_data.pos.size() ? read_data.pos[i+1] : read_data.data_end_pos);
 			std::cout << "+" << std::hex << std::setw(2) << i << ":";
 			std::cout << std::hex << std::setw(2) << std::setfill('0') << int(read_data.data[i]);

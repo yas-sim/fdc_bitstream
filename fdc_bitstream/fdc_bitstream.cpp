@@ -90,7 +90,7 @@ std::vector<std::vector<size_t>> fdc_bitstream::read_track_ex(void) {
 
     m_codec.clear_wraparound();
     while (m_codec.is_wraparound() == false) {
-        pos = m_codec.get_pos();
+        pos = m_codec.get_real_pos();
         m_codec.mfm_read_byte(read_data, missing_clock, false, false);
 #ifdef DEBUG
         std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(read_data) << " ";
@@ -254,20 +254,21 @@ std::vector<fdc_bitstream::id_field> fdc_bitstream::read_all_idam(void) {
 
 
 /**
-* @brief Read a sector. 
+* @brief Read a sector body with byte position data.  
 *        Read sector data from the next nearest DAM/DDAM mark from the current position. 
 *        This function doesn't care about the sector ID and simply reads the subsequent sector data.
 *        Combine the read_id() function to find the desired sector ID and call this function to read the sector body data.
 * 
 * @param[in] sect_length Sector length code (0-3)
 * @param[out] sect_data Read sector data buffer
+* @param[out] pos The start bit position of each byte (in bit_array position). Ignored if the 
 * @param[out] crc_error CRC error flag (true=error)
 * @param[out] dam_type (true=DDAM/false=DAM)
 * @param[out] record_not_found (true=Record-not-found, false=no error)
 * @param[in] time out enable flag (true=time out when DAM can't find in 43 bytes of data read / false = no time out)
 * @return size_t Track position of the read_sector() started reading.
 */
-size_t fdc_bitstream::read_sector_body(size_t sect_length_code, std::vector<uint8_t>& sect_data, std::vector <size_t> &pos, bool& crc_error, bool& dam_type, bool &record_not_found, bool timeout) {
+size_t fdc_bitstream::read_sector_body_ex(size_t sect_length_code, std::vector<uint8_t>& sect_data, std::vector <size_t> &pos, bool& crc_error, bool& dam_type, bool &record_not_found, bool timeout) {
     std::vector<size_t> sector_length_table{ 128, 256, 512, 1024 };
 
     sect_data.clear();
@@ -350,6 +351,29 @@ size_t fdc_bitstream::read_sector_body(size_t sect_length_code, std::vector<uint
     }
     return read_start_pos;
 }
+
+/**
+* @brief Read a sector body. 
+*        Read sector data from the next nearest DAM/DDAM mark from the current position. 
+*        This function doesn't care about the sector ID and simply reads the subsequent sector data.
+*        Combine the read_id() function to find the desired sector ID and call this function to read the sector body data.
+* 
+* @param[in] sect_length Sector length code (0-3)
+* @param[out] sect_data Read sector data buffer
+* @param[out] crc_error CRC error flag (true=error)
+* @param[out] dam_type (true=DDAM/false=DAM)
+* @param[out] record_not_found (true=Record-not-found, false=no error)
+* @param[in] time out enable flag (true=time out when DAM can't find in 43 bytes of data read / false = no time out)
+* @return size_t Track position of the read_sector() started reading.
+*/
+size_t fdc_bitstream::read_sector_body(size_t sect_length_code, std::vector<uint8_t>& sect_data, bool& crc_error, bool& dam_type, bool &record_not_found, bool timeout) {
+    std::vector<size_t> sector_length_table{ 128, 256, 512, 1024 };
+    
+    std::vector<size_t> dummy_pos;
+    return read_sector_body_ex(sect_length_code, sect_data, dummy_pos, crc_error, dam_type, record_not_found, timeout);
+}
+
+
 
 /**
 * @brief Write a sector.
@@ -534,7 +558,7 @@ fdc_bitstream::sector_data fdc_bitstream::read_sector(int trk, int sct) {
         if(sect_id.size()==0) continue;                     // Failed to read ID
         if (sect_id[0] == trk && sect_id[2] == sct) {       // FD179x/MB8876 won'nt compare 'head' field
             if (crc_error == false) {
-                pos = read_sector_body(sect_id[3], sect_body_data, sect_byte_pos, crc_error, dam_type, record_not_found);
+                pos = read_sector_body_ex(sect_id[3], sect_body_data, sect_byte_pos, crc_error, dam_type, record_not_found);
                 sect_data.data_pos = pos;
                 sect_data.data_end_pos = m_codec.get_real_pos();
                 size_t distance;
