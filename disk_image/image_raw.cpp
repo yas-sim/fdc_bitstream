@@ -59,6 +59,10 @@ void disk_image_raw::read(const std::string file_name) {
                     m_track_data[cylinder * 2 + side] = track_data;
                     m_base_prop.m_number_of_tracks = cylinder * 2 + side + 1;
                     read_track_mode = false;
+                } else if(items[0] == "**BIT_RATE") {
+                    m_base_prop.m_data_bit_rate = std::stoi(items[1]);
+                } else if(items[0] == "**SAMPLING_RATE") {
+                    m_base_prop.m_sampling_rate = std::stoi(items[1]);
                 }
                 else if (items[0] == "**MEDIA_TYPE") {
                 }
