@@ -23,7 +23,7 @@
 disk_image *disk_img = nullptr;
 fdc_bitstream *fdc = nullptr;
 
-double g_gain_l = 1.f, g_gain_h = 2.f;
+double g_gain_l = VFO_GAIN_L_DEFAULT, g_gain_h = VFO_GAIN_H_DEFAULT;
 size_t g_vfo_type = VFO_TYPE_DEFAULT;
 
 size_t g_sampling_rate = 0;
@@ -407,7 +407,7 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=99) {
         std::cout << std::setw(6) << count << " >" << line;
         if(irregular) {
             fdc_misc::color(6);
-            std::cout << "*** IRREGULAR PULSE DETECTED ***";
+            std::cout << "\a*** IRREGULAR PULSE DETECTED ***";
             irregular_pulse_count++;
             fdc_misc::color(7);
         }

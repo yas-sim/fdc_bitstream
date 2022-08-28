@@ -15,23 +15,17 @@ void vfo_experimental::disp_vfo_status(void) {
 
 void vfo_experimental::reset(void) {
     vfo_base::reset();
-    m_prev_phase_error = 0.f;
-    m_prev_freq_error = 0.f;
-    m_phase_integral = 0.f;
-    m_freq_integral = 0.f;
-
-    m_prev_pulse_pos = m_cell_center;
+    m_prev_pulse_pos = 0.f;
+    m_prev_phase_err = 0.f;
+    m_phase_err_integral = 0.f;
     m_phase_diff_integral = 0.f;
 }
 
 void vfo_experimental::soft_reset(void) {
     vfo_base::soft_reset();
-    m_prev_phase_error = 0.f;
-    m_prev_freq_error = 0.f;
-    m_phase_integral = 0.f;
-    m_freq_integral = 0.f;
-
-    m_prev_pulse_pos = m_cell_center;
+    m_prev_pulse_pos = 0.f;
+    m_prev_phase_err = 0.f;
+    m_phase_err_integral = 0.f;
     m_phase_diff_integral = 0.f;
 }
 
@@ -51,25 +45,33 @@ void vfo_experimental::soft_reset(void) {
  *  Freq. correction : change bit cell size by accumlated (integrated) error.
  */
 double vfo_experimental::calc(double pulse_pos) {
-#if 0
+#if 1
     // compare the position of the current and previous pulses in the bit cell (phase_diff -=slow freq, +=fast freq)
     double phase_diff = m_prev_pulse_pos - pulse_pos;
     // phase correction. assuming phase difference is less than 180deg.
     if(phase_diff > m_cell_size / 2.f) {
-        phase_diff = m_cell_size - phase_diff;
+        phase_diff = phase_diff - m_cell_size;
     } else if (phase_diff < -(m_cell_size / 2.f)) {
-        phase_diff = m_cell_size + phase_diff;
+        phase_diff = phase_diff + m_cell_size;
     }
+
+    // Phase error from the center of the bit cell
+    double phase_err = m_cell_center - pulse_pos;
+    double phase_err_diff = phase_err - m_prev_phase_err;
+    m_phase_err_integral += phase_err; 
+    m_prev_phase_err = phase_err;
 
     // Cell size adjustment == frequency correction
     m_phase_diff_integral += phase_diff;
-    double new_cell_size = m_cell_size_ref + (m_phase_diff_integral * 0.02f) * m_current_gain;
+    double new_cell_size = m_cell_size_ref - (m_phase_diff_integral * (1.0f/24.f) ) * m_current_gain - 
+                            (phase_err * (1.0f/2.f) - phase_err_diff * (1.0f/8.f) + m_phase_err_integral * (1.0f/128.f));
+    constexpr double range = 0.02f; 
+    new_cell_size = limit(new_cell_size, m_cell_size_ref * (1-range), m_cell_size_ref * (1+range));
     m_prev_pulse_pos = pulse_pos;
-#endif
-
+#else
     double phase_diff = m_cell_center - pulse_pos;
     double new_cell_size = m_cell_size - phase_diff * 0.01f * m_current_gain;
-
+#endif
     // Data pulse position adjustment == phase correction
     //double phase_error = m_cell_center - pulse_pos;
     //constexpr double phase_error_limitter = 0.5f;
@@ -81,7 +83,7 @@ double vfo_experimental::calc(double pulse_pos) {
     //                                            m_cell_size_ref * phase_correction_limitter);
     //pulse_pos += phase_correction;
     //m_prev_phase_error = phase_error;
-    pulse_pos = m_cell_center;      // fixed
+    //pulse_pos = m_cell_center;      // fixed
 
     set_cell_size(new_cell_size);
 

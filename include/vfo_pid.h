@@ -8,9 +8,11 @@
  */
 class vfo_pid : public vfo_base {
 public:
-    double m_prev_phase_error;
-    double m_prev_freq_error;
-    double m_freq_bias;
+    double m_prev_pulse_pos;
+    double m_prev_phase_err;
+    double m_phase_err_integral;
+    double m_phase_diff_integral;
+
 public:
     vfo_pid() { reset(); }
     void disp_vfo_status(void) override;

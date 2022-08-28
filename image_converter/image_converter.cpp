@@ -112,8 +112,8 @@ int main(int argc, char* argv[]) {
     std::string output_file_name;
     bool normalize = false;
     size_t vfo_type = VFO_TYPE_DEFAULT;
-    double gain_l = 1.f;
-    double gain_h = 2.f;
+    double gain_l = VFO_GAIN_L_DEFAULT;
+    double gain_h = VFO_GAIN_H_DEFAULT;
     bool verbose = false;
 
 	for(auto it = cmd_opts.begin(); it != cmd_opts.end(); ++it) {
