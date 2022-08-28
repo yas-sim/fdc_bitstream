@@ -112,12 +112,12 @@ $(document).ready(function(){initNavTree('vfo__simple_8cpp_source.html',''); ini
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="keywordtype">double</span> freq_error = <a class="code hl_variable" href="classvfo__base.html#ad9c7e17252bb90d8c72462b6a10a2b2b">m_cell_center</a> - pulse_pos;</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <a class="code hl_variable" href="classvfo__simple.html#a1953b41dd10af436a3d25ed19add7732">m_freq_integral</a> += freq_error;</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="keywordtype">double</span> new_cell_size = <a class="code hl_variable" href="classvfo__base.html#ae2cc13d31c978303915ddfd9ea2ae7e2">m_cell_size_ref</a> - <a class="code hl_variable" href="classvfo__simple.html#a1953b41dd10af436a3d25ed19add7732">m_freq_integral</a> * 0.1f * <a class="code hl_variable" href="classvfo__base.html#a6e996d8f07db20a03f08668685a94923">m_current_gain</a>;        <span class="comment">// &#39;P&#39; only control</span></div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">#if 1</span></div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="comment">// Data pulse position adjustment == phase correction</span></div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keywordtype">double</span> phase_error = <a class="code hl_variable" href="classvfo__base.html#ad9c7e17252bb90d8c72462b6a10a2b2b">m_cell_center</a> - pulse_pos;</div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="keywordtype">double</span> phase_correction = phase_error * 0.2f * <a class="code hl_variable" href="classvfo__base.html#a6e996d8f07db20a03f08668685a94923">m_current_gain</a>;  <span class="comment">// P control (no ID element)</span></div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    pulse_pos += phase_correction;</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <a class="code hl_function" href="classvfo__base.html#a50ae55d714678f1141cb342fd6c66ae4">set_cell_size</a>(new_cell_size);</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keywordflow">return</span> pulse_pos;</div>

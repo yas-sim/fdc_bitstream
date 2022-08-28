@@ -6,8 +6,10 @@ var classvfo__experimental =
     [ "soft_reset", "classvfo__experimental.html#a20e145153b65bd7952c6aa2ac9abbc42", null ],
     [ "m_freq_integral", "classvfo__experimental.html#af727e59070c986bed91387c34818a6fc", null ],
     [ "m_phase_diff_integral", "classvfo__experimental.html#a8bc8a0b0d31b46b2e92bc02fd4fb4286", null ],
+    [ "m_phase_err_integral", "classvfo__experimental.html#a6c51a6102ac09fea3d3afd79c84a290f", null ],
     [ "m_phase_integral", "classvfo__experimental.html#aee3823d4ed8d3c07410ed6ec335fd458", null ],
     [ "m_prev_freq_error", "classvfo__experimental.html#a5d55902b73ba6844a39db67103d33102", null ],
+    [ "m_prev_phase_err", "classvfo__experimental.html#a774217392297ad96a51696e7c164f3aa", null ],
     [ "m_prev_phase_error", "classvfo__experimental.html#aab2c690628f60df31d5c8a24c68cc9da", null ],
     [ "m_prev_pulse_pos", "classvfo__experimental.html#a30a895f5512759e16820caa1c74329f6", null ]
 ];
