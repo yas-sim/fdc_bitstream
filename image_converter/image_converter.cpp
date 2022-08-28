@@ -174,7 +174,7 @@ int main(int argc, char* argv[]) {
     if(output_ext == "d77") {
         // only for D77 output
         out_image->set_vfo_type(vfo_type);   
-        std::cout << vfo_type << std::endl;   
+        std::cout << "VFO type : " << vfo_type << std::endl;   
         if(verbose) {
             std::cout << "Gain L=" << gain_l << " , Gain H=" << gain_h << std::endl;
         }

@@ -297,7 +297,7 @@ void dump_buf2(const std::vector<std::vector<size_t>> &data) {
                 for(size_t j=0; j<cols; j++) {
                     std::cout << std::hex << std::setw(2) << std::setfill('0') << j << " ";
                 }
-                std::cout << std::endl << std::string(9 + 3*cols, '-') << std::endl;;
+                std::cout << std::endl << std::string(19 + 3*cols, '-') << std::endl;;
             }
             std::cout << std::hex << std::setw(6) << std::setfill('0') << i << " : ";   // ofst adrs
             std::cout << std::dec << std::setw(8) << std::setfill(' ') << pos << " : "; // bit pos

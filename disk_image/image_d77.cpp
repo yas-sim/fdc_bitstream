@@ -155,7 +155,7 @@ void disk_image_d77::write(const std::string file_name) {
             }
         }
         if(m_verbose) {
-            std::cout << std::setw(4) << std::dec << (sector_good+sector_bad) << "/" << std::setw(4) << sector_good << "  ";
+            std::cout << std::setw(4) << std::dec << (sector_good+sector_bad) << "/" << std::setw(4) << sector_bad << "  ";
             if(track_n % 5 == 4) {
                 std::cout << std::endl;
             }

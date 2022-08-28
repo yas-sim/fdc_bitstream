@@ -52,8 +52,8 @@ void vfo_base::set_params(size_t sampling_rate, size_t fdc_bit_rate, double data
 }
 
 void vfo_base::set_cell_size(double cell_size) {
-    constexpr double tolerance = 0.2f;
-    cell_size = limit(cell_size, m_cell_size_ref * (1.f - tolerance), m_cell_size_ref * (1.f + tolerance));
+    //constexpr double tolerance = 0.2f;
+    //cell_size = limit(cell_size, m_cell_size_ref * (1.f - tolerance), m_cell_size_ref * (1.f + tolerance));
     m_cell_size = cell_size;
     update_cell_params();
 }
@@ -74,7 +74,8 @@ void vfo_base::update_cell_params(void) {
 }
 
 void vfo_base::set_gain_val(double gain_l, double gain_h) {
-     m_gain_l = gain_l; m_gain_h = gain_h; 
+     m_gain_l = gain_l;
+     m_gain_h = gain_h; 
 }
 
 /**

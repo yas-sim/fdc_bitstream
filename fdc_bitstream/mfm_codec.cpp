@@ -98,7 +98,7 @@ void mfm_codec::reset(void) {
     m_track_ready = false;
 
     m_vfo->set_params(m_sampling_rate, m_data_bit_rate);
-    m_vfo->set_gain_val(1.f, 2.f);
+    m_vfo->set_gain_val(VFO_GAIN_L_DEFAULT, VFO_GAIN_H_DEFAULT);
     m_vfo->set_gain_mode(vfo_base::gain_state::low);
 }
 

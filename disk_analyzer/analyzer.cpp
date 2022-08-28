@@ -23,7 +23,8 @@
 disk_image *disk_img = nullptr;
 fdc_bitstream *fdc = nullptr;
 
-double g_gain_l = VFO_GAIN_L_DEFAULT, g_gain_h = VFO_GAIN_H_DEFAULT;
+double g_gain_l = VFO_GAIN_L_DEFAULT;
+double g_gain_h = VFO_GAIN_H_DEFAULT;
 size_t g_vfo_type = VFO_TYPE_DEFAULT;
 
 size_t g_sampling_rate = 0;
@@ -368,7 +369,7 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=99) {
     vfo->set_gain_mode(vfo_base::gain_state::low);
     track_stream.set_stream_pos(0);
 
-    double scale = (100 * 0.8f) / (vfo->m_cell_size_ref);
+    double scale = (150 * 0.5f) / (vfo->m_cell_size_ref);
 
     double dist = -1.f;
     size_t irregular_pulse_count = 0;
@@ -382,7 +383,7 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=99) {
 #endif
         irregular = false;
 
-        std::string line = std::string(100, ' ');
+        std::string line = std::string(150, ' ');
         size_t win_st = (vfo->m_window_ofst) * scale;
         size_t win_en = (vfo->m_window_ofst+vfo->m_window_size) * scale;
         for(size_t x = win_st; x < win_en; x++) line[x] = '-';
@@ -391,8 +392,9 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=99) {
         do {
             if (dist < vfo->m_cell_size) {
                 // visualize
-                if(dist>=0.f) line[dist * scale] = 'P';
-                else          line[0]            = '*';
+                if(dist<0.f)                          line[0]                      = '*';
+                else if(dist * scale >= line.size())  line[vfo->m_cell_size*scale] = '*';
+                else                                  line[dist * scale]           = 'P';
                 if(dist < vfo->m_window_ofst || dist > vfo->m_window_ofst + vfo->m_window_size) {
                     irregular = true;
                     irregular_pulse_count++;
@@ -404,7 +406,7 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=99) {
         } while (dist < vfo->m_cell_size);
         dist -= vfo->m_cell_size;
 
-        std::cout << std::setw(6) << count << " >" << line;
+        std::cout << std::setw(6) << count << " " << std::setw(6) << std::setprecision(4) << std::setfill(' ') << vfo->m_cell_size << " >" << line;
         if(irregular) {
             fdc_misc::color(6);
             std::cout << "\a*** IRREGULAR PULSE DETECTED ***";
@@ -538,6 +540,7 @@ int main(int argc, char* argv[]) {
                 std::cout << std::endl << cmd_line << std::endl;   // Disp message
                 continue; 
             }
+            std::cout << cmd_line << std::endl;
         } else {
             std::getline(std::cin, cmd_line);
         }
