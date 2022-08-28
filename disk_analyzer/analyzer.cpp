@@ -515,13 +515,24 @@ int main(int argc, char* argv[]) {
     if (argc>1) {
         ifs.open(argv[1]);
     }
-    std::istream &in_stream = ifs.is_open()? ifs : std::cin;
 
     std::string cmd_line;
     std::string prev_cmd;
     do {
         std::cout << "CMD(" << cmd_count << ") > ";
-        std::getline(in_stream, cmd_line);
+        if(ifs.is_open()) {
+            std::getline(ifs, cmd_line);
+            if(ifs.eof()) ifs.close();
+            if(cmd_line.size()==0) { std::cout << std::endl; continue; }  // Ignore blank line
+            if(cmd_line[0]=='#') { std::cout << std::endl; continue; }    // Ignore comment line
+            if(cmd_line[0]==';') { std::cout << std::endl; continue; }    // Ignore comment line
+            if(cmd_line[0]=='!') { 
+                std::cout << std::endl << cmd_line << std::endl;   // Disp message
+                continue; 
+            }
+        } else {
+            std::getline(std::cin, cmd_line);
+        }
         if(cmd_line.size() == 0) {
             cmd_line = prev_cmd;
             cmd_disp_vfo_status();
