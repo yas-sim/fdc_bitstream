@@ -9,7 +9,10 @@ vfo_pid::vfo_pid() : vfo_base()
     reset();
 }
 
-
+/**
+ * @brief Read PID coefficient from a file 'vfo_settings.txt'.
+ * 
+ */
 void vfo_pid::read_coeff(void) {
     std::ifstream ifs("vfo_settings.txt");
     if(ifs.is_open()) {
@@ -52,6 +55,13 @@ void vfo_pid::soft_reset(void) {
 
     m_prev_phase_diff = 0.f;
     m_phase_diff_I = 0.f;
+
+    m_phase_err_PC =1.f/8.f;
+    m_phase_err_IC =1.f/32.f;
+    m_phase_err_DC =1.f/64.f;
+    m_phase_diff_PC =1.f/128.f;
+    m_phase_diff_IC =1.f/128.f;
+    m_phase_diff_DC =1.f/64.f;
 
     read_coeff();       // Read PID coefficit from a file.
 }
@@ -109,8 +119,8 @@ double vfo_pid::calc(double pulse_pos) {
     // fast-slow combination = (2.5+2.5) *2 = 10%
     // VFO oscillation center frequency variation by temp and power supply voltage variation = 5%
     // Varition in total = 15% 
-    constexpr double tolerance = 0.25f;
-    new_cell_size = limit(new_cell_size, m_cell_size_ref * (1.f/(1.f + tolerance)) , m_cell_size_ref * (1.5f + tolerance));
+    constexpr double tolerance = 0.5f;
+    new_cell_size = limit(new_cell_size, m_cell_size_ref * (1.f/(1.f + tolerance)) , m_cell_size_ref * (1.0f + tolerance));
 
     set_cell_size(new_cell_size);
     m_prev_pulse_pos = pulse_pos;

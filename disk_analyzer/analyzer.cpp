@@ -508,6 +508,84 @@ void cmd_help(void) {
     "Note2: VFO type = 0:vfo_fixed, 1:vfo_simple, 2:vfo_pid, 3:vfo_pid2, 4:vfo_simple2(default) 9=experimental\n"
     << std::endl;
 }
+
+void set_vfo_pid_param(vfo_pid *vfo, size_t num, double val) {
+    switch(num) {
+        case 0: vfo->m_phase_err_PC = val; break;
+        case 1: vfo->m_phase_err_IC = val; break;
+        case 2: vfo->m_phase_err_DC = val; break;
+        case 3: vfo->m_phase_diff_PC = val; break;
+        case 4: vfo->m_phase_diff_IC = val; break;
+        case 5: vfo->m_phase_diff_DC = val; break;
+    }
+}
+
+void cmd_vfo_pid_tune(size_t track_n) {
+    if(is_image_ready()==false) {
+        std::cout << "Disk image is not ready." << std::endl;
+        return;
+    }
+    bit_array track_stream;
+    track_stream = disk_img->get_track_data(track_n);
+    vfo_pid *vfo = new vfo_pid();
+    disk_image_base_properties props = disk_img->get_property();
+    vfo->set_params(props.m_sampling_rate, props.m_data_bit_rate);
+    vfo->set_gain_val(g_gain_l, g_gain_h);
+    vfo->set_gain_mode(vfo_base::gain_state::low);
+    //std::vector<double> param_table { 1.f/1.f, 1.f/2.f, 1.f/4.f, 1.f/8.f, 1.f/16.f, 1.f/32.f, 1.f/64.f, 1.f/128.f, 1.f/256.f, 1.f/512.f };
+    std::vector<double> param_table0 { 1/512.f, 1/256.f, 1/128.f, 1/64.f, 1/32.f, 1/16.f, 1/8.f, 1/4.f };
+    std::vector<double> param_table1 { 1/64.f, 1/32.f, 1/16.f, 1/10.f, 1/8.f, 1/6.f, 1/4.f, 1/3.f, 1/2.f, 1/1.5f };
+    std::vector<double> param_table2 { 1/128.f, 1/96.f, 1/80.f, 1/64.f, 1/48.f, 1/32.f };
+    std::ofstream log("log.txt", std::ios::out);
+    for(auto i0=param_table1.begin(); i0!=param_table1.end(); i0++) {
+        for(auto i1=param_table1.begin(); i1!=param_table1.end(); i1++) {
+            for(auto i2=param_table1.begin(); i2!=param_table1.end(); i2++) {
+                for(auto i3=param_table2.begin(); i3!=param_table2.end(); i3++) {
+                    for(auto i4=param_table2.begin(); i4!=param_table2.end(); i4++) {
+                        for(auto i5=param_table2.begin(); i5!=param_table2.end(); i5++) {
+                            track_stream.set_stream_pos(0);
+                            vfo->reset();
+                            vfo->m_phase_err_PC = *i0;
+                            vfo->m_phase_err_IC = *i1;
+                            vfo->m_phase_err_DC = *i2;
+                            vfo->m_phase_diff_PC = *i3;
+                            vfo->m_phase_diff_IC = *i4;
+                            vfo->m_phase_diff_DC = *i5;
+                            double pulse_pos = 0.f;
+                            size_t err = 0, good=0;
+                            //vfo->disp_vfo_status();
+                            while(!track_stream.is_wraparound()) {
+                                do {
+                                    if(pulse_pos < vfo->m_cell_size) {
+                                        if(pulse_pos >= vfo->m_window_ofst && pulse_pos < vfo->m_window_ofst + vfo->m_window_size) {
+                                            // Good pulse
+                                            good++;
+                                        } else {
+                                            // Irregular pulse
+                                            err++;
+                                        }
+                                        vfo->calc(pulse_pos);
+                                        double dist = track_stream.distance_to_next_pulse();
+                                        pulse_pos += dist;
+                                    }
+                                } while (pulse_pos < vfo->m_cell_size);
+                                if(pulse_pos >= vfo->m_cell_size) pulse_pos -= vfo->m_cell_size;
+                            }
+                            std::cout << good << "," << err << ",";
+                            std::cout << vfo->m_phase_err_PC << "," << vfo->m_phase_err_IC << "," << vfo->m_phase_err_DC << ",";
+                            std::cout << vfo->m_phase_diff_PC << "," << vfo->m_phase_diff_IC << "," << vfo->m_phase_diff_DC << "," << std::endl;
+                            log << good << "," << err << ",";
+                            log << vfo->m_phase_err_PC << "," << vfo->m_phase_err_IC << "," << vfo->m_phase_err_DC << ",";
+                            log << vfo->m_phase_diff_PC << "," << vfo->m_phase_diff_IC << "," << vfo->m_phase_diff_DC << "," << std::endl;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
 // -------------------------------------------------------------------------
 
 int main(int argc, char* argv[]) {
@@ -631,6 +709,9 @@ int main(int argc, char* argv[]) {
             } else {
                 cmd_trim_track(fdc_misc::str2val(args[1]), fdc_misc::str2val(args[2]), fdc_misc::str2val(args[3]));
             }
+        }
+        else if(args[0] == "vfo_tune" && args.size()>=2) {
+            cmd_vfo_pid_tune(std::stoi(args[1]));
         }
         else if(args[0] == "h" || args[0]=="help" || args[0]=="?") {
             cmd_help();
