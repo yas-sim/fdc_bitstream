@@ -146,12 +146,14 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a40fe98b423eca8f56b4c350a25c497c9"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvfo__pid.html#a40fe98b423eca8f56b4c350a25c497c9">m_prev_phase_error</a></td></tr>
-<tr class="separator:a40fe98b423eca8f56b4c350a25c497c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5013301d4a1dfeeec6f849d22ddade6d"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvfo__pid.html#a5013301d4a1dfeeec6f849d22ddade6d">m_prev_freq_error</a></td></tr>
-<tr class="separator:a5013301d4a1dfeeec6f849d22ddade6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a25b409d96c081921431f3af4709ccaef"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvfo__pid.html#a25b409d96c081921431f3af4709ccaef">m_freq_bias</a></td></tr>
-<tr class="separator:a25b409d96c081921431f3af4709ccaef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7052fbcac65a72cd14707aaa5ca9615"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvfo__pid.html#ae7052fbcac65a72cd14707aaa5ca9615">m_prev_pulse_pos</a></td></tr>
+<tr class="separator:ae7052fbcac65a72cd14707aaa5ca9615"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6b05a27a20f6a599b5d324948228129"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvfo__pid.html#ad6b05a27a20f6a599b5d324948228129">m_prev_phase_err</a></td></tr>
+<tr class="separator:ad6b05a27a20f6a599b5d324948228129"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f349623c12b75d44d9972de96fe2fa0"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvfo__pid.html#a3f349623c12b75d44d9972de96fe2fa0">m_phase_err_integral</a></td></tr>
+<tr class="separator:a3f349623c12b75d44d9972de96fe2fa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44cfa404ea5aae2dc107341da7c3589b"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvfo__pid.html#a44cfa404ea5aae2dc107341da7c3589b">m_phase_diff_integral</a></td></tr>
+<tr class="separator:a44cfa404ea5aae2dc107341da7c3589b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_attribs_classvfo__base"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_classvfo__base')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="classvfo__base.html">vfo_base</a></td></tr>
 <tr class="memitem:a6da6df9b227bf64518dfa01a2767cad4 inherit pub_attribs_classvfo__base"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvfo__base.html#a6da6df9b227bf64518dfa01a2767cad4">m_cell_size</a></td></tr>
 <tr class="separator:a6da6df9b227bf64518dfa01a2767cad4 inherit pub_attribs_classvfo__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -214,7 +216,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="vfo__pid_8h_source.html#l00015">15</a> of file <a class="el" href="vfo__pid_8h_source.html">vfo_pid.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vfo__pid_8h_source.html#l00017">17</a> of file <a class="el" href="vfo__pid_8h_source.html">vfo_pid.h</a>.</p>
 
 </div>
 </div>
@@ -315,7 +317,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classvfo__base.html#a49972ac367408055c8ffa2c67ad24fa0">vfo_base</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="vfo__pid_8cpp_source.html#l00013">13</a> of file <a class="el" href="vfo__pid_8cpp_source.html">vfo_pid.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vfo__pid_8cpp_source.html#l00014">14</a> of file <a class="el" href="vfo__pid_8cpp_source.html">vfo_pid.cpp</a>.</p>
 
 </div>
 </div>
@@ -345,19 +347,35 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classvfo__base.html#ae137ed93a8d85d8aaa91b3b5f2f897cd">vfo_base</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="vfo__pid_8cpp_source.html#l00020">20</a> of file <a class="el" href="vfo__pid_8cpp_source.html">vfo_pid.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vfo__pid_8cpp_source.html#l00019">19</a> of file <a class="el" href="vfo__pid_8cpp_source.html">vfo_pid.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a25b409d96c081921431f3af4709ccaef" name="a25b409d96c081921431f3af4709ccaef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a25b409d96c081921431f3af4709ccaef">&#9670;&nbsp;</a></span>m_freq_bias</h2>
+<a id="a44cfa404ea5aae2dc107341da7c3589b" name="a44cfa404ea5aae2dc107341da7c3589b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44cfa404ea5aae2dc107341da7c3589b">&#9670;&nbsp;</a></span>m_phase_diff_integral</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double vfo_pid::m_freq_bias</td>
+          <td class="memname">double vfo_pid::m_phase_diff_integral</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="vfo__pid_8h_source.html#l00014">14</a> of file <a class="el" href="vfo__pid_8h_source.html">vfo_pid.h</a>.</p>
+
+</div>
+</div>
+<a id="a3f349623c12b75d44d9972de96fe2fa0" name="a3f349623c12b75d44d9972de96fe2fa0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f349623c12b75d44d9972de96fe2fa0">&#9670;&nbsp;</a></span>m_phase_err_integral</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double vfo_pid::m_phase_err_integral</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -366,14 +384,14 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a5013301d4a1dfeeec6f849d22ddade6d" name="a5013301d4a1dfeeec6f849d22ddade6d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5013301d4a1dfeeec6f849d22ddade6d">&#9670;&nbsp;</a></span>m_prev_freq_error</h2>
+<a id="ad6b05a27a20f6a599b5d324948228129" name="ad6b05a27a20f6a599b5d324948228129"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6b05a27a20f6a599b5d324948228129">&#9670;&nbsp;</a></span>m_prev_phase_err</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double vfo_pid::m_prev_freq_error</td>
+          <td class="memname">double vfo_pid::m_prev_phase_err</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -382,14 +400,14 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a40fe98b423eca8f56b4c350a25c497c9" name="a40fe98b423eca8f56b4c350a25c497c9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a40fe98b423eca8f56b4c350a25c497c9">&#9670;&nbsp;</a></span>m_prev_phase_error</h2>
+<a id="ae7052fbcac65a72cd14707aaa5ca9615" name="ae7052fbcac65a72cd14707aaa5ca9615"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7052fbcac65a72cd14707aaa5ca9615">&#9670;&nbsp;</a></span>m_prev_pulse_pos</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double vfo_pid::m_prev_phase_error</td>
+          <td class="memname">double vfo_pid::m_prev_pulse_pos</td>
         </tr>
       </table>
 </div><div class="memdoc">
