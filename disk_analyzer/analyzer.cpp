@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <filesystem>
 #include <algorithm>
 
 
@@ -72,6 +73,12 @@ disk_image* create_object_by_ext(std::string ext) {
 // -------------------------------------------------------------------------
 
 void cmd_open_image(std::string file_name) {
+    std::ifstream dmy(file_name, std::ios::in);
+    if(!dmy.is_open()) {
+        std::cout << "File not found." << std::endl;
+        dmy.close();
+        return;
+    }
     std::string ext = get_file_extension(file_name);
     if(check_extension(ext) == false) {
         fdc_misc::color(2);
@@ -472,6 +479,7 @@ void cmd_help(void) {
     "*** Command list\n"
     "o  file_name      Open an image file. (.raw, .mfm, .hfe, .d77)\n"
     "w  file_name      Write an image file. (mfm, d77)\n"
+    "scr file_name     Run a script file.\n"
     "rt trk            Read track\n"
     "vt trk [trk_e]    Validate track(s). Performs read ID and read sector for a track.\n"
     "                  If you specify 'trk_e', the command will perform track validation\n"
@@ -552,6 +560,13 @@ int main(int argc, char* argv[]) {
         }
         else if(args[0] == "w" && args.size()>=2) {
             cmd_write_image(args[1]);
+        }
+        else if(args[0] == "scr" && args.size()>=2) {
+            ifs.open(args[1]);
+            if (!ifs.is_open()) { 
+                std::cout << "File not found" << std::endl;
+                ifs.close();
+            }
         }
         else if(args[0] == "rt" && args.size()>=2) {
             cmd_read_track(fdc_misc::str2val(args[1]));
