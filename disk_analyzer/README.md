@@ -4,12 +4,15 @@
 |-|-|-|
 |`o`|`file_name`|Open an image file.(HFE/MFM/RAW/D77)|
 |`w`|`file_name`|Write an image file. (MFM, D77)|
+|`scr`|`file_name`|Run a script file.|
 |`rt`|`trk`|Read track<br>The data in green color indicates that the data has '**missing-clock**' bit pattern.|
 |`vt`|`trk` [`trk_e`]|Validate track(s).<br>Performs read ID and read sector for a track.<br>If you specify 'trk_e', the command will perform track validation from 'trk' to 'trk_e'.|
 |`tt`|`trk` [`s_byte`] [`e_byte`]|Trim track.<br>Cut out the track data starting from 's_byte' to 'e_byte'.<br>The 's_byte' and 'e_byte' can be specified in byte position in the track dump.<br>If '*' is specified as 'trk', all tracks will be trimmed.|
 |`ri`|`trk` [`trk_e`]|Read all sector IDs.<br>Perform ID read from 'trk' to 'trk_e' if you specify 'trk_e'. Otherwise, an ID read operation will be performed for a track.|
 |`rs`|`trk` `sct`|Read sector 1.<br>Read a sector from track=trk with CHR==(trk/2, trk%2, sct).|
 |`rs`|`trk` `#sct`|Read sector 2.<br>Read a sector from track=trk with sector index #. The sector index # starts from 1 and #1 means the first sector after the index hole.<br>e.g. rs 0 #5 => The 5th sector in track 0.|
+|`rsp`|`trk` `sct`|Read sector with pulse dump 1.<br>Perform a sector read and display the result with pulse dump. You can check the integrity of MFM pulses.|
+|`rsp`|`trk` `#sct`|Read sector with pulse dump 2.<br>Same as `Read sector 2` but with pulse dump.|
 |`ef`|`rate`|Enable fluctuator (VFO stops at rate of `rate(0.0-1.0)`|
 |`ef`||Disable fluctuator|
 |`gain`|`gl` `gh`|Set VFO gain (low=gl, high=gh)|
@@ -21,6 +24,13 @@
 |`q`||Quit analyzer|
 * Note1: The number starting with '$' will be handled as hexadecimal value (e.g. **$f7** == **247**)  
 * Note2: **VFO type** = 0:vfo_fixed, 1:vfo_simple, 2:vfo_pid, 3:vfo_pid2, 9=experimental.  
+
+## Command option  
+The `analyzer` command will run a script file when the command is followed by a file name.  
+```sh
+analyzer script.txt
+```
+
 
 ## Example  
 ```sh
