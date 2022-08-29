@@ -537,12 +537,12 @@ void cmd_vfo_pid_tune(size_t track_n) {
     std::vector<double> param_table1 { 1/64.f, 1/32.f, 1/16.f, 1/10.f, 1/8.f, 1/6.f, 1/4.f, 1/3.f, 1/2.f, 1/1.5f };
     std::vector<double> param_table2 { 1/128.f, 1/96.f, 1/80.f, 1/64.f, 1/48.f, 1/32.f };
     std::ofstream log("log.txt", std::ios::out);
-    for(auto i0=param_table1.begin(); i0!=param_table1.end(); i0++) {
-        for(auto i1=param_table1.begin(); i1!=param_table1.end(); i1++) {
-            for(auto i2=param_table1.begin(); i2!=param_table1.end(); i2++) {
-                for(auto i3=param_table2.begin(); i3!=param_table2.end(); i3++) {
-                    for(auto i4=param_table2.begin(); i4!=param_table2.end(); i4++) {
-                        for(auto i5=param_table2.begin(); i5!=param_table2.end(); i5++) {
+    for(auto i0=param_table0.begin(); i0!=param_table0.end(); i0++) {
+        for(auto i1=param_table0.begin(); i1!=param_table0.end(); i1++) {
+            for(auto i2=param_table0.begin(); i2!=param_table0.end(); i2++) {
+                for(auto i3=param_table0.begin(); i3!=param_table0.end(); i3++) {
+                    for(auto i4=param_table0.begin(); i4!=param_table0.end(); i4++) {
+                        for(auto i5=param_table0.begin(); i5!=param_table0.end(); i5++) {
                             track_stream.set_stream_pos(0);
                             vfo->reset();
                             vfo->m_phase_err_PC = *i0;
