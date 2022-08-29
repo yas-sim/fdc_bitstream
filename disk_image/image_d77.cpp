@@ -148,7 +148,7 @@ void disk_image_d77::write(const std::string file_name) {
             sect_dt.m_sector_data = read_sect.data;
             sect_dt.m_sector_data_length = read_sect.data.size();
             d77_trk.push_back(sect_dt);
-            if (sect_dt.m_status == 0x00) {
+            if (!read_sect.record_not_found && !read_sect.crc_sts && !id_list[sect_n].crc_sts) {
                 sector_good++;
             } else {
                 sector_bad++;
