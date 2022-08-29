@@ -5,6 +5,7 @@
 #include <vector>
 #include <filesystem>
 #include <algorithm>
+#include <cmath>
 
 
 #ifdef _WIN32
@@ -476,6 +477,76 @@ void cmd_histogram(size_t track_n) {
     std::cout << "Data bit rate : " << (g_sampling_rate / (peaks[0] / 2.f)) / 1000.f << " [Kbits/sec]" << std::endl;
 }
 
+void cmd_normalize_track(size_t track_n) {
+    if(is_image_ready()==false) {
+        std::cout << "Disk image is not ready." << std::endl;
+        return;
+    }
+
+    size_t track_n_s, track_n_e;
+    if (track_n == 65535) { // target = all track
+        track_n_s = 0;
+        track_n_e = disk_img->get_number_of_tracks()-1;
+    } else {
+        track_n_s = track_n_e = track_n;
+    }
+
+    bit_array track_stream;
+    bit_array normalized_track;
+    disk_image_base_properties props = disk_img->get_property();
+
+    double cell_size_ref = static_cast<double>(props.m_sampling_rate) / static_cast<double>(props.m_data_bit_rate);
+    double cell_size = cell_size_ref;
+    double new_cell_size;
+    std::cout << "Standard cell size : " << cell_size_ref << std::endl;
+
+    constexpr int window_size = 7;
+    for(size_t trk_n = track_n_s; trk_n <= track_n_e; trk_n++) {
+        track_stream = disk_img->get_track_data(trk_n);
+        track_stream.set_stream_pos(0);
+        normalized_track.clear_array();
+        size_t current_pos = 0;
+        std::cout << trk_n << ", ";
+        std::vector<double> dist_array;
+        while(!track_stream.is_wraparound()) {
+            dist_array.push_back(static_cast<double>(track_stream.distance_to_next_pulse()));
+        }
+        // calculate moving average of cell_size (window size = window_size)
+        for(int i = 0; i < dist_array.size(); i++) {
+            double mov_avg = 0.f;
+            for(int j = -window_size/2; j <= window_size/2; j++) {
+                double tmp_cell_size, tmp_dist;
+                if(i+j < 0) {
+                    tmp_dist = dist_array[-i-j];                             // == [-(i+j)]; // mirroring on lower boundary
+                } else if(i+j >= dist_array.size()) {
+                    tmp_dist = dist_array[dist_array.size()*2 - i - j - 1];  // == [dist_array.size()-((i+j)-dist_array.size()+1)] // mirroring on upper boudary
+                } else {
+                    tmp_dist = dist_array[i+j];
+                }
+                tmp_cell_size = round(tmp_dist/cell_size);       // quantize (by current cell size)
+                if(tmp_cell_size>=2 && tmp_cell_size <=4) {
+                    mov_avg += tmp_dist / tmp_cell_size;         // add quantized cell size if it's normal size
+                } else {
+                    mov_avg += cell_size;                        // ignore outlier data (use current cell size instead)
+                }
+            }
+            mov_avg /= static_cast<double>(window_size);         // moving average of cell_size
+
+            double dist = dist_array[i];
+            size_t quantized = round(dist/mov_avg);              // quantize
+
+            //if(quantized==1) quantized = 2;
+            //if(quantized>=5) quantized = 4; 
+            current_pos += quantized * cell_size_ref;
+            normalized_track.set(current_pos, 1);
+
+            cell_size = mov_avg;
+        }
+        disk_img->set_track_data(trk_n, normalized_track);
+    }
+    std::cout << std::endl;
+}
+
 void cmd_help(void) {
     std::cout <<
     "*** Command list\n"
@@ -489,6 +560,8 @@ void cmd_help(void) {
     "tt trk [s_byte] [e_byte]  Trim track. Cut out the track data starting from 's_byte' to 'e_byte'. \n"
     "                  The 's_byte' and 'e_byte' can be specified in byte position in the track dump.\n"
     "                  If '*' is specified as 'trk', all tracks will be trimmed.\n"
+    "nt trk            Normalize track. Normalize the pulse-to-pulse distance.\n"
+    "                  If '*' is specified as 'trk', all tracks will be processed.\n"
     "ri trk [trk_e]    Read all sector IDs. Perform ID read from 'trk' to 'trk_e' if you specify trk_e.\n"
     "                  Otherwise, an ID read operation will be performed for a track.\n"
     "rs trk sct        Read sector\n"
@@ -708,6 +781,13 @@ int main(int argc, char* argv[]) {
                 cmd_trim_track(65535, fdc_misc::str2val(args[2]), fdc_misc::str2val(args[3]));  // trim all tracks
             } else {
                 cmd_trim_track(fdc_misc::str2val(args[1]), fdc_misc::str2val(args[2]), fdc_misc::str2val(args[3]));
+            }
+        }
+        else if(args[0] == "nt" && args.size()>=2) {
+            if(args[1] == "*") {
+                cmd_normalize_track(65535);  // trim all tracks
+            } else {
+                cmd_normalize_track(fdc_misc::str2val(args[1]));
             }
         }
         else if(args[0] == "vfo_tune" && args.size()>=2) {
