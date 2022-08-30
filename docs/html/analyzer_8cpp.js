@@ -6,6 +6,7 @@ var analyzer_8cpp =
     [ "cmd_enable_fluctuator", "analyzer_8cpp.html#abe62cf108c03d5f78588dbf5101e19e0", null ],
     [ "cmd_help", "analyzer_8cpp.html#a2385163335a35d89c5cb03a6adbfcce0", null ],
     [ "cmd_histogram", "analyzer_8cpp.html#aed3fa9b98867c728b38b464f0f0fd6a9", null ],
+    [ "cmd_normalize_track", "analyzer_8cpp.html#a336edacfb2bffd45b329a6030f379bb1", null ],
     [ "cmd_open_image", "analyzer_8cpp.html#acc00451714bac781ede39bea96a9fd8a", null ],
     [ "cmd_read_id", "analyzer_8cpp.html#a517d06f11bba3eff49330e70afad8fc9", null ],
     [ "cmd_read_sector", "analyzer_8cpp.html#a51dc2cb4554c88766dd4bb957fba4bd1", null ],
