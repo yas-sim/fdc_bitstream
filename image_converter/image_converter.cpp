@@ -3,6 +3,8 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <map>
+#include <unordered_map>
 #include <algorithm>
 
 #include "image_hfe.h"
@@ -101,6 +103,42 @@ std::vector<bit_array> normalize_track(std::vector<bit_array> tracks, size_t sam
     return res;
 }
 
+void inspect_track(std::vector<bit_array> &track_data, std::vector<std::unordered_map<std::string, std::size_t>> &inspect_result, 
+                const size_t vfo_type, const double gain_l, const double gain_h, 
+                const size_t sampling_rate, const size_t data_bit_rate) {
+    fdc_bitstream fdc;
+
+    size_t cell_size_ref = sampling_rate / data_bit_rate;
+    size_t sect_pos_ofst = (cell_size_ref * 16) * 16;       // sector read start position needs to be ahead a bit from the sector ID start position.
+
+    inspect_result.resize(track_data.size());
+    for(size_t track_n = 0; track_n < track_data.size(); track_n++) {
+        fdc.set_track_data(track_data[track_n]);
+        fdc.set_vfo_type(vfo_type);
+        fdc.set_vfo_gain_val(gain_l, gain_h);
+        fdc.set_vfo_gain_mode(fdc_bitstream::gain_state::low);
+        std::vector<fdc_bitstream::id_field> id_list = fdc.read_all_idam();     // Read all IDAMs
+        inspect_result[track_n]["num_ids"] = id_list.size();
+        size_t sector_good = 0;
+        size_t sector_bad = 0;
+        for(auto id = id_list.begin(); id != id_list.end(); id++) {             // Read all sectors
+            // read and inspect a sector
+            size_t sect_pos = (*id).pos;
+            sect_pos = (sect_pos < sect_pos_ofst) ? 0 : sect_pos - sect_pos_ofst;
+            fdc.set_pos(sect_pos);
+            fdc_bitstream::sector_data read_sect = fdc.read_sector((*id).C, (*id).R);
+            if (!read_sect.record_not_found && !read_sect.crc_sts && !(*id).crc_sts) {
+                sector_good++;
+            } else {
+                sector_bad++;
+            }
+        }
+        inspect_result[track_n]["num_good"] = sector_good;
+        inspect_result[track_n]["num_bad"]  = sector_bad;
+        std::cout << "." << std::flush;
+    }
+}
+
 int main(int argc, char* argv[]) {
 
 	std::vector<std::string> cmd_opts;
@@ -108,7 +146,7 @@ int main(int argc, char* argv[]) {
 		cmd_opts.push_back(argv[i]);
 	}
 
-    std::string input_file_name;
+    std::vector<std::string> input_file_names;
     std::string output_file_name;
     bool normalize = false;
     size_t vfo_type = VFO_TYPE_DEFAULT;
@@ -118,7 +156,7 @@ int main(int argc, char* argv[]) {
 
 	for(auto it = cmd_opts.begin(); it != cmd_opts.end(); ++it) {
 		if(*it == "-i" && it+1 != cmd_opts.end()) {
-            input_file_name = *(++it);
+            input_file_names.push_back(*(++it));                // accepts multiple input files
         } else if(*it == "-o" && it+1 != cmd_opts.end()) {
             output_file_name = *(++it);
         } else if(*it == "-n") {
@@ -133,44 +171,87 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    if (input_file_name.size()==0 || output_file_name.size()==0) {
+
+    if (input_file_names.size()==0 || output_file_name.size()==0) {
         usage(argv[0]);
         return -1;
     }
 
-    const std::string input_ext  = get_file_extension(input_file_name);
-    if (check_extension(input_ext)==false) {
-        usage(argv[0]);
-        std::cout << "A file with wrong extension is given (" << input_ext << ")." << std::endl;
-        return -1;
+    // Create image objects for the input files
+    std::vector<disk_image*> in_images;
+    for(auto i = 0; i < input_file_names.size(); i++) {
+        const std::string input_ext  = get_file_extension(input_file_names[i]);
+        if (check_extension(input_ext)==false) {
+            usage(argv[0]);
+            std::cout << "A file with wrong extension is given (" << input_ext << ")." << std::endl;
+            return -1;
+        }
+        in_images.push_back(create_object_by_ext(input_ext));
     }
+
+    // Create an image object for the output file
     const std::string output_ext = get_file_extension(output_file_name); 
     if (check_extension(output_ext)==false) {
         usage(argv[0]);
         std::cout << "A file with wrong extension is given (" << output_ext << ")." << std::endl;
         return -1;
     }
-
-    disk_image *in_image = create_object_by_ext(input_ext);
     disk_image *out_image = create_object_by_ext(output_ext);
 
-    in_image->read(input_file_name);
-    if(!in_image->is_ready()) {
-        std::cout << "Failed to read the input file. (Possibly wrong file format)" << std::endl;
-        return -1;
+    // Read (multiple) input files
+    for(int i=0; i < input_file_names.size(); i++) {
+        std::cout << "Reading " << input_file_names[i] << "." << std::endl;
+        in_images[i]->read(input_file_names[i]);
+        if(!in_images[i]->is_ready()) {
+            std::cout << "Failed to read the input file. (Possibly wrong file format)" << std::endl;
+            return -1;
+        }
     }
-    disk_image_base_properties prop = in_image->get_property();
+
+    // Obtain image parameters and copy them to output image. Use image0 as the representative of the input disk images.
+    disk_image_base_properties prop = in_images[0]->get_property();
     out_image->set_property(prop);
 
-    std::vector<bit_array> all_trk = in_image->get_track_data_all();
+    std::vector<bit_array> chimera_image;
+    chimera_image.resize(in_images[0]->get_number_of_tracks());
+    std::vector<std::vector<std::unordered_map<std::string, size_t>>> inspect_result; // [img][trk]["keys"]
+    if (input_file_names.size() > 1) {
+        std::vector<std::vector<bit_array>> all_trks;
+        inspect_result.resize(input_file_names.size());
+        for(size_t img_n = 0; img_n < input_file_names.size(); img_n++) {
+            std::cout << "Inspecting '" << input_file_names[img_n] << "'";
+            all_trks.push_back(in_images[img_n]->get_track_data_all());
+            inspect_track(all_trks[img_n], inspect_result[img_n], vfo_type, gain_l, gain_h, prop.m_sampling_rate, prop.m_data_bit_rate);
+            std::cout << std::endl;
+        }
 
-    size_t sampling_rate = in_image->get_sampling_rate();
-    size_t bit_rate = in_image->get_data_bit_rate();
-    if(normalize) {
-        all_trk = normalize_track(all_trk, sampling_rate, bit_rate, verbose);
+        std::cout << "Merging images...";
+        for(size_t trk_n = 0; trk_n < in_images[0]->get_number_of_tracks(); trk_n++) {
+            size_t best_img_n = 0;
+            size_t max_sect = 0;
+            for(size_t img_n=0; img_n < input_file_names.size(); img_n++) {
+                // search for the best image (track by track)
+                size_t num_good = inspect_result[img_n][trk_n]["num_good"];
+                size_t num_bad  = inspect_result[img_n][trk_n]["num_bad"];
+                if(num_good-num_bad > max_sect) {
+                    max_sect = num_good - num_bad;
+                    best_img_n = img_n;
+                }
+                std::cout << best_img_n << std::flush;
+                chimera_image[trk_n] = all_trks[best_img_n][trk_n];
+            }
+        }
+        std::cout << std::endl;
+
+    } else {
+        chimera_image = in_images[0]->get_track_data_all();       // In case # of input file == 1
     }
 
-    out_image->set_track_data_all(all_trk);
+    if(normalize) {
+        chimera_image = normalize_track(chimera_image, prop.m_sampling_rate, prop.m_data_bit_rate, verbose);
+    }
+
+    out_image->set_track_data_all(chimera_image);
     if(output_ext == "d77") {
         // only for D77 output
         out_image->set_vfo_type(vfo_type);   
@@ -184,8 +265,13 @@ int main(int argc, char* argv[]) {
 
     out_image->write(output_file_name);
 
-    std::cout << input_file_name << " -> " << output_file_name << std::endl;
+    for(auto it = input_file_names.begin(); it != input_file_names.end(); it++) {
+        std::cout << (*it) << ",";
+    }
+    std::cout << " -> " << output_file_name << std::endl;
 
     delete out_image;
-    delete in_image;
+    for(auto it = in_images.begin(); it != in_images.end(); it++) {
+        delete (*it);
+    }
 }
