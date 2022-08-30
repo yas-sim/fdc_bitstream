@@ -206,6 +206,12 @@ int main(int argc, char* argv[]) {
             std::cout << "Failed to read the input file. (Possibly wrong file format)" << std::endl;
             return -1;
         }
+        if(normalize) {
+            disk_image_base_properties prop = in_images[i]->get_property();
+            std::vector<bit_array> tracks = in_images[i]->get_track_data_all();
+            tracks = normalize_track(tracks, prop.m_sampling_rate, prop.m_data_bit_rate, verbose);
+            in_images[i]->set_track_data_all(tracks);
+        }
     }
 
     // Obtain image parameters and copy them to output image. Use image0 as the representative of the input disk images.
@@ -245,10 +251,6 @@ int main(int argc, char* argv[]) {
 
     } else {
         chimera_image = in_images[0]->get_track_data_all();       // In case # of input file == 1
-    }
-
-    if(normalize) {
-        chimera_image = normalize_track(chimera_image, prop.m_sampling_rate, prop.m_data_bit_rate, verbose);
     }
 
     out_image->set_track_data_all(chimera_image);
