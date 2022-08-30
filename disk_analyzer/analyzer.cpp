@@ -507,7 +507,7 @@ void cmd_normalize_track(size_t track_n) {
         track_stream.set_stream_pos(0);
         normalized_track.clear_array();
         size_t current_pos = 0;
-        std::cout << trk_n << ", ";
+        std::cout << trk_n << ", " << std::flush;
         std::vector<double> dist_array;
         while(!track_stream.is_wraparound()) {
             dist_array.push_back(static_cast<double>(track_stream.distance_to_next_pulse()));
