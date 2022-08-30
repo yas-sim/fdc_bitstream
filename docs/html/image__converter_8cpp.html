@@ -93,6 +93,8 @@ $(document).ready(function(){initNavTree('image__converter_8cpp.html',''); initR
 <code>#include &lt;fstream&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
+<code>#include &lt;map&gt;</code><br />
+<code>#include &lt;unordered_map&gt;</code><br />
 <code>#include &lt;algorithm&gt;</code><br />
 <code>#include &quot;<a class="el" href="image__hfe_8h_source.html">image_hfe.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="image__mfm_8h_source.html">image_mfm.h</a>&quot;</code><br />
@@ -118,6 +120,8 @@ Functions</h2></td></tr>
 <tr class="separator:a951938f545ae411a3bbef610ffc7324d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60b530e94742b10ccd86f68529ae8c0c"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classbit__array.html">bit_array</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image__converter_8cpp.html#a60b530e94742b10ccd86f68529ae8c0c">normalize_track</a> (std::vector&lt; <a class="el" href="classbit__array.html">bit_array</a> &gt; tracks, size_t sampling_rate, size_t bit_rate, bool verbose=false)</td></tr>
 <tr class="separator:a60b530e94742b10ccd86f68529ae8c0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a550da60144739aa9d66fa1a7556ad614"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image__converter_8cpp.html#a550da60144739aa9d66fa1a7556ad614">inspect_track</a> (std::vector&lt; <a class="el" href="classbit__array.html">bit_array</a> &gt; &amp;track_data, std::vector&lt; std::unordered_map&lt; std::string, std::size_t &gt; &gt; &amp;inspect_result, const size_t vfo_type, const double gain_l, const double gain_h, const size_t sampling_rate, const size_t data_bit_rate)</td></tr>
+<tr class="separator:a550da60144739aa9d66fa1a7556ad614"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ddf1224851353fc92bfbff6f499fa97"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image__converter_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a> (int argc, char *argv[])</td></tr>
 <tr class="separator:a0ddf1224851353fc92bfbff6f499fa97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -138,7 +142,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="image__converter_8cpp_source.html#l00040">40</a> of file <a class="el" href="image__converter_8cpp_source.html">image_converter.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="image__converter_8cpp_source.html#l00042">42</a> of file <a class="el" href="image__converter_8cpp_source.html">image_converter.cpp</a>.</p>
 
 </div>
 </div>
@@ -158,7 +162,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="image__converter_8cpp_source.html#l00049">49</a> of file <a class="el" href="image__converter_8cpp_source.html">image_converter.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="image__converter_8cpp_source.html#l00051">51</a> of file <a class="el" href="image__converter_8cpp_source.html">image_converter.cpp</a>.</p>
 
 </div>
 </div>
@@ -178,7 +182,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="image__converter_8cpp_source.html#l00028">28</a> of file <a class="el" href="image__converter_8cpp_source.html">image_converter.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="image__converter_8cpp_source.html#l00030">30</a> of file <a class="el" href="image__converter_8cpp_source.html">image_converter.cpp</a>.</p>
 
 </div>
 </div>
@@ -198,7 +202,67 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="image__converter_8cpp_source.html#l00034">34</a> of file <a class="el" href="image__converter_8cpp_source.html">image_converter.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="image__converter_8cpp_source.html#l00036">36</a> of file <a class="el" href="image__converter_8cpp_source.html">image_converter.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a550da60144739aa9d66fa1a7556ad614" name="a550da60144739aa9d66fa1a7556ad614"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a550da60144739aa9d66fa1a7556ad614">&#9670;&nbsp;</a></span>inspect_track()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void inspect_track </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="classbit__array.html">bit_array</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>track_data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; std::unordered_map&lt; std::string, std::size_t &gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>inspect_result</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const size_t&#160;</td>
+          <td class="paramname"><em>vfo_type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const double&#160;</td>
+          <td class="paramname"><em>gain_l</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const double&#160;</td>
+          <td class="paramname"><em>gain_h</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const size_t&#160;</td>
+          <td class="paramname"><em>sampling_rate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const size_t&#160;</td>
+          <td class="paramname"><em>data_bit_rate</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="image__converter_8cpp_source.html#l00106">106</a> of file <a class="el" href="image__converter_8cpp_source.html">image_converter.cpp</a>.</p>
 
 </div>
 </div>
@@ -228,7 +292,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="image__converter_8cpp_source.html#l00104">104</a> of file <a class="el" href="image__converter_8cpp_source.html">image_converter.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="image__converter_8cpp_source.html#l00142">142</a> of file <a class="el" href="image__converter_8cpp_source.html">image_converter.cpp</a>.</p>
 
 </div>
 </div>
@@ -270,7 +334,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="image__converter_8cpp_source.html#l00060">60</a> of file <a class="el" href="image__converter_8cpp_source.html">image_converter.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="image__converter_8cpp_source.html#l00062">62</a> of file <a class="el" href="image__converter_8cpp_source.html">image_converter.cpp</a>.</p>
 
 </div>
 </div>
@@ -290,7 +354,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="image__converter_8cpp_source.html#l00016">16</a> of file <a class="el" href="image__converter_8cpp_source.html">image_converter.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="image__converter_8cpp_source.html#l00018">18</a> of file <a class="el" href="image__converter_8cpp_source.html">image_converter.cpp</a>.</p>
 
 </div>
 </div>

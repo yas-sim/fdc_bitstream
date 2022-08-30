@@ -48,5 +48,6 @@ var searchData=
   ['m_5fwindow_5fofst_45',['m_window_ofst',['../classvfo__base.html#ab0f2b78ec8efb4ef74ed84a28bb756d9',1,'vfo_base']]],
   ['m_5fwindow_5fratio_46',['m_window_ratio',['../classvfo__base.html#a88039510859130d46e1832d27ea7be68',1,'vfo_base']]],
   ['m_5fwindow_5fsize_47',['m_window_size',['../classvfo__base.html#a8e584eb0d195094cdd9bafb7b20c9ccf',1,'vfo_base']]],
-  ['m_5fwrite_5fprotect_48',['m_write_protect',['../classd77img.html#aa5ff6ebad519cee6a1758c4cb9b52b86',1,'d77img']]]
+  ['m_5fwrite_5fprotect_48',['m_write_protect',['../classd77img.html#aa5ff6ebad519cee6a1758c4cb9b52b86',1,'d77img']]],
+  ['msg_49',['msg',['../namespaceconvert__test.html#aa6100f6ff3d467f362221179858f7a80',1,'convert_test']]]
 ];
