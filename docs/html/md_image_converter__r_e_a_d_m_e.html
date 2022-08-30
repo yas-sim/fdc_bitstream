@@ -86,12 +86,19 @@ $(document).ready(function(){initNavTree('md_image_converter__r_e_a_d_m_e.html',
   <div class="headertitle"><div class="title">Multi format supported disk image converter. </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p ><b>Usage:</b> </p><div class="fragment"><div class="line">image_converter -i input_file.[mfm|raw|hfe|d77] -o output_file.[mfm|d77] -n</div>
+<div class="textblock"><p ><b>Usage:</b> <br  />
+</p><ol type="1">
+<li>Simple conversion <div class="fragment"><div class="line">image_converter -i input_file.[mfm|raw|hfe|d77] -o output_file.[mfm|d77] -v</div>
+</div><!-- fragment --></li>
+<li>Merge images to generate a chimera image</li>
+</ol>
+<div class="fragment"><div class="line">image_converter -i input_file1.[mfm|raw|hfe|d77] [-i input_file2.[mfm|raw|hfe|d77]] [-i ...] -o output_file.[mfm|d77] -v</div>
 </div><!-- fragment --><table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Option   </th><th class="markdownTableHeadNone">Option parameters   </th><th class="markdownTableHeadNone">Description    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>-i</code>   </td><td class="markdownTableBodyNone"><code>in_file</code>   </td><td class="markdownTableBodyNone">Specify input file. HFE, MFM, RAW and D77 are supported.    </td></tr>
+<td class="markdownTableBodyNone"><code>-i</code>   </td><td class="markdownTableBodyNone"><code>in_file</code>   </td><td class="markdownTableBodyNone">Specify input file. HFE, MFM, RAW and D77 are supported.<br  />
+The image converter can accept <b>multiple image files</b> as input. The converter will inspect all tracks in the images, select the best tracks among the images, and generates a merged image (a chimera image).    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>-o</code>   </td><td class="markdownTableBodyNone"><code>out_file</code>   </td><td class="markdownTableBodyNone">Specify output file. MFM and D77 are supported.    </td></tr>
 <tr class="markdownTableRowOdd">

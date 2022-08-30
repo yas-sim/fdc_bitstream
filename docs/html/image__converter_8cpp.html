@@ -120,9 +120,9 @@ Functions</h2></td></tr>
 <tr class="separator:a951938f545ae411a3bbef610ffc7324d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60b530e94742b10ccd86f68529ae8c0c"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classbit__array.html">bit_array</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image__converter_8cpp.html#a60b530e94742b10ccd86f68529ae8c0c">normalize_track</a> (std::vector&lt; <a class="el" href="classbit__array.html">bit_array</a> &gt; tracks, size_t sampling_rate, size_t bit_rate, bool verbose=false)</td></tr>
 <tr class="separator:a60b530e94742b10ccd86f68529ae8c0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a550da60144739aa9d66fa1a7556ad614"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image__converter_8cpp.html#a550da60144739aa9d66fa1a7556ad614">inspect_track</a> (std::vector&lt; <a class="el" href="classbit__array.html">bit_array</a> &gt; &amp;track_data, std::vector&lt; std::unordered_map&lt; std::string, std::size_t &gt; &gt; &amp;inspect_result, const size_t vfo_type, const double gain_l, const double gain_h, const size_t sampling_rate, const size_t data_bit_rate)</td></tr>
-<tr class="memdesc:a550da60144739aa9d66fa1a7556ad614"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inspect all tracks. The inspect result has num_ids, num_good, num_bad. num_ids == number of IDs found in the tack, num_good=number of sectors that could read without error. num_bad=number of sectors with error.  <a href="image__converter_8cpp.html#a550da60144739aa9d66fa1a7556ad614">More...</a><br /></td></tr>
-<tr class="separator:a550da60144739aa9d66fa1a7556ad614"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac795f3df6e2c3c56acbf21171c994905"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image__converter_8cpp.html#ac795f3df6e2c3c56acbf21171c994905">inspect_track</a> (std::vector&lt; <a class="el" href="classbit__array.html">bit_array</a> &gt; &amp;track_data, std::vector&lt; std::unordered_map&lt; std::string, std::size_t &gt; &gt; &amp;inspect_result, const size_t vfo_type, const double gain_l, const double gain_h, const size_t sampling_rate, const size_t data_bit_rate, bool verbose)</td></tr>
+<tr class="memdesc:ac795f3df6e2c3c56acbf21171c994905"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inspect all tracks. The inspect result has num_ids, num_good, num_bad. num_ids == number of IDs found in the tack, num_good=number of sectors that could read without error. num_bad=number of sectors with error.  <a href="image__converter_8cpp.html#ac795f3df6e2c3c56acbf21171c994905">More...</a><br /></td></tr>
+<tr class="separator:ac795f3df6e2c3c56acbf21171c994905"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ddf1224851353fc92bfbff6f499fa97"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image__converter_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a> (int argc, char *argv[])</td></tr>
 <tr class="separator:a0ddf1224851353fc92bfbff6f499fa97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -207,8 +207,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a550da60144739aa9d66fa1a7556ad614" name="a550da60144739aa9d66fa1a7556ad614"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a550da60144739aa9d66fa1a7556ad614">&#9670;&nbsp;</a></span>inspect_track()</h2>
+<a id="ac795f3df6e2c3c56acbf21171c994905" name="ac795f3df6e2c3c56acbf21171c994905"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac795f3df6e2c3c56acbf21171c994905">&#9670;&nbsp;</a></span>inspect_track()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -253,7 +253,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const size_t&#160;</td>
-          <td class="paramname"><em>data_bit_rate</em>&#160;</td>
+          <td class="paramname"><em>data_bit_rate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>verbose</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
