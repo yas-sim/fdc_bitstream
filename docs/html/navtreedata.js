@@ -26,7 +26,7 @@ var NAVTREE =
 [
   [ "fdc_bitstream", "index.html", [
     [ "create_mfm_image - Brand-new formatted MFM disk image file generator.", "md_create_mfm_image__r_e_a_d_m_e.html", null ],
-    [ "Simple disk image analyzer tool", "md_disk_analyzer__r_e_a_d_m_e.html", [
+    [ "Disk image analyzer tool", "md_disk_analyzer__r_e_a_d_m_e.html", [
       [ "Command option", "md_disk_analyzer__r_e_a_d_m_e.html#autotoc_md2", null ],
       [ "Example", "md_disk_analyzer__r_e_a_d_m_e.html#autotoc_md3", null ]
     ] ],
