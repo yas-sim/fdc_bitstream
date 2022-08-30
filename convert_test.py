@@ -3,9 +3,10 @@ import os
 import sys
 import subprocess
 
-bin_dir = '../bin/Release'
+bin_dir = '../bin/Release'     # Directory to the image_converter executable
 cmd_name = 'image_converter'
 
+# Find *raw files
 raw_files = glob.glob(sys.argv[1]+'//**/*.raw', recursive=True)
 
 total_good = 0
