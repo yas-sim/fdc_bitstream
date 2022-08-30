@@ -10,6 +10,7 @@ var dir_04700cb65f3786cf311fa988e0d45468 =
     [ "vfo_fixed.cpp", "vfo__fixed_8cpp.html", null ],
     [ "vfo_pid.cpp", "vfo__pid_8cpp.html", null ],
     [ "vfo_pid2.cpp", "vfo__pid2_8cpp.html", null ],
+    [ "vfo_pid3.cpp", "vfo__pid3_8cpp.html", null ],
     [ "vfo_simple.cpp", "vfo__simple_8cpp.html", null ],
     [ "vfo_simple2.cpp", "vfo__simple2_8cpp.html", null ]
 ];

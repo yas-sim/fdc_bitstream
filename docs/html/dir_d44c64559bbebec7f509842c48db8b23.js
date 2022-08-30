@@ -18,6 +18,7 @@ var dir_d44c64559bbebec7f509842c48db8b23 =
     [ "vfo_fixed.h", "vfo__fixed_8h.html", "vfo__fixed_8h" ],
     [ "vfo_pid.h", "vfo__pid_8h.html", "vfo__pid_8h" ],
     [ "vfo_pid2.h", "vfo__pid2_8h.html", "vfo__pid2_8h" ],
+    [ "vfo_pid3.h", "vfo__pid3_8h.html", "vfo__pid3_8h" ],
     [ "vfo_simple.h", "vfo__simple_8h.html", "vfo__simple_8h" ],
     [ "vfo_simple2.h", "vfo__simple2_8h.html", "vfo__simple2_8h" ]
 ];

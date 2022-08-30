@@ -91,6 +91,7 @@ $(document).ready(function(){initNavTree('functions_m.html',''); initResizable()
 <li>m_cell_center&#160;:&#160;<a class="el" href="classvfo__base.html#ad9c7e17252bb90d8c72462b6a10a2b2b">vfo_base</a></li>
 <li>m_cell_size&#160;:&#160;<a class="el" href="classvfo__base.html#a6da6df9b227bf64518dfa01a2767cad4">vfo_base</a></li>
 <li>m_cell_size_ref&#160;:&#160;<a class="el" href="classvfo__base.html#ae2cc13d31c978303915ddfd9ea2ae7e2">vfo_base</a></li>
+<li>m_coeff_sum&#160;:&#160;<a class="el" href="classvfo__pid3.html#a192bbce8d66244b2ef4db94da315fd42">vfo_pid3</a></li>
 <li>m_current_gain&#160;:&#160;<a class="el" href="classvfo__base.html#a6e996d8f07db20a03f08668685a94923">vfo_base</a></li>
 <li>m_dam_type&#160;:&#160;<a class="el" href="classd77img_1_1sector__data.html#ac97ae7a8c688d5985e5834c4fdac393b">d77img::sector_data</a></li>
 <li>m_data_bit_rate&#160;:&#160;<a class="el" href="classdisk__image__base__properties.html#a20477d0d11b45fd81fb4762f732b9960">disk_image_base_properties</a></li>
@@ -105,23 +106,25 @@ $(document).ready(function(){initNavTree('functions_m.html',''); initResizable()
 <li>m_gain_h&#160;:&#160;<a class="el" href="classvfo__base.html#a130a1decbb7a68ce458d565fdf63edc6">vfo_base</a></li>
 <li>m_gain_l&#160;:&#160;<a class="el" href="classvfo__base.html#abf1b6c024fedae0377dd26e3687f6cd4">vfo_base</a></li>
 <li>m_H&#160;:&#160;<a class="el" href="classd77img_1_1sector__data.html#a914fdfe30a2aff4ce379b718a47242d9">d77img::sector_data</a></li>
+<li>m_hist_ptr&#160;:&#160;<a class="el" href="classvfo__pid3.html#a59fc777f25ab384cfc30b4d774a1b6a9">vfo_pid3</a></li>
 <li>m_N&#160;:&#160;<a class="el" href="classd77img_1_1sector__data.html#ac022c6165b9f7e50870fa8cc7631a224">d77img::sector_data</a></li>
 <li>m_num_sectors&#160;:&#160;<a class="el" href="classd77img_1_1sector__data.html#adb4ce16d4b154795885934ffe4c2ec48">d77img::sector_data</a></li>
 <li>m_number_of_tracks&#160;:&#160;<a class="el" href="classdisk__image__base__properties.html#a441e4b70c3766cd967efc334c9681944">disk_image_base_properties</a></li>
 <li>m_phase_diff_DC&#160;:&#160;<a class="el" href="classvfo__experimental.html#ab28867de05ba453911d79cf300a88ba6">vfo_experimental</a>, <a class="el" href="classvfo__pid.html#aef5e741a0b3a388024b9e040cb098aab">vfo_pid</a></li>
-<li>m_phase_diff_I&#160;:&#160;<a class="el" href="classvfo__experimental.html#abd840d5a302132014f2c3361c08707e2">vfo_experimental</a>, <a class="el" href="classvfo__pid.html#a676c44823e61c33a3c9c9aade3ed6de0">vfo_pid</a></li>
+<li>m_phase_diff_I&#160;:&#160;<a class="el" href="classvfo__experimental.html#abd840d5a302132014f2c3361c08707e2">vfo_experimental</a>, <a class="el" href="classvfo__pid3.html#af9190deec7bc36742e1dbfc03b0e1e8f">vfo_pid3</a>, <a class="el" href="classvfo__pid.html#a676c44823e61c33a3c9c9aade3ed6de0">vfo_pid</a></li>
 <li>m_phase_diff_IC&#160;:&#160;<a class="el" href="classvfo__experimental.html#a147180d2ecd8d1f418f0c8bd9702f805">vfo_experimental</a>, <a class="el" href="classvfo__pid.html#a7f3820a63e6881d251b1afa3d5344c4a">vfo_pid</a></li>
 <li>m_phase_diff_PC&#160;:&#160;<a class="el" href="classvfo__experimental.html#a1294fe281b46d9f81e5d451402f2fe27">vfo_experimental</a>, <a class="el" href="classvfo__pid.html#a538e2f5e6c46ef568f25786b1c85ba95">vfo_pid</a></li>
-<li>m_phase_err_DC&#160;:&#160;<a class="el" href="classvfo__experimental.html#a66d6d8a1a7cb0724abef62644a77f1f7">vfo_experimental</a>, <a class="el" href="classvfo__pid.html#ad4a7ea039b68c1b6175d2a8fdd589457">vfo_pid</a></li>
-<li>m_phase_err_I&#160;:&#160;<a class="el" href="classvfo__experimental.html#abc46d2f27f4cd8d8e94f03a952ecedc7">vfo_experimental</a>, <a class="el" href="classvfo__pid.html#a31a94862753d296189c48bd0da73eae7">vfo_pid</a></li>
-<li>m_phase_err_IC&#160;:&#160;<a class="el" href="classvfo__experimental.html#ada1d267629b6bbcd5963eb502eadfd4d">vfo_experimental</a>, <a class="el" href="classvfo__pid.html#ab10553cb4aeab7e695e9722daa09a86e">vfo_pid</a></li>
-<li>m_phase_err_PC&#160;:&#160;<a class="el" href="classvfo__experimental.html#a1f3a84e88aa19200d0159feacb7065fd">vfo_experimental</a>, <a class="el" href="classvfo__pid.html#a26f4982f6af728cd1cc12051cc94bcd9">vfo_pid</a></li>
+<li>m_phase_err_DC&#160;:&#160;<a class="el" href="classvfo__experimental.html#a66d6d8a1a7cb0724abef62644a77f1f7">vfo_experimental</a>, <a class="el" href="classvfo__pid3.html#adbeb3e41bd48a8523e2e30eefe6c6971">vfo_pid3</a>, <a class="el" href="classvfo__pid.html#ad4a7ea039b68c1b6175d2a8fdd589457">vfo_pid</a></li>
+<li>m_phase_err_I&#160;:&#160;<a class="el" href="classvfo__experimental.html#abc46d2f27f4cd8d8e94f03a952ecedc7">vfo_experimental</a>, <a class="el" href="classvfo__pid3.html#ac2f2c91fec981305b4055f381bee3cde">vfo_pid3</a>, <a class="el" href="classvfo__pid.html#a31a94862753d296189c48bd0da73eae7">vfo_pid</a></li>
+<li>m_phase_err_IC&#160;:&#160;<a class="el" href="classvfo__experimental.html#ada1d267629b6bbcd5963eb502eadfd4d">vfo_experimental</a>, <a class="el" href="classvfo__pid3.html#ad5fa84b3e002f975f976609b9d0091df">vfo_pid3</a>, <a class="el" href="classvfo__pid.html#ab10553cb4aeab7e695e9722daa09a86e">vfo_pid</a></li>
+<li>m_phase_err_PC&#160;:&#160;<a class="el" href="classvfo__experimental.html#a1f3a84e88aa19200d0159feacb7065fd">vfo_experimental</a>, <a class="el" href="classvfo__pid3.html#a3b900e8878b4dad5b8f2e3da9d789202">vfo_pid3</a>, <a class="el" href="classvfo__pid.html#a26f4982f6af728cd1cc12051cc94bcd9">vfo_pid</a></li>
 <li>m_phase_integral&#160;:&#160;<a class="el" href="classvfo__pid2.html#aa184edf5f595785ab94a343ed30d3501">vfo_pid2</a></li>
 <li>m_prev_freq_error&#160;:&#160;<a class="el" href="classvfo__pid2.html#a1f263935a7552bf954f1bbaf933dacfa">vfo_pid2</a></li>
-<li>m_prev_phase_diff&#160;:&#160;<a class="el" href="classvfo__experimental.html#ae7de697ccf0427cd31a3e30b541834d1">vfo_experimental</a>, <a class="el" href="classvfo__pid.html#aefc2cc158b6be0d915fa1cd418d724bc">vfo_pid</a></li>
-<li>m_prev_phase_err&#160;:&#160;<a class="el" href="classvfo__experimental.html#a774217392297ad96a51696e7c164f3aa">vfo_experimental</a>, <a class="el" href="classvfo__pid.html#ad6b05a27a20f6a599b5d324948228129">vfo_pid</a></li>
+<li>m_prev_phase_diff&#160;:&#160;<a class="el" href="classvfo__experimental.html#ae7de697ccf0427cd31a3e30b541834d1">vfo_experimental</a>, <a class="el" href="classvfo__pid3.html#aa81d4ff7c5e8d63099faf09e89069b5f">vfo_pid3</a>, <a class="el" href="classvfo__pid.html#aefc2cc158b6be0d915fa1cd418d724bc">vfo_pid</a></li>
+<li>m_prev_phase_err&#160;:&#160;<a class="el" href="classvfo__experimental.html#a774217392297ad96a51696e7c164f3aa">vfo_experimental</a>, <a class="el" href="classvfo__pid3.html#a361891fdacae352209017c03a219d9dc">vfo_pid3</a>, <a class="el" href="classvfo__pid.html#ad6b05a27a20f6a599b5d324948228129">vfo_pid</a></li>
 <li>m_prev_phase_error&#160;:&#160;<a class="el" href="classvfo__pid2.html#a1578f0069efaed276eef73ec98e5fc41">vfo_pid2</a></li>
-<li>m_prev_pulse_pos&#160;:&#160;<a class="el" href="classvfo__experimental.html#a30a895f5512759e16820caa1c74329f6">vfo_experimental</a>, <a class="el" href="classvfo__pid.html#ae7052fbcac65a72cd14707aaa5ca9615">vfo_pid</a></li>
+<li>m_prev_pulse_pos&#160;:&#160;<a class="el" href="classvfo__experimental.html#a30a895f5512759e16820caa1c74329f6">vfo_experimental</a>, <a class="el" href="classvfo__pid3.html#a769ebc3329d0894e8fba9b9467f84011">vfo_pid3</a>, <a class="el" href="classvfo__pid.html#ae7052fbcac65a72cd14707aaa5ca9615">vfo_pid</a></li>
+<li>m_pulse_pos_history&#160;:&#160;<a class="el" href="classvfo__pid3.html#a5be6b26b40c01cb2502d1a3296b2bce4">vfo_pid3</a></li>
 <li>m_R&#160;:&#160;<a class="el" href="classd77img_1_1sector__data.html#a620202d129bdb48a6e27dc12c0d16315">d77img::sector_data</a></li>
 <li>m_sampling_rate&#160;:&#160;<a class="el" href="classdisk__image__base__properties.html#a2f4c761207d82622336a8aad10dd33a3">disk_image_base_properties</a>, <a class="el" href="classvfo__base.html#ad7d72f5feaf35f4553b145b8f31c25af">vfo_base</a></li>
 <li>m_sector_data&#160;:&#160;<a class="el" href="classd77img_1_1sector__data.html#affa66f586ea4a82e139eaa6e0a64e016">d77img::sector_data</a></li>
