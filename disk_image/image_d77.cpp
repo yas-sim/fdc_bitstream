@@ -113,8 +113,14 @@ void disk_image_d77::write(const std::string file_name) {
 
     output_image.m_disk_name = "D77IMG";
     output_image.m_write_protect = 0;
-    output_image.m_disk_type = 0;       // 2D
+    output_image.m_disk_type = 0;       // 0x00=2D 0x10=2DD 0x20=2HD 0x30=1D 0x40=1DD
     output_image.m_disk_size = 0;
+
+    if(m_base_prop.m_sampling_rate == 1e6) {   // 1Mbps == 2HD_MFM , 500Kbps == 2D/2DD_MFM
+        output_image.m_disk_type = 0x20;        // 2HD
+    } else if (m_base_prop.m_number_of_tracks > 84) {
+        output_image.m_disk_type = 0x10;        // 2DD
+    }
 
     size_t total_sector_good = 0;
     size_t total_sector_bad = 0;
