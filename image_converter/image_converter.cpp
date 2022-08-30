@@ -103,6 +103,17 @@ std::vector<bit_array> normalize_track(std::vector<bit_array> tracks, size_t sam
     return res;
 }
 
+/**
+ * @brief Inspect all tracks. The inspect result has num_ids, num_good, num_bad. num_ids == number of IDs found in the tack, num_good=number of sectors that could read without error. num_bad=number of sectors with error.
+ * 
+ * @param track_data 
+ * @param inspect_result 
+ * @param vfo_type 
+ * @param gain_l 
+ * @param gain_h 
+ * @param sampling_rate 
+ * @param data_bit_rate 
+ */
 void inspect_track(std::vector<bit_array> &track_data, std::vector<std::unordered_map<std::string, std::size_t>> &inspect_result, 
                 const size_t vfo_type, const double gain_l, const double gain_h, 
                 const size_t sampling_rate, const size_t data_bit_rate) {
@@ -222,6 +233,7 @@ int main(int argc, char* argv[]) {
     chimera_image.resize(in_images[0]->get_number_of_tracks());
     std::vector<std::vector<std::unordered_map<std::string, size_t>>> inspect_result; // [img][trk]["keys"]
     if (input_file_names.size() > 1) {
+        // In case multiple input files are given. Inspects all tracks track-by-track and generates a new image by compiling the best track from the images.
         std::vector<std::vector<bit_array>> all_trks;
         inspect_result.resize(input_file_names.size());
         for(size_t img_n = 0; img_n < input_file_names.size(); img_n++) {
@@ -235,17 +247,44 @@ int main(int argc, char* argv[]) {
         for(size_t trk_n = 0; trk_n < in_images[0]->get_number_of_tracks(); trk_n++) {
             size_t best_img_n = 0;
             size_t max_sect = 0;
+            std::vector<size_t> max_sct_img_n;
+            // search for the best image (track by track)
+# if 0
             for(size_t img_n=0; img_n < input_file_names.size(); img_n++) {
-                // search for the best image (track by track)
+                if(inspect_result[img_n][trk_n]["num_ids"] > max_sect) {
+                    max_sect = inspect_result[img_n][trk_n]["num_ids"];     // find the maximum number of IDs in the track from images
+                }
+            }
+            for(size_t img_n=0; img_n < input_file_names.size(); img_n++) {
+                if(inspect_result[img_n][trk_n]["num_ids"] == max_sect) {
+                    max_sct_img_n.push_back(img_n);                         // record which image has the max IDs in the track
+                }
+            }
+            max_sect = 0;
+            for(auto it = max_sct_img_n.begin(); it != max_sct_img_n.end(); it++) {
+                size_t num_good = inspect_result[(*it)][trk_n]["num_good"];
+                size_t num_bad  = inspect_result[(*it)][trk_n]["num_bad"];
+                if(num_good > max_sect) {                                   // pick the best track (that has the most good sectors) 
+                    max_sect = num_good;
+                    best_img_n = (*it);
+                }
+                std::cout << best_img_n << std::flush;
+                chimera_image[trk_n] = all_trks[best_img_n][trk_n];
+            }
+#else
+            max_sect = 0;
+            // select the track by the number of good sectors
+            for(size_t img_n = 0; img_n < input_file_names.size(); img_n++) {
                 size_t num_good = inspect_result[img_n][trk_n]["num_good"];
                 size_t num_bad  = inspect_result[img_n][trk_n]["num_bad"];
-                if(num_good-num_bad > max_sect) {
-                    max_sect = num_good - num_bad;
+                if(num_good > max_sect) {                                   // pick the best track (that has the most good sectors) 
+                    max_sect = num_good;
                     best_img_n = img_n;
                 }
                 std::cout << best_img_n << std::flush;
                 chimera_image[trk_n] = all_trks[best_img_n][trk_n];
             }
+#endif
         }
         std::cout << std::endl;
 
