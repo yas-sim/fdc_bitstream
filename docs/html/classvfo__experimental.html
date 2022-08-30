@@ -91,7 +91,7 @@ $(document).ready(function(){initNavTree('classvfo__experimental.html',''); init
 </div><!--header-->
 <div class="contents">
 
-<p>VFO class using PID control (2)  
+<p>VFO class using PID control.  
  <a href="classvfo__experimental.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="vfo__experimental_8h_source.html">vfo_experimental.h</a>&gt;</code></p>
@@ -107,6 +107,11 @@ Inheritance diagram for vfo_experimental:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a8fbf5463229d7cc89a4d314829633b6c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvfo__experimental.html#a8fbf5463229d7cc89a4d314829633b6c">vfo_experimental</a> ()</td></tr>
+<tr class="separator:a8fbf5463229d7cc89a4d314829633b6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae502b7a37d9d4447bb4080000859e6d7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvfo__experimental.html#ae502b7a37d9d4447bb4080000859e6d7">read_coeff</a> (void)</td></tr>
+<tr class="memdesc:ae502b7a37d9d4447bb4080000859e6d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read PID coefficient from a file 'vfo_settings.txt'.  <a href="classvfo__experimental.html#ae502b7a37d9d4447bb4080000859e6d7">More...</a><br /></td></tr>
+<tr class="separator:ae502b7a37d9d4447bb4080000859e6d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a01212d1cfb35b8687eb3140cff9e7102"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvfo__experimental.html#a01212d1cfb35b8687eb3140cff9e7102">disp_vfo_status</a> (void) override</td></tr>
 <tr class="separator:a01212d1cfb35b8687eb3140cff9e7102"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad9cc656b2dc1de0f3bc5dd91fd5ed8d7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvfo__experimental.html#ad9cc656b2dc1de0f3bc5dd91fd5ed8d7">reset</a> (void) override</td></tr>
@@ -144,22 +149,28 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:aab2c690628f60df31d5c8a24c68cc9da"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvfo__experimental.html#aab2c690628f60df31d5c8a24c68cc9da">m_prev_phase_error</a></td></tr>
-<tr class="separator:aab2c690628f60df31d5c8a24c68cc9da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee3823d4ed8d3c07410ed6ec335fd458"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvfo__experimental.html#aee3823d4ed8d3c07410ed6ec335fd458">m_phase_integral</a></td></tr>
-<tr class="separator:aee3823d4ed8d3c07410ed6ec335fd458"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d55902b73ba6844a39db67103d33102"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvfo__experimental.html#a5d55902b73ba6844a39db67103d33102">m_prev_freq_error</a></td></tr>
-<tr class="separator:a5d55902b73ba6844a39db67103d33102"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af727e59070c986bed91387c34818a6fc"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvfo__experimental.html#af727e59070c986bed91387c34818a6fc">m_freq_integral</a></td></tr>
-<tr class="separator:af727e59070c986bed91387c34818a6fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a30a895f5512759e16820caa1c74329f6"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvfo__experimental.html#a30a895f5512759e16820caa1c74329f6">m_prev_pulse_pos</a></td></tr>
 <tr class="separator:a30a895f5512759e16820caa1c74329f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8bc8a0b0d31b46b2e92bc02fd4fb4286"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvfo__experimental.html#a8bc8a0b0d31b46b2e92bc02fd4fb4286">m_phase_diff_integral</a></td></tr>
-<tr class="separator:a8bc8a0b0d31b46b2e92bc02fd4fb4286"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c51a6102ac09fea3d3afd79c84a290f"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvfo__experimental.html#a6c51a6102ac09fea3d3afd79c84a290f">m_phase_err_integral</a></td></tr>
-<tr class="separator:a6c51a6102ac09fea3d3afd79c84a290f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a774217392297ad96a51696e7c164f3aa"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvfo__experimental.html#a774217392297ad96a51696e7c164f3aa">m_prev_phase_err</a></td></tr>
 <tr class="separator:a774217392297ad96a51696e7c164f3aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc46d2f27f4cd8d8e94f03a952ecedc7"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvfo__experimental.html#abc46d2f27f4cd8d8e94f03a952ecedc7">m_phase_err_I</a></td></tr>
+<tr class="separator:abc46d2f27f4cd8d8e94f03a952ecedc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7de697ccf0427cd31a3e30b541834d1"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvfo__experimental.html#ae7de697ccf0427cd31a3e30b541834d1">m_prev_phase_diff</a></td></tr>
+<tr class="separator:ae7de697ccf0427cd31a3e30b541834d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd840d5a302132014f2c3361c08707e2"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvfo__experimental.html#abd840d5a302132014f2c3361c08707e2">m_phase_diff_I</a></td></tr>
+<tr class="separator:abd840d5a302132014f2c3361c08707e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f3a84e88aa19200d0159feacb7065fd"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvfo__experimental.html#a1f3a84e88aa19200d0159feacb7065fd">m_phase_err_PC</a></td></tr>
+<tr class="separator:a1f3a84e88aa19200d0159feacb7065fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada1d267629b6bbcd5963eb502eadfd4d"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvfo__experimental.html#ada1d267629b6bbcd5963eb502eadfd4d">m_phase_err_IC</a></td></tr>
+<tr class="separator:ada1d267629b6bbcd5963eb502eadfd4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66d6d8a1a7cb0724abef62644a77f1f7"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvfo__experimental.html#a66d6d8a1a7cb0724abef62644a77f1f7">m_phase_err_DC</a></td></tr>
+<tr class="separator:a66d6d8a1a7cb0724abef62644a77f1f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1294fe281b46d9f81e5d451402f2fe27"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvfo__experimental.html#a1294fe281b46d9f81e5d451402f2fe27">m_phase_diff_PC</a></td></tr>
+<tr class="separator:a1294fe281b46d9f81e5d451402f2fe27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a147180d2ecd8d1f418f0c8bd9702f805"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvfo__experimental.html#a147180d2ecd8d1f418f0c8bd9702f805">m_phase_diff_IC</a></td></tr>
+<tr class="separator:a147180d2ecd8d1f418f0c8bd9702f805"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab28867de05ba453911d79cf300a88ba6"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvfo__experimental.html#ab28867de05ba453911d79cf300a88ba6">m_phase_diff_DC</a></td></tr>
+<tr class="separator:ab28867de05ba453911d79cf300a88ba6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_attribs_classvfo__base"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_classvfo__base')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="classvfo__base.html">vfo_base</a></td></tr>
 <tr class="memitem:a6da6df9b227bf64518dfa01a2767cad4 inherit pub_attribs_classvfo__base"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvfo__base.html#a6da6df9b227bf64518dfa01a2767cad4">m_cell_size</a></td></tr>
 <tr class="separator:a6da6df9b227bf64518dfa01a2767cad4 inherit pub_attribs_classvfo__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -195,10 +206,30 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:a19dc98a03137615deb8bc4d127b3d907 inherit pub_types_classvfo__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p >VFO class using PID control (2) </p>
+<div class="textblock"><p >VFO class using PID control. </p>
 
 <p class="definition">Definition at line <a class="el" href="vfo__experimental_8h_source.html#l00009">9</a> of file <a class="el" href="vfo__experimental_8h_source.html">vfo_experimental.h</a>.</p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a8fbf5463229d7cc89a4d314829633b6c" name="a8fbf5463229d7cc89a4d314829633b6c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8fbf5463229d7cc89a4d314829633b6c">&#9670;&nbsp;</a></span>vfo_experimental()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">vfo_experimental::vfo_experimental </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="vfo__experimental_8cpp_source.html#l00007">7</a> of file <a class="el" href="vfo__experimental_8cpp_source.html">vfo_experimental.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="a311a3c4f7f7dd265804af3b317f4644a" name="a311a3c4f7f7dd265804af3b317f4644a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a311a3c4f7f7dd265804af3b317f4644a">&#9670;&nbsp;</a></span>calc()</h2>
 
@@ -235,7 +266,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implements <a class="el" href="classvfo__base.html#a2399fcc796c169d6c55520c8d4dd3796">vfo_base</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="vfo__experimental_8cpp_source.html#l00047">47</a> of file <a class="el" href="vfo__experimental_8cpp_source.html">vfo_experimental.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vfo__experimental_8cpp_source.html#l00090">90</a> of file <a class="el" href="vfo__experimental_8cpp_source.html">vfo_experimental.cpp</a>.</p>
 
 </div>
 </div>
@@ -265,7 +296,29 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classvfo__base.html#ac8dca6b76a362c1698404209d3139452">vfo_base</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="vfo__experimental_8cpp_source.html#l00005">5</a> of file <a class="el" href="vfo__experimental_8cpp_source.html">vfo_experimental.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vfo__experimental_8cpp_source.html#l00030">30</a> of file <a class="el" href="vfo__experimental_8cpp_source.html">vfo_experimental.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ae502b7a37d9d4447bb4080000859e6d7" name="ae502b7a37d9d4447bb4080000859e6d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae502b7a37d9d4447bb4080000859e6d7">&#9670;&nbsp;</a></span>read_coeff()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void vfo_experimental::read_coeff </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read PID coefficient from a file 'vfo_settings.txt'. </p>
+
+<p class="definition">Definition at line <a class="el" href="vfo__experimental_8cpp_source.html#l00016">16</a> of file <a class="el" href="vfo__experimental_8cpp_source.html">vfo_experimental.cpp</a>.</p>
 
 </div>
 </div>
@@ -295,7 +348,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classvfo__base.html#a49972ac367408055c8ffa2c67ad24fa0">vfo_base</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="vfo__experimental_8cpp_source.html#l00016">16</a> of file <a class="el" href="vfo__experimental_8cpp_source.html">vfo_experimental.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vfo__experimental_8cpp_source.html#l00044">44</a> of file <a class="el" href="vfo__experimental_8cpp_source.html">vfo_experimental.cpp</a>.</p>
 
 </div>
 </div>
@@ -325,35 +378,35 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classvfo__base.html#ae137ed93a8d85d8aaa91b3b5f2f897cd">vfo_base</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="vfo__experimental_8cpp_source.html#l00024">24</a> of file <a class="el" href="vfo__experimental_8cpp_source.html">vfo_experimental.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vfo__experimental_8cpp_source.html#l00049">49</a> of file <a class="el" href="vfo__experimental_8cpp_source.html">vfo_experimental.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="af727e59070c986bed91387c34818a6fc" name="af727e59070c986bed91387c34818a6fc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af727e59070c986bed91387c34818a6fc">&#9670;&nbsp;</a></span>m_freq_integral</h2>
+<a id="ab28867de05ba453911d79cf300a88ba6" name="ab28867de05ba453911d79cf300a88ba6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab28867de05ba453911d79cf300a88ba6">&#9670;&nbsp;</a></span>m_phase_diff_DC</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double vfo_experimental::m_freq_integral</td>
+          <td class="memname">double vfo_experimental::m_phase_diff_DC</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="vfo__experimental_8h_source.html#l00014">14</a> of file <a class="el" href="vfo__experimental_8h_source.html">vfo_experimental.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vfo__experimental_8h_source.html#l00025">25</a> of file <a class="el" href="vfo__experimental_8h_source.html">vfo_experimental.h</a>.</p>
 
 </div>
 </div>
-<a id="a8bc8a0b0d31b46b2e92bc02fd4fb4286" name="a8bc8a0b0d31b46b2e92bc02fd4fb4286"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8bc8a0b0d31b46b2e92bc02fd4fb4286">&#9670;&nbsp;</a></span>m_phase_diff_integral</h2>
+<a id="abd840d5a302132014f2c3361c08707e2" name="abd840d5a302132014f2c3361c08707e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abd840d5a302132014f2c3361c08707e2">&#9670;&nbsp;</a></span>m_phase_diff_I</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double vfo_experimental::m_phase_diff_integral</td>
+          <td class="memname">double vfo_experimental::m_phase_diff_I</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -362,51 +415,115 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a6c51a6102ac09fea3d3afd79c84a290f" name="a6c51a6102ac09fea3d3afd79c84a290f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6c51a6102ac09fea3d3afd79c84a290f">&#9670;&nbsp;</a></span>m_phase_err_integral</h2>
+<a id="a147180d2ecd8d1f418f0c8bd9702f805" name="a147180d2ecd8d1f418f0c8bd9702f805"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a147180d2ecd8d1f418f0c8bd9702f805">&#9670;&nbsp;</a></span>m_phase_diff_IC</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double vfo_experimental::m_phase_err_integral</td>
+          <td class="memname">double vfo_experimental::m_phase_diff_IC</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="vfo__experimental_8h_source.html#l00019">19</a> of file <a class="el" href="vfo__experimental_8h_source.html">vfo_experimental.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vfo__experimental_8h_source.html#l00024">24</a> of file <a class="el" href="vfo__experimental_8h_source.html">vfo_experimental.h</a>.</p>
 
 </div>
 </div>
-<a id="aee3823d4ed8d3c07410ed6ec335fd458" name="aee3823d4ed8d3c07410ed6ec335fd458"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aee3823d4ed8d3c07410ed6ec335fd458">&#9670;&nbsp;</a></span>m_phase_integral</h2>
+<a id="a1294fe281b46d9f81e5d451402f2fe27" name="a1294fe281b46d9f81e5d451402f2fe27"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1294fe281b46d9f81e5d451402f2fe27">&#9670;&nbsp;</a></span>m_phase_diff_PC</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double vfo_experimental::m_phase_integral</td>
+          <td class="memname">double vfo_experimental::m_phase_diff_PC</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="vfo__experimental_8h_source.html#l00012">12</a> of file <a class="el" href="vfo__experimental_8h_source.html">vfo_experimental.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vfo__experimental_8h_source.html#l00023">23</a> of file <a class="el" href="vfo__experimental_8h_source.html">vfo_experimental.h</a>.</p>
 
 </div>
 </div>
-<a id="a5d55902b73ba6844a39db67103d33102" name="a5d55902b73ba6844a39db67103d33102"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d55902b73ba6844a39db67103d33102">&#9670;&nbsp;</a></span>m_prev_freq_error</h2>
+<a id="a66d6d8a1a7cb0724abef62644a77f1f7" name="a66d6d8a1a7cb0724abef62644a77f1f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66d6d8a1a7cb0724abef62644a77f1f7">&#9670;&nbsp;</a></span>m_phase_err_DC</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double vfo_experimental::m_prev_freq_error</td>
+          <td class="memname">double vfo_experimental::m_phase_err_DC</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="vfo__experimental_8h_source.html#l00013">13</a> of file <a class="el" href="vfo__experimental_8h_source.html">vfo_experimental.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vfo__experimental_8h_source.html#l00022">22</a> of file <a class="el" href="vfo__experimental_8h_source.html">vfo_experimental.h</a>.</p>
+
+</div>
+</div>
+<a id="abc46d2f27f4cd8d8e94f03a952ecedc7" name="abc46d2f27f4cd8d8e94f03a952ecedc7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc46d2f27f4cd8d8e94f03a952ecedc7">&#9670;&nbsp;</a></span>m_phase_err_I</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double vfo_experimental::m_phase_err_I</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="vfo__experimental_8h_source.html#l00014">14</a> of file <a class="el" href="vfo__experimental_8h_source.html">vfo_experimental.h</a>.</p>
+
+</div>
+</div>
+<a id="ada1d267629b6bbcd5963eb502eadfd4d" name="ada1d267629b6bbcd5963eb502eadfd4d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada1d267629b6bbcd5963eb502eadfd4d">&#9670;&nbsp;</a></span>m_phase_err_IC</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double vfo_experimental::m_phase_err_IC</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="vfo__experimental_8h_source.html#l00021">21</a> of file <a class="el" href="vfo__experimental_8h_source.html">vfo_experimental.h</a>.</p>
+
+</div>
+</div>
+<a id="a1f3a84e88aa19200d0159feacb7065fd" name="a1f3a84e88aa19200d0159feacb7065fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f3a84e88aa19200d0159feacb7065fd">&#9670;&nbsp;</a></span>m_phase_err_PC</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double vfo_experimental::m_phase_err_PC</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="vfo__experimental_8h_source.html#l00020">20</a> of file <a class="el" href="vfo__experimental_8h_source.html">vfo_experimental.h</a>.</p>
+
+</div>
+</div>
+<a id="ae7de697ccf0427cd31a3e30b541834d1" name="ae7de697ccf0427cd31a3e30b541834d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7de697ccf0427cd31a3e30b541834d1">&#9670;&nbsp;</a></span>m_prev_phase_diff</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double vfo_experimental::m_prev_phase_diff</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="vfo__experimental_8h_source.html#l00016">16</a> of file <a class="el" href="vfo__experimental_8h_source.html">vfo_experimental.h</a>.</p>
 
 </div>
 </div>
@@ -422,23 +539,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="vfo__experimental_8h_source.html#l00020">20</a> of file <a class="el" href="vfo__experimental_8h_source.html">vfo_experimental.h</a>.</p>
-
-</div>
-</div>
-<a id="aab2c690628f60df31d5c8a24c68cc9da" name="aab2c690628f60df31d5c8a24c68cc9da"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aab2c690628f60df31d5c8a24c68cc9da">&#9670;&nbsp;</a></span>m_prev_phase_error</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">double vfo_experimental::m_prev_phase_error</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="vfo__experimental_8h_source.html#l00011">11</a> of file <a class="el" href="vfo__experimental_8h_source.html">vfo_experimental.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vfo__experimental_8h_source.html#l00013">13</a> of file <a class="el" href="vfo__experimental_8h_source.html">vfo_experimental.h</a>.</p>
 
 </div>
 </div>
@@ -454,7 +555,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="vfo__experimental_8h_source.html#l00016">16</a> of file <a class="el" href="vfo__experimental_8h_source.html">vfo_experimental.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vfo__experimental_8h_source.html#l00011">11</a> of file <a class="el" href="vfo__experimental_8h_source.html">vfo_experimental.h</a>.</p>
 
 </div>
 </div>

@@ -1,10 +1,10 @@
 var searchData=
 [
   ['r_0',['R',['../structfdc__bitstream_1_1id__field.html#a5ee129bdb20f1fe617fad759c7f0256a',1,'fdc_bitstream::id_field']]],
-  ['read_1',['read',['../classdisk__image__raw.html#ae39818fee995a4cc9797bfb842f23277',1,'disk_image_raw::read()'],['../classdisk__image__mfm.html#a0eaa3b808cd84c53d17108c9dbb03491',1,'disk_image_mfm::read()'],['../classdisk__image__hfe.html#aeadca366b024fe3633d681dd217b4e44',1,'disk_image_hfe::read()'],['../classd77img.html#ae8662679fabbacdf84a2103e2e565bec',1,'d77img::read()'],['../classdisk__image.html#a85d235a1ae58907960f50d760deeaf4f',1,'disk_image::read()'],['../classdisk__image__d77.html#a81da4b9e5d0b7c3036695772b9144e5b',1,'disk_image_d77::read()']]],
+  ['read_1',['read',['../classdisk__image__raw.html#ae39818fee995a4cc9797bfb842f23277',1,'disk_image_raw::read()'],['../classdisk__image__mfm.html#a0eaa3b808cd84c53d17108c9dbb03491',1,'disk_image_mfm::read()'],['../classd77img.html#ae8662679fabbacdf84a2103e2e565bec',1,'d77img::read()'],['../classdisk__image.html#a85d235a1ae58907960f50d760deeaf4f',1,'disk_image::read()'],['../classdisk__image__d77.html#a81da4b9e5d0b7c3036695772b9144e5b',1,'disk_image_d77::read()'],['../classdisk__image__hfe.html#aeadca366b024fe3633d681dd217b4e44',1,'disk_image_hfe::read()']]],
   ['read_5fall_5fidam_2',['read_all_idam',['../classfdc__bitstream.html#a0afb22e2181670e2b83134a690c4ea3d',1,'fdc_bitstream']]],
   ['read_5fbit_5fds_3',['read_bit_ds',['../classmfm__codec.html#a04e612265044876b9af9216696fdcb99',1,'mfm_codec']]],
-  ['read_5fcoeff_4',['read_coeff',['../classvfo__pid.html#a151ab269a8b051165a3532853610db50',1,'vfo_pid']]],
+  ['read_5fcoeff_4',['read_coeff',['../classvfo__pid.html#a151ab269a8b051165a3532853610db50',1,'vfo_pid::read_coeff()'],['../classvfo__experimental.html#ae502b7a37d9d4447bb4080000859e6d7',1,'vfo_experimental::read_coeff()']]],
   ['read_5fdata_5',['read_data',['../classfdc__bitstream.html#a19159752b4c24f253f7f44709e1bfd61',1,'fdc_bitstream']]],
   ['read_5fid_6',['read_id',['../classfdc__bitstream.html#a285e12ca70b10ad1c3f9b65a2cb4e64d',1,'fdc_bitstream']]],
   ['read_5fsector_7',['read_sector',['../classd77img.html#a5caaa93ed613d229074be543b91e293a',1,'d77img::read_sector()'],['../classfdc__bitstream.html#ad2debff4c59f8316d4230aa6c432c0f6',1,'fdc_bitstream::read_sector(int trk, int sct)']]],
