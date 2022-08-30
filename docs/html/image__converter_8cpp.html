@@ -121,6 +121,7 @@ Functions</h2></td></tr>
 <tr class="memitem:a60b530e94742b10ccd86f68529ae8c0c"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classbit__array.html">bit_array</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image__converter_8cpp.html#a60b530e94742b10ccd86f68529ae8c0c">normalize_track</a> (std::vector&lt; <a class="el" href="classbit__array.html">bit_array</a> &gt; tracks, size_t sampling_rate, size_t bit_rate, bool verbose=false)</td></tr>
 <tr class="separator:a60b530e94742b10ccd86f68529ae8c0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a550da60144739aa9d66fa1a7556ad614"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image__converter_8cpp.html#a550da60144739aa9d66fa1a7556ad614">inspect_track</a> (std::vector&lt; <a class="el" href="classbit__array.html">bit_array</a> &gt; &amp;track_data, std::vector&lt; std::unordered_map&lt; std::string, std::size_t &gt; &gt; &amp;inspect_result, const size_t vfo_type, const double gain_l, const double gain_h, const size_t sampling_rate, const size_t data_bit_rate)</td></tr>
+<tr class="memdesc:a550da60144739aa9d66fa1a7556ad614"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inspect all tracks. The inspect result has num_ids, num_good, num_bad. num_ids == number of IDs found in the tack, num_good=number of sectors that could read without error. num_bad=number of sectors with error.  <a href="image__converter_8cpp.html#a550da60144739aa9d66fa1a7556ad614">More...</a><br /></td></tr>
 <tr class="separator:a550da60144739aa9d66fa1a7556ad614"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ddf1224851353fc92bfbff6f499fa97"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image__converter_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a> (int argc, char *argv[])</td></tr>
 <tr class="separator:a0ddf1224851353fc92bfbff6f499fa97"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -262,7 +263,21 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="image__converter_8cpp_source.html#l00106">106</a> of file <a class="el" href="image__converter_8cpp_source.html">image_converter.cpp</a>.</p>
+<p>Inspect all tracks. The inspect result has num_ids, num_good, num_bad. num_ids == number of IDs found in the tack, num_good=number of sectors that could read without error. num_bad=number of sectors with error. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">track_data</td><td></td></tr>
+    <tr><td class="paramname">inspect_result</td><td></td></tr>
+    <tr><td class="paramname">vfo_type</td><td></td></tr>
+    <tr><td class="paramname">gain_l</td><td></td></tr>
+    <tr><td class="paramname">gain_h</td><td></td></tr>
+    <tr><td class="paramname">sampling_rate</td><td></td></tr>
+    <tr><td class="paramname">data_bit_rate</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="image__converter_8cpp_source.html#l00117">117</a> of file <a class="el" href="image__converter_8cpp_source.html">image_converter.cpp</a>.</p>
 
 </div>
 </div>
@@ -292,7 +307,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="image__converter_8cpp_source.html#l00142">142</a> of file <a class="el" href="image__converter_8cpp_source.html">image_converter.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="image__converter_8cpp_source.html#l00153">153</a> of file <a class="el" href="image__converter_8cpp_source.html">image_converter.cpp</a>.</p>
 
 </div>
 </div>
