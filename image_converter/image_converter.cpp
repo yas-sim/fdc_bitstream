@@ -116,7 +116,7 @@ std::vector<bit_array> normalize_track(std::vector<bit_array> tracks, size_t sam
  */
 void inspect_track(std::vector<bit_array> &track_data, std::vector<std::unordered_map<std::string, std::size_t>> &inspect_result, 
                 const size_t vfo_type, const double gain_l, const double gain_h, 
-                const size_t sampling_rate, const size_t data_bit_rate) {
+                const size_t sampling_rate, const size_t data_bit_rate, bool verbose) {
     fdc_bitstream fdc;
 
     size_t cell_size_ref = sampling_rate / data_bit_rate;
@@ -146,7 +146,7 @@ void inspect_track(std::vector<bit_array> &track_data, std::vector<std::unordere
         }
         inspect_result[track_n]["num_good"] = sector_good;
         inspect_result[track_n]["num_bad"]  = sector_bad;
-        std::cout << "." << std::flush;
+        if(verbose) std::cout << "." << std::flush;
     }
 }
 
@@ -211,7 +211,7 @@ int main(int argc, char* argv[]) {
 
     // Read (multiple) input files
     for(int i=0; i < input_file_names.size(); i++) {
-        std::cout << "Reading " << input_file_names[i] << "." << std::endl;
+        if(verbose) std::cout << "Reading " << input_file_names[i] << "." << std::endl;
         in_images[i]->read(input_file_names[i]);
         if(!in_images[i]->is_ready()) {
             std::cout << "Failed to read the input file. (Possibly wrong file format)" << std::endl;
@@ -237,13 +237,13 @@ int main(int argc, char* argv[]) {
         std::vector<std::vector<bit_array>> all_trks;
         inspect_result.resize(input_file_names.size());
         for(size_t img_n = 0; img_n < input_file_names.size(); img_n++) {
-            std::cout << "Inspecting '" << input_file_names[img_n] << "'";
+            if(verbose) std::cout << "Inspecting '" << input_file_names[img_n] << "'";
             all_trks.push_back(in_images[img_n]->get_track_data_all());
-            inspect_track(all_trks[img_n], inspect_result[img_n], vfo_type, gain_l, gain_h, prop.m_sampling_rate, prop.m_data_bit_rate);
-            std::cout << std::endl;
+            inspect_track(all_trks[img_n], inspect_result[img_n], vfo_type, gain_l, gain_h, prop.m_sampling_rate, prop.m_data_bit_rate, verbose);
+            if(verbose) std::cout << std::endl;
         }
 
-        std::cout << "Merging images...";
+        if(verbose) std::cout << "Merging images...";
         for(size_t trk_n = 0; trk_n < in_images[0]->get_number_of_tracks(); trk_n++) {
             size_t best_img_n = 0;
             size_t max_sect = 0;
@@ -268,7 +268,7 @@ int main(int argc, char* argv[]) {
                     max_sect = num_good;
                     best_img_n = (*it);
                 }
-                std::cout << best_img_n << std::flush;
+                if(verbose) std::cout << best_img_n << std::flush;
                 chimera_image[trk_n] = all_trks[best_img_n][trk_n];
             }
 #else
@@ -281,12 +281,12 @@ int main(int argc, char* argv[]) {
                     max_sect = num_good;
                     best_img_n = img_n;
                 }
-                std::cout << best_img_n << std::flush;
+                if(verbose) std::cout << best_img_n << std::flush;
                 chimera_image[trk_n] = all_trks[best_img_n][trk_n];
             }
 #endif
         }
-        std::cout << std::endl;
+        if(verbose) std::cout << std::endl;
 
     } else {
         chimera_image = in_images[0]->get_track_data_all();       // In case # of input file == 1
@@ -296,8 +296,8 @@ int main(int argc, char* argv[]) {
     if(output_ext == "d77") {
         // only for D77 output
         out_image->set_vfo_type(vfo_type);   
-        std::cout << "VFO type : " << vfo_type << std::endl;   
         if(verbose) {
+            std::cout << "VFO type : " << vfo_type << std::endl;   
             std::cout << "Gain L=" << gain_l << " , Gain H=" << gain_h << std::endl;
         }
         out_image->set_gain(gain_l, gain_h);
@@ -306,11 +306,13 @@ int main(int argc, char* argv[]) {
 
     out_image->write(output_file_name);
 
+    // Display file names
     for(auto it = input_file_names.begin(); it != input_file_names.end(); it++) {
         std::cout << (*it) << ",";
     }
     std::cout << " -> " << output_file_name << std::endl;
 
+    // Delete objects
     delete out_image;
     for(auto it = in_images.begin(); it != in_images.end(); it++) {
         delete (*it);

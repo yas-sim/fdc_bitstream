@@ -1,13 +1,19 @@
 # Multi format supported disk image converter.  
 
-**Usage:**
+**Usage:**  
+1. Simple conversion
 ```
-image_converter -i input_file.[mfm|raw|hfe|d77] -o output_file.[mfm|d77] -n
+image_converter -i input_file.[mfm|raw|hfe|d77] -o output_file.[mfm|d77] -v
+```
+2. Merge images to generate a chimera image
+
+```
+image_converter -i input_file1.[mfm|raw|hfe|d77] [-i input_file2.[mfm|raw|hfe|d77]] [-i ...] -o output_file.[mfm|d77] -v
 ```
 
 |Option|Option parameters|Description|
 |-|-|-|
-|`-i`|`in_file`|Specify input file. HFE, MFM, RAW and D77 are supported.|
+|`-i`|`in_file`|Specify input file. HFE, MFM, RAW and D77 are supported.<br>The image converter can accept **multiple image files** as input. The converter will inspect all tracks in the images, select the best tracks among the images, and generates a merged image (a chimera image).|
 |`-o`|`out_file`|Specify output file. MFM and D77 are supported.|
 |`-n`||Normalize pulse pitch.<br>The converter will collect the statistics data of pulse pitch (pulse-to-pulse distance) for each track data and perform pitch normalization during the image format conversion process.  With normalized data, the VFO operation will get stable and reading accuracy may improve.|
 |`-vfo`|`vfo_type`|Specify VFO type. This option is effective only when D77 is specified as output.<br>0:vfo_simple, 1:vfo_fixed, 2:vfo_pid, 3:vfo_pid2, 9:vfo_experimental|
