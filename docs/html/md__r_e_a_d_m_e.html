@@ -166,23 +166,23 @@ How to integrate the fdc_bitstream library with your program</h1>
 <p ><img src="./resources/class-diagram.png" alt="" class="inline"/></p>
 <hr  />
 <h1><a class="anchor" id="autotoc_md22"></a>
-(Simple) Multi format converter</h1>
+Multi format converter</h1>
 <p >This project also includes a <em>simple</em> disk image converter that takes one of <code>*.HFE</code>, <code>*.RAW</code>, <code>*.MFM</code>, or <code>*.D77</code> disk image data and convert it into either one of <code>*.MFM</code> or <code>*.D77</code> disk image data. <br  />
-</p><ul>
+ The image converter can accept <b>multiple image files</b> as input. The converter will inspect all tracks in the images, select the best tracks among the images, and generates a merged image (a chimera image).| |<code>-o</code>|<code>out_file</code>|Specify output file. MFM and D77 are supported.</p><ul>
 <li>How to run: <div class="fragment"><div class="line">image_converter -i input_file.[hfe|raw|mfm|d77] -o output_file.[mfm|d77] [-n] [-vfo vfo_type] [-gain low high] [-v]</div>
 </div><!-- fragment --> <em>Options:</em> <br  />
  <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone" colspan="2">Option   </th><th class="markdownTableHeadNone">Description    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>-i</code>   </td><td class="markdownTableBodyNone"><code>filename</code>   </td><td class="markdownTableBodyNone">Input file name    </td></tr>
+<td class="markdownTableBodyNone"><code>-i</code>   </td><td class="markdownTableBodyNone"><code>filename</code>   </td><td class="markdownTableBodyNone">Input file name. The converter can accept multiple input files.    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>-o</code>   </td><td class="markdownTableBodyNone"><code>filename</code>   </td><td class="markdownTableBodyNone">Output file name    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone" colspan="2"><code>-n</code>   </td><td class="markdownTableBodyNone">Pulse pitch normalization.    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>-vfo</code>   </td><td class="markdownTableBodyNone"><code>vfo_type</code>   </td><td class="markdownTableBodyNone">Specify the type of VFO to be used to decode MFM bit stream for D77 output.<br  />
-0:<a class="el" href="classvfo__simple.html" title="VFO class using simple proportional error correction (P)">vfo_simple</a>, 1:<a class="el" href="classvfo__fixed.html" title="Fixed VFO class (no VFO)">vfo_fixed</a>, 2:<a class="el" href="classvfo__pid.html" title="VFO class using PID control.">vfo_pid</a>, 3:<a class="el" href="classvfo__pid2.html" title="VFO class using PID control (2)">vfo_pid2</a>, 9:<a class="el" href="classvfo__experimental.html" title="VFO class using PID control.">vfo_experimental</a>    </td></tr>
+0:<a class="el" href="classvfo__simple.html" title="VFO class using simple proportional error correction (P)">vfo_simple</a>, 1:<a class="el" href="classvfo__fixed.html" title="Fixed VFO class (no VFO)">vfo_fixed</a>, 2:<a class="el" href="classvfo__pid.html" title="VFO class using PID control.">vfo_pid</a>, 3:<a class="el" href="classvfo__pid2.html" title="VFO class using PID control (2)">vfo_pid2</a>, 4:<a class="el" href="classvfo__simple2.html" title="VFO class using PID control (2)">vfo_simple2</a>, 5:<a class="el" href="classvfo__pid3.html" title="VFO class using PID control.">vfo_pid3</a> 9:<a class="el" href="classvfo__experimental.html" title="VFO class using PID control.">vfo_experimental</a>    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>-gain</code>   </td><td class="markdownTableBodyNone"><code>low</code> <code>high</code>   </td><td class="markdownTableBodyNone">Set VFO gain (D77 only). e.g. <code>-gain 1.0 2.0</code>    </td></tr>
 <tr class="markdownTableRowEven">
@@ -228,14 +228,13 @@ Directory structure - Sample/Test/Tool programs, etc</h1>
 <td class="markdownTableBodyNone"><a href="./disk_analyzer/"><code>disk_analyzer</code></a>   </td><td class="markdownTableBodyNone">Disk image analyze tool. You can try VFO gain and fluctuator setting. This tool can visualize how VFO behaves (VFO visualizer) and check the pulse timing distribution of the disk image (histogram).<br  />
 Also, the analyzer has track data trimming feature so that you can cut out the desired portion from the track. The trimming function can be used to remove unnecessary (or excessive) track data overlapping.    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><a href="./image_converter/"><code>image_converter</code></a>   </td><td class="markdownTableBodyNone">(MFM/D77/RAW/HFE) to (MFM/D77) disk image converter. The converter will take one of mfm/raw/hfe/d77 image file, translate it into a MFM data internally, and then output the data as either one of mfm/d77.    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><a href="./kfx2mfm/"><code>kfx2mfm</code></a>   </td><td class="markdownTableBodyNone">Kryoflux <code>RAW</code> files to <code>MFM</code> disk image file converter. Kryoflux <code>RAW</code> image consists of multiple <code>RAW</code> files. Each file contains bitstream data of a track captured at the clock rate of 24MHz.    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><a href="./create_mfm_image/"><code>create_mfm_image</code></a>   </td><td class="markdownTableBodyNone">Creates an 2D/MFM disk image with regular format (ECMA/ISO).The program will create <code>new_image.mfm</code>.    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><a href="./fdc_test/"><code>fdc_test</code></a>   </td><td class="markdownTableBodyNone">FDC lib test program source code. You can learn how to use <code>bit_stream</code> and <code>image_???</code> classes.   </td></tr>
+<td class="markdownTableBodyNone"><a href="./image_converter/"><code>image_converter</code></a>   </td><td class="markdownTableBodyNone">(MFM/D77/RAW/HFE) to (MFM/D77) disk image converter. The converter will take one of mfm/raw/hfe/d77 image file, translate it into a MFM data internally, and then output the data as either one of mfm/d77.<br  />
+The image converter can accept <b>multiple image files</b> as input. The converter will inspect all tracks in the images, select the best tracks among the images, and generates a merged image (a chimera image).   </td></tr>
 </table>
+<p>|<code>-o</code>|<code>out_file</code>|Specify output file. MFM and D77 are supported.| |<a href="./kfx2mfm/"><code>kfx2mfm</code></a>|Kryoflux <code>RAW</code> files to <code>MFM</code> disk image file converter. Kryoflux <code>RAW</code> image consists of multiple <code>RAW</code> files. Each file contains bitstream data of a track captured at the clock rate of 24MHz.| <br  />
+ |<a href="./create_mfm_image/"><code>create_mfm_image</code></a>|Creates an 2D/MFM disk image with regular format (ECMA/ISO).The program will create <code>new_image.mfm</code>.| <br  />
+ |<a href="./fdc_test/"><code>fdc_test</code></a>|FDC lib test program source code. You can learn how to use <code>bit_stream</code> and <code>image_???</code> classes.| <br  />
+</p>
 <h1><a class="anchor" id="autotoc_md28"></a>
 How to build the test program and tools</h1>
 <p >Build tested on Windows 11 (MSVC), and Linux (Ubuntu20, gcc). <br  />

@@ -52,7 +52,7 @@ var NAVTREE =
       ] ],
       [ "API Document", "md__r_e_a_d_m_e.html#autotoc_md19", null ],
       [ "How to integrate the fdc_bitstream library with your program", "md__r_e_a_d_m_e.html#autotoc_md20", null ],
-      [ "(Simple) Multi format converter", "md__r_e_a_d_m_e.html#autotoc_md22", null ],
+      [ "Multi format converter", "md__r_e_a_d_m_e.html#autotoc_md22", null ],
       [ "Kryoflux RAW to MFM format converter", "md__r_e_a_d_m_e.html#autotoc_md23", null ],
       [ "Disk image analyzer", "md__r_e_a_d_m_e.html#autotoc_md24", null ],
       [ "Directory structure - Libraries", "md__r_e_a_d_m_e.html#autotoc_md26", null ],
