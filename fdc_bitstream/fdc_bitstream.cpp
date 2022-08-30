@@ -91,6 +91,7 @@ std::vector<std::vector<size_t>> fdc_bitstream::read_track_ex(void) {
     m_codec.clear_wraparound();
     while (m_codec.is_wraparound() == false) {
         pos = m_codec.get_real_pos();
+        if(pos>get_track_length()) pos = 0;         // exceptional case handling
         m_codec.mfm_read_byte(read_data, missing_clock, false, false);
 #ifdef DEBUG
         std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(read_data) << " ";

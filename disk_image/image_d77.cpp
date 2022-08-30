@@ -116,6 +116,9 @@ void disk_image_d77::write(const std::string file_name) {
     output_image.m_disk_type = 0;       // 2D
     output_image.m_disk_size = 0;
 
+    size_t total_sector_good = 0;
+    size_t total_sector_bad = 0;
+
     for (size_t track_n = 0; track_n < m_base_prop.m_number_of_tracks; track_n++) {
         if(m_verbose) {
             std::cout << std::setw(4) << std::dec << track_n << ":";
@@ -150,8 +153,10 @@ void disk_image_d77::write(const std::string file_name) {
             d77_trk.push_back(sect_dt);
             if (!read_sect.record_not_found && !read_sect.crc_sts && !id_list[sect_n].crc_sts) {
                 sector_good++;
+                total_sector_good++;
             } else {
                 sector_bad++;
+                total_sector_bad++;
             }
         }
         if(m_verbose) {
@@ -165,6 +170,7 @@ void disk_image_d77::write(const std::string file_name) {
     output_image.write(file_name);
     if(m_verbose) {
         std::cout << std::endl;
+        std::cout << "**TOTAL RESULT(GOOD/BAD):" << total_sector_good << " " << total_sector_bad << std::endl;
     }
     std::cout.flags(flags_saved);
 }
