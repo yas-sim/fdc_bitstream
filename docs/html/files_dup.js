@@ -7,5 +7,6 @@ var files_dup =
     [ "fdc_test", "dir_1cd538333abeb00f0c1f53741fd76805.html", "dir_1cd538333abeb00f0c1f53741fd76805" ],
     [ "image_converter", "dir_af1354dcbe1abc18c1d20d28039b3ae6.html", "dir_af1354dcbe1abc18c1d20d28039b3ae6" ],
     [ "include", "dir_d44c64559bbebec7f509842c48db8b23.html", "dir_d44c64559bbebec7f509842c48db8b23" ],
-    [ "kfx2mfm", "dir_1ef0db3758463f9ecfe02601e66c9643.html", "dir_1ef0db3758463f9ecfe02601e66c9643" ]
+    [ "kfx2mfm", "dir_1ef0db3758463f9ecfe02601e66c9643.html", "dir_1ef0db3758463f9ecfe02601e66c9643" ],
+    [ "convert_test.py", "convert__test_8py.html", "convert__test_8py" ]
 ];
