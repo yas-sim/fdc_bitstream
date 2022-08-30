@@ -57,4 +57,5 @@ public:
 #include "vfo_pid.h"
 #include "vfo_pid2.h"
 #include "vfo_simple2.h"
+#include "vfo_pid3.h"
 #include "vfo_experimental.h"

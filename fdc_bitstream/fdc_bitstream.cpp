@@ -165,6 +165,7 @@ size_t fdc_bitstream::read_id(std::vector<uint8_t>& id_field, bool& crc_error) {
     if (m_codec.is_track_ready() == false) return 0;
     size_t total_read_count = 0;
     size_t read_start_pos = 0;
+    size_t track_length_byte = m_codec.get_track_length() / ((m_sampling_rate/m_data_bit_rate)*2*8);
     while (true) {
         switch (m_state) {
         case fdc_state::IDLE:
@@ -210,8 +211,7 @@ size_t fdc_bitstream::read_id(std::vector<uint8_t>& id_field, bool& crc_error) {
         if (m_state == fdc_state::OPERATION_COMPLETED) {
             break;
         }
-        total_read_count++;
-        if (total_read_count > m_codec.get_track_length()) {
+        if (++total_read_count > track_length_byte) { 
             break;
         }
     }
