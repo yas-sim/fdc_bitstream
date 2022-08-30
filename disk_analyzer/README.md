@@ -1,4 +1,4 @@
-# Simple disk image analyzer tool  
+# Disk image analyzer tool  
 
 |Command|Parameters|Description|
 |-|-|-|
