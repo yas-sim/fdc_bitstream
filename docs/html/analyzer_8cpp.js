@@ -25,7 +25,6 @@ var analyzer_8cpp =
     [ "get_file_extension", "analyzer_8cpp.html#a524c24db4867f0a9c4dfb322f45a4911", null ],
     [ "is_image_ready", "analyzer_8cpp.html#a759e47a8775cc608192ee41cee1e8a96", null ],
     [ "main", "analyzer_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97", null ],
-    [ "set_vfo_pid_param", "analyzer_8cpp.html#a4273ba8a0e912e4b2a97b6dc31050858", null ],
     [ "trim_track", "analyzer_8cpp.html#a2556d314120aa9bf447f962736035fcd", null ],
     [ "disk_img", "analyzer_8cpp.html#ac8dde5975a6fb3d83de90b204c68e7ed", null ],
     [ "fdc", "analyzer_8cpp.html#a172eac6ed2a0db501d9220c1fa1c75c5", null ],
