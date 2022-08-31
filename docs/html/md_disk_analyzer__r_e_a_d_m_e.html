@@ -137,11 +137,14 @@ Read data pulses from the top of a track using specified type of VFO.    </td></
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>sv</code>   </td><td class="markdownTableBodyNone"><code>vfo_type</code>   </td><td class="markdownTableBodyNone">Select VFO type.    </td></tr>
 <tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>vp</code>   </td><td class="markdownTableBodyNone"><code>trk</code> <code>bit_pos</code>   </td><td class="markdownTableBodyNone">Interactive pulse viewer.<br  />
+You can check the condition of the raw bit stream data. You can change the bit position to show, bit cell width and bit window ratio by key operations. This feature supports MFM decoding, so you can check the real-time MFM decoded value of the bit stream you are seeing. Also, this feature will tell you the data matches the special missing clock pattern by showing the data in yellow.    </td></tr>
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone" colspan="2"><code>rv</code>   </td><td class="markdownTableBodyNone">(soft) reset VFO<br  />
 Initializes VFO parameters.    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>histogram</code>   </td><td class="markdownTableBodyNone"><code>trk</code>   </td><td class="markdownTableBodyNone">Display histogram of data pulse distances in a track    </td></tr>
 <tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>histogram</code>   </td><td class="markdownTableBodyNone"><code>trk</code>   </td><td class="markdownTableBodyNone">Display histogram of data pulse distances in a track    </td></tr>
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone" colspan="2"><code>q</code>   </td><td class="markdownTableBodyNone">Quit analyzer   </td></tr>
 </table>
 <ul>
@@ -423,7 +426,14 @@ Example</h1>
 <div class="line">-- vfo_simple --</div>
 <div class="line">Freq integral  : -2.25465</div>
 <div class="line">CMD(7) &gt; q</div>
-</div><!-- fragment --> </div></div><!-- contents -->
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md4"></a>
+Interactive Pulse Viewer ('vp' command)</h2>
+<p >Specify the track number and the pulse position to display the raw bit stream. <br  />
+ You can operate the pulse viewer with the keyboard and check the bit stream (pulse) condition interactively. <br  />
+ You can change display position (bit position), bit cell width, and bit window ratio. <br  />
+ The viewer also shows the decoded MFM byte value. The contents will be displayed in yellow when the special missing-clock-pattern is detected. <br  />
+ <img src="../resources/pulse_viewer.png" alt="pulse_viewer" class="inline"/> </p>
+</div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->
