@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <cmath>
 
+#include "esc_seq.h"
 
 #ifdef _WIN32
 #include <direct.h>
@@ -556,6 +557,116 @@ void cmd_normalize_track(size_t track_n) {
     std::cout << std::endl;
 }
 
+void disp_one_byte(size_t bit_pos, bit_array &track) {
+#ifdef _WIN32
+    std::ios::fmtflags flags_saved = std::cout.flags();
+
+    const uint16_t missing_clock_a1 = 0x4489;       //  0100_0100_10*0_1001
+    const uint16_t missing_clock_c2 = 0x5224;       //  0101_0010_*010_0100
+
+    double bit_cell = static_cast<double>(g_sampling_rate) / static_cast<double>(g_data_bit_rate);
+
+    double window_ratio = 0.9f;
+    size_t key;
+
+    do {
+        escseq::color(7);
+
+        double window_size = bit_cell * window_ratio;
+        double window_ofst = (bit_cell - window_size) / 2.f;
+
+        escseq::cls();
+        escseq::csrpos(0,0);
+        std::cout << std::dec << "Window ratio:"<<window_ratio<<"  Bit cell size:"<<bit_cell<<std::endl;
+
+        // generate the ruler
+        std::string ruler(bit_cell * 16, '-');
+        for(double i=0; i<16; i++) {
+            for(double j = window_ofst; j < window_ofst + window_size; j+=1.f) {
+                ruler[bit_cell * i + j] = (static_cast<int>(i) & 1) ? 'd' : 'c';
+            }
+            ruler[bit_cell * i] = ':';
+        }
+
+        track.set_stream_pos(bit_pos);
+        std::string pulses(bit_cell * 16, '.');
+        double ofst = 0;
+        size_t mfm_stream = 0;
+        while(true) {
+            ofst += static_cast<double>(track.distance_to_next_pulse());
+            if(ofst >= bit_cell * 16) break;
+
+            double bit_pos_mfm = floor(ofst / bit_cell);
+            double pos_in_cell = ofst - bit_pos_mfm * bit_cell;
+            if(pos_in_cell > window_ofst && pos_in_cell <= window_ofst+window_size) {
+                pulses[ofst] = '#';
+                mfm_stream |= (1<<(15-static_cast<size_t>(bit_pos_mfm)));
+            } else {
+                pulses[ofst] = 'x';
+            }
+        }
+
+        // extract only 'D' bits
+        size_t mfm_data = 0;
+        for(size_t bit_mask = 0x4000; bit_mask > 0; bit_mask >>= 2) {
+            mfm_data = (mfm_data << 1) | ((mfm_stream & bit_mask) ? 1 : 0);
+        }
+
+        fdc_misc::color(7);
+        std::cout << "-bitpos-" << " : MFM : " << ruler << std::endl;
+
+        if (mfm_stream == missing_clock_a1 || mfm_stream == missing_clock_c2) {
+            fdc_misc::color(6);
+        }
+        std::cout << std::dec << std::setw(8) << std::setfill(' ') << bit_pos << " : $";
+        std::cout << std::hex << std::setw(2) << std::setfill('0') << mfm_data << " : ";
+        std::cout << pulses << std::endl;
+
+        fdc_misc::color(4);
+        std::cout << std::endl <<
+        "== Key operation ==\n"
+        "j/k : -/+ bit   n/m : -/+ bit cell  i/o : -/+ byte\n"
+        "a/s : -/+ bit cell width\n"
+        "z/x : -/+ data window ratio\n" 
+        "q : quit\n"
+        << std::endl;
+        fdc_misc::color(7);
+
+        key = getch();
+        switch(key) {
+        // 1 bit pos
+        case 'j': if(bit_pos >= 1) bit_pos--;                                                       break;
+        case 'k': if(bit_pos < track.get_length() - 1) bit_pos++;                                   break;
+        // 1 bit in MFM (cell size)
+        case 'n': if(bit_pos > bit_cell) bit_pos -= bit_cell;                                       break;
+        case 'm': if(bit_pos < track.get_length() - bit_cell - 1) bit_pos += bit_cell;              break;
+        // 1 byte in MFM
+        case 'i': if(bit_pos > bit_cell * 16) bit_pos -= bit_cell * 16;                             break;
+        case 'o': if(bit_pos < track.get_length() - bit_cell * 16 - 1) bit_pos += bit_cell * 16;    break;
+        // bit cell width
+        case 'a': if(bit_cell > 5.f) bit_cell -= 0.1f;                                              break;
+        case 's': if(bit_cell < 14.f) bit_cell += 0.1f;                                             break;
+        // data window ratio
+        case 'z': if(window_ratio > 0.3f) window_ratio -= 0.1f;                                     break;
+        case 'x': if(window_ratio < 1.0f) window_ratio += 0.1f;                                     break;
+        }
+    } while(key != 'q');
+
+    fdc_misc::color(7);
+    std::cout.flags(flags_saved);
+#endif
+}
+
+void cmd_pulse_viewer(size_t track_n, size_t bit_pos = 0) {
+    if(is_image_ready()==false) {
+        std::cout << "Disk image is not ready." << std::endl;
+        return;
+    }
+    bit_array track;
+    track = disk_img->get_track_data(track_n);
+    disp_one_byte(bit_pos, track);
+}
+
 void cmd_help(void) {
     std::cout <<
     "*** Command list\n"
@@ -583,6 +694,7 @@ void cmd_help(void) {
     "                  Current VFO setting will be used if 'vfo_type' is omitted.\n"
     "sv vfo_type       Select VFO type.\n"
     "rv                (soft) reset VFO\n"
+    "vp trk bit_pos    Interactive pulse viewer. You can check raw pulses in the bit stream (track) data.\n"
     "histogram trk     Display histogram of data pulse distance in a track.\n"
     "q                 Quit analyzer\n"
     "\n"
@@ -659,6 +771,8 @@ void cmd_vfo_pid_tune(size_t track_n) {
 // -------------------------------------------------------------------------
 
 int main(int argc, char* argv[]) {
+    escseq::enable();
+    escseq::color(7);
 #ifdef _WIN32
     char tmp[256];
     _getcwd(tmp, 256);
@@ -786,6 +900,9 @@ int main(int argc, char* argv[]) {
             } else {
                 cmd_normalize_track(fdc_misc::str2val(args[1]));
             }
+        }
+        else if(args[0] == "vp" && args.size()>=3) {
+            cmd_pulse_viewer(std::stoi(args[1]), std::stoi(args[2]));
         }
         else if(args[0] == "vfo_tune" && args.size()>=2) {
             cmd_vfo_pid_tune(std::stoi(args[1]));
