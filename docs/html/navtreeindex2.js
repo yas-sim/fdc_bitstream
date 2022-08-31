@@ -1,5 +1,7 @@
 var NAVTREEINDEX2 =
 {
+"fdc__vfo__def_8h.html#aa755e7cacbd6f838ca7dc13ca52c5d55":[12,0,6,7,1],
+"fdc__vfo__def_8h.html#aecdae2c0032494f7ac20e871bdce9133":[12,0,6,7,6],
 "fdc__vfo__def_8h.html#af6950cea16f50ba0293f8068f9ae8471":[12,0,6,7,5],
 "fdc__vfo__def_8h_source.html":[12,0,6,7],
 "files.html":[12,0],
@@ -247,7 +249,5 @@ var NAVTREEINDEX2 =
 "structmfm__header__.html#a641f93ea8ca1bede95d1feb0c252c544":[11,0,14,2],
 "structmfm__header__.html#a6d19b9bb46000bd8cd0213e5aa21a818":[11,0,14,4],
 "structmfm__header__.html#aa14a0c19d6cf96eb9e3dc78a0b815adc":[11,0,14,0],
-"structmfm__header__.html#aa4730a859aeb428f92f90490b476df42":[11,0,14,3],
-"structmfm__header__.html#ac4589f09863bbcb3fe4137314e28ac25":[11,0,14,1],
-"structpicfileformatheader__.html":[11,0,15]
+"structmfm__header__.html#aa4730a859aeb428f92f90490b476df42":[11,0,14,3]
 };
