@@ -19,6 +19,7 @@
 |`vfo`||Display current VFO parameters|
 |`vv`|`trk` [`vfo_type`]|VFO visualizer.<br>Read data pulses from the top of a track using specified type of VFO.|
 |`sv`|`vfo_type`|Select VFO type.|
+|`vp`|`trk` `bit_pos`|Interactive pulse viewer.<br>You can check the condition of the raw bit stream data. You can change the bit position to show, bit cell width and bit window ratio by key operations. This feature supports MFM decoding, so you can check the real-time MFM decoded value of the bit stream you are seeing. Also, this feature will tell you the data matches the special missing clock pattern by showing the data in yellow.|
 |`rv`||(soft) reset VFO<br>Initializes VFO parameters.|
 |`histogram`|`trk`|Display histogram of data pulse distances in a track|
 |`q`||Quit analyzer|
@@ -292,3 +293,12 @@ Current gain  : 1
 Freq integral  : -2.25465
 CMD(7) > q
 ```
+
+### Interactive Pulse Viewer ('vp' command)  
+
+Specify the track number and the pulse position to display the raw bit stream.  
+You can operate the pulse viewer with the keyboard and check the bit stream (pulse) condition interactively.  
+You can change display position (bit position), bit cell width, and bit window ratio.  
+The viewer also shows the decoded MFM byte value. The contents will be displayed in yellow when the special missing-clock-pattern is detected.  
+![pulse_viewer](../resources/pulse_viewer.png)
+
