@@ -122,6 +122,10 @@ void cmd_write_image(std::string file_name) {
     disk_image *out_img = create_object_by_ext(ext);
     out_img->set_property(props);
     out_img->set_track_data_all(disk_img->get_track_data_all());
+    if(ext == "d77") {
+        std::cout << std::setfill(' ');
+        out_img->verbose(true);
+    }
     out_img->write(file_name);
     delete out_img;
 }
@@ -164,6 +168,10 @@ void trim_track(bit_array &in_array, bit_array &out_array, size_t start_byte, si
     size_t start_pos=err, end_pos=err, prev_pos;
     size_t read_count = 0;
     fdc->set_track_data(in_array);
+    if(in_array.size() == 0) {
+        out_array = bit_array();    // Input track is empty. Returns an empty track.
+        return;
+    }
     fdc->set_pos(0);
     uint8_t dt;
     bool mc;
