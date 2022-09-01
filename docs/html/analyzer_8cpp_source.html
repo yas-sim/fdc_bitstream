@@ -96,7 +96,7 @@ $(document).ready(function(){initNavTree('analyzer_8cpp_source.html',''); initRe
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;algorithm&gt;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;cmath&gt;</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;esc_seq.h&quot;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;<a class="code" href="esc__seq_8h.html">esc_seq.h</a>&quot;</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#ifdef _WIN32</span></div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;direct.h&gt;</span></div>
@@ -717,13 +717,13 @@ $(document).ready(function(){initNavTree('analyzer_8cpp_source.html',''); initRe
 <div class="line"><a id="l00629" name="l00629"></a><span class="lineno">  629</span>    <span class="keywordtype">size_t</span> key;</div>
 <div class="line"><a id="l00630" name="l00630"></a><span class="lineno">  630</span> </div>
 <div class="line"><a id="l00631" name="l00631"></a><span class="lineno">  631</span>    <span class="keywordflow">do</span> {</div>
-<div class="line"><a id="l00632" name="l00632"></a><span class="lineno">  632</span>        <a class="code hl_function" href="namespacefdc__misc.html#a3f403b4f1144b3106dc763a1191794cb">escseq::color</a>(7);</div>
+<div class="line"><a id="l00632" name="l00632"></a><span class="lineno">  632</span>        <a class="code hl_function" href="namespaceescseq.html#a866c021690e5a565c6b82b507d4dd795">escseq::color</a>(7);</div>
 <div class="line"><a id="l00633" name="l00633"></a><span class="lineno">  633</span> </div>
 <div class="line"><a id="l00634" name="l00634"></a><span class="lineno">  634</span>        <span class="keywordtype">double</span> window_size = bit_cell * window_ratio;</div>
 <div class="line"><a id="l00635" name="l00635"></a><span class="lineno">  635</span>        <span class="keywordtype">double</span> window_ofst = (bit_cell - window_size) / 2.f;</div>
 <div class="line"><a id="l00636" name="l00636"></a><span class="lineno">  636</span> </div>
-<div class="line"><a id="l00637" name="l00637"></a><span class="lineno">  637</span>        escseq::cls();</div>
-<div class="line"><a id="l00638" name="l00638"></a><span class="lineno">  638</span>        escseq::csrpos(0,0);</div>
+<div class="line"><a id="l00637" name="l00637"></a><span class="lineno">  637</span>        <a class="code hl_function" href="namespaceescseq.html#a2d93af1c7e995252afcfc35e1497999d">escseq::cls</a>();</div>
+<div class="line"><a id="l00638" name="l00638"></a><span class="lineno">  638</span>        <a class="code hl_function" href="namespaceescseq.html#a13e07a6d1a7ed6786df47c02fbdb10bf">escseq::csrpos</a>(0,0);</div>
 <div class="line"><a id="l00639" name="l00639"></a><span class="lineno">  639</span>        std::cout &lt;&lt; std::dec &lt;&lt; <span class="stringliteral">&quot;Window ratio:&quot;</span>&lt;&lt;window_ratio&lt;&lt;<span class="stringliteral">&quot;  Bit cell size:&quot;</span>&lt;&lt;bit_cell&lt;&lt;std::endl;</div>
 <div class="line"><a id="l00640" name="l00640"></a><span class="lineno">  640</span> </div>
 <div class="line"><a id="l00641" name="l00641"></a><span class="lineno">  641</span>        <span class="comment">// generate the ruler</span></div>
@@ -920,8 +920,8 @@ $(document).ready(function(){initNavTree('analyzer_8cpp_source.html',''); initRe
 <div class="line"><a id="l00832" name="l00832"></a><span class="lineno">  832</span><span class="comment">// -------------------------------------------------------------------------</span></div>
 <div class="line"><a id="l00833" name="l00833"></a><span class="lineno">  833</span> </div>
 <div class="line"><a id="l00834" name="l00834"></a><span class="lineno"><a class="line" href="analyzer_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">  834</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="analyzer_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>* argv[]) {</div>
-<div class="line"><a id="l00835" name="l00835"></a><span class="lineno">  835</span>    escseq::enable();</div>
-<div class="line"><a id="l00836" name="l00836"></a><span class="lineno">  836</span>    <a class="code hl_function" href="namespacefdc__misc.html#a3f403b4f1144b3106dc763a1191794cb">escseq::color</a>(7);</div>
+<div class="line"><a id="l00835" name="l00835"></a><span class="lineno">  835</span>    <a class="code hl_function" href="namespaceescseq.html#a14c833cf04cda66d6e57a28a14ff1f3b">escseq::enable</a>();</div>
+<div class="line"><a id="l00836" name="l00836"></a><span class="lineno">  836</span>    <a class="code hl_function" href="namespaceescseq.html#a866c021690e5a565c6b82b507d4dd795">escseq::color</a>(7);</div>
 <div class="line"><a id="l00837" name="l00837"></a><span class="lineno">  837</span><span class="preprocessor">#ifdef _WIN32</span></div>
 <div class="line"><a id="l00838" name="l00838"></a><span class="lineno">  838</span>    <span class="keywordtype">char</span> tmp[256];</div>
 <div class="line"><a id="l00839" name="l00839"></a><span class="lineno">  839</span>    _getcwd(tmp, 256);</div>
@@ -1177,6 +1177,7 @@ $(document).ready(function(){initNavTree('analyzer_8cpp_source.html',''); initRe
 <div class="ttc" id="aclassvfo__simple2_html"><div class="ttname"><a href="classvfo__simple2.html">vfo_simple2</a></div><div class="ttdoc">VFO class using PID control (2)</div><div class="ttdef"><b>Definition:</b> <a href="vfo__simple2_8h_source.html#l00009">vfo_simple2.h:9</a></div></div>
 <div class="ttc" id="aclassvfo__simple_html"><div class="ttname"><a href="classvfo__simple.html">vfo_simple</a></div><div class="ttdoc">VFO class using simple proportional error correction (P)</div><div class="ttdef"><b>Definition:</b> <a href="vfo__simple_8h_source.html#l00009">vfo_simple.h:9</a></div></div>
 <div class="ttc" id="adisk__images_8h_html"><div class="ttname"><a href="disk__images_8h.html">disk_images.h</a></div></div>
+<div class="ttc" id="aesc__seq_8h_html"><div class="ttname"><a href="esc__seq_8h.html">esc_seq.h</a></div></div>
 <div class="ttc" id="afdc__bitstream_8h_html"><div class="ttname"><a href="fdc__bitstream_8h.html">fdc_bitstream.h</a></div></div>
 <div class="ttc" id="afdc__misc_8h_html"><div class="ttname"><a href="fdc__misc_8h.html">fdc_misc.h</a></div></div>
 <div class="ttc" id="afdc__vfo__def_8h_html"><div class="ttname"><a href="fdc__vfo__def_8h.html">fdc_vfo_def.h</a></div></div>
@@ -1195,6 +1196,10 @@ $(document).ready(function(){initNavTree('analyzer_8cpp_source.html',''); initRe
 <div class="ttc" id="anamespaceconvert__test_html_a29a07f59d9eb9659db8c28780395c1dc"><div class="ttname"><a href="namespaceconvert__test.html#a29a07f59d9eb9659db8c28780395c1dc">convert_test.log</a></div><div class="ttdeci">log</div><div class="ttdef"><b>Definition:</b> <a href="convert__test_8py_source.html#l00020">convert_test.py:20</a></div></div>
 <div class="ttc" id="anamespaceconvert__test_html_ab5a23e6932600166f8c47fa7e42680dc"><div class="ttname"><a href="namespaceconvert__test.html#ab5a23e6932600166f8c47fa7e42680dc">convert_test.good</a></div><div class="ttdeci">good</div><div class="ttdef"><b>Definition:</b> <a href="convert__test_8py_source.html#l00024">convert_test.py:24</a></div></div>
 <div class="ttc" id="anamespaceconvert__test_html_af2c9e41e63562c2c6506b8ace0d54b15"><div class="ttname"><a href="namespaceconvert__test.html#af2c9e41e63562c2c6506b8ace0d54b15">convert_test.flush</a></div><div class="ttdeci">flush</div><div class="ttdef"><b>Definition:</b> <a href="convert__test_8py_source.html#l00019">convert_test.py:19</a></div></div>
+<div class="ttc" id="anamespaceescseq_html_a13e07a6d1a7ed6786df47c02fbdb10bf"><div class="ttname"><a href="namespaceescseq.html#a13e07a6d1a7ed6786df47c02fbdb10bf">escseq::csrpos</a></div><div class="ttdeci">void csrpos(size_t x, size_t y)</div><div class="ttdef"><b>Definition:</b> <a href="esc__seq_8cpp_source.html#l00023">esc_seq.cpp:23</a></div></div>
+<div class="ttc" id="anamespaceescseq_html_a14c833cf04cda66d6e57a28a14ff1f3b"><div class="ttname"><a href="namespaceescseq.html#a14c833cf04cda66d6e57a28a14ff1f3b">escseq::enable</a></div><div class="ttdeci">bool enable(void)</div><div class="ttdef"><b>Definition:</b> <a href="esc__seq_8cpp_source.html#l00005">esc_seq.cpp:5</a></div></div>
+<div class="ttc" id="anamespaceescseq_html_a2d93af1c7e995252afcfc35e1497999d"><div class="ttname"><a href="namespaceescseq.html#a2d93af1c7e995252afcfc35e1497999d">escseq::cls</a></div><div class="ttdeci">void cls(void)</div><div class="ttdef"><b>Definition:</b> <a href="esc__seq_8cpp_source.html#l00019">esc_seq.cpp:19</a></div></div>
+<div class="ttc" id="anamespaceescseq_html_a866c021690e5a565c6b82b507d4dd795"><div class="ttname"><a href="namespaceescseq.html#a866c021690e5a565c6b82b507d4dd795">escseq::color</a></div><div class="ttdeci">void color(size_t col)</div><div class="ttdef"><b>Definition:</b> <a href="esc__seq_8cpp_source.html#l00027">esc_seq.cpp:27</a></div></div>
 <div class="ttc" id="anamespacefdc__misc_html_a04c8c1858bcc049a70ace832da35a2db"><div class="ttname"><a href="namespacefdc__misc.html#a04c8c1858bcc049a70ace832da35a2db">fdc_misc::display_id_list</a></div><div class="ttdeci">void display_id_list(const std::vector&lt; fdc_bitstream::id_field &gt; &amp;id_fields, bool color_flag)</div><div class="ttdef"><b>Definition:</b> <a href="fdc__misc_8cpp_source.html#l00407">fdc_misc.cpp:407</a></div></div>
 <div class="ttc" id="anamespacefdc__misc_html_a3f403b4f1144b3106dc763a1191794cb"><div class="ttname"><a href="namespacefdc__misc.html#a3f403b4f1144b3106dc763a1191794cb">fdc_misc::color</a></div><div class="ttdeci">void color(size_t col)</div><div class="ttdef"><b>Definition:</b> <a href="fdc__misc_8cpp_source.html#l00032">fdc_misc.cpp:32</a></div></div>
 <div class="ttc" id="anamespacefdc__misc_html_a5bc8870b973af57feaee62054c1b3ca4"><div class="ttname"><a href="namespacefdc__misc.html#a5bc8870b973af57feaee62054c1b3ca4">fdc_misc::display_id</a></div><div class="ttdeci">void display_id(const fdc_bitstream::id_field &amp;id, bool color_flag)</div><div class="ttdef"><b>Definition:</b> <a href="fdc__misc_8cpp_source.html#l00390">fdc_misc.cpp:390</a></div></div>
