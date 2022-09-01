@@ -8,14 +8,7 @@
 #include <algorithm>
 #include <cmath>
 
-#include "esc_seq.h"
-
-#ifdef _WIN32
-#include <direct.h>
-#include <stdio.h>
-#include <conio.h>
-#endif
-
+#include "hw_abst.h"
 
 #include "fdc_bitstream.h"
 
@@ -401,11 +394,7 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=99) {
     size_t count = 0;
     bool irregular = false;
 
-#ifdef _WIN32
     while(count<500000 && !track_stream.is_wraparound()) {
-#else
-    while(count<5000 && !track_stream.is_wraparound()) {
-#endif
         irregular = false;
 
         std::string line = std::string(150, ' ');
@@ -440,12 +429,10 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=99) {
         }
         std::cout << std::endl;
         count++;
-#if _WIN32
-        if(kbhit()) {
-            getch();
+        if(hw_abst::is_key_hit()) {
+            hw_abst::get_key();
             break;
         }
-#endif
     }
     vfo->disp_vfo_status();
     fdc_misc::color(4);
@@ -630,7 +617,6 @@ void cmd_visualize_pulse_fluctuation(size_t track_n) {
 }
 
 void disp_one_byte(size_t bit_pos, bit_array &track) {
-#ifdef _WIN32
     std::ios::fmtflags flags_saved = std::cout.flags();
 
     const uint16_t missing_clock_a1 = 0x4489;       //  0100_0100_10*0_1001
@@ -642,13 +628,13 @@ void disp_one_byte(size_t bit_pos, bit_array &track) {
     size_t key;
 
     do {
-        escseq::color(7);
+        hw_abst::color(7);
 
         double window_size = bit_cell * window_ratio;
         double window_ofst = (bit_cell - window_size) / 2.f;
 
-        escseq::cls();
-        escseq::csrpos(0,0);
+        hw_abst::cls();
+        hw_abst::csrpos(0,0);
         std::cout << std::dec << "Window ratio:"<<window_ratio<<"  Bit cell size:"<<bit_cell<<std::endl;
 
         // generate the ruler
@@ -704,7 +690,8 @@ void disp_one_byte(size_t bit_pos, bit_array &track) {
         << std::endl;
         fdc_misc::color(7);
 
-        key = getch();
+        while(!hw_abst::is_key_hit());
+        key = hw_abst::get_key();
         switch(key) {
         // 1 bit pos
         case 'j': if(bit_pos >= 1) bit_pos--;                                                       break;
@@ -726,7 +713,6 @@ void disp_one_byte(size_t bit_pos, bit_array &track) {
 
     fdc_misc::color(7);
     std::cout.flags(flags_saved);
-#endif
 }
 
 void cmd_pulse_viewer(size_t track_n, size_t bit_pos = 0) {
@@ -847,8 +833,8 @@ void cmd_vfo_pid_tune(size_t track_n) {
 // -------------------------------------------------------------------------
 
 int main(int argc, char* argv[]) {
-    escseq::enable();
-    escseq::color(7);
+    hw_abst::enable_escape_sequence();
+    hw_abst::color(7);
 #ifdef _WIN32
     char tmp[256];
     _getcwd(tmp, 256);
