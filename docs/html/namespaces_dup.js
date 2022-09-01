@@ -15,6 +15,12 @@ var namespaces_dup =
       [ "total_bad", "namespaceconvert__test.html#a8a21a957b72e26afc6ac546282fbb0d7", null ],
       [ "total_good", "namespaceconvert__test.html#a19bec98ef1ada8a98e35adcc1b17c6a1", null ]
     ] ],
+    [ "escseq", "namespaceescseq.html", [
+      [ "cls", "namespaceescseq.html#a2d93af1c7e995252afcfc35e1497999d", null ],
+      [ "color", "namespaceescseq.html#a866c021690e5a565c6b82b507d4dd795", null ],
+      [ "csrpos", "namespaceescseq.html#a13e07a6d1a7ed6786df47c02fbdb10bf", null ],
+      [ "enable", "namespaceescseq.html#a14c833cf04cda66d6e57a28a14ff1f3b", null ]
+    ] ],
     [ "fdc_misc", "namespacefdc__misc.html", [
       [ "bit_dump", "namespacefdc__misc.html#a86e39ef99d93eace245233be99ef3b9f", null ],
       [ "bit_dump", "namespacefdc__misc.html#ae2905d466d531fd2930e149911811a21", null ],
