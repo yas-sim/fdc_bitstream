@@ -106,7 +106,8 @@ If you specify 'trk_e', the command will perform track validation from 'trk' to 
 <td class="markdownTableBodyNone"><code>tt</code>   </td><td class="markdownTableBodyNone"><code>trk</code> [<code>s_byte</code>] [<code>e_byte</code>]   </td><td class="markdownTableBodyNone">Trim track.<br  />
 Cut out the track data starting from 's_byte' to 'e_byte'.<br  />
 The 's_byte' and 'e_byte' can be specified in byte position in the track dump.<br  />
-If '*' is specified as 'trk', all tracks will be trimmed.    </td></tr>
+If '<code>*</code>' is specified for 'trk', all tracks will be trimmed.<br  />
+If '<code>*</code>' is specified for 's_byte' and 'e_byte' is omitted, the target track will be trimmed down to whole 1 disk rotation length based on the spindle time data (auto trimming). (e.g. <code>tt * *</code>)    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>ri</code>   </td><td class="markdownTableBodyNone"><code>trk</code> [<code>trk_e</code>]   </td><td class="markdownTableBodyNone">Read all sector IDs.<br  />
 Perform ID read from 'trk' to 'trk_e' if you specify 'trk_e'. Otherwise, an ID read operation will be performed for a track.    </td></tr>
