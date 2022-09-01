@@ -11,7 +11,7 @@ var searchData=
   ['clear_5ftrack_5fdata_8',['clear_track_data',['../classdisk__image.html#a0e9aad2006b60cadee00ba839693912d',1,'disk_image']]],
   ['clear_5fwraparound_9',['clear_wraparound',['../classfdc__bitstream.html#a5d5b4821c9b9cac9d7ee88e77fb5d098',1,'fdc_bitstream::clear_wraparound()'],['../classmfm__codec.html#ada5e869f03f20757a9d75c91c3eaa382',1,'mfm_codec::clear_wraparound()']]],
   ['clear_5fwraparound_5fflag_10',['clear_wraparound_flag',['../classbit__array.html#a095ab4d72a708ca8016cdcb8d29fbdb2',1,'bit_array']]],
-  ['cls_11',['cls',['../namespaceescseq.html#a2d93af1c7e995252afcfc35e1497999d',1,'escseq']]],
+  ['cls_11',['cls',['../namespacehw__abst.html#a7bf78ecc9131c1f163a9202229a84852',1,'hw_abst']]],
   ['cmd_12',['cmd',['../namespaceconvert__test.html#a62ef04abe2f516e52cdf1033ebc8e56e',1,'convert_test']]],
   ['cmd_5fdisable_5ffluctuator_13',['cmd_disable_fluctuator',['../analyzer_8cpp.html#a431f804e576ffdd681a6bed55e1028f5',1,'analyzer.cpp']]],
   ['cmd_5fdisp_5fvfo_5fstatus_14',['cmd_disp_vfo_status',['../analyzer_8cpp.html#ac4f625890a5d94f59cff70c41b1e848f',1,'analyzer.cpp']]],
@@ -34,7 +34,7 @@ var searchData=
   ['cmd_5fvisualize_5fpulse_5ffluctuation_31',['cmd_visualize_pulse_fluctuation',['../analyzer_8cpp.html#a8c4087ce83e49a9bb49deac7d595db7c',1,'analyzer.cpp']]],
   ['cmd_5fvisualize_5fvfo_32',['cmd_visualize_vfo',['../analyzer_8cpp.html#aa62a976233956c07c79d3d5cf6c62789',1,'analyzer.cpp']]],
   ['cmd_5fwrite_5fimage_33',['cmd_write_image',['../analyzer_8cpp.html#aa3229715d7f9f05444403973e39352e2',1,'analyzer.cpp']]],
-  ['color_34',['color',['../namespaceescseq.html#a866c021690e5a565c6b82b507d4dd795',1,'escseq::color()'],['../namespacefdc__misc.html#a3f403b4f1144b3106dc763a1191794cb',1,'fdc_misc::color()']]],
+  ['color_34',['color',['../namespacehw__abst.html#a78c4f62e18b7ab834193aaf5f86755d0',1,'hw_abst::color()'],['../namespacefdc__misc.html#a3f403b4f1144b3106dc763a1191794cb',1,'fdc_misc::color()']]],
   ['common_2ecpp_35',['common.cpp',['../common_8cpp.html',1,'']]],
   ['common_2eh_36',['common.h',['../common_8h.html',1,'']]],
   ['convert_5ftest_37',['convert_test',['../namespaceconvert__test.html',1,'']]],
@@ -47,5 +47,5 @@ var searchData=
   ['create_5fmfm_5fimage_20_2d_20brand_2dnew_20formatted_20mfm_20disk_20image_20file_20generator_2e_44',['create_mfm_image - Brand-new formatted MFM disk image file generator.',['../md_create_mfm_image__r_e_a_d_m_e.html',1,'']]],
   ['create_5fmfm_5fimage_2ecpp_45',['create_mfm_image.cpp',['../create__mfm__image_8cpp.html',1,'']]],
   ['create_5fobject_5fby_5fext_46',['create_object_by_ext',['../analyzer_8cpp.html#a951938f545ae411a3bbef610ffc7324d',1,'create_object_by_ext(std::string ext):&#160;analyzer.cpp'],['../image__converter_8cpp.html#a951938f545ae411a3bbef610ffc7324d',1,'create_object_by_ext(std::string ext):&#160;image_converter.cpp']]],
-  ['csrpos_47',['csrpos',['../namespaceescseq.html#a13e07a6d1a7ed6786df47c02fbdb10bf',1,'escseq']]]
+  ['csrpos_47',['csrpos',['../namespacehw__abst.html#aee8f011df9a1581cf403082dca63b327',1,'hw_abst']]]
 ];

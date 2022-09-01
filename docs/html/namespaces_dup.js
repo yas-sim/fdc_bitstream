@@ -15,12 +15,6 @@ var namespaces_dup =
       [ "total_bad", "namespaceconvert__test.html#a8a21a957b72e26afc6ac546282fbb0d7", null ],
       [ "total_good", "namespaceconvert__test.html#a19bec98ef1ada8a98e35adcc1b17c6a1", null ]
     ] ],
-    [ "escseq", "namespaceescseq.html", [
-      [ "cls", "namespaceescseq.html#a2d93af1c7e995252afcfc35e1497999d", null ],
-      [ "color", "namespaceescseq.html#a866c021690e5a565c6b82b507d4dd795", null ],
-      [ "csrpos", "namespaceescseq.html#a13e07a6d1a7ed6786df47c02fbdb10bf", null ],
-      [ "enable", "namespaceescseq.html#a14c833cf04cda66d6e57a28a14ff1f3b", null ]
-    ] ],
     [ "fdc_misc", "namespacefdc__misc.html", [
       [ "bit_dump", "namespacefdc__misc.html#a86e39ef99d93eace245233be99ef3b9f", null ],
       [ "bit_dump", "namespacefdc__misc.html#ae2905d466d531fd2930e149911811a21", null ],
@@ -38,6 +32,14 @@ var namespaces_dup =
       [ "generate_interleaved_sector_list", "namespacefdc__misc.html#ab05a48a473d48f709b2c1e9f15922484", null ],
       [ "get_frequent_distribution", "namespacefdc__misc.html#a8dcf7c79b6e4a994f0ffec30c8e15f38", null ],
       [ "str2val", "namespacefdc__misc.html#a6e24870e85a705772ed2d076efd624f2", null ]
+    ] ],
+    [ "hw_abst", "namespacehw__abst.html", [
+      [ "cls", "namespacehw__abst.html#a7bf78ecc9131c1f163a9202229a84852", null ],
+      [ "color", "namespacehw__abst.html#a78c4f62e18b7ab834193aaf5f86755d0", null ],
+      [ "csrpos", "namespacehw__abst.html#aee8f011df9a1581cf403082dca63b327", null ],
+      [ "enable_escape_sequence", "namespacehw__abst.html#a7ede9a0e9e4fd505b18fa227b3e8212f", null ],
+      [ "get_key", "namespacehw__abst.html#ae922604edb8c0cadab3e67c9704ded40", null ],
+      [ "is_key_hit", "namespacehw__abst.html#aafef41ad8b9059808ff5d0211071d069", null ]
     ] ],
     [ "kfx2mfm", "namespacekfx2mfm.html", "namespacekfx2mfm" ]
 ];
