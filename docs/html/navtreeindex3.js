@@ -1,6 +1,5 @@
 var NAVTREEINDEX3 =
 {
-"namespacemembers_vars.html":[10,1,2],
 "namespaces.html":[10,0],
 "pages.html":[],
 "structfdc__bitstream_1_1id__field.html":[11,0,11,0],

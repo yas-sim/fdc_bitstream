@@ -1,6 +1,5 @@
 var NAVTREEINDEX2 =
 {
-"fdc__vfo__def_8h.html#a975cb9998a5e9e768428c523cf4b7393":[12,0,6,7,10],
 "fdc__vfo__def_8h.html#aa755e7cacbd6f838ca7dc13ca52c5d55":[12,0,6,7,1],
 "fdc__vfo__def_8h.html#aecdae2c0032494f7ac20e871bdce9133":[12,0,6,7,6],
 "fdc__vfo__def_8h.html#af6950cea16f50ba0293f8068f9ae8471":[12,0,6,7,5],
@@ -16,8 +15,8 @@ var NAVTREEINDEX2 =
 "functions_enum.html":[11,3,4],
 "functions_eval.html":[11,3,5],
 "functions_f.html":[11,3,0,6],
-"functions_func.html":[11,3,1],
 "functions_func.html":[11,3,1,0],
+"functions_func.html":[11,3,1],
 "functions_func_a.html":[11,3,1,1],
 "functions_func_b.html":[11,3,1,2],
 "functions_func_c.html":[11,3,1,3],
@@ -249,5 +248,6 @@ var NAVTREEINDEX2 =
 "namespacekfx2mfm.html#a9d4e743dbc36421f3584ad412d63e170":[10,0,3,13],
 "namespacekfx2mfm.html#aabc521fe9ff6f77000aa52b3230e2e62":[10,0,3,8],
 "namespacemembers.html":[10,1,0],
-"namespacemembers_func.html":[10,1,1]
+"namespacemembers_func.html":[10,1,1],
+"namespacemembers_vars.html":[10,1,2]
 };

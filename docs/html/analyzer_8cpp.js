@@ -22,7 +22,6 @@ var analyzer_8cpp =
     [ "cmd_visualize_vfo", "analyzer_8cpp.html#aa62a976233956c07c79d3d5cf6c62789", null ],
     [ "cmd_write_image", "analyzer_8cpp.html#aa3229715d7f9f05444403973e39352e2", null ],
     [ "create_object_by_ext", "analyzer_8cpp.html#a951938f545ae411a3bbef610ffc7324d", null ],
-    [ "disp_one_byte", "analyzer_8cpp.html#a7d0532a1a23b68520a14166f944044b2", null ],
     [ "disp_status", "analyzer_8cpp.html#ae3faf2fb649ea768d77746570ff8b498", null ],
     [ "get_file_base", "analyzer_8cpp.html#aa94c4f1edd8a9fbabdc898aa5e31d0a4", null ],
     [ "get_file_extension", "analyzer_8cpp.html#a524c24db4867f0a9c4dfb322f45a4911", null ],
