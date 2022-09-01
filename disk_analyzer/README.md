@@ -300,8 +300,8 @@ CMD(7) > q
 You can view and check the bit stream data at an arbitrary point.  The viewer has a simple MFM decoding feature so that you can check the decoded value in real-time.  
 You can move the display point by sampling unit, bit cell unit, or byte unit by key operation.  
 This viewer also has a simple pulse edit feature. You can add or remove the pulses at any point.  
+![pulse_viewer](../resources/pulse_viewer.gif)
 ![pulse_viewer](../resources/pulse_viewer.png)
-
 
 ### Pulse pitch fluctuation viewer ('vpf' command)  
 
