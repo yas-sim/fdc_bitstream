@@ -18,6 +18,7 @@
 |`gain`|`gl` `gh`|Set VFO gain (low=gl, high=gh)|
 |`vfo`||Display current VFO parameters|
 |`vv`|`trk` [`vfo_type`]|VFO visualizer.<br>Read data pulses from the top of a track using specified type of VFO.|
+|`vpf`|`trk`|Visualize pulse fluctuation.<br>Visualize pulse pitch fluctuation throughout a track|
 |`sv`|`vfo_type`|Select VFO type.|
 |`vp`|`trk` `bit_pos`|Interactive pulse viewer.<br>You can check the condition of the raw bit stream data. You can change the bit position to show, bit cell width and bit window ratio by key operations. This feature supports MFM decoding, so you can check the real-time MFM decoded value of the bit stream you are seeing. Also, this feature will tell you the data matches the special missing clock pattern by showing the data in yellow.|
 |`rv`||(soft) reset VFO<br>Initializes VFO parameters.|
@@ -296,9 +297,16 @@ CMD(7) > q
 
 ### Interactive Pulse Viewer ('vp' command)  
 
-Specify the track number and the pulse position to display the raw bit stream.  
-You can operate the pulse viewer with the keyboard and check the bit stream (pulse) condition interactively.  
-You can change display position (bit position), bit cell width, and bit window ratio.  
-The viewer also shows the decoded MFM byte value. The contents will be displayed in yellow when the special missing-clock-pattern is detected.  
+You can check the fluctuation of pulse pitch in a track. FDD/FDC is expecting stable pulse pitches to decode MFM data. However, some floppy disk mediums may have pulse pitch fluctuation, making the disk image data reconstruction from the captured data difficult.    
+This feature visualizes the pulse pitch fluctuation through a track so that you can visually check the stability of the pulses in the medium.   
 ![pulse_viewer](../resources/pulse_viewer.png)
 
+
+### Pulse pitch fluctuation viewer ('vpf' command)  
+
+You can check the fluctuation of pulse pitch in a track. FDD/FDC is expecting stable pulse pitch to decode MFM data but some floppy disk medium may have pulse pitch fluctuation and it makes image reconstruction from the captured data difficult.    
+
+* Bad case - pulse pitch is fluctuating  
+![fluctuation](../resources/pulse%20fluctuation.png)
+* Good case - stable and regular pulse pitch   
+![fluctuation_good](../resources/pulse_fluctuation_good.png)

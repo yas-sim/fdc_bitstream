@@ -8,7 +8,7 @@ vfo_pid3::vfo_pid3() : vfo_base(), m_hist_ptr()
 { 
     reset();
     m_pulse_pos_history.resize(c_history_len);
-    
+
     m_coeff_sum = 0.f;
     for(double i=1; i<= c_history_len; i+=1.f) {
         m_coeff_sum += i;
@@ -53,8 +53,6 @@ void vfo_pid3::soft_reset(void) {
     m_prev_phase_err = 0.f;
     m_phase_err_I = 0.f;
 
-    m_prev_phase_diff = 0.f;
-    m_phase_diff_I = 0.f;
 #if 1
     m_phase_err_PC =1.f/4.f;
     m_phase_err_IC =1.f/128.f;

@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <map>
 #include <filesystem>
 #include <algorithm>
 #include <cmath>
@@ -557,6 +558,64 @@ void cmd_normalize_track(size_t track_n) {
     std::cout << std::endl;
 }
 
+void cmd_visualize_pulse_fluctuation(size_t track_n) {
+    if(is_image_ready()==false) {
+        std::cout << "Disk image is not ready." << std::endl;
+        return;
+    }
+    bit_array track;
+    track = disk_img->get_track_data(track_n);
+
+    size_t line_width = track.get_length() / 200;       // show the data in 400 lines
+
+    track.set_stream_pos(0);
+    double bit_cell_ref = static_cast<double>(g_sampling_rate / g_data_bit_rate);
+    size_t total_pulse_pos = 0;
+    std::vector<std::pair<size_t, double>> result;
+    size_t prev_line = 0;
+    size_t curr_line = 0;
+    size_t count = 0;
+    double sum = 0.f;
+    do {
+        size_t dist = track.distance_to_next_pulse();
+
+        double quantized = round(static_cast<double>(dist) / bit_cell_ref);
+        double instant_cell_size = bit_cell_ref;
+        if(quantized > 0.f) {
+            instant_cell_size = static_cast<double>(dist) / quantized;
+        }
+        sum += instant_cell_size;
+        count++;
+
+        total_pulse_pos += dist;
+        curr_line = floor(total_pulse_pos / line_width);
+        if(curr_line != prev_line) {
+            sum /= count;
+            result.push_back(std::pair<size_t, double>(curr_line * line_width, sum));
+            sum = 0.f;
+            count = 0;
+            prev_line = curr_line;
+        }
+    } while(!track.is_wraparound());
+
+    constexpr size_t max = 14;
+    double scale = 100.f / max;  // display pulse pitch in 100 characters width
+    std::cout << "=BITPOS= : ";
+    for(size_t i=0; i < max; i++) {
+        std::cout << std::setw(2) << i << std::string(scale-2, ' ');
+    }
+    std::cout << std::endl;
+    for(auto it = result.begin(); it != result.end(); it++) {
+        std::cout << std::setw(8) << it->first << " : ";
+        std::string line;
+        for (size_t i = 0; i < max; i++) {
+            line += "|" + std::string(scale-1, ' ');
+        }
+        line[it->second * scale] = '*';
+        std::cout << line << std::endl;
+    }
+}
+
 void disp_one_byte(size_t bit_pos, bit_array &track) {
 #ifdef _WIN32
     std::ios::fmtflags flags_saved = std::cout.flags();
@@ -692,6 +751,8 @@ void cmd_help(void) {
     "vfo               Display current VFO parameters\n"
     "vv trk [vfo_type] VFO visualizer. Read 5,000 pulses from the top of a track using specified type of VFO.\n"
     "                  Current VFO setting will be used if 'vfo_type' is omitted.\n"
+    "vpf trk           Visualize pulse fluctuation. Visualize pulse pitch fluctuation \n"
+    "                  throughout a track.\n"
     "sv vfo_type       Select VFO type.\n"
     "rv                (soft) reset VFO\n"
     "vp trk bit_pos    Interactive pulse viewer. You can check raw pulses in the bit stream (track) data.\n"
@@ -903,6 +964,9 @@ int main(int argc, char* argv[]) {
         }
         else if(args[0] == "vp" && args.size()>=3) {
             cmd_pulse_viewer(std::stoi(args[1]), std::stoi(args[2]));
+        }
+        else if(args[0] == "vpf" && args.size()>=2) {
+            cmd_visualize_pulse_fluctuation(std::stoi(args[1]));
         }
         else if(args[0] == "vfo_tune" && args.size()>=2) {
             cmd_vfo_pid_tune(std::stoi(args[1]));
