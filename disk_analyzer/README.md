@@ -297,14 +297,16 @@ CMD(7) > q
 
 ### Interactive Pulse Viewer ('vp' command)  
 
-You can check the fluctuation of pulse pitch in a track. FDD/FDC is expecting stable pulse pitches to decode MFM data. However, some floppy disk mediums may have pulse pitch fluctuation, making the disk image data reconstruction from the captured data difficult.    
-This feature visualizes the pulse pitch fluctuation through a track so that you can visually check the stability of the pulses in the medium.   
+You can view and check the bit stream data at an arbitrary point.  The viewer has a simple MFM decoding feature so that you can check the decoded value in real-time.  
+You can move the display point by sampling unit, bit cell unit, or byte unit by key operation.  
+This viewer also has a simple pulse edit feature. You can add or remove the pulses at any point.  
 ![pulse_viewer](../resources/pulse_viewer.png)
 
 
 ### Pulse pitch fluctuation viewer ('vpf' command)  
 
-You can check the fluctuation of pulse pitch in a track. FDD/FDC is expecting stable pulse pitch to decode MFM data but some floppy disk medium may have pulse pitch fluctuation and it makes image reconstruction from the captured data difficult.    
+You can check the fluctuation of pulse pitch in a track. FDD/FDC is expecting stable pulse pitches to decode MFM data. However, some floppy disk mediums may have pulse pitch fluctuation, making the disk image data reconstruction from the captured data difficult.    
+This feature visualizes the pulse pitch fluctuation through a track so that you can visually check the stability of the pulses in the medium.   
 
 * Bad case - pulse pitch is fluctuating  
 ![fluctuation](../resources/pulse%20fluctuation.png)
