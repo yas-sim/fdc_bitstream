@@ -7,7 +7,7 @@
 |`scr`|`file_name`|Run a script file.|
 |`rt`|`trk`|Read track<br>The data in green color indicates that the data has '**missing-clock**' bit pattern.|
 |`vt`|`trk` [`trk_e`]|Validate track(s).<br>Performs read ID and read sector for a track.<br>If you specify 'trk_e', the command will perform track validation from 'trk' to 'trk_e'.|
-|`tt`|`trk` [`s_byte`] [`e_byte`]|Trim track.<br>Cut out the track data starting from 's_byte' to 'e_byte'.<br>The 's_byte' and 'e_byte' can be specified in byte position in the track dump.<br>If '*' is specified as 'trk', all tracks will be trimmed.|
+|`tt`|`trk` [`s_byte`] [`e_byte`]|Trim track.<br>Cut out the track data starting from 's_byte' to 'e_byte'.<br>The 's_byte' and 'e_byte' can be specified in byte position in the track dump.<br>If '`*`' is specified for 'trk', all tracks will be trimmed.<br>If '`*`' is specified for 's_byte' and 'e_byte' is omitted, the target track will be trimmed down to whole 1 disk rotation length based on the spindle time data (auto trimming). (e.g. `tt * *`)|
 |`ri`|`trk` [`trk_e`]|Read all sector IDs.<br>Perform ID read from 'trk' to 'trk_e' if you specify 'trk_e'. Otherwise, an ID read operation will be performed for a track.|
 |`rs`|`trk` `sct`|Read sector 1.<br>Read a sector from track=trk with CHR==(trk/2, trk%2, sct).|
 |`rs`|`trk` `#sct`|Read sector 2.<br>Read a sector from track=trk with sector index #. The sector index # starts from 1 and #1 means the first sector after the index hole.<br>e.g. rs 0 #5 => The 5th sector in track 0.|

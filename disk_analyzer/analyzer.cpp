@@ -166,30 +166,43 @@ void cmd_read_id(size_t track_n, size_t track_end_n = -1) {
 }
 
 void trim_track(bit_array &in_array, bit_array &out_array, size_t start_byte, size_t end_byte) {
+    double spindle_time = static_cast<double>(g_spindle_time_ns) / 1e9;
+    size_t track_length_for_one_rotation = g_sampling_rate * spindle_time;
+
     constexpr size_t err = 99999999;
     size_t start_pos=err, end_pos=err, prev_pos;
     size_t read_count = 0;
-    fdc->set_track_data(in_array);
-    if(in_array.size() == 0) {
-        out_array = bit_array();    // Input track is empty. Returns an empty track.
-        return;
+
+    if (start_byte != end_byte) {
+        // search start and end bit position from start/end byte position
+        fdc->set_track_data(in_array);
+        if(in_array.size() == 0) {
+            out_array = bit_array();    // Input track is empty. Returns an empty track.
+            return;
+        }
+        fdc->set_pos(0);
+        uint8_t dt;
+        bool mc;
+        std::cout << start_byte << " " << end_byte << std::endl;
+        do {
+            prev_pos = fdc->get_pos();
+            fdc->read_data(dt, mc, false, false);
+            if(read_count == start_byte) start_pos = prev_pos;
+            if(read_count == end_byte)   end_pos   = fdc->get_pos();
+            read_count++;
+        } while(!fdc->is_wraparound());
+        if(start_pos == err || end_pos == err) {
+            std::cout << "Could not find start or end position." << std::endl;
+            out_array = in_array;
+            return;
+        }
+    } else {
+        // start=0, end=1_rotation (based on spindle time)
+        start_pos = 0;
+        end_pos = track_length_for_one_rotation;
     }
-    fdc->set_pos(0);
-    uint8_t dt;
-    bool mc;
-    std::cout << start_byte << " " << end_byte << std::endl;
-    do {
-        prev_pos = fdc->get_pos();
-        fdc->read_data(dt, mc, false, false);
-        if(read_count == start_byte) start_pos = prev_pos;
-        if(read_count == end_byte)   end_pos   = fdc->get_pos();
-        read_count++;
-    } while(!fdc->is_wraparound());
-    if(start_pos == err || end_pos == err) {
-        std::cout << "Could not find start or end position." << std::endl;
-        out_array = in_array;
-        return;
-    }
+
+    std::cout << "Start bit pos = " << start_pos << ", End bit pos = " << end_pos << std::endl;
     out_array.clear_array();
     in_array.set_stream_pos(start_pos);
     for(size_t pos = start_pos; pos<end_pos; pos++) {
@@ -738,7 +751,9 @@ void cmd_help(void) {
     "                  from 'trk' to 'trk_e'.\n"
     "tt trk [s_byte] [e_byte]  Trim track. Cut out the track data starting from 's_byte' to 'e_byte'. \n"
     "                  The 's_byte' and 'e_byte' can be specified in byte position in the track dump.\n"
-    "                  If '*' is specified as 'trk', all tracks will be trimmed.\n"
+    "                  If '*' is specified for 'trk', all tracks will be trimmed.\n"
+    "                  If '*' is specified for 's_byte' and 'e_byte' is omitted, the target track\n"
+    "                  will be trimmed down to whole 1 disk rotation based on the spindle time data. (e.g. tt * *)\n"
     "nt trk            Normalize track. Normalize the pulse-to-pulse distance.\n"
     "                  If '*' is specified as 'trk', all tracks will be processed.\n"
     "ri trk [trk_e]    Read all sector IDs. Perform ID read from 'trk' to 'trk_e' if you specify trk_e.\n"
@@ -948,10 +963,14 @@ int main(int argc, char* argv[]) {
         else if(args[0] == "histogram" && args.size()>=2) {
             cmd_histogram(fdc_misc::str2val(args[1]));            
         }
-        else if(args[0] == "tt" && args.size()>=4) {
+        else if(args[0] == "tt" && args.size()>=3) {
             if(args[1] == "*") {
-                cmd_trim_track(65535, fdc_misc::str2val(args[2]), fdc_misc::str2val(args[3]));  // trim all tracks
-            } else {
+                if(args[2] == "*") {
+                    cmd_trim_track(65535, 0, 0);  // trim all tracks. Trim track based on spidle time (automatic trimming)
+                } else if(args.size()>=4) {
+                    cmd_trim_track(65535, fdc_misc::str2val(args[2]), fdc_misc::str2val(args[3]));  // trim all tracks
+                }
+            } else if (args.size()>=4) {
                 cmd_trim_track(fdc_misc::str2val(args[1]), fdc_misc::str2val(args[2]), fdc_misc::str2val(args[3]));
             }
         }
