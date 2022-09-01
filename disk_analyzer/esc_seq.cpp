@@ -1,8 +1,6 @@
 #include "esc_seq.h"
 
-namespace escseq {
-
-bool enable(void) {
+bool escseq::enable(void) {
 #ifdef _WIN32      // enable escape sequence (Windows)
     HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);;
     DWORD mode = 0;
@@ -16,20 +14,18 @@ bool enable(void) {
     return true;
 }
 
-void cls(void) {
+void escseq::cls(void) {
     std::cout << "\x1b[2J";
 }
 
-void csrpos(size_t x, size_t y) {
+void escseq::csrpos(size_t x, size_t y) {
     std::cout << "\x1b[" << y << ";" << x << "H";
 }
 
-void color(size_t col) {
+void escseq::color(size_t col) {
     col = col & 0x07;
     col = ((col & 0x02) ? 1:0) |
           ((col & 0x04) ? 2:0) |
           ((col & 0x01) ? 4:0);
     std::cout << "\x1b[" << 90 + col << "m";
 }
-
-} // escseq
