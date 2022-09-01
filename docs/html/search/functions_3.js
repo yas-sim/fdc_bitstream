@@ -4,7 +4,7 @@ var searchData=
   ['check_5fextension_1',['check_extension',['../image__converter_8cpp.html#ae7ebf12a2d3a5b98e12304a5f7fdaf89',1,'check_extension(std::string extension):&#160;image_converter.cpp'],['../analyzer_8cpp.html#ae7ebf12a2d3a5b98e12304a5f7fdaf89',1,'check_extension(std::string extension):&#160;analyzer.cpp']]],
   ['clear_5farray_2',['clear_array',['../classbit__array.html#a4e2e12feb739995bca487fa805baeedc',1,'bit_array']]],
   ['clear_5ftrack_5fdata_3',['clear_track_data',['../classdisk__image.html#a0e9aad2006b60cadee00ba839693912d',1,'disk_image']]],
-  ['clear_5fwraparound_4',['clear_wraparound',['../classmfm__codec.html#ada5e869f03f20757a9d75c91c3eaa382',1,'mfm_codec::clear_wraparound()'],['../classfdc__bitstream.html#a5d5b4821c9b9cac9d7ee88e77fb5d098',1,'fdc_bitstream::clear_wraparound()']]],
+  ['clear_5fwraparound_4',['clear_wraparound',['../classfdc__bitstream.html#a5d5b4821c9b9cac9d7ee88e77fb5d098',1,'fdc_bitstream::clear_wraparound()'],['../classmfm__codec.html#ada5e869f03f20757a9d75c91c3eaa382',1,'mfm_codec::clear_wraparound()']]],
   ['clear_5fwraparound_5fflag_5',['clear_wraparound_flag',['../classbit__array.html#a095ab4d72a708ca8016cdcb8d29fbdb2',1,'bit_array']]],
   ['cmd_5fdisable_5ffluctuator_6',['cmd_disable_fluctuator',['../analyzer_8cpp.html#a431f804e576ffdd681a6bed55e1028f5',1,'analyzer.cpp']]],
   ['cmd_5fdisp_5fvfo_5fstatus_7',['cmd_disp_vfo_status',['../analyzer_8cpp.html#ac4f625890a5d94f59cff70c41b1e848f',1,'analyzer.cpp']]],
@@ -23,10 +23,11 @@ var searchData=
   ['cmd_5ftrim_5ftrack_20',['cmd_trim_track',['../analyzer_8cpp.html#a731d13bfd321c57fa37d72c5d20f5732',1,'analyzer.cpp']]],
   ['cmd_5fvalidate_5ftrack_21',['cmd_validate_track',['../analyzer_8cpp.html#a9291d3f436338b013e2adf1e51637558',1,'analyzer.cpp']]],
   ['cmd_5fvfo_5fpid_5ftune_22',['cmd_vfo_pid_tune',['../analyzer_8cpp.html#a65b7997b8e6c5fffe3af4812b33bdfc9',1,'analyzer.cpp']]],
-  ['cmd_5fvisualize_5fvfo_23',['cmd_visualize_vfo',['../analyzer_8cpp.html#aa62a976233956c07c79d3d5cf6c62789',1,'analyzer.cpp']]],
-  ['cmd_5fwrite_5fimage_24',['cmd_write_image',['../analyzer_8cpp.html#aa3229715d7f9f05444403973e39352e2',1,'analyzer.cpp']]],
-  ['color_25',['color',['../namespacefdc__misc.html#a3f403b4f1144b3106dc763a1191794cb',1,'fdc_misc']]],
-  ['convert_5fto_5fdist_5farray_26',['convert_to_dist_array',['../namespacefdc__misc.html#a5b0963a78621d86811f116749eb96c65',1,'fdc_misc']]],
-  ['create_5fempty_5ftrack_5fdata_27',['create_empty_track_data',['../classdisk__image.html#ac1fbd2842ec16fe6925ff4e26d7afe1e',1,'disk_image']]],
-  ['create_5fobject_5fby_5fext_28',['create_object_by_ext',['../analyzer_8cpp.html#a951938f545ae411a3bbef610ffc7324d',1,'create_object_by_ext(std::string ext):&#160;analyzer.cpp'],['../image__converter_8cpp.html#a951938f545ae411a3bbef610ffc7324d',1,'create_object_by_ext(std::string ext):&#160;image_converter.cpp']]]
+  ['cmd_5fvisualize_5fpulse_5ffluctuation_23',['cmd_visualize_pulse_fluctuation',['../analyzer_8cpp.html#a8c4087ce83e49a9bb49deac7d595db7c',1,'analyzer.cpp']]],
+  ['cmd_5fvisualize_5fvfo_24',['cmd_visualize_vfo',['../analyzer_8cpp.html#aa62a976233956c07c79d3d5cf6c62789',1,'analyzer.cpp']]],
+  ['cmd_5fwrite_5fimage_25',['cmd_write_image',['../analyzer_8cpp.html#aa3229715d7f9f05444403973e39352e2',1,'analyzer.cpp']]],
+  ['color_26',['color',['../namespacefdc__misc.html#a3f403b4f1144b3106dc763a1191794cb',1,'fdc_misc']]],
+  ['convert_5fto_5fdist_5farray_27',['convert_to_dist_array',['../namespacefdc__misc.html#a5b0963a78621d86811f116749eb96c65',1,'fdc_misc']]],
+  ['create_5fempty_5ftrack_5fdata_28',['create_empty_track_data',['../classdisk__image.html#ac1fbd2842ec16fe6925ff4e26d7afe1e',1,'disk_image']]],
+  ['create_5fobject_5fby_5fext_29',['create_object_by_ext',['../analyzer_8cpp.html#a951938f545ae411a3bbef610ffc7324d',1,'create_object_by_ext(std::string ext):&#160;analyzer.cpp'],['../image__converter_8cpp.html#a951938f545ae411a3bbef610ffc7324d',1,'create_object_by_ext(std::string ext):&#160;image_converter.cpp']]]
 ];
