@@ -29,40 +29,41 @@ var NAVTREE =
     [ "Disk image analyzer tool", "md_disk_analyzer__r_e_a_d_m_e.html", [
       [ "Command option", "md_disk_analyzer__r_e_a_d_m_e.html#autotoc_md2", null ],
       [ "Example", "md_disk_analyzer__r_e_a_d_m_e.html#autotoc_md3", [
-        [ "Interactive Pulse Viewer ('vp' command)", "md_disk_analyzer__r_e_a_d_m_e.html#autotoc_md4", null ]
+        [ "Interactive Pulse Viewer ('vp' command)", "md_disk_analyzer__r_e_a_d_m_e.html#autotoc_md4", null ],
+        [ "Pulse pitch fluctuation viewer ('vpf' command)", "md_disk_analyzer__r_e_a_d_m_e.html#autotoc_md5", null ]
       ] ]
     ] ],
     [ "C++ class library for the disk image file handling", "md_disk_image__r_e_a_d_m_e.html", null ],
     [ "The C++ FDC bitstream library", "md_fdc_bitstream__r_e_a_d_m_e.html", [
-      [ "Description:", "md_fdc_bitstream__r_e_a_d_m_e.html#autotoc_md7", [
-        [ "Supported functions:", "md_fdc_bitstream__r_e_a_d_m_e.html#autotoc_md8", null ],
-        [ "Supported floppy disk image formats:", "md_fdc_bitstream__r_e_a_d_m_e.html#autotoc_md9", null ]
+      [ "Description:", "md_fdc_bitstream__r_e_a_d_m_e.html#autotoc_md8", [
+        [ "Supported functions:", "md_fdc_bitstream__r_e_a_d_m_e.html#autotoc_md9", null ],
+        [ "Supported floppy disk image formats:", "md_fdc_bitstream__r_e_a_d_m_e.html#autotoc_md10", null ]
       ] ],
-      [ "API Document", "md_fdc_bitstream__r_e_a_d_m_e.html#autotoc_md10", null ],
-      [ "How to integrate the fdc_bitstream library with your program", "md_fdc_bitstream__r_e_a_d_m_e.html#autotoc_md11", null ]
+      [ "API Document", "md_fdc_bitstream__r_e_a_d_m_e.html#autotoc_md11", null ],
+      [ "How to integrate the fdc_bitstream library with your program", "md_fdc_bitstream__r_e_a_d_m_e.html#autotoc_md12", null ]
     ] ],
     [ "fdc_bitstream test program", "md_fdc_test__r_e_a_d_m_e.html", null ],
     [ "Multi format supported disk image converter.", "md_image_converter__r_e_a_d_m_e.html", null ],
     [ "Simple Kryoflux RAW image file(s) to MFM image converter", "md_kfx2mfm__r_e_a_d_m_e.html", [
-      [ "How to use:", "md_kfx2mfm__r_e_a_d_m_e.html#autotoc_md15", null ]
+      [ "How to use:", "md_kfx2mfm__r_e_a_d_m_e.html#autotoc_md16", null ]
     ] ],
     [ "LICENSE", "md__l_i_c_e_n_s_e.html", null ],
     [ "C++ FDC library to manipulate 2D/MFM bitstream image data", "md__r_e_a_d_m_e.html", [
-      [ "Description:", "md__r_e_a_d_m_e.html#autotoc_md17", [
-        [ "Supported functions:", "md__r_e_a_d_m_e.html#autotoc_md18", null ],
-        [ "Supported floppy disk image formats:", "md__r_e_a_d_m_e.html#autotoc_md19", null ]
+      [ "Description:", "md__r_e_a_d_m_e.html#autotoc_md18", [
+        [ "Supported functions:", "md__r_e_a_d_m_e.html#autotoc_md19", null ],
+        [ "Supported floppy disk image formats:", "md__r_e_a_d_m_e.html#autotoc_md20", null ]
       ] ],
-      [ "API Document", "md__r_e_a_d_m_e.html#autotoc_md20", null ],
-      [ "How to integrate the fdc_bitstream library with your program", "md__r_e_a_d_m_e.html#autotoc_md21", null ],
-      [ "Multi format converter", "md__r_e_a_d_m_e.html#autotoc_md23", null ],
-      [ "Kryoflux RAW to MFM format converter", "md__r_e_a_d_m_e.html#autotoc_md24", null ],
-      [ "Disk image analyzer", "md__r_e_a_d_m_e.html#autotoc_md25", null ],
-      [ "Directory structure - Libraries", "md__r_e_a_d_m_e.html#autotoc_md27", null ],
-      [ "Directory structure - Sample/Test/Tool programs, etc", "md__r_e_a_d_m_e.html#autotoc_md28", null ],
-      [ "How to build the test program and tools", "md__r_e_a_d_m_e.html#autotoc_md29", null ],
-      [ "<em>Intentional</em> fluctuation mechanism - for timing sensitive copy-protection data reproduction", "md__r_e_a_d_m_e.html#autotoc_md31", null ],
-      [ "Command line examples for sample programs and tools.", "md__r_e_a_d_m_e.html#autotoc_md33", null ],
-      [ "MFM image data format:", "md__r_e_a_d_m_e.html#autotoc_md35", null ]
+      [ "API Document", "md__r_e_a_d_m_e.html#autotoc_md21", null ],
+      [ "How to integrate the fdc_bitstream library with your program", "md__r_e_a_d_m_e.html#autotoc_md22", null ],
+      [ "Multi format converter", "md__r_e_a_d_m_e.html#autotoc_md24", null ],
+      [ "Kryoflux RAW to MFM format converter", "md__r_e_a_d_m_e.html#autotoc_md25", null ],
+      [ "Disk image analyzer", "md__r_e_a_d_m_e.html#autotoc_md26", null ],
+      [ "Directory structure - Libraries", "md__r_e_a_d_m_e.html#autotoc_md28", null ],
+      [ "Directory structure - Sample/Test/Tool programs, etc", "md__r_e_a_d_m_e.html#autotoc_md29", null ],
+      [ "How to build the test program and tools", "md__r_e_a_d_m_e.html#autotoc_md30", null ],
+      [ "<em>Intentional</em> fluctuation mechanism - for timing sensitive copy-protection data reproduction", "md__r_e_a_d_m_e.html#autotoc_md32", null ],
+      [ "Command line examples for sample programs and tools.", "md__r_e_a_d_m_e.html#autotoc_md34", null ],
+      [ "MFM image data format:", "md__r_e_a_d_m_e.html#autotoc_md36", null ]
     ] ],
     [ "Deprecated List", "deprecated.html", null ],
     [ "Namespaces", "namespaces.html", [
@@ -103,9 +104,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "analyzer_8cpp.html",
-"classmfm__codec.html#a5303b45e09cb1f5accbd004dde49bfc5",
-"fdc__vfo__def_8h.html#aa755e7cacbd6f838ca7dc13ca52c5d55",
-"structmfm__header__.html#aa4730a859aeb428f92f90490b476df42"
+"classmfm__codec.html#a4b50ec3fa5e03ec92c46cd74f4ee344ea98c28ac1297ef4bf9db28448236d8a9b",
+"fdc__vfo__def_8h.html#a975cb9998a5e9e768428c523cf4b7393",
+"structmfm__header__.html#a6d19b9bb46000bd8cd0213e5aa21a818"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -94,6 +94,7 @@ $(document).ready(function(){initNavTree('analyzer_8cpp.html',''); initResizable
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;sstream&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
+<code>#include &lt;map&gt;</code><br />
 <code>#include &lt;filesystem&gt;</code><br />
 <code>#include &lt;algorithm&gt;</code><br />
 <code>#include &lt;cmath&gt;</code><br />
@@ -153,6 +154,8 @@ Functions</h2></td></tr>
 <tr class="separator:aed3fa9b98867c728b38b464f0f0fd6a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a336edacfb2bffd45b329a6030f379bb1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="analyzer_8cpp.html#a336edacfb2bffd45b329a6030f379bb1">cmd_normalize_track</a> (size_t track_n)</td></tr>
 <tr class="separator:a336edacfb2bffd45b329a6030f379bb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c4087ce83e49a9bb49deac7d595db7c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="analyzer_8cpp.html#a8c4087ce83e49a9bb49deac7d595db7c">cmd_visualize_pulse_fluctuation</a> (size_t track_n)</td></tr>
+<tr class="separator:a8c4087ce83e49a9bb49deac7d595db7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7d0532a1a23b68520a14166f944044b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="analyzer_8cpp.html#a7d0532a1a23b68520a14166f944044b2">disp_one_byte</a> (size_t bit_pos, <a class="el" href="classbit__array.html">bit_array</a> &amp;track)</td></tr>
 <tr class="separator:a7d0532a1a23b68520a14166f944044b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa3efbe6e2a9248273fc4110f8adc95b5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="analyzer_8cpp.html#aa3efbe6e2a9248273fc4110f8adc95b5">cmd_pulse_viewer</a> (size_t track_n, size_t bit_pos=0)</td></tr>
@@ -202,7 +205,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00058">58</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00059">59</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -222,7 +225,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00347">347</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00348">348</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -242,7 +245,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00351">351</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00352">352</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -262,7 +265,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00342">342</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00343">343</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -282,7 +285,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00670">670</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00729">729</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -302,7 +305,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00459">459</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00460">460</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -322,7 +325,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00490">490</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00491">491</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -342,7 +345,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00078">78</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00079">79</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -372,7 +375,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00660">660</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00719">719</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -402,7 +405,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00150">150</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00151">151</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -438,7 +441,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00265">265</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00266">266</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -458,7 +461,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00134">134</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00135">135</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -478,7 +481,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00454">454</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00455">455</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -498,7 +501,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00445">445</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00446">446</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -528,7 +531,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00257">257</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00258">258</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -564,7 +567,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00199">199</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00200">200</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -594,7 +597,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00223">223</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00224">224</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -614,7 +617,27 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00706">706</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00767">767</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a8c4087ce83e49a9bb49deac7d595db7c" name="a8c4087ce83e49a9bb49deac7d595db7c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c4087ce83e49a9bb49deac7d595db7c">&#9670;&nbsp;</a></span>cmd_visualize_pulse_fluctuation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cmd_visualize_pulse_fluctuation </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>track_n</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00561">561</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -644,7 +667,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00355">355</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00356">356</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -664,7 +687,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00110">110</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00111">111</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -684,7 +707,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00067">67</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00068">68</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -714,7 +737,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00560">560</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00619">619</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -734,7 +757,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00037">37</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00038">38</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -754,7 +777,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00046">46</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00047">47</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -774,7 +797,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00052">52</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00053">53</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -794,7 +817,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00041">41</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00042">42</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -824,7 +847,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00773">773</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00834">834</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -866,7 +889,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00167">167</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00168">168</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -883,7 +906,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00025">25</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00026">26</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -899,7 +922,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00026">26</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00027">27</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -915,7 +938,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00033">33</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00034">34</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -931,7 +954,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00029">29</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00030">30</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -947,7 +970,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00028">28</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00029">29</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -963,7 +986,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00035">35</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00036">36</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -979,7 +1002,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00032">32</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00033">33</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -995,7 +1018,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00034">34</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00035">35</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>
@@ -1011,7 +1034,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00030">30</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="analyzer_8cpp_source.html#l00031">31</a> of file <a class="el" href="analyzer_8cpp_source.html">analyzer.cpp</a>.</p>
 
 </div>
 </div>

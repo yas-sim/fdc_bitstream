@@ -18,6 +18,7 @@ var analyzer_8cpp =
     [ "cmd_trim_track", "analyzer_8cpp.html#a731d13bfd321c57fa37d72c5d20f5732", null ],
     [ "cmd_validate_track", "analyzer_8cpp.html#a9291d3f436338b013e2adf1e51637558", null ],
     [ "cmd_vfo_pid_tune", "analyzer_8cpp.html#a65b7997b8e6c5fffe3af4812b33bdfc9", null ],
+    [ "cmd_visualize_pulse_fluctuation", "analyzer_8cpp.html#a8c4087ce83e49a9bb49deac7d595db7c", null ],
     [ "cmd_visualize_vfo", "analyzer_8cpp.html#aa62a976233956c07c79d3d5cf6c62789", null ],
     [ "cmd_write_image", "analyzer_8cpp.html#aa3229715d7f9f05444403973e39352e2", null ],
     [ "create_object_by_ext", "analyzer_8cpp.html#a951938f545ae411a3bbef610ffc7324d", null ],
