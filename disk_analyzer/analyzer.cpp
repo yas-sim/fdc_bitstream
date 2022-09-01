@@ -616,7 +616,14 @@ void cmd_visualize_pulse_fluctuation(size_t track_n) {
     }
 }
 
-void disp_one_byte(size_t bit_pos, bit_array &track) {
+
+void cmd_pulse_viewer(size_t track_n, size_t bit_pos = 0) {
+    if(is_image_ready()==false) {
+        std::cout << "Disk image is not ready." << std::endl;
+        return;
+    }
+    bit_array track;
+    track = disk_img->get_track_data(track_n);
     std::ios::fmtflags flags_saved = std::cout.flags();
 
     const uint16_t missing_clock_a1 = 0x4489;       //  0100_0100_10*0_1001
@@ -626,6 +633,7 @@ void disp_one_byte(size_t bit_pos, bit_array &track) {
 
     double window_ratio = 0.9f;
     size_t key;
+    size_t edit_pointer = 0;                        // pulse edit point (ofst)
 
     do {
         hw_abst::color(7);
@@ -680,12 +688,17 @@ void disp_one_byte(size_t bit_pos, bit_array &track) {
         std::cout << std::hex << std::setw(2) << std::setfill('0') << mfm_data << " : ";
         std::cout << pulses << std::endl;
 
+        std::cout << std::string(18 + edit_pointer, ' ') << "^" << std::endl;   // edit point cursor
+
         fdc_misc::color(4);
         std::cout << std::endl <<
         "== Key operation ==\n"
         "j/k : -/+ bit   n/m : -/+ bit cell  i/o : -/+ byte\n"
         "a/s : -/+ bit cell width\n"
         "z/x : -/+ data window ratio\n" 
+        "v/b : -/+ edit point cursor"
+        "' ' : invert pulse status at the edit cursor point\n"
+        "'W': write back track data to image data.\n"
         "q : quit\n"
         << std::endl;
         fdc_misc::color(7);
@@ -708,21 +721,18 @@ void disp_one_byte(size_t bit_pos, bit_array &track) {
         // data window ratio
         case 'z': if(window_ratio > 0.3f) window_ratio -= 0.1f;                                     break;
         case 'x': if(window_ratio < 1.0f) window_ratio += 0.1f;                                     break;
+        // move edit pointer
+        case 'v': if(edit_pointer > 0) edit_pointer--;                                              break;
+        case 'b': if(edit_pointer < 16 * bit_cell) edit_pointer++;                                  break;
+        // pulse edit (invert pulse status)
+        case ' ': track.set(bit_pos + edit_pointer, track.get(bit_pos + edit_pointer) ? 0 : 1);     break;
+        // write back current track buffer to image data (Capital 'W')
+        case 'W': disk_img->set_track_data(track_n, track);                                         break;
         }
     } while(key != 'q');
 
     fdc_misc::color(7);
     std::cout.flags(flags_saved);
-}
-
-void cmd_pulse_viewer(size_t track_n, size_t bit_pos = 0) {
-    if(is_image_ready()==false) {
-        std::cout << "Disk image is not ready." << std::endl;
-        return;
-    }
-    bit_array track;
-    track = disk_img->get_track_data(track_n);
-    disp_one_byte(bit_pos, track);
 }
 
 void cmd_help(void) {
