@@ -2,8 +2,8 @@
 
 #include <iostream>
 #include <stdio.h>
-#include <io.h>
 #ifdef _WIN32
+#include <io.h>
 #include <windows.h>
 #endif
 
