@@ -1,7 +1,7 @@
 var classbit__array =
 [
     [ "bit_array", "classbit__array.html#a2bfe5f37464003cab697f4ea32e8e9fb", null ],
-    [ "advance_stream_pos", "classbit__array.html#a4d9be589626877b42ac820f55796783b", null ],
+    [ "advance_stream_pos", "classbit__array.html#ab5b3734f926a3fe3fa9b3d79969c88b5", null ],
     [ "clear_array", "classbit__array.html#a4e2e12feb739995bca487fa805baeedc", null ],
     [ "clear_wraparound_flag", "classbit__array.html#a095ab4d72a708ca8016cdcb8d29fbdb2", null ],
     [ "distance_to_next_pulse", "classbit__array.html#ac31fb571ac2a69c8426a10d83587cae9", null ],

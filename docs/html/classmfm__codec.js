@@ -19,7 +19,7 @@ var classmfm__codec =
     [ "is_wraparound", "classmfm__codec.html#a71464a6e92ad3f0d94bad9b31bec4282", null ],
     [ "mfm_encoder", "classmfm__codec.html#aa58bc9489d1fee68770f021dd4d4d4e6", null ],
     [ "mfm_read_byte", "classmfm__codec.html#afb3614a444293ecf43de800cb2198a46", null ],
-    [ "mfm_write_byte", "classmfm__codec.html#a6ac57dc1c37a2395d264659f805caf39", null ],
+    [ "mfm_write_byte", "classmfm__codec.html#af452148c60786f81643802c70942dd93", null ],
     [ "read_bit_ds", "classmfm__codec.html#a04e612265044876b9af9216696fdcb99", null ],
     [ "reset", "classmfm__codec.html#aa4483dff3a6830326ee2214aeeea9286", null ],
     [ "reset_sync_mode", "classmfm__codec.html#a8e4002d3d156c205177e4c880ab7cfbd", null ],
