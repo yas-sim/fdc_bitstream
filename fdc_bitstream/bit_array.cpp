@@ -184,15 +184,21 @@ void bit_array::write_stream(uint8_t value, bool elastic) {
  * @brief Advance the stream read/write pointer for 1 bit (without actual read/write operation)
  * 
  */
-void bit_array::advance_stream_pos(void) {
+void bit_array::advance_stream_pos(bool elastic) {
     if(m_array_data.size() == 0) {
         m_wraparound = true;
         return;
     }
     m_stream_pos++;
     if (m_stream_pos >= m_bit_length) {     // wrap around
-        m_stream_pos = 0;
-        m_wraparound = true;
+        if (elastic == false) {
+            m_stream_pos = 0;
+            m_wraparound = true;
+        }
+    } else {
+        size_t byte_pos = to_byte_pos(m_stream_pos);
+        m_array_data.resize(byte_pos + 10, 0);      // Extend the buffer
+        m_bit_length = m_stream_pos + 1;
     }
 }
 

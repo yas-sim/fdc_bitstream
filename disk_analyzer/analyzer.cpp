@@ -134,6 +134,7 @@ void cmd_read_track(size_t track_n) {
     std::vector<std::vector<size_t>> read_data;
     track_stream = disk_img->get_track_data(track_n);
     fdc->set_track_data(track_stream);
+    fdc->set_pos(0);
     read_data = fdc->read_track_ex();
     constexpr size_t cols = 32;
     constexpr size_t rows = 16;
@@ -153,6 +154,7 @@ void cmd_read_id(size_t track_n, size_t track_end_n = -1) {
         std::vector<fdc_bitstream::id_field> read_data;
         track_stream = disk_img->get_track_data(trk_n);
         fdc->set_track_data(track_stream);
+        fdc->set_pos(0);
         read_data = fdc->read_all_idam();
         fdc_misc::display_id_list(read_data, true);
     }
@@ -169,6 +171,7 @@ void trim_track(bit_array &in_array, bit_array &out_array, size_t start_byte, si
     if (start_byte != end_byte) {
         // search start and end bit position from start/end byte position
         fdc->set_track_data(in_array);
+        fdc->set_pos(0);
         if(in_array.size() == 0) {
             out_array = bit_array();    // Input track is empty. Returns an empty track.
             return;
@@ -239,6 +242,7 @@ void cmd_validate_track(size_t track_n, size_t track_end_n = -1) {
         std::vector<fdc_bitstream::id_field> id_data;
         track_stream = disk_img->get_track_data(trk_n);
         fdc->set_track_data(track_stream);
+        fdc->set_pos(0);
         id_data = fdc->read_all_idam();
         size_t cell_size_ref = g_sampling_rate / g_data_bit_rate;
         size_t sect_pos_ofst = (cell_size_ref * 16) * 16;
@@ -278,6 +282,7 @@ void cmd_read_sector(size_t cyl, size_t rcd, bool pulse_vis) {
     fdc_bitstream::sector_data read_data;
     track_stream = disk_img->get_track_data(cyl);
     fdc->set_track_data(track_stream);
+    fdc->set_pos(0);
     if(rcd >= 1000) {   // read by sector index #
         std::vector<fdc_bitstream::id_field> id_list = fdc->read_all_idam();   // get the list of all IDs
         size_t sct_idx = rcd - 1000;
@@ -635,13 +640,17 @@ void cmd_pulse_viewer(size_t track_n, size_t bit_pos = 0) {
     size_t key;
     size_t edit_pointer = 0;                        // pulse edit point (ofst)
 
+    if (bit_pos >= track.get_length()) {
+        bit_pos = track.get_length();
+    }
+
+    hw_abst::cls();
     do {
         hw_abst::color(7);
 
         double window_size = bit_cell * window_ratio;
         double window_ofst = (bit_cell - window_size) / 2.f;
 
-        hw_abst::cls();
         hw_abst::csrpos(0,0);
         std::cout << std::dec << "Window ratio:"<<window_ratio<<"  Bit cell size:"<<bit_cell<<std::endl;
 
@@ -688,7 +697,7 @@ void cmd_pulse_viewer(size_t track_n, size_t bit_pos = 0) {
         std::cout << std::hex << std::setw(2) << std::setfill('0') << mfm_data << " : ";
         std::cout << pulses << std::endl;
 
-        std::cout << std::string(18 + edit_pointer, ' ') << "^" << std::endl;   // edit point cursor
+        std::cout << std::string(18 + edit_pointer, ' ') << "^ " << std::endl;   // edit point cursor
 
         fdc_misc::color(4);
         std::cout << std::endl <<
@@ -706,9 +715,8 @@ void cmd_pulse_viewer(size_t track_n, size_t bit_pos = 0) {
         while(!hw_abst::is_key_hit());
         key = hw_abst::get_key();
         switch(key) {
-        // 1 bit pos
-        case 'j': if(bit_pos >= 1) bit_pos--;                                                       break;
-        case 'k': if(bit_pos < track.get_length() - 1) bit_pos++;                                   break;
+        default:
+        case 'c': hw_abst::cls();                                                                   break;
         // 1 bit in MFM (cell size)
         case 'n': if(bit_pos > bit_cell) bit_pos -= bit_cell;                                       break;
         case 'm': if(bit_pos < track.get_length() - bit_cell - 1) bit_pos += bit_cell;              break;
@@ -722,12 +730,33 @@ void cmd_pulse_viewer(size_t track_n, size_t bit_pos = 0) {
         case 'z': if(window_ratio > 0.3f) window_ratio -= 0.1f;                                     break;
         case 'x': if(window_ratio < 1.0f) window_ratio += 0.1f;                                     break;
         // move edit pointer
-        case 'v': if(edit_pointer > 0) edit_pointer--;                                              break;
-        case 'b': if(edit_pointer < 16 * bit_cell) edit_pointer++;                                  break;
+        case 'v': 
+            if(edit_pointer > 0) {
+                edit_pointer--;
+            } else {
+                key = 'j';      // move display position to left for 1 sampling
+            } 
+            break;
+        case 'b': 
+            if(edit_pointer < 16 * bit_cell) {
+                edit_pointer++;
+            } else {
+                key = 'k';      // move display position to right for 1 sampling
+            }
+            break;
         // pulse edit (invert pulse status)
         case ' ': track.set(bit_pos + edit_pointer, track.get(bit_pos + edit_pointer) ? 0 : 1);     break;
         // write back current track buffer to image data (Capital 'W')
         case 'W': disk_img->set_track_data(track_n, track);                                         break;
+        case 'k':   // nop (handled by next switch() sentanse)
+        case 'j':   // nop (handled by next switch() sentanse)
+            break;
+        }
+
+        switch(key) {
+        // 1 bit pos
+        case 'j': if(bit_pos >= 1) bit_pos--;                                                       break;
+        case 'k': if(bit_pos < track.get_length() - 1) bit_pos++;                                   break;
         }
     } while(key != 'q');
 

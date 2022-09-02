@@ -16,12 +16,13 @@
  * @brief Construct a new mfm codec::mfm codec object
  * 
  */
-mfm_codec::mfm_codec() : m_bit_stream(0),
+mfm_codec::mfm_codec() : m_bit_stream(),
         m_sync_mode(false), m_wraparound(false),
-        m_prev_write_bit(0),
+        m_prev_write_bit(),
         m_sampling_rate(4e6), m_data_bit_rate(500e3),
-        m_vfo_suspension_rate(0.f),
+        m_vfo_suspension_rate(),
         m_track_ready(false),
+        m_current_bit_pos(), m_distance_to_next_pulse(),
         m_vfo(nullptr)
 {
     set_vfo_type(VFO_TYPE_DEFAULT);
@@ -372,19 +373,19 @@ uint16_t mfm_codec::mfm_encoder(uint8_t data, bool mode) {
  * @param mode Encoding mode (true: cares FD179x/MB8877 compatible special codes ($f5, $f6) and generates a data with missing-clock pattern)
  * @param write_gate Write gate (true:perform actual write, false:dummy write (no actual write will be perfored. buffer pointer will be increased))
  */
-void mfm_codec::mfm_write_byte(uint8_t data, bool mode, bool write_gate) {
+void mfm_codec::mfm_write_byte(uint8_t data, bool mode, bool write_gate, bool elastic) {
     uint16_t bit_pattern = mfm_encoder(data, mode);
     for (uint16_t bit_pos = 0x8000; bit_pos != 0; bit_pos >>= 1) {
         int bit = (bit_pattern & bit_pos) ? 1 : 0;
         if (write_gate == true) {
             for (size_t i = 0; i < m_bit_width_w; i++) {
-                if (m_bit_width_w / 2 == i)   m_track.write_stream(bit);    // write data pulse at the center of the bit cell
-                else                        m_track.write_stream(0);
+                if (m_bit_width_w / 2 == i)   m_track.write_stream(bit, elastic);    // write data pulse at the center of the bit cell
+                else                          m_track.write_stream(0, elastic);
             }
         }
         else {
             for (size_t i = 0; i < m_bit_width_w; i++) {
-                m_track.advance_stream_pos();                          // advance stream pointer without actual data write (dummy write)
+                m_track.advance_stream_pos(elastic);                                // advance stream pointer without actual data write (dummy write)
             }
         }
     }
@@ -424,8 +425,8 @@ size_t mfm_codec::get_real_pos(void)
     if (is_track_ready() == false) {
         return -1;
     }
-	size_t int_dist=size_t(m_distance_to_next_pulse);
-	if(m_track.get_stream_pos()<int_dist)
+	size_t int_dist = static_cast<size_t>(m_distance_to_next_pulse);
+	if(m_track.get_stream_pos() < int_dist)
 	{
 		return -1;
 	}

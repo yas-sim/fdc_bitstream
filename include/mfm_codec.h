@@ -28,9 +28,9 @@ private:
     size_t      m_sampling_rate;
     size_t      m_data_bit_rate;
 
-    size_t      m_current_bit_pos   = 0;          // current bit position to process
-    double      m_distance_to_next_pulse = 0.f;
-    double      m_vfo_suspension_rate = 0.f;
+    size_t      m_current_bit_pos;          // current bit position to process
+    double      m_distance_to_next_pulse;
+    double      m_vfo_suspension_rate;
 
     vfo_base    *m_vfo;
 
@@ -70,7 +70,7 @@ public:
     void set_vfo_gain(gain_state state);
     void set_vfo_cell_size(double cell_size);
     uint16_t mfm_encoder(uint8_t data, bool mode = false);
-    void mfm_write_byte(uint8_t data, bool mode = false, bool write_gate = true);
+    void mfm_write_byte(uint8_t data, bool mode = false, bool write_gate = true, bool elastic = false);
     void set_pos(size_t bit_pos);
     size_t get_pos(void);
     size_t get_real_pos(void);

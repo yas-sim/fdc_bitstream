@@ -33,73 +33,74 @@ void disk_image_d77::read(const std::string file_name) {
     for(size_t track_n=0; track_n<input_image.m_disk_data.size(); track_n ++) {
         // Format a track by parsing D77 track data
         track_data.clear_array();
-        track_data.set_array(m_base_prop.m_sampling_rate * (m_base_prop.m_spindle_time_ns / 1e9));
+        //track_data.set_array(m_base_prop.m_sampling_rate * (m_base_prop.m_spindle_time_ns / 1e9));
         codec.set_track_data(track_data);
         codec.set_pos(0);
         // preamble
-        for(size_t i=0; i<80; i++) codec.mfm_write_byte(0x4e, false); // Gap4a
-        for(size_t i=0; i<12; i++) codec.mfm_write_byte(0x00, false); // SYNC
-        for(size_t i=0; i< 3; i++) codec.mfm_write_byte(0xf6, true);  // 0xc2
-                                   codec.mfm_write_byte(0xfc, false); // IAM
-        for(size_t i=0; i<50; i++) codec.mfm_write_byte(0x4e, false); // Gap1
+        for(size_t i=0; i<80; i++) codec.mfm_write_byte(0x4e, false, true, true); // Gap4a
+        for(size_t i=0; i<12; i++) codec.mfm_write_byte(0x00, false, true, true); // SYNC
+        for(size_t i=0; i< 3; i++) codec.mfm_write_byte(0xf6, true , true, true); // 0xc2
+                                   codec.mfm_write_byte(0xfc, false, true, true); // IAM
+        for(size_t i=0; i<50; i++) codec.mfm_write_byte(0x4e, false, true, true); // Gap1
         // sectors
         d77img::track_data image_track = input_image.m_disk_data[track_n]; 
         if (image_track.size() == 0) continue;
         for(size_t sect_n=0; sect_n<image_track.size(); sect_n++) {
             d77img::sector_data sect = image_track[sect_n];
             byte_array sect_body = sect.m_sector_data;
-            for(size_t i=0; i<12; i++) codec.mfm_write_byte(0x00, false); // SYNC
-            for(size_t i=0; i< 3; i++) codec.mfm_write_byte(0xf5, true);  // 0xa1
+            for(size_t i=0; i<12; i++) codec.mfm_write_byte(0x00, false, true, true); // SYNC
+            for(size_t i=0; i< 3; i++) codec.mfm_write_byte(0xf5, true , true, true); // 0xa1
             crcgen.reset();
-            codec.mfm_write_byte(0xfe, false); crcgen.data(0xfe); // IDAM
-            codec.mfm_write_byte(sect.m_C, false); crcgen.data(sect.m_C);
-            codec.mfm_write_byte(sect.m_H, false); crcgen.data(sect.m_H);
-            codec.mfm_write_byte(sect.m_R, false); crcgen.data(sect.m_R);
-            codec.mfm_write_byte(sect.m_N, false); crcgen.data(sect.m_N);
+            codec.mfm_write_byte(0xfe    , false, true, true); crcgen.data(0xfe); // IDAM
+            codec.mfm_write_byte(sect.m_C, false, true, true); crcgen.data(sect.m_C);
+            codec.mfm_write_byte(sect.m_H, false, true, true); crcgen.data(sect.m_H);
+            codec.mfm_write_byte(sect.m_R, false, true, true); crcgen.data(sect.m_R);
+            codec.mfm_write_byte(sect.m_N, false, true, true); crcgen.data(sect.m_N);
             uint16_t crcval;
             crcgen.data(0); crcgen.data(0);
             crcval = crcgen.get();
             switch(sect.m_status) {
             case 0xa0: // ID-CRC error
-                codec.mfm_write_byte(~crcval >> 8, false); codec.mfm_write_byte(~crcval, false);   // CRC (intentional CRC error)
+                codec.mfm_write_byte(~crcval >> 8, false, true, true); codec.mfm_write_byte(~crcval, false, true, true);   // CRC (intentional CRC error)
                 break;
             default:
-                codec.mfm_write_byte(crcval >> 8, false); codec.mfm_write_byte(crcval, false);   // CRC
+                codec.mfm_write_byte(crcval >> 8, false, true, true); codec.mfm_write_byte(crcval, false, true, true);   // CRC
                 break;
             }
             if(sect.m_status != 0xf0) {  // no DAM
-                for(size_t i=0; i<22; i++) codec.mfm_write_byte(0x4e, false); // Gap2
-                for(size_t i=0; i<12; i++) codec.mfm_write_byte(0x00, false); // SYNC
-                for(size_t i=0; i< 3; i++) codec.mfm_write_byte(0xf5, true);  // 0xa1
+                for(size_t i=0; i<22; i++) codec.mfm_write_byte(0x4e, false, true, true); // Gap2
+                for(size_t i=0; i<12; i++) codec.mfm_write_byte(0x00, false, true, true); // SYNC
+                for(size_t i=0; i< 3; i++) codec.mfm_write_byte(0xf5, true, true, true);  // 0xa1
                 crcgen.reset();
                 switch(sect.m_dam_type) {
                 case 0x10:
-                    codec.mfm_write_byte(0xfb, false); crcgen.data(0xf8); // DDAM
+                    codec.mfm_write_byte(0xfb, false, true, true); crcgen.data(0xf8); // DDAM
                     break;
                 default:
-                    codec.mfm_write_byte(0xfb, false); crcgen.data(0xfb); // DAM
+                    codec.mfm_write_byte(0xfb, false, true, true); crcgen.data(0xfb); // DAM
                     break;
                 }
                 for(size_t i=0; i<sect.m_sector_data_length; i++) {
-                    codec.mfm_write_byte(sect_body[i], false);
+                    codec.mfm_write_byte(sect_body[i], false, true, true);
                     crcgen.data(sect_body[i]);
                 }
                 crcgen.data(0); crcgen.data(0);
                 crcval = crcgen.get();
                 switch(sect.m_status) {
                 case 0xb0: // DT-CRC error
-                    codec.mfm_write_byte(~crcval >> 8, false); codec.mfm_write_byte(~crcval, false);   // CRC (intentional CRC error)
+                    codec.mfm_write_byte(~crcval >> 8, false, true, true); codec.mfm_write_byte(~crcval, false, true, true);   // CRC (intentional CRC error)
                     break;
                 default:
-                    codec.mfm_write_byte(crcval >> 8, false); codec.mfm_write_byte(crcval, false);   // CRC
+                    codec.mfm_write_byte(crcval >> 8, false, true, true); codec.mfm_write_byte(crcval, false, true, true);   // CRC
                     break;
                 }
-                for(size_t i=0; i<54; i++) codec.mfm_write_byte(0x4e, false); //Gap3
+                for(size_t i=0; i<54; i++) codec.mfm_write_byte(0x4e, false, true, true); //Gap3
             }
         }
-        for(size_t i=0; i<152; i++) codec.mfm_write_byte(0x4e, false); //Gap4b
+        for(size_t i=0; i<152; i++) codec.mfm_write_byte(0x4e, false, true, true); //Gap4b
 
         track_data = codec.get_track_data();
+        track_data.set_stream_pos(0);
         m_track_data[track_n] = track_data;
         m_base_prop.m_number_of_tracks = track_n+1;
     }

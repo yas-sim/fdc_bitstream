@@ -38,7 +38,7 @@ public:
     bool set_stream_pos(size_t position);
     size_t get_stream_pos(void);
     void write_stream(uint8_t value, bool elastic = false);
-    void advance_stream_pos(void);
+    void advance_stream_pos(bool elastic = false);
     uint8_t read_stream(void);
     size_t distance_to_next_pulse(void);
     void fill_stream(uint8_t data, uint8_t length = 1);
