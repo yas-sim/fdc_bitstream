@@ -308,7 +308,6 @@ size_t fdc_bitstream::read_sector_body_ex(size_t sect_length_code, std::vector<u
                 else if (read_data == 0xf8 || read_data == 0xf9) {     // DDAM
                     dam_type = true;
                 }
-                sect_data.clear();
                 m_crcgen.reset();
                 m_crcgen.data(read_data);
                 read_count = sector_length_table[sect_length_code & 0b0011u] + 2;   // sector size+CRC

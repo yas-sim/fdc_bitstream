@@ -108,7 +108,7 @@ void disk_image_d77::read(const std::string file_name) {
 }
 
 void disk_image_d77::write(const std::string file_name) {
-    std::vector<size_t> sector_length_table{ 128, 256, 512, 1024 };
+    const size_t sector_length_table[] = { 128, 256, 512, 1024 };
     std::ios::fmtflags flags_saved = std::cout.flags();
     fdc_bitstream fdc;
     d77img output_image;
@@ -156,16 +156,16 @@ void disk_image_d77::write(const std::string file_name) {
             sect_pos = (sect_pos < sect_pos_ofst) ? 0 : sect_pos - sect_pos_ofst;
             fdc.set_pos(sect_pos);
             fdc_bitstream::sector_data read_sect = fdc.read_sector(sect_dt.m_C, sect_dt.m_R);
-#if 1
+#if 0
             // Use actual sector body length
             sect_dt.m_sector_data = read_sect.data;
             sect_dt.m_sector_data_length = read_sect.data.size();
 #else
             // Use ID.N information for the sector length
-            sect_dt.m_sector_data_length = sector_length_table[id_list[sect_n].N];
+            sect_dt.m_sector_data_length = sector_length_table[id_list[sect_n].N & 0x03];
             sect_dt.m_sector_data = read_sect.data;
-            if(read_sect.data.size() < sect_dt.m_sector_data_length) {
-                read_sect.data.resize(sect_dt.m_sector_data_length);
+            if(sect_dt.m_sector_data.size() < sect_dt.m_sector_data_length) {
+                sect_dt.m_sector_data.resize(sect_dt.m_sector_data_length);
             }
 #endif
             d77_trk.push_back(sect_dt);
