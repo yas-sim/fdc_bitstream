@@ -115,8 +115,7 @@ double vfo_pid3::calc(double pulse_pos) {
     // fast-slow combination = (2.5+2.5) *2 = 10%
     // VFO oscillation center frequency variation by temp and power supply voltage variation = 5%
     // Varition in total = 15% 
-    //constexpr double tolerance = 0.5f;
-    constexpr double tolerance = 0.8f;
+    constexpr double tolerance = 0.4f;
     new_cell_size = limit(new_cell_size, m_cell_size_ref * (1.f/(1.f + tolerance)) , m_cell_size_ref * (1.0f + tolerance));
 
     set_cell_size(new_cell_size);
