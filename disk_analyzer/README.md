@@ -2,8 +2,8 @@
 
 |Command|Parameters|Description|
 |-|-|-|
-|`o`|`file_name`|Open an image file.(HFE/MFM/RAW/D77)|
-|`w`|`file_name`|Write an image file. (MFM, D77)|
+|`o`|`file_name`|Open an image file.(HFE/MFM/RAW/D77/FDX)|
+|`w`|`file_name`|Write an image file. (MFM, D77, FDX)|
 |`scr`|`file_name`|Run a script file.|
 |`rt`|`trk`|Read track<br>The data in green color indicates that the data has '**missing-clock**' bit pattern.|
 |`vt`|`trk` [`trk_e`]|Validate track(s).<br>Performs read ID and read sector for a track.<br>If you specify 'trk_e', the command will perform track validation from 'trk' to 'trk_e'.|
