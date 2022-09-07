@@ -1,5 +1,5 @@
 var searchData=
 [
   ['write_5fallowed_0',['write_allowed',['../structpicfileformatheader__.html#a1120a2d9594bcee66f896067ba182ccd',1,'picfileformatheader_']]],
-  ['writeprotect_1',['writeprotect',['../structfdx__header.html#aad9a63b6eb2d761e8c59693bb325e2cc',1,'fdx_header']]]
+  ['write_5fprotect_1',['write_protect',['../structfdx__header.html#aee902b8740750c4313e5e80f0cd388b5',1,'fdx_header']]]
 ];
