@@ -47,5 +47,7 @@ var searchData=
   ['create_5fmfm_5fimage_20_2d_20brand_2dnew_20formatted_20mfm_20disk_20image_20file_20generator_2e_44',['create_mfm_image - Brand-new formatted MFM disk image file generator.',['../md_create_mfm_image__r_e_a_d_m_e.html',1,'']]],
   ['create_5fmfm_5fimage_2ecpp_45',['create_mfm_image.cpp',['../create__mfm__image_8cpp.html',1,'']]],
   ['create_5fobject_5fby_5fext_46',['create_object_by_ext',['../analyzer_8cpp.html#a951938f545ae411a3bbef610ffc7324d',1,'create_object_by_ext(std::string ext):&#160;analyzer.cpp'],['../image__converter_8cpp.html#a951938f545ae411a3bbef610ffc7324d',1,'create_object_by_ext(std::string ext):&#160;image_converter.cpp']]],
-  ['csrpos_47',['csrpos',['../namespacehw__abst.html#aee8f011df9a1581cf403082dca63b327',1,'hw_abst']]]
+  ['csrpos_47',['csrpos',['../namespacehw__abst.html#aee8f011df9a1581cf403082dca63b327',1,'hw_abst']]],
+  ['cylinder_48',['cylinder',['../structfdx__track__header.html#a21f216abc54aaf779d63bd3ce140504d',1,'fdx_track_header']]],
+  ['cylinders_49',['cylinders',['../structfdx__header.html#a76f5f67f89ace4d571c031ad1d66a623',1,'fdx_header']]]
 ];

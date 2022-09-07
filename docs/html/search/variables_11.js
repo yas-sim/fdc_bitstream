@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['write_5fallowed_0',['write_allowed',['../structpicfileformatheader__.html#a1120a2d9594bcee66f896067ba182ccd',1,'picfileformatheader_']]]
+  ['unused_0',['unused',['../structfdx__header.html#a489bb4433a962e58d1e017fb8840f80e',1,'fdx_header']]]
 ];
