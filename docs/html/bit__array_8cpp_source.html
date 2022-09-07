@@ -200,12 +200,12 @@ $(document).ready(function(){initNavTree('bit__array_8cpp_source.html',''); init
 <div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>        <span class="keywordflow">if</span> (elastic == <span class="keyword">false</span>) {</div>
 <div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>            m_stream_pos = 0;</div>
 <div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>            m_wraparound = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>        }</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>        <span class="keywordtype">size_t</span> byte_pos = to_byte_pos(m_stream_pos);</div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>        m_array_data.resize(byte_pos + 10, 0);      <span class="comment">// Extend the buffer</span></div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>        m_bit_length = m_stream_pos + 1;</div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>    }</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>            <span class="keywordtype">size_t</span> byte_pos = to_byte_pos(m_stream_pos);</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>            m_array_data.resize(byte_pos + 10, 0);      <span class="comment">// Extend the buffer</span></div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>            m_bit_length = m_stream_pos + 1;</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>        }</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>    } </div>
 <div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>}</div>
 <div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span> </div>
 <div class="line"><a id="l00210" name="l00210"></a><span class="lineno"><a class="line" href="classbit__array.html#a75e48a992e9838b97fcfb00bb6d12e20">  210</a></span>uint8_t <a class="code hl_function" href="classbit__array.html#a75e48a992e9838b97fcfb00bb6d12e20">bit_array::read_stream</a>(<span class="keywordtype">void</span>) {</div>
