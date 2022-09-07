@@ -14,7 +14,7 @@ private:
     bool                    m_wraparound;
 
     inline size_t to_byte_pos(size_t bit_pos) { return bit_pos >> 3; }
-    inline uint8_t to_bit_pos(size_t bit_pos) { return 0x80 >> (bit_pos & 0x07); }
+    inline uint8_t to_bit_pos(size_t bit_pos) { return 0x80u >> (bit_pos & 0x07u); }
 public:
 
     bit_array() : m_stream_pos(), m_wraparound(false), m_bit_length() {

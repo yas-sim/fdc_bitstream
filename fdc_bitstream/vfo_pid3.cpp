@@ -54,11 +54,16 @@ void vfo_pid3::soft_reset(void) {
     m_phase_err_I = 0.f;
 
 #if 1
+// golden
     m_phase_err_PC =1.f/4.f;
     m_phase_err_IC =1.f/128.f;
     m_phase_err_DC =1.f/512.f;
 #endif
-
+#if 0
+    m_phase_err_PC =1.f/4.f;
+    m_phase_err_IC =1.f/16.f;
+    m_phase_err_DC =1.f/64.f;
+#endif
 // 1/4  0.25
 // 1/8  0.125
 // 1/16 0.0625
