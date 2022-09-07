@@ -14,17 +14,16 @@ typedef struct {
     uint8_t     signature[3];       // +0
     uint8_t     revision;           // +3
     uint8_t     disk_name[64-4];    // +4
-    uint8_t     pad2[68-64];        // +64
+    uint8_t     pad1[68-64];        // +64
     uint32_t    type;               // +68  0:2D, 1:2DD, 2:2HD, 9:RAW
     uint32_t    cylinders;          // +72
     uint32_t    heads;              // +76
     uint32_t    rate;               // +80  500 or 1000
     uint32_t    rpm;                // +84
-    uint8_t     writeprotect;       // +88
-    uint8_t     pad3[92-89];
+    uint32_t    write_protect;      // +88
     uint32_t    option;             // +92
     uint32_t    unused;             // +96
-    uint32_t    tracksize;          // +100
+    uint32_t    track_block_size;   // +100  (bytes)
     uint8_t     reserve[256-104];   // +104  (Total header size is 256bytes)
 } fdx_header;
 
@@ -45,10 +44,15 @@ typedef struct {
 
 class disk_image_fdx : public disk_image {
 private:
+    /**
+     * @brief Convert mode. true=RAW, false=MFM (default)
+     * 
+     */
+    bool m_conversion_mode;
     bit_array simple_raw_to_mfm(bit_array &raw) const;
     bit_array simple_mfm_to_raw(bit_array &mfm) const;
 public:
-    disk_image_fdx(void) : disk_image() {};
+    disk_image_fdx(void) : disk_image(), m_conversion_mode(false) {};
 
     void read(const std::string file_name) override;
     void write(const std::string file_name) override;
@@ -60,4 +64,10 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Set the conversion mode object
+     * 
+     * @param flag true=RAW, false=MFM
+     */
+    void set_conversion_mode(bool flag) { m_conversion_mode = flag; }
 };
