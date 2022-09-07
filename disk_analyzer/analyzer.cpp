@@ -50,7 +50,7 @@ std::string get_file_extension(std::string file_name) {
 }
 
 bool check_extension(std::string extension) {
-    std::vector<std::string> allowed = { "hfe", "mfm", "raw", "d77" };
+    std::vector<std::string> allowed = { "hfe", "mfm", "raw", "d77", "fdx" };
     bool res = false;
     for(auto it = allowed.begin(); it != allowed.end(); ++it) {
         if(*it == extension) res = true;
@@ -64,6 +64,7 @@ disk_image* create_object_by_ext(std::string ext) {
     if(ext == "raw") obj = new disk_image_raw();
     if(ext == "mfm") obj = new disk_image_mfm();
     if(ext == "d77") obj = new disk_image_d77();
+    if(ext == "fdx") obj = new disk_image_fdx();
     return obj;
 }
 
@@ -103,7 +104,7 @@ void cmd_open_image(std::string file_name) {
 
 void cmd_write_image(std::string file_name) {
     std::string ext = get_file_extension(file_name);
-    if (ext != "mfm" && ext != "d77") {
+    if (ext != "mfm" && ext != "d77" && ext != "fdx") {
         fdc_misc::color(2);
         std::cout << "Unsupported file extension." << std::endl;
         fdc_misc::color(7);

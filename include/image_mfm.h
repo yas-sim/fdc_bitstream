@@ -6,7 +6,7 @@
 #include "image_base.h"
 
 // Header (ofst(byte) = 0)
-typedef struct mfm_header_ {
+typedef struct {
     uint8_t     id_str[8];                  //  "MFM_IMG "
     uint64_t    track_table_offset;         // 
     uint64_t    number_of_tracks;           //
@@ -17,7 +17,7 @@ typedef struct mfm_header_ {
 
 
 // Track offset table (ofst(byte) = header.track_table_offset)
-typedef struct track_table_ {
+typedef struct {
     uint64_t    offset;                     // Offset to the track data (unit=byte, from the top of the file == absolute offset)
     uint64_t    length_bit;                 // Track data length (uint=bits, not bytes)
 } mfm_track_table;

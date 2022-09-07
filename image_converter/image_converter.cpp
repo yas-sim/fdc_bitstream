@@ -7,18 +7,16 @@
 #include <unordered_map>
 #include <algorithm>
 
-#include "image_hfe.h"
-#include "image_mfm.h"
-#include "image_raw.h"
-#include "image_d77.h"
+#include "disk_images.h"
+
 #include "bit_array.h"
 #include "fdc_vfo_def.h"
 #include "fdc_misc.h"
 
 void usage(std::string cmd_name) {
     std::cout << cmd_name << "-i input_file -o output_file [-n]" << std::endl;
-    std::cout << "Input file     : hfe, mfm, raw, d77" << std::endl;
-    std::cout << "Output file    : mfm, d77" << std::endl;
+    std::cout << "Input file     : hfe, mfm, raw, d77, fdx" << std::endl;
+    std::cout << "Output file    : mfm, d77, fdx" << std::endl;
     std::cout << "-n             : Normalize pulse pitch. Get statistic data of pulse-to-pulse distance \n"
                  "                 distribution in a track and align bit position with standard bit cell pitch.\n"
                  "                 This will make the disk image data easy to read." << std::endl;
@@ -40,7 +38,7 @@ std::string get_file_extension(std::string file_name) {
 }
 
 bool check_extension(std::string extension) {
-    std::vector<std::string> allowed = { "hfe", "mfm", "raw", "d77" };
+    std::vector<std::string> allowed = { "hfe", "mfm", "raw", "d77", "fdx" };
     bool res = false;
     for(auto it = allowed.begin(); it != allowed.end(); ++it) {
         if(*it == extension) res = true;
@@ -54,6 +52,7 @@ disk_image* create_object_by_ext(std::string ext) {
     if(ext == "raw") obj = new disk_image_raw();
     if(ext == "mfm") obj = new disk_image_mfm();
     if(ext == "d77") obj = new disk_image_d77();
+    if(ext == "fdx") obj = new disk_image_fdx();
     return obj;
 }
 
