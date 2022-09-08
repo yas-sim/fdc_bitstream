@@ -57,7 +57,7 @@ This project also includes a *simple* disk image converter that takes one of  `*
 The image converter can accept **multiple image files** as input. If multiple image files are given, the converter will inspect all tracks in the images, select the best tracks among the images, and generates a merged image (create a chimera image).|
 - How to run:
 ```sh
-image_converter -i input_file.[hfe|raw|mfm|d77] -o output_file.[mfm|d77] [-n] [-vfo vfo_type] [-gain low high] [-v]
+image_converter -i input_file.[hfe|raw|mfm|d77|vfx] -o output_file.[mfm|d77|vfx] [-n] [-vfo vfo_type] [-gain low high] [-v]
 ```  
 *Options:*  
 |Option||Description|
@@ -67,6 +67,7 @@ image_converter -i input_file.[hfe|raw|mfm|d77] -o output_file.[mfm|d77] [-n] [-
 |`-n`||Pulse pitch normalization.|  
 |`-vfo`|`vfo_type`|Specify the type of VFO to be used to decode MFM bit stream for D77 output.<br>0:vfo_simple, 1:vfo_fixed, 2:vfo_pid, 3:vfo_pid2, 4:vfo_simple2, 5:vfo_pid3 9:vfo_experimental|  
 |`-gain`|`low` `high`|Set VFO gain (D77 only). e.g. `-gain 1.0 2.0`|
+|`-raw`||Generate a VFX-RAW image. Effective only for a VFX image generation.|
 |`-v`||Verbose mode|
 
 ## Kryoflux RAW to MFM format converter  

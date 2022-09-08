@@ -97,7 +97,12 @@ void disk_image_fdx::write(const std::string file_name) {
     header.type = m_conversion_mode ? 9 : 0;                // 0:2D, 1:2DD, 2:2HD, 9:RAW
     header.cylinders = m_base_prop.m_number_of_tracks / 2;
     header.heads = 2;
-    header.rate = m_base_prop.m_data_bit_rate / 1e3;        // 500 or 1000
+    if(m_conversion_mode==false) {
+        header.rate = m_base_prop.m_data_bit_rate / 1e3;        // MFM mode : 500 or 1000
+    } else {
+        header.rate = 4000;                                     // RAW mode : 4000 (or 8000)
+    }
+
     size_t rpm = 60e9 / m_base_prop.m_spindle_time_ns;
     header.rpm = (rpm < 360*1.05f && rpm > 360*0.95f) ? 360 : 300;
     header.write_protect = 0;
