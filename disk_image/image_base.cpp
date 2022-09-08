@@ -10,7 +10,7 @@
  */
 #include "image_base.h"
 
-disk_image::disk_image() : m_track_data_is_set(false) {
+disk_image::disk_image() : m_verbose(false), m_track_data_is_set(false) {
     m_base_prop.m_data_bit_rate = 500e3;
     m_base_prop.m_number_of_tracks = 0;
     m_base_prop.m_sampling_rate = 4e6;
