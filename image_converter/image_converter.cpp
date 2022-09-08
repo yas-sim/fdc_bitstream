@@ -163,6 +163,7 @@ int main(int argc, char* argv[]) {
     double gain_l = VFO_GAIN_L_DEFAULT;
     double gain_h = VFO_GAIN_H_DEFAULT;
     bool verbose = false;
+    bool raw_flag = false;          // effective only for FDX format
 
 	for(auto it = cmd_opts.begin(); it != cmd_opts.end(); ++it) {
 		if(*it == "-i" && it+1 != cmd_opts.end()) {
@@ -178,6 +179,8 @@ int main(int argc, char* argv[]) {
             gain_h = std::stod(*(++it));
         } else if(*it == "-v") {
             verbose = true;
+        } else if(*it == "-raw") {
+            raw_flag = true;
         }
     }
 
@@ -300,9 +303,13 @@ int main(int argc, char* argv[]) {
             std::cout << "Gain L=" << gain_l << " , Gain H=" << gain_h << std::endl;
         }
         out_image->set_gain(gain_l, gain_h);
-        out_image->verbose(verbose);
     }
 
+    if(output_ext == "fdx") {
+        static_cast<disk_image_fdx*>(out_image)->set_conversion_mode(raw_flag);
+    }
+
+    out_image->verbose(verbose);
     out_image->write(output_file_name);
 
     // Display file names

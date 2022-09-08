@@ -32,9 +32,10 @@ public:
 class disk_image {
 private:
 protected:
-    bool        m_track_data_is_set;            /** true=track data is set and ready */
+    bool m_track_data_is_set;            /** true=track data is set and ready */
     disk_image_base_properties m_base_prop;
     std::vector<bit_array>  m_track_data;
+    bool m_verbose;
 
     /** align a number with specified boundary */
     inline size_t align(size_t pos, size_t grain_size = 0x400) { return ((pos / grain_size) + ((pos % grain_size) ? 1 : 0)) * grain_size; }
@@ -76,5 +77,5 @@ public:
 
     virtual void set_vfo_type(size_t vfo_type) {};
     virtual void set_gain(double gain_l, double gain_h) {};
-    virtual void verbose(bool verbose_flag) {};
+    void verbose(bool verbose_flag) { m_verbose = verbose_flag; };
 };
