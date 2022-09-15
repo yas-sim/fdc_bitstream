@@ -10,6 +10,18 @@
  */
 #include "image_hfe.h"
 
+void flip_bit_order(std::vector<uint8_t> &vec) {
+	for(auto it = vec.begin(); it != vec.end(); it++) {
+		uint8_t src = *it;
+		uint8_t tmp = 0;
+		for(int i=0; i<8; i++) {
+			tmp = (tmp << 1) | (src & 1);
+			src >>= 1;
+		}
+		*it = tmp;
+	}
+}
+
 void disk_image_hfe::read(const std::string file_name) {
 	m_track_data_is_set = false;
 	hfe_header header;
@@ -30,7 +42,7 @@ void disk_image_hfe::read(const std::string file_name) {
 		m_base_prop.m_spindle_time_ns = (60 * 1e9) / header.floppyRPM;
 	}
 	m_base_prop.m_data_bit_rate = header.bitRate * 2e3;			// HFE(MFM,2D) == 250??
-	m_base_prop.m_sampling_rate = header.bitRate * 2e3;
+	m_base_prop.m_sampling_rate = 4e6;
 
 	hfe_track track_offset_table[84];
 	ifs.seekg(header.track_list_offset * 0x0200, std::ios_base::beg);
@@ -47,7 +59,7 @@ void disk_image_hfe::read(const std::string file_name) {
 		size_t blocks = track_offset_table[track].track_len / 0x0200;
 		size_t fraction = track_offset_table[track].track_len % 0x0200;
 		size_t read_blocks = blocks + (fraction > 0 ? 1 : 0);
-		size_t bit_cell_width = 8;
+		size_t bit_cell_width = m_base_prop.m_sampling_rate / m_base_prop.m_data_bit_rate;
 		buf.resize(read_blocks * 0x0200);
 		ifs.seekg(track_offset_table[track].offset * 0x0200, std::ios_base::beg);
 		ifs.read(reinterpret_cast<char*>(buf.data()), read_blocks * 0x0200);
@@ -91,18 +103,6 @@ void disk_image_hfe::read(const std::string file_name) {
 		m_track_data[track * 2 + 1] = side1;
 	}
 	m_track_data_is_set = true;
-}
-
-void flip_bit_order(std::vector<uint8_t> &vec) {
-	for(auto it = vec.begin(); it != vec.end(); it++) {
-		uint8_t src = *it;
-		uint8_t tmp = 0;
-		for(int i=0; i<8; i++) {
-			tmp = (tmp << 1) | (src & 1);
-			src >>= 1;
-		}
-		*it = tmp;
-	}
 }
 
 void disk_image_hfe::write(const std::string file_name) {
