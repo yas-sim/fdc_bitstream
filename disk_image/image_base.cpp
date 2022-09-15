@@ -89,3 +89,34 @@ size_t disk_image::media_number_of_tracks(const media_type mtype) {
     }
     return number_of_tracks;
 }
+
+bit_array disk_image::simple_raw_to_mfm(bit_array &raw) const {
+    bit_array mfm;
+    raw.set_stream_pos(0);
+    mfm.clear_array();
+    size_t bit_cell_size = m_base_prop.m_sampling_rate / m_base_prop.m_data_bit_rate;
+    while(!raw.is_wraparound()) {
+        size_t dist = raw.distance_to_next_pulse();
+        dist = (dist + bit_cell_size / 2) / bit_cell_size;
+        if(dist<2) continue;
+        for(size_t i = 0; i < dist-1; i++) {
+            mfm.write_stream(0, true);
+        }
+        mfm.write_stream(1, true);
+    }
+    return mfm;
+}
+
+bit_array disk_image::simple_mfm_to_raw(bit_array &mfm) const {
+    bit_array raw;
+    mfm.set_stream_pos(0);
+    raw.clear_array();
+    size_t cell_width = m_base_prop.m_sampling_rate / m_base_prop.m_data_bit_rate;
+    while(!mfm.is_wraparound()) {
+        size_t bit = mfm.read_stream();
+        for(size_t i = 0; i < cell_width; i++) {
+            raw.write_stream((i == cell_width / 2) ? bit : 0, true);   // place the pulse at the center of the each bit cell.
+        }
+    }
+    return raw;
+}

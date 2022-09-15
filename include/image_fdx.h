@@ -49,8 +49,6 @@ private:
      * 
      */
     bool m_conversion_mode;
-    bit_array simple_raw_to_mfm(bit_array &raw) const;
-    bit_array simple_mfm_to_raw(bit_array &mfm) const;
 public:
     disk_image_fdx(void) : disk_image(), m_conversion_mode(false) {};
 

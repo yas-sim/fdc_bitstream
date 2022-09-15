@@ -10,8 +10,7 @@
 
 #include "image_base.h"
 
-typedef struct picfileformatheader_
-{
+typedef struct {
 	uint8_t HEADERSIGNATURE[8];		// "HXCPICFE"
 	uint8_t formatrevision;			// Revision 0
 	uint8_t number_of_track;		// Number of track in the file
@@ -31,10 +30,10 @@ typedef struct picfileformatheader_
 	uint8_t track0s0_encoding;		// alternate track_encoding for track 0 Side 0
 	uint8_t track0s1_altencoding;	// 0x00 : Use an alternate track_encoding for track 0 Side 1
 	uint8_t track0s1_encoding;		// alternate track_encoding for track 0 Side 1
-} picfileformatheader;
+} hfe_header;
 
 // floppyinterfacemode
-enum class floppyinterfacemode_t {
+enum floppyinterfacemode_t {
 	IBMPC_DD_FLOPPYMODE				= 0x00,
 	IBMPC_HD_FLOPPYMODE				= 0x01,
 	ATARIST_DD_FLOPPYMODE			= 0x02,
@@ -53,7 +52,7 @@ enum class floppyinterfacemode_t {
 };
 
 // track_encoding
-enum class track_encoding_t {
+enum track_encoding_t {
 	ISOIBM_MFM_ENCODING				= 0x00,
 	AMIGA_MFM_ENCODING				= 0x01,
 	ISOIBM_FM_ENCODING				= 0x02,
@@ -61,18 +60,18 @@ enum class track_encoding_t {
 	UNKNOWN_ENCODING				= 0xFF
 };
 
-typedef struct pictrack_
+typedef struct
 {
 	uint16_t offset;		// Offset of the track data in block of 512 bytes (Ex: 2=0x400)
 	uint16_t track_len;		// Length of the track data in byte.
-}pictrack;
+} hfe_track;
 
 class disk_image_hfe : public disk_image {
 public:
 	disk_image_hfe(void) : disk_image() {}
 
 	void read(const std::string file_name) override;
-	void write(const std::string file_name) override { assert(false); }
+	void write(const std::string file_name) override;
 
     disk_image_hfe& operator=(disk_image &image)
     {

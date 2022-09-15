@@ -104,7 +104,7 @@ void cmd_open_image(std::string file_name) {
 
 void cmd_write_image(std::string file_name) {
     std::string ext = get_file_extension(file_name);
-    if (ext != "mfm" && ext != "d77" && ext != "fdx") {
+    if (ext != "mfm" && ext != "d77" && ext != "fdx" && ext != "hfe") {
         fdc_misc::color(2);
         std::cout << "Unsupported file extension." << std::endl;
         fdc_misc::color(7);
@@ -769,7 +769,7 @@ void cmd_help(void) {
     std::cout <<
     "*** Command list\n"
     "o  file_name      Open an image file. (.raw, .mfm, .hfe, .d77, .fdx)\n"
-    "w  file_name      Write an image file. (mfm, d77, fdx)\n"
+    "w  file_name      Write an image file. (mfm, d77, fdx, hfe)\n"
     "scr file_name     Run a script file.\n"
     "rt trk            Read track\n"
     "vt trk [trk_e]    Validate track(s). Performs read ID and read sector for a track.\n"

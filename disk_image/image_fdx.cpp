@@ -10,37 +10,6 @@
  */
 #include "image_fdx.h"
 
-bit_array disk_image_fdx::simple_raw_to_mfm(bit_array &raw) const {
-    bit_array mfm;
-    raw.set_stream_pos(0);
-    mfm.clear_array();
-    size_t bit_cell_size = m_base_prop.m_sampling_rate / m_base_prop.m_data_bit_rate;
-    while(!raw.is_wraparound()) {
-        size_t dist = raw.distance_to_next_pulse();
-        dist = (dist + bit_cell_size / 2) / bit_cell_size;
-        if(dist<2) continue;
-        for(size_t i = 0; i < dist-1; i++) {
-            mfm.write_stream(0, true);
-        }
-        mfm.write_stream(1, true);
-    }
-    return mfm;
-}
-
-bit_array disk_image_fdx::simple_mfm_to_raw(bit_array &mfm) const {
-    bit_array raw;
-    mfm.set_stream_pos(0);
-    raw.clear_array();
-    size_t cell_width = m_base_prop.m_sampling_rate / m_base_prop.m_data_bit_rate;
-    while(!mfm.is_wraparound()) {
-        size_t bit = mfm.read_stream();
-        for(size_t i = 0; i < cell_width; i++) {
-            raw.write_stream((i == cell_width / 2) ? bit : 0, true);   // place the pulse at the center of the each bit cell.
-        }
-    }
-    return raw;
-}
-
 void disk_image_fdx::read(const std::string file_name) {
     fdx_header             header;
     m_track_data_is_set = false;
@@ -118,7 +87,7 @@ void disk_image_fdx::write(const std::string file_name) {
     track_buf_length = ((m_conversion_mode ? m_base_prop.m_sampling_rate : m_base_prop.m_data_bit_rate) * m_base_prop.m_spindle_time_ns) / 1e9;
     track_buf_length *= 1.1;
     track_buf_length /= 8;
-    track_buf_length = ((track_buf_length/0x1000) + 1) * 0x1000;             // align with 0x1000 boundary
+    track_buf_length = align(track_buf_length, 0x1000);
 
     for (size_t track_n = 0; track_n < m_base_prop.m_number_of_tracks; track_n++) {
         fdx_track_header track_header;

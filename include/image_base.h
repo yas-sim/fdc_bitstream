@@ -75,6 +75,9 @@ public:
     inline size_t get_data_bit_rate(void)    { return m_base_prop.m_data_bit_rate; }
     inline size_t get_sampling_rate(void)    { return m_base_prop.m_sampling_rate; }
 
+    bit_array simple_raw_to_mfm(bit_array &raw) const;
+    bit_array simple_mfm_to_raw(bit_array &mfm) const;
+
     virtual void set_vfo_type(size_t vfo_type) {};
     virtual void set_gain(double gain_l, double gain_h) {};
     void verbose(bool verbose_flag) { m_verbose = verbose_flag; };
