@@ -22,6 +22,22 @@ void flip_bit_order(std::vector<uint8_t> &vec) {
 	}
 }
 
+
+// NOTE: !! HFE is LSB first !!
+void convert_hfe_block_to_raw(uint8_t *hfe, bit_array &raw, size_t byte_count=256, size_t bit_cell_width = 8) {
+	for(size_t ofst = 0; ofst < byte_count; ofst++) {
+		uint8_t hfe_byte = hfe[ofst];
+		for(uint16_t bit_pos = 0x01; bit_pos <= 0x80; bit_pos <<= 1) {
+			uint8_t bit_data = (hfe_byte & bit_pos) ? 1 : 0;
+			for (size_t j = 0; j < bit_cell_width; j++) {
+				if (j == bit_cell_width / 2) raw.write_stream(bit_data, true);
+				else                         raw.write_stream(0, true);
+			}
+		}
+	}
+}
+
+
 void disk_image_hfe::read(const std::string file_name) {
 	m_track_data_is_set = false;
 	hfe_header header;
@@ -48,6 +64,8 @@ void disk_image_hfe::read(const std::string file_name) {
 	ifs.seekg(header.track_list_offset * 0x0200, std::ios_base::beg);
 	ifs.read(reinterpret_cast<char*>(track_offset_table), header.number_of_track * sizeof(hfe_track));
 
+	size_t bit_cell_width = m_base_prop.m_sampling_rate / m_base_prop.m_data_bit_rate;
+	const size_t hfe_blk_size = 0x0200;
 	for (size_t track = 0; track < header.number_of_track; track++) {
 		bit_array side0;
 		bit_array side1;
@@ -56,54 +74,26 @@ void disk_image_hfe::read(const std::string file_name) {
 		side0.set_stream_pos(0);
 		side1.set_stream_pos(0);
 		std::vector<uint8_t> buf;
-		size_t blocks = track_offset_table[track].track_len / 0x0200;
-		size_t fraction = track_offset_table[track].track_len % 0x0200;
-		size_t read_blocks = blocks + (fraction > 0 ? 1 : 0);
-		size_t bit_cell_width = m_base_prop.m_sampling_rate / m_base_prop.m_data_bit_rate;
-		buf.resize(read_blocks * 0x0200);
-		ifs.seekg(track_offset_table[track].offset * 0x0200, std::ios_base::beg);
-		ifs.read(reinterpret_cast<char*>(buf.data()), read_blocks * 0x0200);
-		size_t blk_id;
-		for (blk_id = 0; blk_id < blocks; blk_id++) {
-			for (size_t ofst = 0; ofst < 0x0100; ofst++) {
-				for (uint16_t bit_pos = 0x01; bit_pos < 0x100; bit_pos <<= 1) {
-					int bit_data;
-					bit_data = (buf[blk_id * 0x0200 + ofst] & bit_pos) ? 1 : 0;
-					for (size_t j = 0; j < bit_cell_width; j++) {
-						if (j == bit_cell_width / 2) side0.write_stream(bit_data, true);
-						else                         side0.write_stream(0, true);
-					}
-					bit_data = (buf[blk_id * 0x0200 + ofst + 0x0100] & bit_pos) ? 1 : 0;
-					for (size_t j = 0; j < bit_cell_width; j++) {
-						if (j == bit_cell_width / 2) side1.write_stream(bit_data, true);
-						else                         side1.write_stream(0, true);
-					}
-				}
-			}
-		}
-		if (fraction > 0) {
-			for (size_t ofst = 0; ofst < fraction / 2; ofst++) {
-				for (uint16_t bit_pos = 0x01; bit_pos < 0x100; bit_pos <<= 1) {
-					int bit_data;
-					bit_data = (buf[blk_id * 0x0200 + ofst] & bit_pos) ? 1 : 0;
-					for (size_t j = 0; j < bit_cell_width; j++) {
-						if (j == bit_cell_width / 2) side0.write_stream(bit_data, true);
-						else                         side0.write_stream(0, true);
-					}
-
-					bit_data = (buf[blk_id * 0x0200 + ofst + 0x0100] & bit_pos) ? 1 : 0;
-					for (size_t j = 0; j < bit_cell_width; j++) {
-						if (j == bit_cell_width / 2) side1.write_stream(bit_data, true);
-						else                         side1.write_stream(0, true);
-					}
-				}
-			}
+		size_t track_len = track_offset_table[track].track_len;
+		size_t fraction = track_len % hfe_blk_size;
+		size_t num_blocks = track_len / hfe_blk_size + (fraction > 0 ? 1 : 0);
+		buf.resize(num_blocks * hfe_blk_size);
+		ifs.seekg(track_offset_table[track].offset * hfe_blk_size, std::ios_base::beg);
+		ifs.read(reinterpret_cast<char*>(buf.data()), num_blocks * hfe_blk_size);
+		size_t blk_id = 0;
+		uint8_t *buf_ptr = buf.data();
+		for(blk_id = 0; blk_id <= num_blocks; blk_id++) {
+			size_t size = (blk_id * hfe_blk_size < track_len) ? hfe_blk_size / 2 : fraction / 2;
+			uint8_t *blk_ptr = buf_ptr + blk_id * hfe_blk_size;
+			convert_hfe_block_to_raw(blk_ptr                   , side0, size, bit_cell_width);
+			convert_hfe_block_to_raw(blk_ptr + hfe_blk_size / 2, side1, size, bit_cell_width);
 		}
 		m_track_data[track * 2 + 0] = side0;
 		m_track_data[track * 2 + 1] = side1;
 	}
 	m_track_data_is_set = true;
 }
+
 
 void disk_image_hfe::write(const std::string file_name) {
 	if(m_track_data_is_set == false) return;
@@ -142,7 +132,7 @@ void disk_image_hfe::write(const std::string file_name) {
 		size_t track_n = cylinder_n * 2;
 		side0 = simple_raw_to_mfm(m_track_data[track_n    ]).get_array();
 		side1 = simple_raw_to_mfm(m_track_data[track_n + 1]).get_array();
-		flip_bit_order(side0);
+		flip_bit_order(side0); // b7..b0 -> b0..b7   HFE is LSB first.
 		flip_bit_order(side1);
 		size_t mpx_track_size = side0.size() + side1.size();
 		char* mpx_track = new char[align(mpx_track_size, 0x400)];
@@ -168,7 +158,6 @@ void disk_image_hfe::write(const std::string file_name) {
 		ofs.write(mpx_track, dst_ofst);
 		track_table[cylinder_n].offset = track_data_ofst / 0x200;
 		track_table[cylinder_n].track_len = mpx_track_size;
-		//track_table[cylinder_n].track_len = (size0 > size1) ? size0 : size1;
 		track_data_ofst = align(track_data_ofst + mpx_track_size, 0x200);
 		delete[] mpx_track;
 	}
