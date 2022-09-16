@@ -768,8 +768,8 @@ void cmd_pulse_viewer(size_t track_n, size_t bit_pos = 0) {
 void cmd_help(void) {
     std::cout <<
     "*** Command list\n"
-    "o  file_name      Open an image file. (.raw, .mfm, .hfe, .d77, .fdx)\n"
-    "w  file_name      Write an image file. (mfm, d77, fdx, hfe)\n"
+    "o  file_name      Open an image file. (raw/mfm/hfe/d77/fdx)\n"
+    "w  file_name      Write an image file. (mfm/d77/hfe/fdx)\n"
     "scr file_name     Run a script file.\n"
     "rt trk            Read track\n"
     "vt trk [trk_e]    Validate track(s). Performs read ID and read sector for a track.\n"
