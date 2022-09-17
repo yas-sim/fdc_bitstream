@@ -56,13 +56,13 @@ void vfo_pid3::soft_reset(void) {
 #if 0
 // golden
     m_phase_err_PC =1.f/4.f;
-    m_phase_err_IC =1.f/128.f;
     m_phase_err_DC =1.f/512.f;
+    m_phase_err_IC =1.f/128.f;
 #endif
 #if 1
     m_phase_err_PC =1.f/4.f;
-    m_phase_err_IC =1.f/16.f;
-    m_phase_err_DC =1.f/64.f;
+    m_phase_err_DC =1.f/16.f;
+    m_phase_err_IC =1.f/64.f;
 #endif
 // 1/4  0.25
 // 1/8  0.125
@@ -110,6 +110,7 @@ double vfo_pid3::calc(double pulse_pos) {
     double phase_err_D  = phase_err_P - m_prev_phase_err;
     m_phase_err_I      += phase_err_P;
     m_prev_phase_err    = phase_err_P;
+    m_phase_err_I = limit(m_phase_err_I, -(1/m_phase_err_IC), (1/m_phase_err_IC));   // safeguard to avoid out-of-control
 
     // Cell size adjustment == frequency correction + phase adjust
     double new_cell_size = m_cell_size_ref 

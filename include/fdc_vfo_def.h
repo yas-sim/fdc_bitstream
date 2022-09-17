@@ -18,5 +18,5 @@
 
 #define VFO_TYPE_DESC_STR  "0:vfo_simple, 1:vfo_fixed, 2:vfo_pid, 3:vfo_pid2, 4:vfo_simple2, 5:vfo_pid3, 9:vfo_experimental"
 
-#define VFO_GAIN_L_DEFAULT  (1.f)
+#define VFO_GAIN_L_DEFAULT  (0.2f)
 #define VFO_GAIN_H_DEFAULT  (1.f)
