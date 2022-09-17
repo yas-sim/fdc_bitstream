@@ -291,6 +291,8 @@ void dump_buf2(const std::vector<std::vector<size_t>> &data) {
         size_t dt = data[i][0];
         size_t mc = data[i][1];
         size_t pos = data[i][2];
+        size_t err = data[i][3];
+        // display ruler
         if (i % cols == 0) {
             if (row_count % rows == 0) {
                 std::cout << std::endl << "-OFST- : -BitPos- : ";
@@ -302,7 +304,14 @@ void dump_buf2(const std::vector<std::vector<size_t>> &data) {
             std::cout << std::hex << std::setw(6) << std::setfill('0') << i << " : ";   // ofst adrs
             std::cout << std::dec << std::setw(8) << std::setfill(' ') << pos << " : "; // bit pos
         }
+        // Color AMs
         if(mc != 0) color(4);
+#if 1
+        // Color bit error
+        if(err > 16000) color(6);
+        if(err > 32000) color(3);
+        if(err > 64000) color(2);
+#endif
         std::cout << std::hex << std::setw(2) << std::setfill('0') << dt << " ";
         color(7);
         if (i % cols == cols-1) {

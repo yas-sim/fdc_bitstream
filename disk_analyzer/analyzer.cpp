@@ -407,6 +407,7 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=99) {
         size_t win_st = (vfo->m_window_ofst) * scale;
         size_t win_en = (vfo->m_window_ofst+vfo->m_window_size) * scale;
         for(size_t x = win_st; x < win_en; x++) line[x] = '-';
+        line[(win_st + win_en) / 2] = '|';        // center mark
         line[vfo->m_cell_size * scale] = '<';
 
         do {
@@ -414,7 +415,7 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=99) {
                 // visualize
                 if(dist<0.f)                          line[0]                      = '*';
                 else if(dist * scale >= line.size())  line[vfo->m_cell_size*scale] = '*';
-                else                                  line[dist * scale]           = 'P';
+                else                                  line[dist * scale]           = '#';
                 if(dist < vfo->m_window_ofst || dist > vfo->m_window_ofst + vfo->m_window_size) {
                     irregular = true;
                     irregular_pulse_count++;
@@ -436,8 +437,9 @@ void cmd_visualize_vfo(size_t track_n, size_t vfo_sel=99) {
         std::cout << std::endl;
         count++;
         if(hw_abst::is_key_hit()) {
-            hw_abst::get_key();
-            break;
+            uint8_t key = hw_abst::get_key();
+            if(key == 'q' || key == 27) break;
+            if(key == ' ') { while(!hw_abst::is_key_hit()); hw_abst::get_key(); }
         }
     }
     vfo->disp_vfo_status();
@@ -622,6 +624,17 @@ void cmd_visualize_pulse_fluctuation(size_t track_n) {
     }
 }
 
+// Find the next pulse and calculate the required adjuctment value to keep the next pulse on the center of the bit cell.
+int align_pulse_pos(bit_array &track, size_t pos, double bit_cell) {
+    size_t save_pos = track.get_stream_pos();
+    track.set_stream_pos(pos);
+    size_t dist = track.distance_to_next_pulse();
+    track.set_stream_pos(save_pos);
+    double pos_in_cell = dist - floorf(dist / bit_cell) * bit_cell;    // dist % bit_cell;
+    size_t adjust = pos_in_cell - bit_cell / 2;
+    return adjust;
+}
+
 
 void cmd_pulse_viewer(size_t track_n, size_t bit_pos = 0) {
     if(is_image_ready()==false) {
@@ -719,11 +732,31 @@ void cmd_pulse_viewer(size_t track_n, size_t bit_pos = 0) {
         default:
         case 'c': hw_abst::cls();                                                                   break;
         // 1 bit in MFM (cell size)
-        case 'n': if(bit_pos > bit_cell) bit_pos -= bit_cell;                                       break;
-        case 'm': if(bit_pos < track.get_length() - bit_cell - 1) bit_pos += bit_cell;              break;
+        case 'n': 
+            if(bit_pos > bit_cell) {
+                bit_pos -= bit_cell;
+                bit_pos += align_pulse_pos(track, bit_pos, bit_cell);
+            }
+            break;
+        case 'm':
+            if(bit_pos < track.get_length() - bit_cell - 1) {
+                bit_pos += bit_cell;
+                bit_pos += align_pulse_pos(track, bit_pos, bit_cell);
+            }
+            break;
         // 1 byte in MFM
-        case 'i': if(bit_pos > bit_cell * 16) bit_pos -= bit_cell * 16;                             break;
-        case 'o': if(bit_pos < track.get_length() - bit_cell * 16 - 1) bit_pos += bit_cell * 16;    break;
+        case 'i':
+            if(bit_pos > bit_cell * 16) {
+                bit_pos -= bit_cell * 16;
+                bit_pos += align_pulse_pos(track, bit_pos, bit_cell); 
+            }
+            break;
+        case 'o':
+            if(bit_pos < track.get_length() - bit_cell * 16 - 1) {
+                bit_pos += bit_cell * 16;
+                bit_pos += align_pulse_pos(track, bit_pos, bit_cell);
+            }
+            break;
         // bit cell width
         case 'a': if(bit_cell > 5.f) bit_cell -= 0.1f;                                              break;
         case 's': if(bit_cell < 14.f) bit_cell += 0.1f;                                             break;
@@ -818,7 +851,7 @@ void cmd_vfo_pid_tune(size_t track_n) {
     vfo.set_gain_val(g_gain_l, g_gain_h);
     vfo.set_gain_mode(vfo_base::gain_state::low);
     //std::vector<double> param_table { 1.f/1.f, 1.f/2.f, 1.f/4.f, 1.f/8.f, 1.f/16.f, 1.f/32.f, 1.f/64.f, 1.f/128.f, 1.f/256.f, 1.f/512.f };
-    std::vector<double> param_table0 { 1/512.f, 1/256.f, 1/128.f, 1/64.f, 1/32.f, 1/16.f, 1/8.f, 1/4.f };
+    std::vector<double> param_table0 { 1/1024.f, 1/512.f, 1/256.f, 1/128.f, 1/64.f, 1/32.f, 1/16.f, 1/8.f, 1/4.f, 1/2.f };
     std::vector<double> param_table1 { 1/64.f, 1/32.f, 1/16.f, 1/10.f, 1/8.f, 1/6.f, 1/4.f, 1/3.f, 1/2.f, 1/1.5f };
     std::vector<double> param_table2 { 1/128.f, 1/96.f, 1/80.f, 1/64.f, 1/48.f, 1/32.f };
     std::ofstream log("log.txt", std::ios::out);
@@ -863,9 +896,9 @@ void cmd_vfo_pid_tune(size_t track_n) {
     }
     std::cout << std::endl;
     std::sort(results.begin(), results.end(), [](auto left, auto right) { return left[1]<right[1]; });
-    for(auto it = results.begin(); it != results.begin()+5; it++) {
+    for(auto it = results.begin(); it != results.begin()+30; it++) {
         std::cout << (*it)[0] << " / " << (*it)[1] << " : ";
-        std::cout << 1/(*it)[2] << " " << 1/(*it)[3] << " " << 1/ (*it)[4] << std::endl;
+        std::cout << "P:" << 1/(*it)[2] << ", D:" << 1/(*it)[3] << ", I:" << 1/ (*it)[4] << std::endl;
     }
 }
 

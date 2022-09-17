@@ -86,17 +86,18 @@ std::vector<std::vector<size_t>> fdc_bitstream::read_track_ex(void) {
     size_t pos;
     uint8_t read_data;
     bool missing_clock;
+    double error;
     if (m_codec.is_track_ready() == false) return std::vector<std::vector<size_t>>();
 
     m_codec.clear_wraparound();
     while (m_codec.is_wraparound() == false) {
         pos = m_codec.get_real_pos();
         if(pos>get_track_length()) pos = 0;         // exceptional case handling
-        m_codec.mfm_read_byte(read_data, missing_clock, false, false);
+        m_codec.mfm_read_byte(read_data, missing_clock, error, false, false);
 #ifdef DEBUG
         std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(read_data) << " ";
 #endif
-        res.push_back(std::vector<size_t>{static_cast<size_t>(read_data), static_cast<size_t>(missing_clock?1:0), pos});
+        res.push_back(std::vector<size_t>{static_cast<size_t>(read_data), static_cast<size_t>(missing_clock?1:0), pos, static_cast<size_t>(error * 1000)});
     }
     return res;
 }

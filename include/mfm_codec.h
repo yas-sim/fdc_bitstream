@@ -66,7 +66,9 @@ public:
     inline size_t get_track_length(void) { return m_track.get_length(); }       /** unit = bit */
 
     int read_bit_ds(void);
+    int read_bit_ds(double &error);
     bool mfm_read_byte(uint8_t& data, bool& missing_clock, bool ignore_missing_clock = true, bool ignore_sync_field = true);
+    bool mfm_read_byte(uint8_t& data, bool& missing_clock, double &error, bool ignore_missing_clock = true, bool ignore_sync_field = true);
     void set_vfo_gain(gain_state state);
     void set_vfo_cell_size(double cell_size);
     uint16_t mfm_encoder(uint8_t data, bool mode = false);

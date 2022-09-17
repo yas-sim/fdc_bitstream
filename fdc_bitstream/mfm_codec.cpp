@@ -177,17 +177,22 @@ void mfm_codec::set_sampling_rate(size_t sampling_rate) {
 /**
  * @brief Read a bit from the bit array track data. 
  *        This function includes data separator and PLL.
- * 
+ * @param[out] *error : bit pulse displacement error (for analysis purpose) 
  * @return int Read bit data.
  */
 int mfm_codec::read_bit_ds(void) {
+    double dmy;
+    return read_bit_ds(dmy);
+}
+
+int mfm_codec::read_bit_ds(double &error) {
     int bit_reading = 0;
     size_t loop_count = 0;      // for timeout check
 
     if (is_track_ready() == false) {
         return -1;
     }
-
+    double error_sum = 0.f;
     do {
         // check if the next bit is within the next data window
         if (m_distance_to_next_pulse < m_vfo->m_cell_size) {
@@ -195,13 +200,14 @@ int mfm_codec::read_bit_ds(void) {
             if (m_distance_to_next_pulse >= m_vfo->m_window_ofst &&
                 m_distance_to_next_pulse < m_vfo->m_window_ofst + m_vfo->m_window_size) {
                 bit_reading = 1;                // regular pulse (within the data window)
-
             }
             else {
 #ifdef DEBUG
                 std::cout << '?';               // irregular pulse
 #endif
             }
+            error_sum += powf(fabs(m_vfo->m_cell_center - m_distance_to_next_pulse),2 );
+
             // Adjust pulse phase (imitate PLL/VFO operation)
             // Limit the PLL/VFO operation frequency and introduce fluctuation with the random generator (certain fluctuation is required to reproduce some copy protection)
             if ((static_cast<double>(m_rnd()) / static_cast<double>(INT32_MAX)) >= m_vfo_suspension_rate) {
@@ -230,13 +236,14 @@ int mfm_codec::read_bit_ds(void) {
     if (m_distance_to_next_pulse >= m_vfo->m_cell_size) {
         m_distance_to_next_pulse -= m_vfo->m_cell_size;
     }
+    error = error_sum;
     return bit_reading;
 }
 
 /**
  * @brief Set gain for the PLL in the data separator.
  * 
- * @param[in] gain Gain value for the PLL (value in double type).
+ * @param[in] state Set PLL gain state (vfo_base::gain_state::[low|high])
  */
 void mfm_codec::set_vfo_gain(gain_state state) {
     switch(state) {
@@ -265,8 +272,14 @@ void mfm_codec::set_vfo_gain(gain_state state) {
  * @return false: Track bit array data is not set. Returned values are invalid.
  */
 bool mfm_codec::mfm_read_byte(uint8_t& data, bool& missing_clock, bool ignore_missing_clock, bool ignore_sync_field) {
+    double dmy;
+    return mfm_read_byte(data, missing_clock, dmy, ignore_missing_clock, ignore_sync_field);
+}
+
+bool mfm_codec::mfm_read_byte(uint8_t& data, bool& missing_clock, double &error, bool ignore_missing_clock, bool ignore_sync_field) {
     size_t decode_count = 0;
     missing_clock = false;
+    double err = 0.f, error_sum = 0.f;
 
     if (is_track_ready() == false) {
         data = 0;
@@ -275,7 +288,8 @@ bool mfm_codec::mfm_read_byte(uint8_t& data, bool& missing_clock, bool ignore_mi
     }
 
     do {
-        int bit_data = read_bit_ds();
+        int bit_data = read_bit_ds(err);
+        error_sum += err;
         if (bit_data == -1) {
              data = 0;
              missing_clock = false;
@@ -318,6 +332,7 @@ bool mfm_codec::mfm_read_byte(uint8_t& data, bool& missing_clock, bool ignore_mi
     }
     data = read_data;
     missing_clock = false;
+    error = error_sum;
     return true;
 }
 
