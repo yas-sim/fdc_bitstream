@@ -36,20 +36,50 @@ void disk_image_d77::read(const std::string file_name) {
         //track_data.set_array(m_base_prop.m_sampling_rate * (m_base_prop.m_spindle_time_ns / 1e9));
         codec.set_track_data(track_data);
         codec.set_pos(0);
+#if 0
+        // Parameters for the standard IBM format
+        size_t gap4a = 80;
+        size_t gap1  = 50;
+        size_t gap2  = 22;
+        size_t gap3  = 54;
+        size_t gap4b = 152;
+        size_t sync  = 12;
+        bool index_address_mark = true;
+#elif 0
+        // Parameters for the ECMA/ISO standard format
+        size_t gap4a = 32;
+        size_t gap1  = 0;
+        size_t gap2  = 22;
+        size_t gap3  = 54;
+        size_t gap4b = 266;
+        size_t sync  = 12;
+        bool index_address_mark = false;
+#else
+        // Parameters for the shrank format (to support protect format)
+        size_t gap4a = 32;
+        size_t gap1  = 0;
+        size_t gap2  = 22;
+        size_t gap3  = 32;
+        size_t gap4b = 32;
+        size_t sync  = 12;
+        bool index_address_mark = false;
+#endif
         // preamble
-        for(size_t i=0; i<80; i++) codec.mfm_write_byte(0x4e, false, true, true); // Gap4a
-        for(size_t i=0; i<12; i++) codec.mfm_write_byte(0x00, false, true, true); // SYNC
-        for(size_t i=0; i< 3; i++) codec.mfm_write_byte(0xf6, true , true, true); // 0xc2
-                                   codec.mfm_write_byte(0xfc, false, true, true); // IAM
-        for(size_t i=0; i<50; i++) codec.mfm_write_byte(0x4e, false, true, true); // Gap1
+        for(size_t i=0; i < gap4a; i++) codec.mfm_write_byte(0x4e, false, true, true); // Gap4a
+        if(index_address_mark) {
+            for(size_t i=0; i <  sync; i++) codec.mfm_write_byte(0x00, false, true, true); // SYNC
+            for(size_t i=0; i <     3; i++) codec.mfm_write_byte(0xf6, true , true, true); // 0xc2
+                                            codec.mfm_write_byte(0xfc, false, true, true); // IAM
+            for(size_t i=0; i <  gap1; i++) codec.mfm_write_byte(0x4e, false, true, true); // Gap1
+        }
         // sectors
         d77img::track_data image_track = input_image.m_disk_data[track_n]; 
         if (image_track.size() == 0) continue;
         for(size_t sect_n=0; sect_n<image_track.size(); sect_n++) {
             d77img::sector_data sect = image_track[sect_n];
             byte_array sect_body = sect.m_sector_data;
-            for(size_t i=0; i<12; i++) codec.mfm_write_byte(0x00, false, true, true); // SYNC
-            for(size_t i=0; i< 3; i++) codec.mfm_write_byte(0xf5, true , true, true); // 0xa1
+            for(size_t i=0; i < sync; i++) codec.mfm_write_byte(0x00, false, true, true); // SYNC
+            for(size_t i=0; i <    3; i++) codec.mfm_write_byte(0xf5, true , true, true); // 0xa1
             crcgen.reset();
             codec.mfm_write_byte(0xfe    , false, true, true); crcgen.data(0xfe); // IDAM
             codec.mfm_write_byte(sect.m_C, false, true, true); crcgen.data(sect.m_C);
@@ -68,9 +98,9 @@ void disk_image_d77::read(const std::string file_name) {
                 break;
             }
             if(sect.m_status != 0xf0) {  // no DAM
-                for(size_t i=0; i<22; i++) codec.mfm_write_byte(0x4e, false, true, true); // Gap2
-                for(size_t i=0; i<12; i++) codec.mfm_write_byte(0x00, false, true, true); // SYNC
-                for(size_t i=0; i< 3; i++) codec.mfm_write_byte(0xf5, true, true, true);  // 0xa1
+                for(size_t i=0; i < gap2; i++) codec.mfm_write_byte(0x4e, false, true, true); // Gap2
+                for(size_t i=0; i < sync; i++) codec.mfm_write_byte(0x00, false, true, true); // SYNC
+                for(size_t i=0; i <    3; i++) codec.mfm_write_byte(0xf5, true, true, true);  // 0xa1
                 crcgen.reset();
                 switch(sect.m_dam_type) {
                 case 0x10:
@@ -94,10 +124,10 @@ void disk_image_d77::read(const std::string file_name) {
                     codec.mfm_write_byte(crcval >> 8, false, true, true); codec.mfm_write_byte(crcval, false, true, true);   // CRC
                     break;
                 }
-                for(size_t i=0; i<54; i++) codec.mfm_write_byte(0x4e, false, true, true); //Gap3
+                for(size_t i=0; i < gap3; i++) codec.mfm_write_byte(0x4e, false, true, true); //Gap3
             }
         }
-        for(size_t i=0; i<152; i++) codec.mfm_write_byte(0x4e, false, true, true); //Gap4b
+        for(size_t i=0; i < gap4b; i++) codec.mfm_write_byte(0x4e, false, true, true); //Gap4b
 
         track_data = codec.get_track_data();
         track_data.set_stream_pos(0);
