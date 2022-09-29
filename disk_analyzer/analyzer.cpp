@@ -311,7 +311,7 @@ void cmd_read_sector(size_t cyl, size_t rcd, bool pulse_vis) {
 	if(true!=pulse_vis)
 	{
         // hex dump
-	    fdc_misc::dump_buf(read_data.data.data(), read_data.data.size(), true, 16, 16, true);
+	    fdc_misc::dump_buf(read_data.data.data(), read_data.data.size(), true, 16, 16, true, nullptr, true);
 	}
 	else
 	{

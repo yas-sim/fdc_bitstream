@@ -253,12 +253,15 @@ std::vector<size_t> convert_to_dist_array(bit_array track) {
 }
 
 
-void dump_buf(uint8_t* ptr, size_t size, bool line_feed/*=true*/, size_t cols/*=64*/, size_t rows/*=32*/, bool disp_ofst/*=false*/, uint8_t *marker/*=nullptr*/) {
+void dump_buf(uint8_t* ptr, size_t size, bool line_feed/*=true*/, size_t cols/*=64*/, size_t rows/*=32*/, bool disp_ofst/*=false*/, uint8_t *marker/*=nullptr*/, bool ascii_dump/*=false*/) {
     std::ios::fmtflags flags_saved = std::cout.flags();
     size_t row_count = 0;
+    std::string ascii_buf;
+
     for (size_t i = 0; i < size; i++) {
-        if (disp_ofst) {
-            if (i % cols == 0) {
+        if (i % cols == 0) {
+            ascii_buf = std::string(cols, '.');
+            if (disp_ofst) {
                 if (row_count % rows == 0) {
                     std::cout << std::endl << "-OFST- : ";
                     for(size_t j=0; j<cols; j++) {
@@ -272,7 +275,12 @@ void dump_buf(uint8_t* ptr, size_t size, bool line_feed/*=true*/, size_t cols/*=
         if (marker != nullptr) if(marker[i] == 1) color(4);
         std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(ptr[i]) << " ";
         color(7);
+        // ascii buffer
+        ascii_buf[i % cols] = (ptr[i] >= 0x20 && ptr[i] <= 0x7e) ? ptr[i] : '.';
         if (i % cols == cols-1) {
+            if(ascii_dump) {
+                std::cout << ascii_buf;
+            }
             std::cout << std::endl;
             row_count++;
         }
