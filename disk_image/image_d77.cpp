@@ -107,6 +107,7 @@ void disk_image_d77::read(const std::string file_name) {
     m_track_data_is_set = true;
 }
 
+
 void disk_image_d77::write(const std::string file_name) {
     const size_t sector_length_table[] = { 128, 256, 512, 1024 };
     std::ios::fmtflags flags_saved = std::cout.flags();

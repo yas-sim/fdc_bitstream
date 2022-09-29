@@ -15,7 +15,7 @@ public:
     disk_image_raw() : disk_image(), m_overlap() {};
 
     void read(const std::string raw_file_name) override;
-    void write(const std::string raw_file_name) override { assert(false); }
+    void write(const std::string raw_file_name) override;
 
     disk_image_raw& operator=(disk_image &image)
     {

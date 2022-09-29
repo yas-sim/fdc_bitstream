@@ -15,8 +15,8 @@
 
 void usage(std::string cmd_name) {
     std::cout << cmd_name << "-i input_file -o output_file [-n]" << std::endl;
-    std::cout << "Input file     : hfe, mfm, raw, d77, fdx" << std::endl;
-    std::cout << "Output file    : mfm, d77, fdx, hfe" << std::endl;
+    std::cout << "Input file     : mfm, raw, d77, hfe, fdx" << std::endl;
+    std::cout << "Output file    : mfm, raw, d77, hfe, fdx" << std::endl;
     std::cout << "-n             : Normalize pulse pitch. Get statistic data of pulse-to-pulse distance \n"
                  "                 distribution in a track and align bit position with standard bit cell pitch.\n"
                  "                 This will make the disk image data easy to read." << std::endl;

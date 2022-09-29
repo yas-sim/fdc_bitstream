@@ -81,3 +81,69 @@ void disk_image_raw::read(const std::string file_name) {
     }
     m_track_data_is_set = true;
 }
+
+std::vector<size_t> bitarray_to_dist(bit_array &bary) {
+    std::vector<size_t> res;
+    res.clear();
+    bary.set_stream_pos(0);
+    while(!bary.is_wraparound()) {
+        size_t dist = bary.distance_to_next_pulse();
+        res.push_back(dist);
+    }
+    return res;
+}
+
+void disk_image_raw::write(const std::string file_name) {
+    constexpr uint8_t encode_base = ' ';
+    constexpr uint8_t max_length = 'z' - encode_base;
+    constexpr uint8_t extend_char = '{';
+
+    std::ofstream ofs(file_name, std::ios::out);        // not binary
+    if(ofs.is_open() == false) {
+        return;
+    }
+    // write the header
+    ofs << "**BIT_RATE " << m_base_prop.m_data_bit_rate << std::endl;
+    ofs << "**TRACK_RANGE 0 " << m_base_prop.m_number_of_tracks - 1 << std::endl;
+    ofs << "**MEDIA_TYPE 2D" << std::endl;
+    ofs << "**START" << std::endl;
+    //ofs << "**DRIVE_TYPE 2D" << std::endl;
+    ofs << "**SPIN_SPD " << m_base_prop.m_spindle_time_ns / 1e9 << std::endl;
+    double track_time = static_cast<double>(m_track_data[0].get_length()) / static_cast<double>(m_base_prop.m_sampling_rate);     // track time in (sec)
+    double track_ratio = track_time / (m_base_prop.m_spindle_time_ns / 1e9);            // track time ratio to spin time 
+    int overlap = static_cast<int>((track_ratio - 1.f) * 100.f);
+    if(overlap < 0) overlap = 0;
+    ofs << "**OVERLAP " << overlap << std::endl;
+    ofs << "**SAMPLING_RATE " << m_base_prop.m_sampling_rate << std::endl;
+
+    for(size_t track_n = 0; track_n < m_base_prop.m_number_of_tracks; track_n ++) {
+        ofs << "**TRACK_READ " << track_n / 2 << " " << track_n % 2 << std::endl;
+        bit_array track_data = m_track_data[track_n];
+        size_t count = 0;
+        track_data.set_stream_pos(0);
+        while(!track_data.is_wraparound()) {
+            size_t dist = track_data.distance_to_next_pulse();
+            do {
+                if(count % 100 == 0) {
+                    ofs << "~";         // pulse data line leader
+                }
+                if(dist > max_length) {
+                    ofs << static_cast<char>(extend_char);
+                    dist -= max_length;
+                } else {
+                    ofs << static_cast<char>(dist + encode_base);
+                    dist = 0;
+                }
+                if(++count % 100 == 0) {
+                    ofs << std::endl;
+                }
+            } while(dist>0);
+        }
+        if(count % 100 != 0) {
+            ofs << std::endl;
+        }        
+        ofs << "**TRACK_END" << std::endl;
+    }
+    ofs << "**COMPLETED" << std::endl;
+    ofs.close();
+}
