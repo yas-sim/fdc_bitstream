@@ -31,7 +31,6 @@ private:
     size_t      m_current_bit_pos;          // current bit position to process
     double      m_distance_to_next_pulse;
     double      m_vfo_suspension_rate;
-
     vfo_base    *m_vfo;
 
     std::random_device m_rnd;
@@ -41,6 +40,8 @@ public:
         low = 0,
         high = 1
     };
+    gain_state  m_current_vfo_gain;
+
 public:
     mfm_codec();
     ~mfm_codec();
