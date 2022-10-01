@@ -569,7 +569,7 @@ fdc_bitstream::sector_data fdc_bitstream::read_sector(int trk, int sct) {
                 else {
                     distance = pos - sect_data.id_pos + get_track_length();     // Compensation for wrap around
                 }
-                if (distance > (43 + 9) * (4e6 / 500e3) * 8 * 2) {       // DAM/DDAM must be found in 43 bytes (MFM, FDC179x/MB8876). +10 for IDAM field, *8 for 1 byte, *2 for (CLK+DATA).
+                if (distance > (43 + 9) * (m_sampling_rate / m_data_bit_rate) * 8 * 2) {       // DAM/DDAM must be found in 43 bytes (MFM, FDC179x/MB8876). +10 for IDAM field, *8 for 1 byte, *2 for (CLK+DATA).
                     sect_data.record_not_found = true;
                 }
                 else {
