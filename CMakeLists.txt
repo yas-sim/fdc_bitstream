@@ -18,3 +18,5 @@ add_subdirectory(disk_analyzer)
 
 add_subdirectory(externals/lz4)
 add_subdirectory(pauline2raw)
+
+add_subdirectory(tests)

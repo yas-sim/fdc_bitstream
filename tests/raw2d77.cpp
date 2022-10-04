@@ -186,5 +186,32 @@ int main(int ac,char *av[])
 	correctD77FileName=av[2];
 	workDir=av[3];
 
-	return 1;
+	std::string templD77output=workDir+"/testout.d77";
+
+	disk_image_raw raw;
+	raw.read(inputRAWFileName);
+
+	disk_image_d77 correctD77;
+	correctD77.read(correctD77FileName);
+
+	disk_image_d77 d77forSave;
+	d77forSave.set_track_data_all(raw.get_track_data_all());
+
+
+	if(raw.get_number_of_tracks()!=correctD77.get_number_of_tracks())
+	{
+		std::cout << "RAW and correct D77 track count do not match." << std::endl;
+		std::cout << "  RAW  " << raw.get_number_of_tracks() << std::endl;
+		std::cout << "  D77  " << correctD77.get_number_of_tracks() << std::endl;
+		return 1;
+	}
+	if(raw.get_number_of_tracks()!=d77forSave.get_number_of_tracks())
+	{
+		std::cout << "RAW and converted D77 track count do not match." << std::endl;
+		std::cout << "  RAW  " << raw.get_number_of_tracks() << std::endl;
+		std::cout << "  D77  " << d77forSave.get_number_of_tracks() << std::endl;
+		return 1;
+	}
+
+	return 0;
 }
