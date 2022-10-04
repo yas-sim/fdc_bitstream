@@ -48,7 +48,7 @@ std::ifstream disk_image::open_text_file(const std::string file_name) {
     return ifs;
 }
 
-bit_array disk_image::get_track_data(const size_t track_number) {
+bit_array disk_image::get_track_data(const size_t track_number) const {
     if (track_number < m_track_data.size() && track_number < m_base_prop.m_number_of_tracks) {
         return m_track_data[track_number];
     }
