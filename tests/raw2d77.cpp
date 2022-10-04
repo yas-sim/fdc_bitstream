@@ -1,6 +1,7 @@
 #include <string>
 
 #include "disk_images.h"
+#include "fdc_bitstream.h"
 
 
 
@@ -171,6 +172,96 @@ unsigned char trueSectorData[]=
 };
 
 
+bool CompareDisk(const disk_image &diskA,const disk_image &diskB,std::string diskALabel,std::string diskBLabel)
+{
+	std::cout << "Compare " << diskALabel << " and " << diskBLabel << std::endl;
+
+	if(diskA.get_number_of_tracks()!=diskB.get_number_of_tracks())
+	{
+		std::cout << "Track count do not match." << std::endl;
+		std::cout << "    " << diskA.get_number_of_tracks() << std::endl;
+		std::cout << "    " << diskB.get_number_of_tracks() << std::endl;
+		return false;
+	}
+	for(unsigned int trk=0; trk<diskA.get_number_of_tracks(); ++trk)
+	{
+		fdc_bitstream drive[2];
+
+		drive[0].set_track_data(diskA.get_track_data(trk));
+		drive[0].set_pos(0);
+		drive[0].set_vfo_type(VFO_TYPE_DEFAULT);
+		drive[0].set_vfo_gain_val(VFO_GAIN_L_DEFAULT,VFO_GAIN_H_DEFAULT);
+		auto idDisk0=drive[0].read_all_idam();
+
+		drive[1].set_track_data(diskB.get_track_data(trk));
+		drive[1].set_pos(0);
+		drive[1].set_vfo_type(VFO_TYPE_DEFAULT);
+		drive[1].set_vfo_gain_val(VFO_GAIN_L_DEFAULT,VFO_GAIN_H_DEFAULT);
+		auto idDisk1=drive[0].read_all_idam();
+
+		if(idDisk0.size()!=idDisk1.size())
+		{
+			std::cout << "Sector count in track " << trk << " do not match." << std::endl;
+			std::cout << "    " << idDisk0.size() << std::endl;
+			std::cout << "    " << idDisk1.size() << std::endl;
+			return false;
+		}
+
+		for(auto id0 : idDisk0)
+		{
+			bool foundMatch=false;
+			for(auto id1 : idDisk1)
+			{
+				if(id0.C==id1.C &&
+				   id0.H==id1.H &&
+				   id0.R==id1.R &&
+				   id0.N==id1.N)
+				{
+					foundMatch=true;
+					break;
+				}
+			}
+			if(true!=foundMatch)
+			{
+				std::cout << "Sector (C,H,R,N)=(" << id0.C << "," << id0.H << "," << id0.R << "," << id0.N << ")" << std::endl;
+				std::cout << "in " << diskALabel << " was not found in " << diskBLabel << std::endl;
+				return false;
+			}
+		}
+
+		for(auto id : idDisk0)
+		{
+			auto sector0=drive[0].read_sector(id.C,id.R);
+			auto sector1=drive[1].read_sector(id.C,id.R);
+
+			if(true==sector0.record_not_found || true==sector1.record_not_found)
+			{
+				std::cout << "Record Not Found Error." << std::endl;
+				std::cout << "Sector (C,H,R,N)=(" << id.C << "," << id.H << "," << id.R << "," << id.N << ")" << std::endl;
+				return false;
+			}
+
+			if(sector0.data.size()!=sector1.data.size())
+			{
+				std::cout << "Sector sizes do not match." << std::endl;
+				std::cout << "Sector (C,H,R,N)=(" << id.C << "," << id.H << "," << id.R << "," << id.N << ")" << std::endl;
+				return false;
+			}
+
+			for(int i=0; i<sector0.data.size(); ++i)
+			{
+				if(sector0.data[i]!=sector1.data[i])
+				{
+					std::cout << "Sector contents do not match." << std::endl;
+					std::cout << "Sector (C,H,R,N)=(" << id.C << "," << id.H << "," << id.R << "," << id.N << ")" << std::endl;
+					return false;
+				}
+			}
+		}
+	}
+
+	return true;
+}
 
 int main(int ac,char *av[])
 {
@@ -186,7 +277,7 @@ int main(int ac,char *av[])
 	correctD77FileName=av[2];
 	workDir=av[3];
 
-	std::string templD77output=workDir+"/testout.d77";
+	std::string tempD77output=workDir+"/testout.d77";
 
 	disk_image_raw raw;
 	raw.read(inputRAWFileName);
@@ -196,22 +287,52 @@ int main(int ac,char *av[])
 
 	disk_image_d77 d77forSave;
 	d77forSave.set_track_data_all(raw.get_track_data_all());
+	d77forSave.set_property(raw.get_property());
 
+	d77forSave.write(tempD77output);
 
-	if(raw.get_number_of_tracks()!=correctD77.get_number_of_tracks())
+	disk_image_d77 d77ReadBack;
+	d77ReadBack.read(tempD77output);
+
+	if(true!=CompareDisk(raw,correctD77,"RAW","Correct D77") ||
+	   true!=CompareDisk(raw,correctD77,"RAW","Converted D77") ||
+	   true!=CompareDisk(raw,d77ReadBack,"RAW","D77 Read Back"))
 	{
-		std::cout << "RAW and correct D77 track count do not match." << std::endl;
-		std::cout << "  RAW  " << raw.get_number_of_tracks() << std::endl;
-		std::cout << "  D77  " << correctD77.get_number_of_tracks() << std::endl;
+		std::cout << "Error!" << std::endl;
 		return 1;
 	}
-	if(raw.get_number_of_tracks()!=d77forSave.get_number_of_tracks())
+
+
+	for(unsigned int i=0; i<sizeof(trueSectorData); i+=258)
 	{
-		std::cout << "RAW and converted D77 track count do not match." << std::endl;
-		std::cout << "  RAW  " << raw.get_number_of_tracks() << std::endl;
-		std::cout << "  D77  " << d77forSave.get_number_of_tracks() << std::endl;
-		return 1;
+		fdc_bitstream fdc;
+		auto trk=trueSectorData[i];
+		auto C=trk/2;
+		auto R=trueSectorData[i+1];
+
+        fdc.set_track_data(d77ReadBack.get_track_data(trk));
+        fdc.set_pos(0);
+        fdc.set_vfo_type(VFO_TYPE_DEFAULT);
+        fdc.set_vfo_gain_val(VFO_GAIN_L_DEFAULT,VFO_GAIN_H_DEFAULT);
+
+		auto data=trueSectorData+i+2;
+		auto sector=fdc.read_sector(C,R);
+		if(sector.data.size()<256)
+		{
+			std::cout << "Sector read size too short." << std::endl;
+			return 1;
+		}
+		for(int j=0; j<256; ++j)
+		{
+			if(data[j]!=sector.data[j])
+			{
+				std::cout << "Sector data error." << std::endl;
+				return 1;
+			}
+		}
 	}
 
+
+	std::cout << "Pass!" << std::endl;
 	return 0;
 }
