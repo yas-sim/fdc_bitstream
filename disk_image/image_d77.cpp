@@ -149,7 +149,7 @@ void disk_image_d77::write(const std::string file_name) {
     output_image.m_disk_type = 0;       // 0x00=2D 0x10=2DD 0x20=2HD 0x30=1D 0x40=1DD
     output_image.m_disk_size = 0;
 
-    if(m_base_prop.m_sampling_rate == 1e6) {   // 1Mbps == 2HD_MFM , 500Kbps == 2D/2DD_MFM
+    if(m_base_prop.m_data_bit_rate == 1e6) {   // 1Mbps == 2HD_MFM , 500Kbps == 2D/2DD_MFM
         output_image.m_disk_type = 0x20;        // 2HD
     } else if (m_base_prop.m_number_of_tracks > 84) {
         output_image.m_disk_type = 0x10;        // 2DD
@@ -157,6 +157,8 @@ void disk_image_d77::write(const std::string file_name) {
 
     size_t total_sector_good = 0;
     size_t total_sector_bad = 0;
+
+    fdc.set_fdc_params(m_base_prop.m_sampling_rate,m_base_prop.m_data_bit_rate);
 
     for (size_t track_n = 0; track_n < m_base_prop.m_number_of_tracks; track_n++) {
         if(m_verbose) {
