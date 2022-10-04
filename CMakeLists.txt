@@ -3,6 +3,8 @@ project(fdc_bitstream)
 
 #set(CMAKE_CXX_FLAGS "-std=c++14")
 
+enable_testing()
+
 include_directories("${CMAKE_SOURCE_DIR}/include")
 link_directories("${CMAKE_SOURCE_DIR}/bin/debug")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
@@ -18,3 +20,5 @@ add_subdirectory(disk_analyzer)
 
 add_subdirectory(externals/lz4)
 add_subdirectory(pauline2raw)
+
+add_subdirectory(tests)

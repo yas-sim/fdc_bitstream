@@ -51,7 +51,7 @@ public:
     virtual void read(const std::string file_name) = 0;
     virtual void write(const std::string file_name) = 0;
 
-    bit_array get_track_data(const size_t track_number);
+    bit_array get_track_data(const size_t track_number) const;
     void set_track_data(const size_t track_number, const bit_array track_data);
 
     size_t media_number_of_tracks(const media_type mtype);
@@ -70,10 +70,10 @@ public:
         }
     }
 
-    inline size_t get_number_of_tracks(void) { return m_base_prop.m_number_of_tracks; }
-    inline size_t get_spindle_time_ns(void)  { return m_base_prop.m_spindle_time_ns; }
-    inline size_t get_data_bit_rate(void)    { return m_base_prop.m_data_bit_rate; }
-    inline size_t get_sampling_rate(void)    { return m_base_prop.m_sampling_rate; }
+    inline size_t get_number_of_tracks(void) const { return m_base_prop.m_number_of_tracks; }
+    inline size_t get_spindle_time_ns(void) const  { return m_base_prop.m_spindle_time_ns; }
+    inline size_t get_data_bit_rate(void) const    { return m_base_prop.m_data_bit_rate; }
+    inline size_t get_sampling_rate(void) const    { return m_base_prop.m_sampling_rate; }
 
     bit_array simple_raw_to_mfm(bit_array &raw) const;
     bit_array simple_mfm_to_raw(bit_array &mfm) const;
