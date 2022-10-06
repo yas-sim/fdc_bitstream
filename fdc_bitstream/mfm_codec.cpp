@@ -146,6 +146,7 @@ void mfm_codec::unset_track_data(void) {
  */
 void mfm_codec::set_data_bit_rate(size_t data_bit_rate) {
     m_data_bit_rate = data_bit_rate;
+	m_bit_width_w = m_sampling_rate/m_data_bit_rate;
     m_vfo -> set_params(m_sampling_rate, m_data_bit_rate);
     m_vfo -> update_cell_params();
 }
@@ -157,6 +158,7 @@ void mfm_codec::set_data_bit_rate(size_t data_bit_rate) {
  */
 void mfm_codec::set_sampling_rate(size_t sampling_rate) { 
     m_sampling_rate = sampling_rate; 
+	m_bit_width_w = m_sampling_rate/m_data_bit_rate;
     m_vfo -> set_params(m_sampling_rate, m_data_bit_rate);
     m_vfo -> update_cell_params();
 }
