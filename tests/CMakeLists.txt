@@ -17,3 +17,14 @@ add_test(
 		"${CMAKE_SOURCE_DIR}/test_data/2019FM77AVDemo.d77"
 		"${CMAKE_BINARY_DIR}"
 )
+
+
+
+add_executable(testFormat format.cpp)
+target_link_libraries(testFormat disk_image)
+add_test(
+	NAME TEST_FORMAT
+	COMMAND
+		testFormat
+)
+
