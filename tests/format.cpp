@@ -83,19 +83,18 @@ std::vector <uint8_t> MakeFormatData(int C,int H)
 	return format;
 }
 
-
-
-int main(void)
+int FormatTest(unsigned int samplingRate,unsigned int dataBitRate)
 {
 	disk_image_raw img;
 
 	disk_image_base_properties prop;
     prop.m_number_of_tracks=80;
     prop.m_spindle_time_ns=200000000;
-    prop.m_sampling_rate=4000000;
-    prop.m_data_bit_rate=500000;
+    prop.m_sampling_rate=samplingRate;
+    prop.m_data_bit_rate=dataBitRate;
 	img.set_property(prop);
 
+	std::cout << "Sampling Rate " << samplingRate << "Data Bit Rate " << dataBitRate << std::endl;
 	std::cout << "Formatting..." << std::endl;
 	img.create_empty_track_data(80);
 	for(int trk=0; trk<80; ++trk)
@@ -173,6 +172,17 @@ int main(void)
 				return 1;
 			}
 		}
+	}
+	return 0;
+}
+
+int main(void)
+{
+	if(0!=FormatTest(8000000,500000) ||
+	   0!=FormatTest(4000000,500000))
+	{
+		std::cout << "Fail!" << std::endl;
+		return 1;
 	}
 
 	std::cout << "Pass!" << std::endl;
