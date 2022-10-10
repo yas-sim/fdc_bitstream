@@ -660,7 +660,7 @@ bool PaulineToRaw::ExportRaw(std::string fName,const std::vector <HxCStream::Tra
 				{
 					ofp << "~";
 				}
-				auto pulseLen=hxc.pulse[i];
+				uint64_t pulseLen=hxc.pulse[i];
 				pulseLen*=resampleRate;
 
 				pulseLen+=leftOverTime;
