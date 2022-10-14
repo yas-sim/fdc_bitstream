@@ -21,8 +21,16 @@ void disk_image_fdx::read(const std::string file_name) {
     }
     m_base_prop.m_number_of_tracks = header.cylinders * header.heads;
     m_base_prop.m_spindle_time_ns  = 60e9 / header.rpm;
-    m_base_prop.m_data_bit_rate    = header.rate * 1e3;
-    m_base_prop.m_sampling_rate    = 4e6;      // 4MHz fixed
+	if(9==header.type)
+	{
+		m_base_prop.m_data_bit_rate    = ((290<=header.rpm && header.rpm<=310) ? 500000 : 1000000);
+	    m_base_prop.m_sampling_rate    = header.rate * 1e3;
+	}
+	else
+	{
+	    m_base_prop.m_data_bit_rate    = header.rate * 1e3;
+	    m_base_prop.m_sampling_rate    = 4e6;      // 4MHz fixed
+	}
 
     size_t data_type = header.type; // 00:2D MFM, 09:RAW
 
