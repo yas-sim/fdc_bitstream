@@ -1,3 +1,6 @@
+set(TEST_IMAGE_DIR ${CMAKE_SOURCE_DIR}/../fdc_bitstream_test)
+
+
 add_library(testutil util.cpp)
 target_include_directories(testutil PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(testutil disk_image)
@@ -39,3 +42,24 @@ add_test(
 add_executable(testCompare compare.cpp)
 target_link_libraries(testCompare disk_image testutil)
 
+if(EXISTS ${TEST_IMAGE_DIR}/000000.raw AND
+   EXISTS ${TEST_IMAGE_DIR}/000000.d77)
+	add_test(
+		NAME COMPARE_000000
+		COMMAND testCompare ${TEST_IMAGE_DIR}/000000.d77 ${TEST_IMAGE_DIR}/000000.raw
+	) # Memo-to-myself:  Put D77 first.  RAW may have extra broken sector from overlap read.
+endif()
+if(EXISTS ${TEST_IMAGE_DIR}/000001.raw AND
+   EXISTS ${TEST_IMAGE_DIR}/000001.d77)
+	add_test(
+		NAME COMPARE_000001
+		COMMAND testCompare ${TEST_IMAGE_DIR}/000001.d77 ${TEST_IMAGE_DIR}/000001.raw
+	) # Memo-to-myself:  Put D77 first.  RAW may have extra broken sector from overlap read.
+endif()
+if(EXISTS ${TEST_IMAGE_DIR}/000002.raw AND
+   EXISTS ${TEST_IMAGE_DIR}/000002.d77)
+	add_test(
+		NAME COMPARE_000002
+		COMMAND testCompare ${TEST_IMAGE_DIR}/000002.d77 ${TEST_IMAGE_DIR}/000002.raw
+	) # Memo-to-myself:  Put D77 first.  RAW may have extra broken sector from overlap read.
+endif()

@@ -67,24 +67,29 @@ bool CompareDisk(const disk_image &diskA,const disk_image &diskB,std::string dis
 			auto sector0=drive[0].read_sector(id.C,id.R);
 			auto sector1=drive[1].read_sector(id.C,id.R);
 
+			int C=id.C;
+			int H=id.H;
+			int R=id.R;
+			int N=id.N;
+
 			if(true==sector0.record_not_found || true==sector1.record_not_found)
 			{
 				std::cout << "Record Not Found Error." << std::endl;
-				std::cout << "Sector (C,H,R,N)=(" << id.C << "," << id.H << "," << id.R << "," << id.N << ")" << std::endl;
+				std::cout << "Sector (C,H,R,N)=(" << C << "," << H << "," << R << "," << N << ")" << std::endl;
 				return false;
 			}
 
 			if(sector0.crc_sts!=sector1.crc_sts)
 			{
 				std::cout << "CRC Error Status Do Not Match." << std::endl;
-				std::cout << "Sector (C,H,R,N)=(" << id.C << "," << id.H << "," << id.R << "," << id.N << ")" << std::endl;
+				std::cout << "Sector (C,H,R,N)=(" << C << "," << H << "," << R << "," << N << ")" << std::endl;
 				return false;
 			}
 
 			if(sector0.data.size()!=sector1.data.size())
 			{
 				std::cout << "Sector sizes do not match." << std::endl;
-				std::cout << "Sector (C,H,R,N)=(" << id.C << "," << id.H << "," << id.R << "," << id.N << ")" << std::endl;
+				std::cout << "Sector (C,H,R,N)=(" << C << "," << H << "," << R << "," << N << ")" << std::endl;
 				return false;
 			}
 
@@ -98,7 +103,7 @@ bool CompareDisk(const disk_image &diskA,const disk_image &diskB,std::string dis
 				if(sector0.data[i]!=sector1.data[i])
 				{
 					std::cout << "Sector contents do not match." << std::endl;
-					std::cout << "Sector (C,H,R,N)=(" << id.C << "," << id.H << "," << id.R << "," << id.N << ")" << std::endl;
+					std::cout << "Sector (C,H,R,N)=(" << C << "," << H << "," << R << "," << N << ")" << std::endl;
 					return false;
 				}
 			}
