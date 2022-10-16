@@ -44,7 +44,10 @@ bool HxCStream::LoadTrack(std::ifstream &ifp)
 		size_t packetSize=ReadDWORD(chunkHeader+4);
 		size_t packetNum=ReadDWORD(chunkHeader+8);
 
-		std::cout << "Chunk #" << packetNum << " at " << chunkPtr << " (" << packetSize << " bytes)" << std::endl;
+		if(true!=quiet)
+		{
+			std::cout << "Chunk #" << packetNum << " at " << chunkPtr << " (" << packetSize << " bytes)" << std::endl;
+		}
 
 		std::vector <unsigned char> packetData;
 		unsigned char crcBytes[4];
@@ -66,7 +69,10 @@ bool HxCStream::LoadTrack(std::ifstream &ifp)
 			switch(packetType)
 			{
 			case 0:
-				std::cout << "[Metadata] (" << packetDataSize << "+8 bytes)" << std::endl;
+				if(true!=quiet)
+				{
+					std::cout << "[Metadata] (" << packetDataSize << "+8 bytes)" << std::endl;
+				}
 				{
 					std::string meta;
 					for(size_t i=0; i<packetDataSize; ++i)
@@ -78,7 +84,10 @@ bool HxCStream::LoadTrack(std::ifstream &ifp)
 				packetTop+=packetDataSize+8;
 				break;
 			case 1:
-				std::cout << "[IO] (" << packetDataSize << "+8 bytes)" << std::endl;
+				if(true!=quiet)
+				{
+					std::cout << "[IO] (" << packetDataSize << "+8 bytes)" << std::endl;
+				}
 				{
 					auto packedSize=ReadDWORD(packetPtr+8);
 					auto unpackedSize=ReadDWORD(packetPtr+12);
@@ -100,7 +109,10 @@ bool HxCStream::LoadTrack(std::ifstream &ifp)
 				packetTop+=packetDataSize+8;
 				break;
 			case 2:
-				std::cout << "[Pulse] (" << packetDataSize << "+8 bytes)" << std::endl;
+				if(true!=quiet)
+				{
+					std::cout << "[Pulse] (" << packetDataSize << "+8 bytes)" << std::endl;
+				}
 				{
 					auto packedSize=ReadDWORD(packetPtr+8);
 					auto unpackedSize=ReadDWORD(packetPtr+12);
@@ -122,7 +134,10 @@ bool HxCStream::LoadTrack(std::ifstream &ifp)
 				packetTop+=packetDataSize+8;
 				break;
 			case 0xFFFFFFFF:
-				std::cout << "[Padding]" << std::endl;
+				if(true!=quiet)
+				{
+					std::cout << "[Padding]" << std::endl;
+				}
 				packetTop=packetData.size();
 				break;
 			default:
@@ -136,8 +151,11 @@ bool HxCStream::LoadTrack(std::ifstream &ifp)
 	MarkIndexHole();
 	CalculateMillisecPerRotation();
 
-	std::cout << "Time per Track " << timePerTrack << "ms" << std::endl;
-	std::cout << millisecPerRotation << "ms per rotation." << std::endl;
+	if(true!=quiet)
+	{
+		std::cout << "Time per Track " << timePerTrack << "ms" << std::endl;
+		std::cout << millisecPerRotation << "ms per rotation." << std::endl;
+	}
 
 	if(numPulses!=pulse.size())
 	{
@@ -149,20 +167,25 @@ bool HxCStream::LoadTrack(std::ifstream &ifp)
 	{
 		totalTime+=p;
 	}
-	std::cout << "Total Pulse: " << totalTime << std::endl;
 
 	size_t millisec=totalTime*1000/samplingRate;
-	std::cout << "Total Time:  " << millisec << "ms" << std::endl;
-	std::cout << "Total IO:    " << io.size() << std::endl;
-
-	std::cout << "Pulse Count: " << numPulses << std::endl;
+	if(true!=quiet)
+	{
+		std::cout << "Total Pulse: " << totalTime << std::endl;
+		std::cout << "Total Time:  " << millisec << "ms" << std::endl;
+		std::cout << "Total IO:    " << io.size() << std::endl;
+		std::cout << "Pulse Count: " << numPulses << std::endl;
+	}
 
 	bool prev=false;
 	for(size_t i=0; i<indexHole.size(); ++i)
 	{
 		if(prev!=indexHole[i])
 		{
-			std::cout << "Index " << (indexHole[i] ? "ON " : "OFF") << " at " << i << std::endl;
+			if(true!=quiet)
+			{
+				std::cout << "Index " << (indexHole[i] ? "ON " : "OFF") << " at " << i << std::endl;
+			}
 		}
 		prev=indexHole[i];
 	}
@@ -383,8 +406,8 @@ void HxCStream::CalculateMillisecPerRotation(void)
 bool HxCStream::GetIndexForNthRotation(size_t &iStart,size_t &iEnd,unsigned int nthRotation) const
 {
 	int state=0;
-	iStart=0;
-	for(int i=0; i<pulse.size(); ++i)
+	iStart=1; // The first pulse is garbage.  Throw it away.
+	for(int i=1; i<pulse.size(); ++i)
 	{
 		if(0==state && true==indexHole[i])
 		{
@@ -412,6 +435,47 @@ bool HxCStream::GetIndexForNthRotation(size_t &iStart,size_t &iEnd,unsigned int 
 		return true;
 	}
 	return false;
+}
+
+size_t HxCStream::MakeOverlap(size_t iStart,size_t iEnd,float overlap) const
+{
+	float len=(float)(iEnd-iStart);
+	len*=overlap;
+	return std::min(iStart+(size_t)len,pulse.size()-1);
+}
+
+size_t HxCStream::ExactCut(size_t iStart,size_t iEnd,int searchRange,size_t searchWindowSize) const
+{
+	if(iEnd<searchRange || pulse.size()<=iEnd+searchRange)
+	{
+		return iEnd;
+	}
+
+	size_t iEndBest=iEnd;
+	size_t maxError=0x7fffffff;
+	for(size_t i=iEnd-searchRange; i<=iEnd+searchRange; ++i)
+	{
+		size_t e=0;
+		for(int j=0; j<searchWindowSize; ++j)
+		{
+			int64_t p0=pulse[iStart+j];
+			int64_t p1=pulse[i+j];
+			e+=(p1-p0)*(p1-p0);
+		}
+		if(e<maxError)
+		{
+			iEndBest=i;
+			maxError=e;
+		}
+		// std::cout << "[" << i << "]" << e << std::endl;
+	}
+
+	if(iStart+1<iEndBest)
+	{
+		--iEndBest; // iEnd is inclusive.
+	}
+
+	return iEndBest;
 }
 
 std::vector <HxCStream::TrackFileName> HxCStream::MakeTrackFileNameList(std::string path)
@@ -506,6 +570,12 @@ bool PaulineToRaw::RecognizeCommandParameter(int ac,char *av[])
 		else if("-RESAMPLE"==arg && i+1<ac)
 		{
 			resampleRate=atoi(av[i+1]);
+			++i;
+		}
+		else if("-OVERLAP"==arg && i+1<ac)
+		{
+			overlap=atof(av[i+1]);
+			exactCut=false;
 			++i;
 		}
 		else if(true!=streamPathSet)
@@ -625,6 +695,15 @@ bool PaulineToRaw::ExportRaw(std::string fName,const std::vector <HxCStream::Tra
 	ofp << "**SAMPLING_RATE " << resampleRate << std::endl;
 	ofp << "**BIT_RATE " << dataBitRate << std::endl;
 	ofp << "**SPIN_SPD " << spinSpeed << std::endl;
+
+	{
+		int ovlp=(int)(100.0f*(overlap-1.0f));
+		if(0!=ovlp)
+		{
+			ofp << "**OVERLAP " << ovlp << std::endl;
+		}
+	}
+
 	ofp << "**START" << std::endl;
 	for(auto tfn : fileList)
 	{
@@ -644,6 +723,15 @@ bool PaulineToRaw::ExportRaw(std::string fName,const std::vector <HxCStream::Tra
 				std::cout << "The rotation is not sampled." << std::endl;
 				return false;
 			}
+
+			if(true==exactCut)
+			{
+				int searchBytes=4;
+				size_t searchWindowSize=256; // Ad-hoc
+				iEnd=hxc.ExactCut(iStart,iEnd,16*searchBytes,searchWindowSize); // 16 pulses for one byte.
+			}
+
+			iEnd=hxc.MakeOverlap(iStart,iEnd,overlap);
 
 			ofp << "**TRACK_READ " << tfn.C << " " << tfn.H << std::endl;
 			unsigned int lineCount=0;
@@ -720,4 +808,11 @@ void PaulineToRaw::Help(void)
 	std::cout << "    Default is automatic from rotation speed info in the hxcstream." << std::endl;
 	std::cout << "  -resample sampling_rate_in_hz" << std::endl;
 	std::cout << "    Set re-sampling rate.  Default is 8000000 (8MHz)" << std::endl;
+	std::cout << "  -overlap overlap_ratio" << std::endl;
+	std::cout << "    Set overlap ratio.  In multiple-revolution sample, setting greater than 1.0 overlap" << std::endl;
+	std::cout << "    will take samples beyond the index hole to capture cross-index sectors." << std::endl;
+	std::cout << "    Overlap ratio 1.0 means exactly one revolution." << std::endl;
+	std::cout << "    Overlap ratio 1.1 means take 10% more than one revolution." << std::endl;
+	std::cout << "    This option also disables exact-cut feature." << std::endl;
+	std::cout << "    -overlap 1.0 for disabling exact-cut and cut out one revolution." << std::endl;
 }

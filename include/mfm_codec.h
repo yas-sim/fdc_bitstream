@@ -17,6 +17,8 @@ private:
     size_t      m_bit_width_w = ((4e6 / 1e6) * 2);    // Bit cell width for writing. default == 8  # 4MHz/500KHz
     const uint16_t m_missing_clock_a1 = 0x4489;       //  0100_0100_10*0_1001
     const uint16_t m_missing_clock_c2 = 0x5224;       //  0101_0010_*010_0100
+    const uint16_t m_missing_clock_14 = 0x8912;       //  1000_1001_0*01_0010  A1 can decay to become 14
+    const uint16_t m_missing_clock_28 = 0x5224;       //  1010_010*_0100_1000  C2 can decay to become 28
     const uint64_t m_pattern_ff = 0x5555555555555555; // for 4 bytes of sync data(unused)
     const uint64_t m_pattern_00 = 0xaaaaaaaaaaaaaaaa; // for 4 bytes of sync data
 

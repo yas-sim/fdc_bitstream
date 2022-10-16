@@ -189,6 +189,15 @@ void disk_image_d77::write(const std::string file_name) {
             sect_pos = (sect_pos < sect_pos_ofst) ? 0 : sect_pos - sect_pos_ofst;
             fdc.set_pos(sect_pos);
             fdc_bitstream::sector_data read_sect = fdc.read_sector(sect_dt.m_C, sect_dt.m_R);
+
+			if(true==read_sect.crc_sts && 0==sect_dt.m_status)
+			{
+				sect_dt.m_status=0xb0;
+			}
+			if(true==read_sect.dam_type)
+			{
+				sect_dt.m_dam_type=0x10;
+			}
 #if 0
             // Use actual sector body length
             sect_dt.m_sector_data = read_sect.data;
