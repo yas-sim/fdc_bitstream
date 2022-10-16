@@ -468,6 +468,20 @@ size_t fdc_bitstream::get_real_pos(void)
 	return m_codec.get_real_pos();
 }
 
+/**
+ * @brief Read 1 byte from track buffer (Interface to mfm_codec)
+ * 
+ * @param[out] data Read data of 1 byte. 
+ * @param[out] missing_clock Missing clock flag (true=missing clock). 
+ * @param ignore_missing_clock Flag to ignore missing clock pattern during decoding (true=ignore).
+ * @param ignore_sync_field Flag to ignore SYNC pattern during decoding (true=ignore).
+ * @return true: Result is valid.
+ * @return false: Track bit array data is not set. Returned values are invalid.
+*/
+bool fdc_bitstream::read_byte(uint8_t& data, bool& missing_clock, double &error,bool ignore_missing_clock, bool ignore_sync_field)
+{
+	return m_codec.mfm_read_byte(data,missing_clock,error,ignore_missing_clock,ignore_sync_field);
+}
 
 /**
 * @brief Set a new track data.
