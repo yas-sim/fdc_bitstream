@@ -212,7 +212,11 @@ int mfm_codec::read_bit_ds(double &error) {
 
             // Adjust pulse phase (imitate PLL/VFO operation)
             // Limit the PLL/VFO operation frequency and introduce fluctuation with the random generator (certain fluctuation is required to reproduce some copy protection)
+<<<<<<< HEAD
             if (m_current_vfo_gain == gain_state::high ||  (static_cast<double>(m_rnd()) / static_cast<double>(INT32_MAX)) >= m_vfo_suspension_rate) {
+=======
+            if ((static_cast<double>(m_rnd()) / static_cast<double>(UINT32_MAX)) >= m_vfo_suspension_rate) {
+>>>>>>> 8047723ce748343b0bcc264bd15d08d54f9334f5
                 m_distance_to_next_pulse = m_vfo->calc(m_distance_to_next_pulse);
             }
             
@@ -290,6 +294,9 @@ bool mfm_codec::mfm_read_byte(uint8_t& data, bool& missing_clock, double &error,
         return false;
     }
 
+	bool prevA1decay=((m_bit_stream&0xffffu)==m_missing_clock_14);
+	bool prevC2decay=((m_bit_stream&0xffffu)==m_missing_clock_28);
+
     do {
         int bit_data = read_bit_ds(err);
         error_sum += err;
@@ -305,13 +312,25 @@ bool mfm_codec::mfm_read_byte(uint8_t& data, bool& missing_clock, double &error,
         }
         m_bit_stream = (m_bit_stream << 1) | bit_data;
 
-        if (ignore_missing_clock == false && (decode_count & 0b01u)==0) {  // Ignore MC on clock phase
-            if ((m_bit_stream & 0x0ffffu) == m_missing_clock_a1) {      // Missing clock 0xA1 pattern
+        if (ignore_missing_clock == false) {  // Ignore MC on clock phase
+			if ((m_bit_stream & 0x0ffffu) == m_missing_clock_14 && (decode_count & 0b01u)==0)
+			{
+                data = 0x14;
+                missing_clock = true;
+                return true;
+			}
+			if ((m_bit_stream & 0x0ffffu) == m_missing_clock_28 && (decode_count & 0b01u)==0)
+			{
+                data = 0x28;
+                missing_clock = true;
+                return true;
+			}
+            if ((m_bit_stream & 0x0ffffu) == m_missing_clock_a1 && ((decode_count & 0b01u)==0 || prevA1decay)) {      // Missing clock 0xA1 pattern
                 data = 0xa1;
                 missing_clock = true;
                 return true;
             }
-            if ((m_bit_stream & 0x0ffffu) == m_missing_clock_c2) {       // Missing clock 0xC2 pattern
+            if ((m_bit_stream & 0x0ffffu) == m_missing_clock_c2 && ((decode_count & 0b01u)==0 || prevC2decay)) {       // Missing clock 0xC2 pattern
                 data = 0xc2;
                 missing_clock = true;
                 return true;

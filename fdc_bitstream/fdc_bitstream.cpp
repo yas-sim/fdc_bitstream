@@ -576,6 +576,7 @@ fdc_bitstream::sector_data fdc_bitstream::read_sector(int trk, int sct) {
                     sect_data.data = sect_body_data;
                     sect_data.pos = sect_byte_pos;
                     sect_data.record_not_found = record_not_found;
+                    sect_data.dam_type=dam_type;
                     sect_data.crc_sts = crc_error;
                     return sect_data;
                 }

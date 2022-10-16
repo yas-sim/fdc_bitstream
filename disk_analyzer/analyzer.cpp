@@ -921,7 +921,34 @@ int main(int argc, char* argv[]) {
     size_t cmd_count = 1;
     std::ifstream ifs;
     if (argc>1) {
-        ifs.open(argv[1]);
+		std::string argv1=argv[1];
+		size_t lastDot=0;
+		for(size_t i=0; i<argv1.size(); ++i)
+		{
+			if(argv1[i]=='.')
+			{
+				lastDot=i;
+			}
+		}
+		std::string ext=argv1.substr(lastDot);
+		for(auto &c : ext)
+		{
+			if('a'<=c && c<='z')
+			{
+				c=c+'A'-'a';
+			}
+		}
+		if(".RAW"==ext ||
+		   ".MFM"==ext ||
+		   ".FDX"==ext ||
+		   ".D77"==ext)
+		{
+			cmd_open_image(argv[1]);
+		}
+		else
+		{
+	        ifs.open(argv[1]);
+	    }
     }
 
     std::string cmd_line;

@@ -88,6 +88,7 @@ public:
 		TICKS_PER_IO_READ=16,
 	};
 
+	bool quiet=true;
 	int numPulses=0;
 	std::vector <unsigned int> pulse;
 	std::vector <bool> indexHole;
@@ -125,6 +126,18 @@ public:
 	*/
 	bool GetIndexForNthRotation(size_t &iStart,size_t &iEnd,unsigned int nthRotation) const;
 
+	/*! Expand iEnd for overlap.
+	    Returns updated iEnd.  iEnd will not go beyond pulse.size().
+	    Overlap 1.0 means no overlap.
+	    Overlap 1.1 means 10% overlap.
+	*/
+	size_t MakeOverlap(size_t iStart,size_t iEnd,float overlap) const;
+
+	/*! Search pulse-matching across the index hole, and cut out exactly.
+	    Returns updated iEnd.
+	*/
+	size_t ExactCut(size_t iStart,size_t iEnd,int pulseSearchRange,size_t searchWindowSize) const;
+
 	class TrackFileName
 	{
 	public:
@@ -149,6 +162,8 @@ public:
 	int nthRevolution=0;            // Will be ignored when allRevolutions is true.
 	uint64_t resampleRate=8000000;  // 8MHz
 	uint64_t dataBitRate=0;         // 0 for auto (based on rpm)  500000bps 2D/2DD   1000000 2HD
+	float overlap=1.0f;
+	bool exactCut=true;
 
 	/*! Set export parameters by command-line arguments.
 	*/
