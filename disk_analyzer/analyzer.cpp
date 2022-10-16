@@ -169,7 +169,7 @@ void cmd_read_track_pulse(size_t track_n,size_t byte_offset,size_t length) {
 
             if((i-byte_offset) % 8==0) { // display standard bit cell guide (ruler)
                 size_t standard_bit_cell = g_sampling_rate / g_data_bit_rate;
-                std::cout << std::string(19, ' ');
+                std::cout << std::string(21, ' ');
                 for(size_t ii=0; ii<8; ii++) {
                     std::cout << "|" << std::string(standard_bit_cell-1, 'c');
                     std::cout << "|" << std::string(standard_bit_cell-1, 'D');
