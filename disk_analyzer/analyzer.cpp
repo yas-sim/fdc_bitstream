@@ -184,6 +184,7 @@ void cmd_read_track_pulse(size_t track_n,size_t byte_offset,size_t length) {
 			{
 				std::cout << (int(track_stream.get(j)) ? "#":".");
 			}
+
 			std::cout << std::endl;
 		}
     }
