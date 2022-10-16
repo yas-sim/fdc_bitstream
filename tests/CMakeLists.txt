@@ -1,5 +1,11 @@
+add_library(testutil util.cpp)
+target_include_directories(testutil PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(testutil disk_image)
+
+
+
 add_executable(testRaw2d77 raw2d77.cpp)
-target_link_libraries(testRaw2d77 disk_image)
+target_link_libraries(testRaw2d77 disk_image testutil)
 
 add_test(
 	NAME TEST_RAW_4MHz_TO_D77
@@ -21,10 +27,15 @@ add_test(
 
 
 add_executable(testFormat format.cpp)
-target_link_libraries(testFormat disk_image)
+target_link_libraries(testFormat disk_image testutil)
 add_test(
 	NAME TEST_FORMAT
 	COMMAND
 		testFormat
 )
+
+
+
+add_executable(testCompare compare.cpp)
+target_link_libraries(testCompare disk_image testutil)
 
