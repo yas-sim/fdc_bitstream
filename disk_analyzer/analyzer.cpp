@@ -863,7 +863,8 @@ void cmd_help(void) {
     "                  If '*' is specified as 'trk', all tracks will be processed.\n"
     "ri trk [trk_e]    Read all sector IDs. Perform ID read from 'trk' to 'trk_e' if you specify trk_e.\n"
     "                  Otherwise, an ID read operation will be performed for a track.\n"
-    "rs trk sct        Read sector\n"
+    "rs trk sct        Read sector. \n You can use $ prefix for hexadecimal value (e.g. rs 1 $f7).\n"
+    "                  If you put # prefix to the sector number, the number will be treated as sector index in the track(e.g. rs 0 #2)."
     "rsp trk sct       Read sector (Visualize pulses for each byte)\n"
     "ef sus_ratio      Enable fluctuator (VFO stops operation at rate of sus_ratio (0.0-1.0))\n"
     "ef                Disable fluctuator\n"
@@ -880,7 +881,7 @@ void cmd_help(void) {
     "q                 Quit analyzer\n"
     "\n"
     "Note1: The number starting with '$' will be handled as hexadecimal value (e.g. $f7)\n"
-    "Note2: VFO type = 0:vfo_fixed, 1:vfo_simple, 2:vfo_pid, 3:vfo_pid2, 4:vfo_simple2(default) 9=experimental\n"
+    "Note2: VFO type = 0:vfo_fixed, 1:vfo_simple, 2:vfo_pid, 3:vfo_pid2, 4:vfo_simple2, 5:vfo_pid3(default) 9=experimental\n"
     << std::endl;
 }
 

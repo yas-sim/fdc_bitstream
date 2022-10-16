@@ -212,7 +212,11 @@ int mfm_codec::read_bit_ds(double &error) {
 
             // Adjust pulse phase (imitate PLL/VFO operation)
             // Limit the PLL/VFO operation frequency and introduce fluctuation with the random generator (certain fluctuation is required to reproduce some copy protection)
+<<<<<<< HEAD
+            if (m_current_vfo_gain == gain_state::high ||  (static_cast<double>(m_rnd()) / static_cast<double>(INT32_MAX)) >= m_vfo_suspension_rate) {
+=======
             if ((static_cast<double>(m_rnd()) / static_cast<double>(UINT32_MAX)) >= m_vfo_suspension_rate) {
+>>>>>>> 8047723ce748343b0bcc264bd15d08d54f9334f5
                 m_distance_to_next_pulse = m_vfo->calc(m_distance_to_next_pulse);
             }
             
@@ -257,6 +261,7 @@ void mfm_codec::set_vfo_gain(gain_state state) {
         m_vfo -> set_gain_mode(vfo_base::gain_state::high);
         break;
     }
+    m_current_vfo_gain = state;
 }
 
 
