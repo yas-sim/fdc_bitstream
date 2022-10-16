@@ -18,11 +18,18 @@ namespace fdc_misc {
 #ifdef _WIN32
 #include <windows.h>
 void color(size_t col) {
-    if(col>7) col=7;
+    //if(col>7) col=7;
     size_t flags = FOREGROUND_INTENSITY;
-    if (col & 0b0001) flags |= FOREGROUND_INTENSITY | FOREGROUND_BLUE;
-    if (col & 0b0010) flags |= FOREGROUND_INTENSITY | FOREGROUND_RED;
-    if (col & 0b0100) flags |= FOREGROUND_INTENSITY | FOREGROUND_GREEN;
+    if (col & 0b10000) {
+        flags = 0;
+        if (col & 0b0001) flags |= BACKGROUND_INTENSITY | BACKGROUND_BLUE;
+        if (col & 0b0010) flags |= BACKGROUND_INTENSITY | BACKGROUND_RED;
+        if (col & 0b0100) flags |= BACKGROUND_INTENSITY | BACKGROUND_GREEN;
+    } else {
+        if (col & 0b0001) flags |= FOREGROUND_INTENSITY | FOREGROUND_BLUE;
+        if (col & 0b0010) flags |= FOREGROUND_INTENSITY | FOREGROUND_RED;
+        if (col & 0b0100) flags |= FOREGROUND_INTENSITY | FOREGROUND_GREEN;
+    }
     HANDLE console_handle = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(console_handle, flags);
 }
@@ -312,14 +319,15 @@ void dump_buf2(const std::vector<std::vector<size_t>> &data) {
             std::cout << std::hex << std::setw(6) << std::setfill('0') << i << " : ";   // ofst adrs
             std::cout << std::dec << std::setw(8) << std::setfill(' ') << pos << " : "; // bit pos
         }
-        // Color AMs
-        if(mc != 0) color(4);
 #if 1
         // Color bit error
         if(err > 16000) color(6);
         if(err > 32000) color(3);
         if(err > 64000) color(2);
 #endif
+        // Color AMs
+        if(mc != 0) color(4 + 0x10);
+
         std::cout << std::hex << std::setw(2) << std::setfill('0') << dt << " ";
         color(7);
         if (i % cols == cols-1) {
