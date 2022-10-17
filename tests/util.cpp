@@ -20,16 +20,21 @@ bool CompareDisk(const disk_image &diskA,const disk_image &diskB,std::string dis
 	{
 		fdc_bitstream drive[2];
 
+		auto propsA = diskA.get_property();
+		auto propsB = diskB.get_property();
+
 		drive[0].set_track_data(diskA.get_track_data(trk));
 		drive[0].set_pos(0);
 		drive[0].set_vfo_type(VFO_TYPE_DEFAULT);
 		drive[0].set_vfo_gain_val(VFO_GAIN_L_DEFAULT,VFO_GAIN_H_DEFAULT);
+		drive[0].set_fdc_params(propsA.m_sampling_rate, propsA.m_data_bit_rate);
 		auto idDisk0=drive[0].read_all_idam();
 
 		drive[1].set_track_data(diskB.get_track_data(trk));
 		drive[1].set_pos(0);
 		drive[1].set_vfo_type(VFO_TYPE_DEFAULT);
 		drive[1].set_vfo_gain_val(VFO_GAIN_L_DEFAULT,VFO_GAIN_H_DEFAULT);
+		drive[1].set_fdc_params(propsB.m_sampling_rate, propsB.m_data_bit_rate);
 		auto idDisk1=drive[0].read_all_idam();
 
 		if(idDisk0.size()!=idDisk1.size())

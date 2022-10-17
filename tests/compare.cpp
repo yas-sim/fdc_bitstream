@@ -12,7 +12,8 @@ int main(int ac,char *av[])
 
 	for(int i=1; i<ac; ++i)
 	{
-		if("-ignore_crc"==av[i])
+		std::string avi=av[i];
+		if("-ignore_crc"==avi)
 		{
 			ignoreCRCErrorSectors=true;
 		}
@@ -22,7 +23,7 @@ int main(int ac,char *av[])
 		}
 		else
 		{
-			std::cout << "Undefined option: " << av[i] << std::endl;
+			std::cout << "Undefined option: [" << av[i] << "]" << std::endl;
 			return 1;
 		}
 	}
