@@ -164,6 +164,7 @@ public:
 	uint64_t dataBitRate=0;         // 0 for auto (based on rpm)  500000bps 2D/2DD   1000000 2HD
 	float overlap=1.0f;
 	bool exactCut=true;
+	unsigned int maxNumTracks=0x7FFFFFFF;
 
 	/*! Set export parameters by command-line arguments.
 	*/

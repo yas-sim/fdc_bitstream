@@ -75,6 +75,8 @@ public:
     size_t get_real_pos(void);
     inline bool is_wraparound(void) { return m_codec.is_wraparound(); }
     inline void clear_wraparound(void) { m_codec.clear_wraparound(); }
+	bool read_byte(uint8_t& data, bool& missing_clock, double &error, bool ignore_missing_clock, bool ignore_sync_field);
+
 
     /** 
      * @brief Enable FDC read operation fluctuatior.

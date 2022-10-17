@@ -56,11 +56,11 @@ public:
 
     size_t media_number_of_tracks(const media_type mtype);
 
-    inline bool is_ready(void) { return m_track_data_is_set; };
+    inline bool is_ready(void) const { return m_track_data_is_set; };
 
-    disk_image_base_properties get_property(void) { return m_base_prop; }
+    disk_image_base_properties get_property(void) const { return m_base_prop; }
     void set_property(const disk_image_base_properties prop) { m_base_prop = prop; }
-    std::vector<bit_array> get_track_data_all(void) { return m_track_data; }
+    std::vector<bit_array> get_track_data_all(void) const { return m_track_data; }
     void set_track_data_all(std::vector<bit_array> track_data) { 
         m_track_data = track_data; 
         if(track_data.size() > 0) {

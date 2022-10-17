@@ -143,6 +143,53 @@ void cmd_read_track(size_t track_n) {
     fdc_misc::dump_buf2(read_data);
 }
 
+void cmd_read_track_pulse(size_t track_n,size_t byte_offset,size_t length) {
+    if(is_image_ready()==false) {
+        std::cout << "Disk image is not ready." << std::endl;
+        return;
+    }
+
+	auto track_stream = disk_img->get_track_data(track_n);
+    fdc->set_track_data(track_stream);
+    fdc->set_pos(0);
+
+    fdc->clear_wraparound();
+    for(size_t i=0; i<byte_offset+length && fdc->is_wraparound() == false; ++i) {
+        auto pos = fdc->get_real_pos();
+        if(pos>fdc->get_track_length()) pos = 0;         // exceptional case handling
+
+        uint8_t read_data;
+	    bool missing_clock;
+	    double error;
+        fdc->read_byte(read_data, missing_clock, error, false, false);
+
+		if(byte_offset<=i)
+		{
+			auto pos_end=fdc->get_real_pos();
+
+            if((i-byte_offset) % 8==0) { // display standard bit cell guide (ruler)
+                size_t standard_bit_cell = g_sampling_rate / g_data_bit_rate;
+                std::cout << std::string(21, ' ');
+                for(size_t ii=0; ii<8; ii++) {
+                    std::cout << "|" << std::string(standard_bit_cell-1, 'c');
+                    std::cout << "|" << std::string(standard_bit_cell-1, 'D');
+                }
+                std::cout << std::endl;
+            }
+			std::cout << "+" << std::hex << std::setw(4) << i << ":";
+			std::cout << std::hex << std::setw(2) << std::setfill('0') << int(read_data);
+			std::cout << std::dec << std::setw(10) << std::setfill(' ') << pos;
+			std::cout << "   ";
+			for(int j=pos; j<pos_end; ++j)
+			{
+				std::cout << (int(track_stream.get(j)) ? "#":".");
+			}
+
+			std::cout << std::endl;
+		}
+    }
+}
+
 void cmd_read_id(size_t track_n, size_t track_end_n = -1) {
     if(is_image_ready()==false) {
         std::cout << "Disk image is not ready." << std::endl;
@@ -999,6 +1046,9 @@ int main(int argc, char* argv[]) {
         else if(args[0] == "rt" && args.size()>=2) {
             cmd_read_track(fdc_misc::str2val(args[1]));
         } 
+		else if(args[0] == "rtp" && args.size()>=4) { // rtp track byte_offset length
+			cmd_read_track_pulse(fdc_misc::str2val(args[1]),fdc_misc::str2val(args[2]),fdc_misc::str2val(args[3]));
+		}
         else if(args[0] == "ri") {
             if(args.size()==2) cmd_read_id(fdc_misc::str2val(args[1]), -1);
             if(args.size()==3) cmd_read_id(fdc_misc::str2val(args[1]), fdc_misc::str2val(args[2]));

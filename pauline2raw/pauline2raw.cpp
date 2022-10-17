@@ -559,6 +559,11 @@ bool PaulineToRaw::RecognizeCommandParameter(int ac,char *av[])
 		{
 			allRevolutions=true;
 		}
+		else if("-MAXNUMTRACKS"==arg && i+1<ac)
+		{
+			maxNumTracks=atoi(av[i+1]);
+			++i;
+		}
 		else if("-2HD"==arg)
 		{
 			dataBitRate=1000000;
@@ -705,8 +710,14 @@ bool PaulineToRaw::ExportRaw(std::string fName,const std::vector <HxCStream::Tra
 	}
 
 	ofp << "**START" << std::endl;
+	int n=0;
 	for(auto tfn : fileList)
 	{
+		if(maxNumTracks<=n)
+		{
+			break;
+		}
+
 		std::ifstream ifp(tfn.fName,std::ios::binary);
 		if(true!=ifp.is_open())
 		{
@@ -777,6 +788,8 @@ bool PaulineToRaw::ExportRaw(std::string fName,const std::vector <HxCStream::Tra
 			std::cout << "Something went wrong." << std::endl;
 			return false;
 		}
+
+		++n;
 	}
 
 	ofp << "**COMPLETED" << std::endl;
