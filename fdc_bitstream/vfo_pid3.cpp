@@ -98,11 +98,11 @@ void vfo_pid3::soft_reset(void) {
 double vfo_pid3::calc(double pulse_pos) {
     // Adjust pulse position
     if(m_prev_pulse_pos > pulse_pos) {                          // pulse pos shifted to left
-        if(m_prev_pulse_pos - pulse_pos > m_cell_size / 2) {    // assume pulse pos shifted to right if phase shift is greater than 180deg.
+        if(m_prev_pulse_pos - pulse_pos > m_cell_size-1.1) {    // assume the pulse shifted to the right and jumped over the bit cell border when the amount of phase shift is close to m_cell_size.
             pulse_pos += m_cell_size;
         }
     } else if (m_prev_pulse_pos < pulse_pos) {                  // pulse pos shifted to right
-        if(pulse_pos - m_prev_pulse_pos > m_cell_size / 2) {    // assume pulse pos shifted to left if phase shift is greater than 180deg.
+        if(pulse_pos - m_prev_pulse_pos > m_cell_size-1.1) {    // assume the pulse shifted to the left and jumped over the bit cell border when the amount of phase shift is close to m_cell_size.
             pulse_pos -= m_cell_size;                           // note: pulse_pos might be negative value.
         }
     }
