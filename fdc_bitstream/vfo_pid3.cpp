@@ -96,6 +96,17 @@ void vfo_pid3::soft_reset(void) {
  *  Freq. correction : change bit cell size by accumlated (integrated) error.
  */
 double vfo_pid3::calc(double pulse_pos) {
+    // Adjust pulse position
+    if(m_prev_pulse_pos > pulse_pos) {                          // pulse pos shifted to left
+        if(m_prev_pulse_pos - pulse_pos > m_cell_size / 2) {    // assume pulse pos shifted to right if phase shift is greater than 180deg.
+            pulse_pos += m_cell_size;
+        }
+    } else if (m_prev_pulse_pos < pulse_pos) {                  // pulse pos shifted to right
+        if(pulse_pos - m_prev_pulse_pos > m_cell_size / 2) {    // assume pulse pos shifted to left if phase shift is greater than 180deg.
+            pulse_pos -= m_cell_size;                           // note: pulse_pos might be negative value.
+        }
+    }
+
     //LPF
     m_hist_ptr = (++m_hist_ptr) & (c_history_len-1);
     m_pulse_pos_history[m_hist_ptr] = pulse_pos;
