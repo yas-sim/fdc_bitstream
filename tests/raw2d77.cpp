@@ -203,9 +203,10 @@ int main(int ac,char *av[])
 	disk_image_d77 d77ReadBack;
 	d77ReadBack.read(tempD77output);
 
-	if(true!=CompareDisk(raw,correctD77,"RAW","Correct D77",false) || // false: Do not ignore CRC-error sectors.
-	   true!=CompareDisk(raw,correctD77,"RAW","Converted D77",false) ||
-	   true!=CompareDisk(raw,d77ReadBack,"RAW","D77 Read Back",false))
+	CompareDiskOption opt;
+	if(true!=CompareDisk(raw,correctD77,"RAW","Correct D77",opt) ||
+	   true!=CompareDisk(raw,correctD77,"RAW","Converted D77",opt) ||
+	   true!=CompareDisk(raw,d77ReadBack,"RAW","D77 Read Back",opt))
 	{
 		std::cout << "Error!" << std::endl;
 		return 1;

@@ -1,11 +1,12 @@
 #include <string>
+#include <set>
 
 #include "disk_images.h"
 #include "fdc_bitstream.h"
 #include "util.h"
 
 
-bool CompareDisk(const disk_image &diskA,const disk_image &diskB,std::string diskALabel,std::string diskBLabel,bool ignoreCRCErrorSector)
+bool CompareDisk(const disk_image &diskA,const disk_image &diskB,std::string diskALabel,std::string diskBLabel,const CompareDiskOption &opt)
 {
 	std::cout << "Compare " << diskALabel << " and " << diskBLabel << std::endl;
 
@@ -18,6 +19,11 @@ bool CompareDisk(const disk_image &diskA,const disk_image &diskB,std::string dis
 	}
 	for(unsigned int trk=0; trk<diskA.get_number_of_tracks(); ++trk)
 	{
+		if(opt.excludeTracks.end()!=opt.excludeTracks.find(trk))
+		{
+			continue;
+		}
+
 		fdc_bitstream drive[2];
 
 		auto propsA = diskA.get_property();
@@ -98,7 +104,7 @@ bool CompareDisk(const disk_image &diskA,const disk_image &diskB,std::string dis
 				return false;
 			}
 
-			if(true==ignoreCRCErrorSector && true==sector0.crc_sts)
+			if(true==opt.ignoreCRCErrorSector && true==sector0.crc_sts)
 			{
 				continue;
 			}

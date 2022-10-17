@@ -3,11 +3,19 @@
 /* { */
 
 #include <string>
+#include <set>
 
 #include "disk_images.h"
 #include "fdc_bitstream.h"
 
-bool CompareDisk(const disk_image &diskA,const disk_image &diskB,std::string diskALabel,std::string diskBLabel,bool ignoreCRCErrorSector);
+class CompareDiskOption
+{
+public:
+	bool ignoreCRCErrorSector=false;
+	std::set <int> excludeTracks;
+};
+
+bool CompareDisk(const disk_image &diskA,const disk_image &diskB,std::string diskALabel,std::string diskBLabel,const CompareDiskOption &opt);
 
 
 /* } */
