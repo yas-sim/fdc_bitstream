@@ -23,6 +23,11 @@ int main(int ac,char *av[])
 			opt.excludeTracks.insert(atoi(av[i+1]));
 			++i;
 		}
+		else if("-track_limit"==avi && i+1<ac)
+		{
+			opt.trackLimit=atoi(av[i+1]);
+			++i;
+		}
 		else if(fNameCount<2)
 		{
 			fName[fNameCount++]=av[i];

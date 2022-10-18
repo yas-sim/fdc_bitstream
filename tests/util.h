@@ -12,6 +12,7 @@ class CompareDiskOption
 {
 public:
 	bool ignoreCRCErrorSector=false;
+	unsigned int trackLimit=0x7fffffff;
 	std::set <int> excludeTracks;
 };
 
