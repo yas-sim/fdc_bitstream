@@ -96,13 +96,14 @@ void vfo_pid3::soft_reset(void) {
  *  Freq. correction : change bit cell size by accumlated (integrated) error.
  */
 double vfo_pid3::calc(double pulse_pos) {
+    double pulse_pos_bkup = pulse_pos;
     // Adjust pulse position
     if(m_prev_pulse_pos > pulse_pos) {                          // pulse pos shifted to left
-        if(m_prev_pulse_pos - pulse_pos > m_cell_size-1.1) {    // assume the pulse shifted to the right and jumped over the bit cell border when the amount of phase shift is close to m_cell_size.
+        if(m_prev_pulse_pos - pulse_pos > m_cell_size / 2.f) {  // assume the pulse shifted to the left and jumped over the bit cell border when the phase shift is greater than 180deg.
             pulse_pos += m_cell_size;
         }
     } else if (m_prev_pulse_pos < pulse_pos) {                  // pulse pos shifted to right
-        if(pulse_pos - m_prev_pulse_pos > m_cell_size-1.1) {    // assume the pulse shifted to the left and jumped over the bit cell border when the amount of phase shift is close to m_cell_size.
+        if(pulse_pos - m_prev_pulse_pos > m_cell_size / 2.f) {  // assume the pulse shifted to the left and jumped over the bit cell border when the phase shift is greater than 180deg.
             pulse_pos -= m_cell_size;                           // note: pulse_pos might be negative value.
         }
     }
@@ -123,7 +124,7 @@ double vfo_pid3::calc(double pulse_pos) {
     m_prev_phase_err    = phase_err_P;
 
     // Limit integral controller output within 20% of the cell_size_ref.
-	double ICLimit = m_cell_size_ref / 5.0; // 4MHz/500Kbps->cell_size_ref=8, limit=1.6.  8MHz/500Kbps->cell_size_ref=16, limit=3.2
+	double ICLimit = m_cell_size_ref * 0.4f; // 4MHz/500Kbps->cell_size_ref=8, limit=1.6.  8MHz/500Kbps->cell_size_ref=16, limit=3.2
     m_phase_err_I = limit(m_phase_err_I, -(ICLimit/m_phase_err_IC), (ICLimit/m_phase_err_IC));   // safeguard to avoid out-of-control
 
     // Cell size adjustment == frequency correction + phase adjust
@@ -139,7 +140,7 @@ double vfo_pid3::calc(double pulse_pos) {
     new_cell_size = limit(new_cell_size, m_cell_size_ref * (1.f/(1.f + tolerance)) , m_cell_size_ref * (1.0f + tolerance));
 
     set_cell_size(new_cell_size);
-    m_prev_pulse_pos = pulse_pos;
+    m_prev_pulse_pos = pulse_pos_bkup;
 
-    return pulse_pos;
+    return pulse_pos_bkup;
 }
