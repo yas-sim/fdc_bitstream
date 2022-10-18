@@ -124,7 +124,7 @@ double vfo_pid3::calc(double pulse_pos) {
     m_prev_phase_err    = phase_err_P;
 
     // Limit integral controller output within 20% of the cell_size_ref.
-	double ICLimit = m_cell_size_ref / 5.0; // 4MHz/500Kbps->cell_size_ref=8, limit=1.6.  8MHz/500Kbps->cell_size_ref=16, limit=3.2
+	double ICLimit = m_cell_size_ref * 0.4f; // 4MHz/500Kbps->cell_size_ref=8, limit=1.6.  8MHz/500Kbps->cell_size_ref=16, limit=3.2
     m_phase_err_I = limit(m_phase_err_I, -(ICLimit/m_phase_err_IC), (ICLimit/m_phase_err_IC));   // safeguard to avoid out-of-control
 
     // Cell size adjustment == frequency correction + phase adjust
