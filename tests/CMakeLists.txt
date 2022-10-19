@@ -418,10 +418,38 @@ if(EXISTS ${TEST_IMAGE_DIR}/000051.raw AND
 		COMMAND testCompare ${TEST_IMAGE_DIR}/000051.d77 ${TEST_IMAGE_DIR}/000051.raw -track_limit 154
 	) # Memo-to-myself:  Put D77 first.  RAW may have extra broken sector from overlap read.
 endif()
-if(EXISTS ${TEST_IMAGE_DIR}/000052.raw AND
-   EXISTS ${TEST_IMAGE_DIR}/000052.d77)
+if(EXISTS ${TEST_IMAGE_DIR}/000053.raw AND
+   EXISTS ${TEST_IMAGE_DIR}/000053.d77)
 	add_test(
-		NAME COMPARE_000052
-		COMMAND testCompare ${TEST_IMAGE_DIR}/000052.d77 ${TEST_IMAGE_DIR}/000052.raw -track_limit 154
+		NAME COMPARE_000053
+		COMMAND testCompare ${TEST_IMAGE_DIR}/000053.d77 ${TEST_IMAGE_DIR}/000053.raw -track_limit 154
+	) # Memo-to-myself:  Put D77 first.  RAW may have extra broken sector from overlap read.
+endif()
+if(EXISTS ${TEST_IMAGE_DIR}/000054.raw AND
+   EXISTS ${TEST_IMAGE_DIR}/000054.d77)
+	add_test(
+		NAME COMPARE_000054
+		COMMAND testCompare ${TEST_IMAGE_DIR}/000054.d77 ${TEST_IMAGE_DIR}/000054.raw -track_limit 154
+	) # Memo-to-myself:  Put D77 first.  RAW may have extra broken sector from overlap read.
+endif()
+if(EXISTS ${TEST_IMAGE_DIR}/000055.raw AND
+   EXISTS ${TEST_IMAGE_DIR}/000055.d77)
+	add_test(
+		NAME COMPARE_000055
+		COMMAND testCompare ${TEST_IMAGE_DIR}/000055.d77 ${TEST_IMAGE_DIR}/000055.raw -track_limit 154
+	) # Memo-to-myself:  Put D77 first.  RAW may have extra broken sector from overlap read.
+endif()
+if(EXISTS ${TEST_IMAGE_DIR}/000056.raw AND
+   EXISTS ${TEST_IMAGE_DIR}/000056.d77)
+	add_test(
+		NAME COMPARE_000056
+		COMMAND testCompare ${TEST_IMAGE_DIR}/000056.d77 ${TEST_IMAGE_DIR}/000056.raw -track_limit 154
+	) # Memo-to-myself:  Put D77 first.  RAW may have extra broken sector from overlap read.
+endif()
+if(EXISTS ${TEST_IMAGE_DIR}/000057.raw AND
+   EXISTS ${TEST_IMAGE_DIR}/000057.d77)
+	add_test(
+		NAME COMPARE_000057
+		COMMAND testCompare ${TEST_IMAGE_DIR}/000057.d77 ${TEST_IMAGE_DIR}/000057.raw -track_limit 154
 	) # Memo-to-myself:  Put D77 first.  RAW may have extra broken sector from overlap read.
 endif()
