@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <iostream>
 #include <string>
 #include <memory>
@@ -8,14 +9,24 @@ int main(int ac,char *av[])
 {
 	int fNameCount=0;
 	std::string fName[2];
-	bool ignoreCRCErrorSectors=false;
+	CompareDiskOption opt;
 
 	for(int i=1; i<ac; ++i)
 	{
 		std::string avi=av[i];
 		if("-ignore_crc"==avi)
 		{
-			ignoreCRCErrorSectors=true;
+			opt.ignoreCRCErrorSector=true;
+		}
+		else if("-exclude_track"==avi && 1+i<ac)
+		{
+			opt.excludeTracks.insert(atoi(av[i+1]));
+			++i;
+		}
+		else if("-track_limit"==avi && i+1<ac)
+		{
+			opt.trackLimit=atoi(av[i+1]);
+			++i;
 		}
 		else if(fNameCount<2)
 		{
@@ -90,7 +101,7 @@ int main(int ac,char *av[])
 	}
 
 	std::cout << "Images Loaded." << std::endl;
-	if(true!=CompareDisk(*img[0],*img[1],fName[0],fName[1],ignoreCRCErrorSectors))
+	if(true!=CompareDisk(*img[0],*img[1],fName[0],fName[1],opt))
 	{
 		std::cout << "Comparison Failed." << std::endl;
 		return 1;

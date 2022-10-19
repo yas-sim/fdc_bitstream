@@ -1,23 +1,33 @@
+#include <algorithm>
 #include <string>
+#include <set>
 
 #include "disk_images.h"
 #include "fdc_bitstream.h"
 #include "util.h"
 
 
-bool CompareDisk(const disk_image &diskA,const disk_image &diskB,std::string diskALabel,std::string diskBLabel,bool ignoreCRCErrorSector)
+bool CompareDisk(const disk_image &diskA,const disk_image &diskB,std::string diskALabel,std::string diskBLabel,const CompareDiskOption &opt)
 {
 	std::cout << "Compare " << diskALabel << " and " << diskBLabel << std::endl;
 
-	if(diskA.get_number_of_tracks()!=diskB.get_number_of_tracks())
+	auto numTracksA=std::min<unsigned int>(diskA.get_number_of_tracks(),opt.trackLimit);
+	auto numTracksB=std::min<unsigned int>(diskB.get_number_of_tracks(),opt.trackLimit);
+
+	if(numTracksA!=numTracksB)
 	{
 		std::cout << "Track count do not match." << std::endl;
-		std::cout << "    " << diskA.get_number_of_tracks() << std::endl;
-		std::cout << "    " << diskB.get_number_of_tracks() << std::endl;
+		std::cout << "    " << numTracksA << std::endl;
+		std::cout << "    " << numTracksA << std::endl;
 		return false;
 	}
-	for(unsigned int trk=0; trk<diskA.get_number_of_tracks(); ++trk)
+	for(unsigned int trk=0; trk<numTracksA && trk<numTracksB; ++trk)
 	{
+		if(opt.excludeTracks.end()!=opt.excludeTracks.find(trk))
+		{
+			continue;
+		}
+
 		fdc_bitstream drive[2];
 
 		auto propsA = diskA.get_property();
@@ -98,7 +108,7 @@ bool CompareDisk(const disk_image &diskA,const disk_image &diskB,std::string dis
 				return false;
 			}
 
-			if(true==ignoreCRCErrorSector && true==sector0.crc_sts)
+			if(true==opt.ignoreCRCErrorSector && true==sector0.crc_sts)
 			{
 				continue;
 			}
