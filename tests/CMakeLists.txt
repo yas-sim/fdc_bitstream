@@ -453,3 +453,31 @@ if(EXISTS ${TEST_IMAGE_DIR}/000057.raw AND
 		COMMAND testCompare ${TEST_IMAGE_DIR}/000057.d77 ${TEST_IMAGE_DIR}/000057.raw -track_limit 154
 	) # Memo-to-myself:  Put D77 first.  RAW may have extra broken sector from overlap read.
 endif()
+if(EXISTS ${TEST_IMAGE_DIR}/000058.raw AND
+   EXISTS ${TEST_IMAGE_DIR}/000058.d77)
+	add_test(
+		NAME COMPARE_000058
+		COMMAND testCompare ${TEST_IMAGE_DIR}/000058.d77 ${TEST_IMAGE_DIR}/000058.raw -track_limit 154
+	) # Memo-to-myself:  Put D77 first.  RAW may have extra broken sector from overlap read.
+endif()
+if(EXISTS ${TEST_IMAGE_DIR}/000059.raw AND
+   EXISTS ${TEST_IMAGE_DIR}/000059.d77)
+	add_test(
+		NAME COMPARE_000059
+		COMMAND testCompare ${TEST_IMAGE_DIR}/000059.d77 ${TEST_IMAGE_DIR}/000059.raw -track_limit 154
+	) # Memo-to-myself:  Put D77 first.  RAW may have extra broken sector from overlap read.
+endif()
+if(EXISTS ${TEST_IMAGE_DIR}/000060.raw AND
+   EXISTS ${TEST_IMAGE_DIR}/000060.d77)
+	add_test(
+		NAME COMPARE_000060
+		COMMAND testCompare ${TEST_IMAGE_DIR}/000060.d77 ${TEST_IMAGE_DIR}/000060.raw -track_limit 154
+	) # Memo-to-myself:  Put D77 first.  RAW may have extra broken sector from overlap read.
+endif()
+if(EXISTS ${TEST_IMAGE_DIR}/000061.raw AND
+   EXISTS ${TEST_IMAGE_DIR}/000061.d77)
+	add_test(
+		NAME COMPARE_000061
+		COMMAND testCompare ${TEST_IMAGE_DIR}/000061.d77 ${TEST_IMAGE_DIR}/000061.raw -track_limit 154
+	) # Memo-to-myself:  Put D77 first.  RAW may have extra broken sector from overlap read.
+endif()
