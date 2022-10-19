@@ -383,3 +383,45 @@ if(EXISTS ${TEST_IMAGE_DIR}/000046.raw AND
 		COMMAND testCompare ${TEST_IMAGE_DIR}/000046.d77 ${TEST_IMAGE_DIR}/000046.raw -track_limit 154
 	) # Memo-to-myself:  Put D77 first.  RAW may have extra broken sector from overlap read.
 endif()
+if(EXISTS ${TEST_IMAGE_DIR}/000047.raw AND
+   EXISTS ${TEST_IMAGE_DIR}/000047.d77)
+	add_test(
+		NAME COMPARE_000047
+		COMMAND testCompare ${TEST_IMAGE_DIR}/000047.d77 ${TEST_IMAGE_DIR}/000047.raw -track_limit 154
+	) # Memo-to-myself:  Put D77 first.  RAW may have extra broken sector from overlap read.
+endif()
+if(EXISTS ${TEST_IMAGE_DIR}/000048.raw AND
+   EXISTS ${TEST_IMAGE_DIR}/000048.d77)
+	add_test(
+		NAME COMPARE_000048
+		COMMAND testCompare ${TEST_IMAGE_DIR}/000048.d77 ${TEST_IMAGE_DIR}/000048.raw -track_limit 154
+	) # Memo-to-myself:  Put D77 first.  RAW may have extra broken sector from overlap read.
+endif()
+if(EXISTS ${TEST_IMAGE_DIR}/000049.raw AND
+   EXISTS ${TEST_IMAGE_DIR}/000049.d77)
+	add_test(
+		NAME COMPARE_000049
+		COMMAND testCompare ${TEST_IMAGE_DIR}/000049.d77 ${TEST_IMAGE_DIR}/000049.raw -track_limit 154
+	) # Memo-to-myself:  Put D77 first.  RAW may have extra broken sector from overlap read.
+endif()
+if(EXISTS ${TEST_IMAGE_DIR}/000050.raw AND
+   EXISTS ${TEST_IMAGE_DIR}/000050.d77)
+	add_test(
+		NAME COMPARE_000050
+		COMMAND testCompare ${TEST_IMAGE_DIR}/000050.d77 ${TEST_IMAGE_DIR}/000050.raw -track_limit 154
+	) # Memo-to-myself:  Put D77 first.  RAW may have extra broken sector from overlap read.
+endif()
+if(EXISTS ${TEST_IMAGE_DIR}/000051.raw AND
+   EXISTS ${TEST_IMAGE_DIR}/000051.d77)
+	add_test(
+		NAME COMPARE_000051
+		COMMAND testCompare ${TEST_IMAGE_DIR}/000051.d77 ${TEST_IMAGE_DIR}/000051.raw -track_limit 154
+	) # Memo-to-myself:  Put D77 first.  RAW may have extra broken sector from overlap read.
+endif()
+if(EXISTS ${TEST_IMAGE_DIR}/000052.raw AND
+   EXISTS ${TEST_IMAGE_DIR}/000052.d77)
+	add_test(
+		NAME COMPARE_000052
+		COMMAND testCompare ${TEST_IMAGE_DIR}/000052.d77 ${TEST_IMAGE_DIR}/000052.raw -track_limit 154
+	) # Memo-to-myself:  Put D77 first.  RAW may have extra broken sector from overlap read.
+endif()
