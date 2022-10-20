@@ -955,15 +955,15 @@ void cmd_vfo_pid_tune(size_t track_n) {
 
 int main(int argc, char* argv[]) {
     hw_abst::enable_escape_sequence();
+    hw_abst::color(4);
+    std::cout << "*** fdc_bitstream disk image analyzer" << std::endl;
     hw_abst::color(7);
 #ifdef _WIN32
     char tmp[256];
     _getcwd(tmp, 256);
     std::cout << "Current working directory : " << tmp << std::endl;
 #endif
-    cmd_help();
     fdc = new fdc_bitstream();
-    fdc->disp_vfo_status();
 
     size_t cmd_count = 1;
     std::ifstream ifs;
@@ -999,7 +999,7 @@ int main(int argc, char* argv[]) {
     }
 
     std::string cmd_line;
-    std::string prev_cmd;
+    std::string prev_cmd = "h";
     do {
         std::cout << "CMD(" << cmd_count << ") > ";
         if(ifs.is_open()) {

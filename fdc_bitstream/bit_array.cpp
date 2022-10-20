@@ -33,6 +33,11 @@ void bit_array::set_array(size_t size) {
     m_bit_length = size * 8;
 }
 
+
+void bit_array::clear_with_0(void) {
+    std::fill(m_array_data.begin(), m_array_data.end(), 0);
+}
+
 /**
  * @brief Get an copy of the bit array data.
  * 

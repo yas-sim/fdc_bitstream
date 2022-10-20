@@ -23,6 +23,7 @@ public:
 
     void set_array(std::vector<uint8_t>& buf);
     void set_array(size_t size);
+    void clear_with_0(void);
     std::vector<uint8_t> get_array(void);
     void clear_array(void);
     size_t get_length(void);
