@@ -1,48 +1,97 @@
 #include <stdlib.h>
 #include <iostream>
+#include <fstream>
 #include <string>
+#include <vector>
 #include <memory>
 #include "util.h"
 
 
+
+std::vector <std::string> Parse(std::string line)
+{
+	std::vector <std::string> words;
+
+	int state=0;
+	for(auto c : line)
+	{
+		if(0==state)
+		{
+			if(' '!=c && '\t'!=c && '\n'!=c)
+			{
+				state=1;
+				words.push_back("");
+				words.back().push_back(c);
+			}
+		}
+		else // if(0!=state)
+		{
+			if(' '==c || '\t'==c || '\n'==c)
+			{
+				state=0;
+			}
+			else
+			{
+				words.back().push_back(c);
+			}
+		}
+	}
+	return words;
+}
+
 int main(int ac,char *av[])
 {
-	int fNameCount=0;
 	std::string fName[2];
 	CompareDiskOption opt;
 
-	for(int i=1; i<ac; ++i)
+	if(3<=ac)
 	{
-		std::string avi=av[i];
-		if("-ignore_crc"==avi)
-		{
-			opt.ignoreCRCErrorSector=true;
-		}
-		else if("-exclude_track"==avi && 1+i<ac)
-		{
-			opt.excludeTracks.insert(atoi(av[i+1]));
-			++i;
-		}
-		else if("-track_limit"==avi && i+1<ac)
-		{
-			opt.trackLimit=atoi(av[i+1]);
-			++i;
-		}
-		else if(fNameCount<2)
-		{
-			fName[fNameCount++]=av[i];
-		}
-		else
-		{
-			std::cout << "Undefined option: [" << av[i] << "]" << std::endl;
-			return 1;
-		}
+		fName[0]=av[1];
+		fName[1]=av[2];
 	}
-
-	if(2!=fNameCount)
+	else
 	{
 		std::cout << "Two file names must be given." << std::endl;
 		return 1;
+	}
+
+	if(4<=ac)
+	{
+		std::vector <std::string> argv;
+		std::ifstream ifp(av[3]);
+		if(true==ifp.is_open())
+		{
+			while(true!=ifp.eof())
+			{
+				std::string str;
+				std::getline(ifp,str);
+				auto words=Parse(str);
+				argv.insert(argv.end(),words.begin(),words.end());
+			}
+		}
+
+		for(int i=0; i<argv.size(); ++i)
+		{
+			if("-ignore_crc"==argv[i])
+			{
+				opt.ignoreCRCErrorSector=true;
+			}
+			else if("-exclude_track"==argv[i] && 1+i<argv.size())
+			{
+				opt.excludeTracks.insert(atoi(argv[i+1].c_str()));
+				++i;
+			}
+			else if("-track_limit"==argv[i] && i+1<argv.size())
+			{
+				opt.trackLimit=atoi(argv[i+1].c_str());
+				++i;
+			}
+			else
+			{
+				std::cout << "Undefined option: [" << argv[i] << "]" << std::endl;
+				return 1;
+			}
+		}
 	}
 
 	std::unique_ptr <disk_image> img[2]={nullptr,nullptr};

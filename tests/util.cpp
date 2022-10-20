@@ -18,7 +18,7 @@ bool CompareDisk(const disk_image &diskA,const disk_image &diskB,std::string dis
 	{
 		std::cout << "Track count do not match." << std::endl;
 		std::cout << "    " << numTracksA << std::endl;
-		std::cout << "    " << numTracksA << std::endl;
+		std::cout << "    " << numTracksB << std::endl;
 		return false;
 	}
 	for(unsigned int trk=0; trk<numTracksA && trk<numTracksB; ++trk)
