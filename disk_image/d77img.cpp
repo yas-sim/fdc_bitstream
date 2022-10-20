@@ -65,8 +65,8 @@ void d77img::read(const std::string& file_name) {
     for (size_t track = 0; track < 164; track++) {
         size_t track_offset = image_data.get_dword_le(0x20 + track * 4);
         if (track_offset != 0) {
-            size_t num_sect = 0;
-            do {
+            size_t num_sect = image_data.get_word_le(track_offset + 4);
+            while (m_disk_data[track].size() < num_sect) {
                 sector_data sect;
                 sect.m_C = image_data.get_byte_le(track_offset + 0);
                 sect.m_H = image_data.get_byte_le(track_offset + 1);
@@ -83,8 +83,7 @@ void d77img::read(const std::string& file_name) {
                 last_track = track;
 
                 track_offset += 0x10 + sect.m_sector_data_length;
-
-            } while (m_disk_data[track].size() < num_sect);
+            }
         }
     }
     ifs.close();
