@@ -23,6 +23,9 @@ public:
     double m_phase_err_IC;
     double m_phase_err_DC;
 
+	// to prevent controller becoming unstable on sudden change of gain.
+	double m_gain_used=1.0;
+
     std::vector<double> m_pulse_pos_history;
     size_t m_hist_ptr;
     const size_t c_history_len = 4;     // must be power of 2 (2^n)

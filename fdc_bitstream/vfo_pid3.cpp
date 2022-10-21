@@ -108,6 +108,20 @@ double vfo_pid3::calc(double pulse_pos) {
         }
     }
 
+	const double gain_change_speed=0.05;
+	if(fabs(m_current_gain-m_gain_used)<gain_change_speed)
+	{
+		m_gain_used=m_current_gain;
+	}
+	else if(m_gain_used<m_current_gain)
+	{
+		m_gain_used+=gain_change_speed;
+	}
+	else
+	{
+		m_gain_used-=gain_change_speed;
+	}
+
     //LPF
     m_hist_ptr = (++m_hist_ptr) & (c_history_len-1);
     m_pulse_pos_history[m_hist_ptr] = pulse_pos;
@@ -129,7 +143,7 @@ double vfo_pid3::calc(double pulse_pos) {
 
     // Cell size adjustment == frequency correction + phase adjust
     double new_cell_size = m_cell_size_ref 
-                - (phase_err_P  * m_phase_err_PC  - phase_err_D  * m_phase_err_DC  + m_phase_err_I  * m_phase_err_IC ) * m_current_gain;   // Phase control (PID)
+                - (phase_err_P  * m_phase_err_PC  - phase_err_D  * m_phase_err_DC  + m_phase_err_I  * m_phase_err_IC ) * m_gain_used;   // Phase control (PID)
 
     // FDD spindle variation (long term) = 2-2.5%
     // FDD spindle wow/flutter variation (short term)= +-2-2.5%
