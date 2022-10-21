@@ -111,8 +111,9 @@ void disk_image_d77::read(const std::string file_name) {
                     break;
                 }
                 for(size_t i=0; i<sect.m_sector_data_length; i++) {
-                    codec.mfm_write_byte(sect_body[i], false, true, true);
-                    crcgen.data(sect_body[i]);
+                    uint8_t data=(i<sect.m_sector_data.size() ? sect_body[i] : 0);
+                    codec.mfm_write_byte(data, false, true, true);
+                    crcgen.data(data);
                 }
                 crcgen.data(0); crcgen.data(0);
                 crcval = crcgen.get();
