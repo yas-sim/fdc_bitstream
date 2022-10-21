@@ -696,6 +696,7 @@ void cmd_pulse_viewer(size_t track_n, size_t bit_pos = 0) {
     const uint16_t missing_clock_c2 = 0x5224;       //  0101_0010_*010_0100
 
     double bit_cell = static_cast<double>(g_sampling_rate) / static_cast<double>(g_data_bit_rate);
+    double bit_cell_ref = static_cast<double>(g_sampling_rate) / static_cast<double>(g_data_bit_rate);
 
     double window_ratio = 0.9f;
     size_t key;
@@ -805,8 +806,8 @@ void cmd_pulse_viewer(size_t track_n, size_t bit_pos = 0) {
             }
             break;
         // bit cell width
-        case 'a': if(bit_cell > 5.f) bit_cell -= 0.1f;                                              break;
-        case 's': if(bit_cell < 14.f) bit_cell += 0.1f;                                             break;
+        case 'a': if(bit_cell > bit_cell_ref * (1.f-0.3f)) bit_cell -= 0.1f;                        break;
+        case 's': if(bit_cell < bit_cell_ref * (1.f+0.3f)) bit_cell += 0.1f;                        break;
         // data window ratio
         case 'z': if(window_ratio > 0.3f) window_ratio -= 0.1f;                                     break;
         case 'x': if(window_ratio < 1.0f) window_ratio += 0.1f;                                     break;
