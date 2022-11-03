@@ -853,6 +853,7 @@ void cmd_help(void) {
     "w  file_name      Write an image file. (raw/mfm/hfe/d77/fdx)\n"
     "scr file_name     Run a script file.\n"
     "rt trk            Read track\n"
+    "rtp trk ofst len  Read track, and display result in pulse visualize mode.\n"
     "vt trk [trk_e]    Validate track(s). Performs read ID and read sector for a track.\n"
     "                  If you specify 'trk_e', the command will perform track validation\n"
     "                  from 'trk' to 'trk_e'.\n"
@@ -865,9 +866,9 @@ void cmd_help(void) {
     "                  If '*' is specified as 'trk', all tracks will be processed.\n"
     "ri trk [trk_e]    Read all sector IDs. Perform ID read from 'trk' to 'trk_e' if you specify trk_e.\n"
     "                  Otherwise, an ID read operation will be performed for a track.\n"
-    "rs trk sct        Read sector. \n You can use $ prefix for hexadecimal value (e.g. rs 1 $f7).\n"
+    "rs trk sct        Read sector. You can use $ prefix for hexadecimal value (e.g. rs 1 $f7).\n"
     "                  If you put # prefix to the sector number, the number will be treated as sector index in the track(e.g. rs 0 #2)."
-    "rsp trk sct       Read sector (Visualize pulses for each byte)\n"
+    "rsp trk sct       Read sector (Visualize pulses for each byte). You can use both '$' and '#' prefix for the sector number.\n"
     "ef sus_ratio      Enable fluctuator (VFO stops operation at rate of sus_ratio (0.0-1.0))\n"
     "ef                Disable fluctuator\n"
     "gain gl gh        Set VFO gain (low=gl, high=gh)\n"
@@ -1069,7 +1070,7 @@ int main(int argc, char* argv[]) {
         }
         else if(args[0] == "rsp" && args.size()>=3) {
             if(args[2][0] == '#') {
-                args[2].erase(args[2].begin());  // remove #
+                args[2].erase(args[2].begin());  // remove '#'
                 size_t sct_num = fdc_misc::str2val(args[2]) + 1000-1;
                 cmd_read_sector(fdc_misc::str2val(args[1]), sct_num, true);
             } else {

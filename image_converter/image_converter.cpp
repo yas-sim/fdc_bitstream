@@ -192,13 +192,19 @@ std::vector<size_t> get_pulse_dist_buf(bit_array &track_data, size_t start_pos, 
     return res;
 }
 
-double calc_dist_buf_correlation(std::vector<size_t> dist_buf0, std::vector<size_t> dist_buf1) {
+/**
+ * @brief Calculate the correlation metric for two vectors.
+ * @param dist_buf0 
+ * @param dist_buf1 
+ * @return size_t 
+ */
+size_t calc_dist_buf_correlation(std::vector<size_t> dist_buf0, std::vector<size_t> dist_buf1) {
     size_t len = std::min(dist_buf0.size(), dist_buf1.size());
-    double metric = 0.f;
+    size_t metric = 0;
     for(size_t i = 0; i < len; i++) {
-        size_t diff = std::abs(static_cast<int>(dist_buf0[i]) - static_cast<int>(dist_buf1[i]));
+        int diff = static_cast<int>(dist_buf0[i]) - static_cast<int>(dist_buf1[i]);
         metric += diff * diff;             // SSD
-        //metric += diff;                    // SAD
+        //metric += std::abs(diff);                    // SAD
     }
     return metric;
 }
@@ -234,7 +240,16 @@ void stitch_track_auto(disk_image *input_image, bool verbose) {
     std::vector<std::vector<size_t>> read_data; // (mfm_data, mc_flag, pos, error)
 
     for(size_t track_num = 0; track_num < prop.m_number_of_tracks; track_num++) {
-        bit_array track_data = input_image->get_track_data(track_num);
+        bit_array tmp_track_data = input_image->get_track_data(track_num);
+        
+        // Remove the 1st pulse data from the track data because the distance to the 1st pulse from the top of the track is unreliable (the pulse might be captured incompletely)
+        bit_array track_data;
+        tmp_track_data.set_stream_pos(0);
+        tmp_track_data.distance_to_next_pulse();                          // read bit data until the 1st pulse is read (1st '1' data)
+        while(tmp_track_data.is_wraparound() == false) {
+            track_data.write_stream(tmp_track_data.read_stream(), /*elastic=*/true);    // Copy the rest of track data
+        }
+
         fdc.set_track_data(track_data);
         fdc.set_pos(0);
         read_data = fdc.read_track_ex();                                  // perform read track
@@ -267,33 +282,41 @@ void stitch_track_auto(disk_image *input_image, bool verbose) {
                     }
                 }
                 if(match_flag) {       // Found match AM pair.
-                    size_t offset_2s_mfm = am_pos_1s[i1];                           // offset (in MFM byte count) to the top of the 2nd spin.
+                    size_t offset_2s_mfm = am_pos_1s[i1];                            // offset (in MFM byte count) to the top of the 2nd spin.
                     size_t top_pos_2s = mfm_pos[am_pos_2s[i2] - offset_2s_mfm];      // position (in bit_array pos) of the top of the 2nd spin.
                     if(verbose) {
-                        std::cout << "TRACK " << std::dec << track_num << std::endl; 
+                        std::cout << "TRACK " << std::dec << track_num << " - AM pair" << std::endl;
                         dump(mfm_data, am_pos_1s[i1]);
                         dump(mfm_data, am_pos_2s[i2]);
                     }
                     //dump(mfm_data, 0);
                     //dump(mfm_data, am_pos_2s[i2] - offset_2s_mfm);
                     // Search precise trim point
-                    const size_t compare_length = 128;
+                    const size_t compare_length = 64;
                     std::vector<size_t> dist_buf0 = get_pulse_dist_buf(track_data, 0, compare_length);           // distance buffer for 128 pulses from the top of the track
-                    std::vector<size_t> dist_buf1;
+                    std::vector<size_t> dist_buf1, minbuf0, minbuf1;
                     int bit_cell_size = prop.m_sampling_rate / prop.m_data_bit_rate;
-                    double min_error = 1e99;
+                    size_t min_error = UINT64_MAX;
                     int min_offset = 0;
-                    for(int offset = -(bit_cell_size * 32); offset < (bit_cell_size * 32); offset++) {  // search +- 4 bit cell region
+                    for(int offset = -(bit_cell_size * 320); offset < (bit_cell_size * 320); offset++) {  // search +- 4 bit cell region
                         dist_buf1 = get_pulse_dist_buf(track_data, top_pos_2s + offset, compare_length);
-                        double error = calc_dist_buf_correlation(dist_buf0, dist_buf1);               // find least error position
-                        //std::cout << error << std::endl;
+                        size_t error = calc_dist_buf_correlation(dist_buf0, dist_buf1);                   // find least error position
+                        //error += offset * offset;                                                         // count the offset into calculation
+                        error += std::abs(offset);                                                        // count the offset into calculation
                         if(error < min_error) {
                             min_error = error;
                             min_offset = offset;
+                            minbuf0 = dist_buf0;
+                            minbuf1 = dist_buf1;
                         }
                     }
                     if(verbose) {
-                        std::cout << "Min error:" << std::dec << min_error << ", offset:" << min_offset << std::endl;
+                        std::cout << "Pulse distance buff - matching result" << std::endl;
+                        dump(minbuf0, 0, compare_length);
+                        dump(minbuf1, 0, compare_length);
+                    }
+                    if(verbose) {
+                        std::cout << "Min error:" << std::dec << min_error << " Avg error:" << min_error/static_cast<double>(compare_length) << ", offset:" << min_offset << std::endl;
                         std::cout << std::endl;
                     }
                     trim_pos = top_pos_2s + min_offset;      // adjust the trim position
