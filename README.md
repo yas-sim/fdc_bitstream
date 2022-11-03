@@ -72,6 +72,7 @@ image_converter -i input_file.[raw|mfm|d77|hfe|fdx] -o output_file.[raw|mfm|d77|
 |`-vfo`|`vfo_type`|Specify the type of VFO to be used to decode MFM bit stream for D77 output.<br>0:vfo_simple, 1:vfo_fixed, 2:vfo_pid, 3:vfo_pid2, 4:vfo_simple2, 5:vfo_pid3 9:vfo_experimental|  
 |`-gain`|`low` `high`|Set VFO gain (D77 only). e.g. `-gain 1.0 2.0`|
 |`-raw`||Generate a VFX-RAW image. Effective only for a VFX image generation.|
+|`-auto_trim`||Automatic track data trimming. This feature automatically find the best point to trim down the track data so that the bottom of the track data and the top of the track data is stitched seamlessly.<br>You need to have a `*.raw` disk image with `read_overlap` to utilize this feature.|
 |`-v`||Verbose mode|
 
 ## Kryoflux RAW to MFM format converter  
