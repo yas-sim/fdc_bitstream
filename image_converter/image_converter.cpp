@@ -242,7 +242,7 @@ void stitch_track_auto(disk_image *input_image, bool verbose) {
     for(size_t track_num = 0; track_num < prop.m_number_of_tracks; track_num++) {
         bit_array tmp_track_data = input_image->get_track_data(track_num);
 
-#if 1        
+#if 0        
         // Remove the 1st pulse data from the track data because the distance to the 1st pulse from the top of the track is unreliable (the pulse might be captured incompletely)
         bit_array track_data;
         tmp_track_data.set_stream_pos(0);
@@ -287,17 +287,19 @@ void stitch_track_auto(disk_image *input_image, bool verbose) {
                 }
                 //     1st spin                                       2nd spin
                 //     |   *AM0                                       |   *AM0
-                //                                                    ^---^ == offset_2s_mfm
+                //     ^---^ == top_pos_1s                            ^---^ <- Assuming this is equal to top_pos_1s.
                 if(match_flag) {       // Found match AM pair.
-                    size_t offset_2s_mfm = am_pos_1s[i1];                            // offset (in MFM byte count) to the top of the 2nd spin.
-                    size_t top_pos_2s = mfm_pos[am_pos_2s[i2] - offset_2s_mfm];      // position (in bit_array pos) of the top of the 2nd spin.
+                    size_t &am_1s = am_pos_1s[i1];                        // MFM byte position of the matched AM in the 1st spin.
+                    size_t &am_2s = am_pos_2s[i2];                        // MFM byte position of the matched AM in the 2nd spin.
+                    size_t top_pos_2s = mfm_pos[am_2s - am_1s];           // assumed position (in bit_array pos) of the top of the 2nd spin.
                     if(verbose) {
                         std::cout << "TRACK " << std::dec << track_num << " - AM pair" << std::endl;
-                        dump(mfm_data, am_pos_1s[i1]);
-                        dump(mfm_data, am_pos_2s[i2]);
+                        dump(mfm_data, am_1s);
+                        dump(mfm_data, am_2s);
                     }
                     //dump(mfm_data, 0);
-                    //dump(mfm_data, am_pos_2s[i2] - offset_2s_mfm);
+                    //dump(mfm_data, am_2s - am_1s);
+
                     // Search precise trim point
                     const size_t compare_length = 64;
                     std::vector<size_t> dist_buf0 = get_pulse_dist_buf(track_data, 0, compare_length);           // distance buffer for 128 pulses from the top of the track
@@ -305,11 +307,11 @@ void stitch_track_auto(disk_image *input_image, bool verbose) {
                     int bit_cell_size = prop.m_sampling_rate / prop.m_data_bit_rate;
                     size_t min_error = UINT64_MAX;
                     int min_offset = 0;
-                    for(int offset = -(bit_cell_size * 320); offset < (bit_cell_size * 320); offset++) {  // search +- 4 bit cell region
+                    for(int offset = -(bit_cell_size * 32); offset < (bit_cell_size * 32); offset++) {        // search +- 4 bit cell region
                         dist_buf1 = get_pulse_dist_buf(track_data, top_pos_2s + offset, compare_length);
-                        size_t error = calc_dist_buf_correlation(dist_buf0, dist_buf1);                   // find least error position
-                        //error += offset * offset;                                                         // count the offset into calculation
-                        error += std::abs(offset);                                                        // count the offset into calculation
+                        size_t error = calc_dist_buf_correlation(dist_buf0, dist_buf1);                       // find least error position
+                        //error += offset * offset;                                                           // count the offset into calculation
+                        error += std::abs(offset);                                                            // count the offset into calculation
                         if(error < min_error) {
                             min_error = error;
                             min_offset = offset;
@@ -327,6 +329,7 @@ void stitch_track_auto(disk_image *input_image, bool verbose) {
                         std::cout << std::endl;
                     }
                     trim_pos = top_pos_2s + min_offset;      // adjust the trim position
+                    trim_pos += -1;
                 }
             }
         }
