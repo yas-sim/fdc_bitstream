@@ -241,7 +241,8 @@ void stitch_track_auto(disk_image *input_image, bool verbose) {
 
     for(size_t track_num = 0; track_num < prop.m_number_of_tracks; track_num++) {
         bit_array tmp_track_data = input_image->get_track_data(track_num);
-        
+
+#if 1        
         // Remove the 1st pulse data from the track data because the distance to the 1st pulse from the top of the track is unreliable (the pulse might be captured incompletely)
         bit_array track_data;
         tmp_track_data.set_stream_pos(0);
@@ -249,6 +250,9 @@ void stitch_track_auto(disk_image *input_image, bool verbose) {
         while(tmp_track_data.is_wraparound() == false) {
             track_data.write_stream(tmp_track_data.read_stream(), /*elastic=*/true);    // Copy the rest of track data
         }
+#else
+        bit_array track_data { tmp_track_data };
+#endif
 
         fdc.set_track_data(track_data);
         fdc.set_pos(0);
@@ -267,9 +271,9 @@ void stitch_track_auto(disk_image *input_image, bool verbose) {
             for(i=0; i < am_pos.size(); i++) {
                 if(mfm_pos[am_pos[i]] >= pos_top_of_2nd_spin) break;                         // find the 1st AM in the 2nd spin
             }
-            if(i != am_pos.size()) {                                                         // AM fields found in the 2nd spin
-                std::vector<size_t> am_pos_1s { am_pos.begin()    , am_pos.begin() + i - 1};
-                std::vector<size_t> am_pos_2s { am_pos.begin() + i, am_pos.end()};
+            if(i != am_pos.size()) {                                                         // AM fields are found in the 2nd spin
+                std::vector<size_t> am_pos_1s { am_pos.begin()    , am_pos.begin() + i - 1};    // Vector of AMs in the 1st spin (mfm byte pos)
+                std::vector<size_t> am_pos_2s { am_pos.begin() + i, am_pos.end()};              // Vector of AMs in the 2nd spin (mfm byte pos)
                 size_t i1 = 0, i2 = 0;
                 bool match_flag = true;
                 while(compare_data(mfm_data, am_pos_1s[i1], am_pos_2s[i2], 0x10) != 0) {      // find a match AM pair from the 1st spin and the 2nd spin (compare 0x10 bytes)
@@ -281,6 +285,9 @@ void stitch_track_auto(disk_image *input_image, bool verbose) {
                         }
                     }
                 }
+                //     1st spin                                       2nd spin
+                //     |   *AM0                                       |   *AM0
+                //                                                    ^---^ == offset_2s_mfm
                 if(match_flag) {       // Found match AM pair.
                     size_t offset_2s_mfm = am_pos_1s[i1];                            // offset (in MFM byte count) to the top of the 2nd spin.
                     size_t top_pos_2s = mfm_pos[am_pos_2s[i2] - offset_2s_mfm];      // position (in bit_array pos) of the top of the 2nd spin.
