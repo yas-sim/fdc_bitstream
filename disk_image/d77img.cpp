@@ -77,7 +77,11 @@ void d77img::read(const std::string& file_name) {
                 sect.m_dam_type           = image_data.get_byte_le(track_offset + 7);
                 sect.m_status             = image_data.get_byte_le(track_offset + 8);
                 sect.m_sector_data_length = image_data.get_word_le(track_offset + 0x0e);
-                sect.m_sector_data        = image_data.get_block(track_offset + 0x10, (128 << (sect.m_N & 3)));
+                if(sect.m_sector_data_length > 0 && sect.m_status != 0xf0 && sect.m_status != 0xa0) {       // 0xf0 == no DAM, 0xa0 == ID_CRC_ERR
+                    sect.m_sector_data        = image_data.get_block(track_offset + 0x10, (128 << (sect.m_N & 3)));
+                } else {
+                    sect.m_sector_data = byte_array();
+                }
                 num_sect = sect.m_num_sectors;
                 m_disk_data[track].push_back(sect);
                 last_track = track;

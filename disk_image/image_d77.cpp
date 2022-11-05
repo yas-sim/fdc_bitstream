@@ -91,7 +91,7 @@ void disk_image_d77::read(const std::string file_name) {
             crcval = crcgen.get();
             switch(sect.m_status) {
             case 0xa0: // ID-CRC error
-                codec.mfm_write_byte(~crcval >> 8, false, true, true); codec.mfm_write_byte(~crcval, false, true, true);   // CRC (intentional CRC error)
+                codec.mfm_write_byte(~crcval >> 8, false, true, true); codec.mfm_write_byte(~crcval, false, true, true);   // CRC (cause CRC error intentionally)
                 break;
             default:
                 codec.mfm_write_byte(crcval >> 8, false, true, true); codec.mfm_write_byte(crcval, false, true, true);   // CRC
@@ -192,25 +192,42 @@ void disk_image_d77::write(const std::string file_name) {
                 fdc.set_pos(sect_pos);
                 read_sect = fdc.read_sector(sect_dt.m_C, sect_dt.m_R);
 
-                sect_dt.m_status   = (true==read_sect.crc_sts && 0==sect_dt.m_status) ? 0xb0 : 0x00; 
-                sect_dt.m_dam_type = (true==read_sect.dam_type) ? 0x10 : 0x00;
+                if(read_sect.record_not_found == false) {
+                    if(read_sect.dam_type == false) {                               // not Record_not_found (read succeeded)
+                        sect_dt.m_dam_type = 0;     // DAM
+                        sect_dt.m_status   = 0;
+                    } else {
+                        sect_dt.m_dam_type = 0x10;  // DDAM
+                        sect_dt.m_status   = 0x10;
+                    }
+                    sect_dt.m_status   = (true==read_sect.crc_sts && 0==sect_dt.m_status) ? 0xb0 : 0x00;
 #if 0
-                // Use actual sector body length
-                sect_dt.m_sector_data = read_sect.data;
-                sect_dt.m_sector_data_length = read_sect.data.size();
+                    // Use actual sector body length
+                    sect_dt.m_sector_data = read_sect.data;
+                    sect_dt.m_sector_data_length = read_sect.data.size();
 #else
-                // Use ID.N information for the sector length
-                sect_dt.m_sector_data_length = sector_length_table[id_list[sect_n].N & 0x03];
-                sect_dt.m_sector_data = read_sect.data;
-                if(sect_dt.m_sector_data.size() < sect_dt.m_sector_data_length) {
-                    sect_dt.m_sector_data.resize(sect_dt.m_sector_data_length);
-                }
+                    // Use ID.N information for the sector length
+                    sect_dt.m_sector_data_length = sector_length_table[id_list[sect_n].N & 0x03];
+                    sect_dt.m_sector_data = read_sect.data;
+                    if(sect_dt.m_sector_data.size() < sect_dt.m_sector_data_length) {
+                        sect_dt.m_sector_data.resize(sect_dt.m_sector_data_length);
+                    }
 #endif
+                } else {                                                            // Record_not_found
+                    sect_dt.m_status = 0xf0;    // no DAM
+                    sect_dt.m_dam_type = 0;
+                    sect_dt.m_sector_data_length = 0;
+                    sect_dt.m_sector_data = byte_array();
+                    sect_dt.m_sector_data.clear();
+                    read_sect.record_not_found = true;
+                    read_sect.crc_sts = false;
+                }
             } else {                                                                // ID CRC error
                 sect_dt.m_status = 0xa0;                                            // 0xa0 == ID_CRC error (D88/D77)
                 sect_dt.m_dam_type = 0x00;
                 sect_dt.m_sector_data_length = 0;
                 sect_dt.m_sector_data = byte_array();
+                sect_dt.m_sector_data.clear();
                 read_sect.record_not_found = false;
                 read_sect.crc_sts = false;
             }
