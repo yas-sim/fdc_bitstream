@@ -572,7 +572,7 @@ fdc_bitstream::sector_data fdc_bitstream::read_sector(int trk, int sct) {
         sect_data.id_pos = pos;
         if(sect_id.size()==0) continue;                     // Failed to read ID
         if (sect_id[0] == trk && sect_id[2] == sct) {       // FD179x/MB8876 won'nt compare 'head' field
-            if (crc_error == false) {
+            if (crc_error == false) {                       // Skip reading sector body if ID has a CRC error
                 pos = read_sector_body_ex(sect_id[3], sect_body_data, sect_byte_pos, crc_error, dam_type, record_not_found);
                 sect_data.data_pos = pos;
                 sect_data.data_end_pos = m_codec.get_real_pos();
@@ -586,12 +586,12 @@ fdc_bitstream::sector_data fdc_bitstream::read_sector(int trk, int sct) {
                 if (distance > (43 + 9) * (m_sampling_rate / m_data_bit_rate) * 8 * 2) {       // DAM/DDAM must be found in 43 bytes (MFM, FDC179x/MB8876). +10 for IDAM field, *8 for 1 byte, *2 for (CLK+DATA).
                     sect_data.record_not_found = true;
                 }
-                else {
-                    sect_data.data = sect_body_data;
-                    sect_data.pos = sect_byte_pos;
+                else {  // Record not found
+                    sect_data.data             = sect_body_data;
+                    sect_data.pos              = sect_byte_pos;
                     sect_data.record_not_found = record_not_found;
-                    sect_data.dam_type=dam_type;
-                    sect_data.crc_sts = crc_error;
+                    sect_data.dam_type         = dam_type;
+                    sect_data.crc_sts          = crc_error;
                     return sect_data;
                 }
             }

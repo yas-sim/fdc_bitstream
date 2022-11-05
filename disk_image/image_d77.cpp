@@ -104,14 +104,14 @@ void disk_image_d77::read(const std::string file_name) {
                 crcgen.reset();
                 switch(sect.m_dam_type) {
                 case 0x10:
-                    codec.mfm_write_byte(0xfb, false, true, true); crcgen.data(0xf8); // DDAM
+                    codec.mfm_write_byte(0xf8, false, true, true); crcgen.data(0xf8); // DDAM
                     break;
                 default:
                     codec.mfm_write_byte(0xfb, false, true, true); crcgen.data(0xfb); // DAM
                     break;
                 }
                 for(size_t i=0; i<sect.m_sector_data_length; i++) {
-                    uint8_t data=(i<sect.m_sector_data.size() ? sect_body[i] : 0);
+                    uint8_t data=(i < sect.m_sector_data.size() ? sect_body[i] : 0);
                     codec.mfm_write_byte(data, false, true, true);
                     crcgen.data(data);
                 }
@@ -182,37 +182,40 @@ void disk_image_d77::write(const std::string file_name) {
             sect_dt.m_H = id_list[sect_n].H;
             sect_dt.m_R = id_list[sect_n].R;
             sect_dt.m_N = id_list[sect_n].N;
-            sect_dt.m_dam_type = 0;
+            sect_dt.m_dam_type = 0;         // temporary
             sect_dt.m_density = 0;
             sect_dt.m_num_sectors = id_list.size();
-            sect_dt.m_status = id_list[sect_n].crc_sts ? 0xb0 : 0x00;  // DT-CRC error
-            size_t sect_pos = id_list[sect_n].pos;
-            sect_pos = (sect_pos < sect_pos_ofst) ? 0 : sect_pos - sect_pos_ofst;
-            fdc.set_pos(sect_pos);
-            fdc_bitstream::sector_data read_sect = fdc.read_sector(sect_dt.m_C, sect_dt.m_R);
+            fdc_bitstream::sector_data read_sect;
+            if(id_list[sect_n].crc_sts == false) {                                   // no CRC error in IDAM
+                size_t sect_pos = id_list[sect_n].pos;
+                sect_pos = (sect_pos < sect_pos_ofst) ? 0 : sect_pos - sect_pos_ofst;
+                fdc.set_pos(sect_pos);
+                read_sect = fdc.read_sector(sect_dt.m_C, sect_dt.m_R);
 
-			if(true==read_sect.crc_sts && 0==sect_dt.m_status)
-			{
-				sect_dt.m_status=0xb0;
-			}
-			if(true==read_sect.dam_type)
-			{
-				sect_dt.m_dam_type=0x10;
-			}
+                sect_dt.m_status   = (true==read_sect.crc_sts && 0==sect_dt.m_status) ? 0xb0 : 0x00; 
+                sect_dt.m_dam_type = (true==read_sect.dam_type) ? 0x10 : 0x00;
 #if 0
-            // Use actual sector body length
-            sect_dt.m_sector_data = read_sect.data;
-            sect_dt.m_sector_data_length = read_sect.data.size();
+                // Use actual sector body length
+                sect_dt.m_sector_data = read_sect.data;
+                sect_dt.m_sector_data_length = read_sect.data.size();
 #else
-            // Use ID.N information for the sector length
-            sect_dt.m_sector_data_length = sector_length_table[id_list[sect_n].N & 0x03];
-            sect_dt.m_sector_data = read_sect.data;
-            if(sect_dt.m_sector_data.size() < sect_dt.m_sector_data_length) {
-                sect_dt.m_sector_data.resize(sect_dt.m_sector_data_length);
-            }
+                // Use ID.N information for the sector length
+                sect_dt.m_sector_data_length = sector_length_table[id_list[sect_n].N & 0x03];
+                sect_dt.m_sector_data = read_sect.data;
+                if(sect_dt.m_sector_data.size() < sect_dt.m_sector_data_length) {
+                    sect_dt.m_sector_data.resize(sect_dt.m_sector_data_length);
+                }
 #endif
+            } else {                                                                // ID CRC error
+                sect_dt.m_status = 0xa0;                                            // 0xa0 == ID_CRC error (D88/D77)
+                sect_dt.m_dam_type = 0x00;
+                sect_dt.m_sector_data_length = 0;
+                sect_dt.m_sector_data = byte_array();
+                read_sect.record_not_found = false;
+                read_sect.crc_sts = false;
+            }
             d77_trk.push_back(sect_dt);
-            if (!read_sect.record_not_found && !read_sect.crc_sts && !id_list[sect_n].crc_sts) {
+            if (!read_sect.record_not_found && !read_sect.crc_sts && !id_list[sect_n].crc_sts) {  // no error (RNF or DT_CRC error or ID_CRC error)
                 sector_good++;
                 total_sector_good++;
             } else {
