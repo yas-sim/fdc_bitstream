@@ -93,7 +93,7 @@ std::vector<size_t> bitarray_to_dist(bit_array &bary) {
     return res;
 }
 
-void disk_image_raw::write(const std::string file_name) {
+void disk_image_raw::write(const std::string file_name) const {
     constexpr uint8_t encode_base = ' ';
     constexpr uint8_t max_length = 'z' - encode_base;
     constexpr uint8_t extend_char = '{';

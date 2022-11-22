@@ -43,7 +43,7 @@ void bit_array::clear_with_0(void) {
  * 
  * @return std::vector<uint8_t> Bit array data.
  */
-std::vector<uint8_t> bit_array::get_array(void) {
+std::vector<uint8_t> bit_array::get_array(void) const{
     return m_array_data;
 }
 
@@ -62,7 +62,7 @@ void bit_array::clear_array(void) {
  * 
  * @return size_t Buffer length in bit unit.
  */
-size_t bit_array::get_length(void) {
+size_t bit_array::get_length(void) const{
     return m_bit_length;
 }
 
@@ -71,7 +71,7 @@ size_t bit_array::get_length(void) {
  * 
  * @return size_t Buffer length in bit unit.
  */
-size_t bit_array::size(void) {
+size_t bit_array::size(void) const {
     return m_bit_length;
 }
 

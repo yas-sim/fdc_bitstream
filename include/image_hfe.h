@@ -71,7 +71,7 @@ public:
 	disk_image_hfe(void) : disk_image() {}
 
 	void read(const std::string file_name) override;
-	void write(const std::string file_name) override;
+	void write(const std::string file_name) const override;
 
     disk_image_hfe& operator=(disk_image &image)
     {

@@ -38,7 +38,7 @@ protected:
     bool m_verbose;
 
     /** align a number with specified boundary */
-    inline size_t align(size_t pos, size_t grain_size = 0x400) { return ((pos / grain_size) + ((pos % grain_size) ? 1 : 0)) * grain_size; }
+    inline size_t align(size_t pos, size_t grain_size = 0x400) const { return ((pos / grain_size) + ((pos % grain_size) ? 1 : 0)) * grain_size; }
 public:
 
     disk_image();
@@ -49,7 +49,7 @@ public:
     std::ifstream open_binary_file(const std::string file_name);
     std::ifstream open_text_file(const std::string file_name);
     virtual void read(const std::string file_name) = 0;
-    virtual void write(const std::string file_name) = 0;
+    virtual void write(const std::string file_name) const = 0;
 
     bit_array get_track_data(const size_t track_number) const;
     void set_track_data(const size_t track_number, const bit_array track_data);
@@ -75,8 +75,10 @@ public:
     inline size_t get_data_bit_rate(void) const    { return m_base_prop.m_data_bit_rate; }
     inline size_t get_sampling_rate(void) const    { return m_base_prop.m_sampling_rate; }
 
-    bit_array simple_raw_to_mfm(bit_array &raw) const;
-    bit_array simple_mfm_to_raw(bit_array &mfm) const;
+	// bit_array is safe for copy.  To make const-correct, it needs to make a copy.
+	// These functions apparently are called only for data-conversion, therefore not too performance-critical.
+    bit_array simple_raw_to_mfm(bit_array raw) const;
+    bit_array simple_mfm_to_raw(bit_array mfm) const;
 
     virtual void set_vfo_type(size_t vfo_type) {};
     virtual void set_gain(double gain_l, double gain_h) {};

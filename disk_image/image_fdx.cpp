@@ -61,7 +61,7 @@ void disk_image_fdx::read(const std::string file_name) {
 }
 
 
-void disk_image_fdx::write(const std::string file_name) {
+void disk_image_fdx::write(const std::string file_name) const {
     fdx_header header;
 
     std::ofstream ofs;

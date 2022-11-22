@@ -41,7 +41,7 @@ void disk_image_mfm::read(const std::string file_name) {
 }
 
 
-void disk_image_mfm::write(const std::string file_name) {
+void disk_image_mfm::write(const std::string file_name) const {
     mfm_header header;
     std::vector<mfm_track_table> track_table;
 

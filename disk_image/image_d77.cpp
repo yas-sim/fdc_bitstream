@@ -139,7 +139,7 @@ void disk_image_d77::read(const std::string file_name) {
 }
 
 
-void disk_image_d77::write(const std::string file_name) {
+void disk_image_d77::write(const std::string file_name) const {
     const size_t sector_length_table[] = { 128, 256, 512, 1024 };
     std::ios::fmtflags flags_saved = std::cout.flags();
     fdc_bitstream fdc;

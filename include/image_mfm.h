@@ -33,7 +33,7 @@ public:
     disk_image_mfm(void) : disk_image() {};
 
     void read(const std::string file_name) override;
-    void write(const std::string file_name) override;
+    void write(const std::string file_name) const override;
 
     disk_image_mfm& operator=(disk_image &image)
     {

@@ -90,7 +90,7 @@ size_t disk_image::media_number_of_tracks(const media_type mtype) {
     return number_of_tracks;
 }
 
-bit_array disk_image::simple_raw_to_mfm(bit_array &raw) const {
+bit_array disk_image::simple_raw_to_mfm(bit_array raw) const {
     bit_array mfm;
     raw.set_stream_pos(0);
     mfm.clear_array();
@@ -107,7 +107,7 @@ bit_array disk_image::simple_raw_to_mfm(bit_array &raw) const {
     return mfm;
 }
 
-bit_array disk_image::simple_mfm_to_raw(bit_array &mfm) const {
+bit_array disk_image::simple_mfm_to_raw(bit_array mfm) const {
     bit_array raw;
     mfm.set_stream_pos(0);
     raw.clear_array();
