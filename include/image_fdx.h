@@ -53,7 +53,7 @@ public:
     disk_image_fdx(void) : disk_image(), m_conversion_mode(false) {};
 
     void read(const std::string file_name) override;
-    void write(const std::string file_name) override;
+    void write(const std::string file_name) const override;
 
     disk_image_fdx& operator=(disk_image &image)
     {

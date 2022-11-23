@@ -24,10 +24,10 @@ public:
     void set_array(std::vector<uint8_t>& buf);
     void set_array(size_t size);
     void clear_with_0(void);
-    std::vector<uint8_t> get_array(void);
+    std::vector<uint8_t> get_array(void) const;
     void clear_array(void);
-    size_t get_length(void);
-    size_t size(void);
+    size_t get_length(void) const;
+    size_t size(void) const;
     void resize(size_t bit_length);
     void reserve(size_t bit_length);
     inline bool is_wraparound(void) { return m_wraparound; }

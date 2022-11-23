@@ -95,7 +95,7 @@ void disk_image_hfe::read(const std::string file_name) {
 }
 
 
-void disk_image_hfe::write(const std::string file_name) {
+void disk_image_hfe::write(const std::string file_name) const {
 	if(m_track_data_is_set == false) return;
 
 	hfe_header header;
