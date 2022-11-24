@@ -131,7 +131,6 @@ void disk_image::filter_for_FDX_export(void)
 	{
 		std::cout << "Track " << trk << std::endl;
 		filter_for_FDX_export_track(trk);
-break;
 	}
 }
 void disk_image::filter_for_FDX_export_track(int trk)
@@ -149,7 +148,6 @@ void disk_image::filter_for_FDX_export_track(int trk)
 	while(true!=wraparound)
 	{
 		auto lastPos=fdc.get_real_pos();
-printf("Last pos %d\n",lastPos);
 
 		// My problem:
 		//   In the end, fdc.set_pos(60651) but then, in here I am getting lastPos=60632.
@@ -258,7 +256,6 @@ printf("Last pos %d\n",lastPos);
 			}
 		}
 
-printf("Data end %d\n",data_end_pos);
 		fdc.set_real_pos(data_end_pos);
 	}
 }
