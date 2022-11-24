@@ -83,4 +83,13 @@ public:
     virtual void set_vfo_type(size_t vfo_type) {};
     virtual void set_gain(double gain_l, double gain_h) {};
     void verbose(bool verbose_flag) { m_verbose = verbose_flag; };
+
+
+
+	// FDX assumes a bit is unstable if no pulse in four consecutive bit window in:
+	//   (1) gap between sectors, and
+	//   (2) a sector causing CRC error.
+	// This function applies a filter to make that condition.
+	void filter_for_FDX_export(void);
+	void filter_for_FDX_export_track(int trk);
 };

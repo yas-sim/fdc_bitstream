@@ -449,6 +449,28 @@ size_t mfm_codec::get_pos(void) {
 }
 
 /**
+ * @brief Set stream real read/write position.  It also updates m_distance_to_next_pulse.
+ * 
+ * @param bit_pos New position (units=bits).
+ */
+void mfm_codec::set_real_pos(size_t bit_pos)
+{
+    if (is_track_ready() == false) {
+        return;
+    }
+	set_pos(bit_pos);  // Tentative for fall back.
+	for(size_t dist=0; bit_pos+dist<m_track.size(); ++dist)
+	{
+		if(0!=m_track.get(bit_pos+dist))
+		{
+			set_pos(bit_pos+dist);
+			m_distance_to_next_pulse=dist;
+			break;
+		}
+	}
+}
+
+/**
  * @brief Get real current read/write position
  * 
  * @return size_t Current position (unit=bits).

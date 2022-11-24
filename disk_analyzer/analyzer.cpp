@@ -881,6 +881,7 @@ void cmd_help(void) {
     "rv                (soft) reset VFO\n"
     "vp trk bit_pos    Interactive pulse viewer. You can check raw pulses in the bit stream (track) data.\n"
     "histogram trk     Display histogram of data pulse distance in a track.\n"
+    "fdx               Apply filter for FDX.\n"
     "q                 Quit analyzer\n"
     "\n"
     "Note1: The number starting with '$' will be handled as hexadecimal value (e.g. $f7)\n"
@@ -952,6 +953,15 @@ void cmd_vfo_pid_tune(size_t track_n) {
     }
 }
 
+void cmd_fdx_filter(void)
+{
+    if(is_image_ready()==false) {
+        std::cout << "Disk image is not ready." << std::endl;
+        return;
+    }
+    disk_img->filter_for_FDX_export();
+    std::cout << "Applied FDX filter." << std::endl;
+}
 
 // -------------------------------------------------------------------------
 
@@ -1128,6 +1138,9 @@ int main(int argc, char* argv[]) {
         }
         else if(args[0] == "vfo_tune" && args.size()>=2) {
             cmd_vfo_pid_tune(std::stoi(args[1]));
+        }
+        else if(args[0] == "fdx") {
+            cmd_fdx_filter();
         }
         else if(args[0] == "h" || args[0]=="help" || args[0]=="?") {
             cmd_help();

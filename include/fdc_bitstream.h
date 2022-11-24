@@ -72,6 +72,7 @@ public:
     bit_array get_track_data(void);
     void set_pos(size_t bit_pos);
     size_t get_pos(void);
+    void set_real_pos(size_t bit_pos);
     size_t get_real_pos(void);
     inline bool is_wraparound(void) { return m_codec.is_wraparound(); }
     inline void clear_wraparound(void) { m_codec.clear_wraparound(); }
