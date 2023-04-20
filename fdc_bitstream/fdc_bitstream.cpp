@@ -456,6 +456,20 @@ size_t fdc_bitstream::get_pos(void) {
 
 
 /**
+* @brief Set real current bit position in the track buffer.
+*        Difference from set_pos is this function also updates m_distance_to_next_pulse so that the real position
+*        becomes bit_pos.
+*
+* @param[in] bit_pos New position
+*/
+void fdc_bitstream::set_real_pos(size_t bit_pos)
+{
+    m_codec.set_real_pos(bit_pos);
+    clear_wraparound();
+}
+
+
+/**
 * @brief Get current position minus distance to the next pulse
 *        Current position is always at a pulse.
 *        Real position is m_codec.m_distance_to_next_pulse before the current position.

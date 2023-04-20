@@ -67,12 +67,32 @@ void disk_image_fdx::write(const std::string file_name) const {
     std::ofstream ofs;
     ofs.open(file_name, std::ios::out | std::ios::binary);
 
+	auto number_of_tracks=m_base_prop.m_number_of_tracks;
+
     memset(reinterpret_cast<char*>(header.signature), 0, sizeof(fdx_header));
     memcpy(reinterpret_cast<char*>(header.signature), "FDX", 3);
     header.revision = 3;
     memcpy(reinterpret_cast<char*>(header.disk_name), "FDX_IMAGE\0", 10);
     header.type = m_conversion_mode ? 9 : 0;                // 0:2D, 1:2DD, 2:2HD, 9:RAW
-    header.cylinders = m_base_prop.m_number_of_tracks / 2;
+
+	if(168<number_of_tracks)
+	{
+		number_of_tracks=168;
+	}
+	if(0==header.type && 84<number_of_tracks)
+	{
+		number_of_tracks=84;
+	}
+	else if(9==header.type && 84<number_of_tracks && number_of_tracks<128)
+	{
+		// FDX apparently identifies 2D or 2DD based on number of tracks.
+		// If number of tracks is 43, it is identified as 2D.
+		// However, the last track goes beyond physical track number 168 because 43*number_of_sides*two_for_2D=172, and crash.
+		// If number of tracks is between 43 and 83, it should be rounded to 42.
+		number_of_tracks=84;
+	}
+
+    header.cylinders = number_of_tracks / 2;
     header.heads = 2;
     if(m_conversion_mode==false) {
         header.rate = m_base_prop.m_data_bit_rate / 1e3;        // MFM mode : 500 or 1000
@@ -97,7 +117,7 @@ void disk_image_fdx::write(const std::string file_name) const {
     track_buf_length /= 8;
     track_buf_length = align(track_buf_length, 0x1000);
 
-    for (size_t track_n = 0; track_n < m_base_prop.m_number_of_tracks; track_n++) {
+    for (size_t track_n = 0; track_n < number_of_tracks; track_n++) {
         fdx_track_header track_header;
         bit_array mfm_track = m_track_data[track_n];
         if(m_conversion_mode==false) mfm_track = simple_raw_to_mfm(mfm_track);

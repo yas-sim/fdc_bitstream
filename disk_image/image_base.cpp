@@ -120,3 +120,142 @@ bit_array disk_image::simple_mfm_to_raw(bit_array mfm) const {
     }
     return raw;
 }
+
+
+
+#include "fdc_bitstream.h"
+
+void disk_image::filter_for_FDX_export(void)
+{
+	for(size_t trk=0; trk<m_track_data.size(); ++trk)
+	{
+		std::cout << "Track " << trk << std::endl;
+		filter_for_FDX_export_track(trk);
+	}
+}
+void disk_image::filter_for_FDX_export_track(int trk)
+{
+	auto &bits=m_track_data[trk];
+
+	fdc_bitstream fdc;
+
+    fdc.set_track_data(bits);
+    fdc.set_pos(0);
+
+	bool wraparound=false;
+
+	fdc.clear_wraparound(); // Just in case;
+	while(true!=wraparound)
+	{
+		auto lastPos=fdc.get_real_pos();
+
+		// My problem:
+		//   In the end, fdc.set_pos(60651) but then, in here I am getting lastPos=60632.
+		// My solution:
+		//   Added fdc_bitstream::set_real_pos.
+
+		std::vector <uint8_t> id_field;
+		bool id_crc_error;
+		auto idStart=fdc.read_id(id_field,id_crc_error);
+
+		if(0==idStart) // No Address Mark
+		{
+			break;
+		}
+
+		if(true==fdc.is_wraparound())
+		{
+			wraparound=true;
+		}
+
+		auto id_end_pos=fdc.get_real_pos();
+
+
+		std::vector<uint8_t> sect_data;
+		std::vector<size_t> byte_pos;
+		bool data_crc_error,deleted_data,record_not_found;
+		auto dataStart=fdc.read_sector_body_ex(id_field[3],sect_data,byte_pos,data_crc_error,deleted_data,record_not_found);
+
+		auto data_end_pos=fdc.get_real_pos();
+
+		if(0==dataStart) // No Data Mark
+		{
+			break;
+		}
+
+		if(true==fdc.is_wraparound())
+		{
+			wraparound=true;
+		}
+
+		std::cout << (int)id_field[0] << " " << (int)id_field[1] << " " << (int)id_field[2] << " " << (int)id_field[3];
+		if(true==data_crc_error)
+		{
+			std::cout << " crc_error";
+		}
+		std::cout << std::endl;
+
+
+		fdc.set_real_pos(lastPos);  // This clears internal is_wraparound flag.
+		while(fdc.get_real_pos()<idStart)
+		{
+			auto byte_start=fdc.get_real_pos();
+
+			uint8_t data;
+			bool missing_clock;
+			double error;
+			fdc.read_byte(data,missing_clock,error,false,false);
+			if(16<=error)
+			{
+				auto byte_end=fdc.get_real_pos();
+				for(auto i=byte_start; i<byte_end; ++i)
+				{
+					bits.set(i,0);
+				}
+			}
+		}
+
+		fdc.set_real_pos(id_end_pos);
+		while(fdc.get_real_pos()<dataStart)
+		{
+			auto byte_start=fdc.get_real_pos();
+
+			uint8_t data;
+			bool missing_clock;
+			double error;
+			fdc.read_byte(data,missing_clock,error,false,false);
+			if(16<=error)
+			{
+				auto byte_end=fdc.get_real_pos();
+				for(auto i=byte_start; i<byte_end; ++i)
+				{
+					bits.set(i,0);
+				}
+			}
+		}
+
+
+		if(true==data_crc_error)
+		{
+			for(auto byte_start : byte_pos)
+			{
+				fdc.set_real_pos(byte_start);
+
+				uint8_t data;
+				bool missing_clock;
+				double error;
+				fdc.read_byte(data,missing_clock,error,true,true);
+				if(16<=error)
+				{
+					auto byte_end=fdc.get_real_pos();
+					for(auto i=byte_start; i<byte_end; ++i)
+					{
+						bits.set(i,0);
+					}
+				}
+			}
+		}
+
+		fdc.set_real_pos(data_end_pos);
+	}
+}
