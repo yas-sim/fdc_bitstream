@@ -5,9 +5,9 @@
 
 class byte_array : public std::vector<uint8_t> {
 public:
-	uint32_t    get_dword_le(size_t pos) { return at(pos) | (at(pos + 1) << 8) | (at(pos + 2) << 16) | (at(pos + 3) << 24); }
-	uint16_t    get_word_le(size_t pos)  { return at(pos) | (at(pos + 1) << 8); }
-	uint8_t     get_byte_le(size_t pos)  { return at(pos); }
+	inline uint32_t    get_dword_le(size_t pos) { return get_byte_le(pos) | (get_byte_le(pos + 1) << 8) | (get_byte_le(pos + 2) << 16) | (get_byte_le(pos + 3) << 24); }
+	inline uint16_t    get_word_le(size_t pos)  { return get_byte_le(pos) | (get_byte_le(pos + 1) << 8); }
+	inline uint8_t     get_byte_le(size_t pos)  { return at(pos); }
 
 	byte_array& operator=(const std::vector<uint8_t> &data) {
 		this->resize(data.size());

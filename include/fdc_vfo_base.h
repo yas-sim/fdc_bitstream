@@ -7,16 +7,16 @@
 #include "fdc_vfo_def.h"
 
 /**
- * @brief Base class of VFO (virtual).
+ * @brief Base class of VFO (virtual base class).
  * 
  */
 class vfo_base {
 public:
-    double  m_cell_size;
-    double  m_cell_size_ref;
-    double  m_window_ratio;    // data window width ratio to the data cell width (0.75 means window = cell*0.75 )
-    double  m_window_size;
-    double  m_window_ofst;
+    double  m_cell_size;        // Current data cell size (width) in samping data count (4 means data cell size is 4 sampling data width)
+    double  m_cell_size_ref;    // Reference data cell size (standard cell size)
+    double  m_window_ratio;     // data window width ratio to the data cell width (0.75 means window = cell*0.75 )
+    double  m_window_size;      // Current data window size (width) in sampling data count
+    double  m_window_ofst;      // Current data window start position from the top of the data cell
     double  m_cell_center;
 
     double  m_gain_l;

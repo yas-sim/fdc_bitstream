@@ -30,7 +30,7 @@
 #include <iomanip>
 
 #include "d77img.h"
-
+#include "fdc_misc.h"
 
 
 void d77img::read(const std::string& file_name) {
@@ -62,8 +62,17 @@ void d77img::read(const std::string& file_name) {
     m_disk_data.resize(164);
 
     size_t last_track = 0;
+#if 0
+    // void dump_buf(uint8_t* ptr, size_t size, bool line_feed=true, size_t cols=64, size_t rows=32, bool disp_ofst=false, uint8_t *marker=nullptr, bool ascii_dump=false);
+    //fdc_misc::dump_buf(image_data.data(), 164 * 4, true, 16, 16, true, nullptr, true);
+#endif
     for (size_t track = 0; track < 164; track++) {
         size_t track_offset = image_data.get_dword_le(0x20 + track * 4);
+#if 0
+        if(track==59) {
+            fdc_misc::dump_buf(image_data.data()+track_offset, 0x400, true, 16, 16, true, nullptr, true);
+        }
+#endif
         if (track_offset != 0) {
             size_t num_sect = image_data.get_word_le(track_offset + 4);
             while (m_disk_data[track].size() < num_sect) {
