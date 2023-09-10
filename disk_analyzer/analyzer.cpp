@@ -867,7 +867,7 @@ void cmd_help(void) {
     "ri trk [trk_e]    Read all sector IDs. Perform ID read from 'trk' to 'trk_e' if you specify trk_e.\n"
     "                  Otherwise, an ID read operation will be performed for a track.\n"
     "rs trk sct        Read sector. You can use $ prefix for hexadecimal value (e.g. rs 1 $f7).\n"
-    "                  If you put # prefix to the sector number, the number will be treated as sector index in the track(e.g. rs 0 #2)."
+    "                  If you put # prefix to the sector number, the number will be treated as sector index in the track(e.g. rs 0 #2).\n"
     "rsp trk sct       Read sector (Visualize pulses for each byte). You can use both '$' and '#' prefix for the sector number.\n"
     "ef sus_ratio      Enable fluctuator (VFO stops operation at rate of sus_ratio (0.0-1.0))\n"
     "ef                Disable fluctuator\n"
