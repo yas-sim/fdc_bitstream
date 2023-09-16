@@ -8,7 +8,7 @@
 #include <algorithm>
 #include <stdlib.h>
 
-#define USE_OCV 1
+#define USE_OCV 0
 
 #if USE_OCV == 1
 #include <opencv2/opencv.hpp>
@@ -293,9 +293,9 @@ void visualize_track_bufs2(bit_array track_data0, bit_array track_data1, size_t 
 void stitch_track_auto(disk_image *input_image, bool verbose) {
     disk_image_base_properties prop = input_image->get_property();
 
-    const size_t search_range_bfr = 512;         // search range before the 2nd index hole         
-    const size_t search_range_aft = 512;         // search range after the 2nd index hole
-    const size_t compare_byte_count = 256;      // bytes ((IBM(168): Gap4=80, SYNC=12, IAM=4, Gap1=50, Sync=12, IDAM=4, CHRN=4, CRC=2), (ISO(54): Gap1=32, SYNC=12, IDAM=4, CHRN=4, CRC=2))
+    const size_t search_range_bfr = 256;         // search range before the 2nd index hole         
+    const size_t search_range_aft = 256;         // search range after the 2nd index hole
+    const size_t compare_byte_count = 200;      // bytes ((IBM(168): Gap4=80, SYNC=12, IAM=4, Gap1=50, Sync=12, IDAM=4, CHRN=4, CRC=2), (ISO(54): Gap1=32, SYNC=12, IDAM=4, CHRN=4, CRC=2))
     const size_t bit_rate_2d = 500e3;
     const size_t samples_per_byte = (prop.m_sampling_rate/prop.m_data_bit_rate) * 8;
 
@@ -363,8 +363,6 @@ void stitch_track_auto(disk_image *input_image, bool verbose) {
                 }
             }
 
-            std::cout << dist_buf_ref.size() << ", " << dist_buf.size() << std::endl;
-
             if(verbose) {
                 std::cout << "Min error=" << min_error << ", Stitch pos=" << min_offset << ", Top of 2nd spin=" << pos_top_of_2nd_spin <<std::endl;
             }
@@ -382,6 +380,12 @@ void stitch_track_auto(disk_image *input_image, bool verbose) {
                     std::cout << "*** Calculated error is too large. Use calculated position of the top of 2nd spin (idx hole) from index hole period measured." << std::endl;
                 }
                 min_offset = pos_top_of_2nd_spin;
+            }
+#else
+            if(min_error > dist_buf.size() * 6) {  // reference: when compare_byte_count==180, min_error is around 500~800 when stitching succeeded.
+                if(verbose) {
+                    std::cout << "*** Calculated error is very large." << std::endl;
+                }
             }
 #endif
             tmp_track_data = bit_array{track_data};
