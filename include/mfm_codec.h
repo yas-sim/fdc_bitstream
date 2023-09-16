@@ -66,7 +66,7 @@ public:
 
     inline bool is_wraparound(void) const { return m_wraparound; }
     inline void clear_wraparound(void) { m_wraparound = false; }
-    inline size_t get_track_length(void) { return m_track.get_length(); }       /** unit = bit */
+    inline size_t get_track_length(void) { return m_track.get_bit_length(); }       /** unit = bit */
 
     int read_bit_ds(void);
     int read_bit_ds(double &error);

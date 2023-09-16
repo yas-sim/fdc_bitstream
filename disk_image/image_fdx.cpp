@@ -123,7 +123,7 @@ void disk_image_fdx::write(const std::string file_name) const {
         if(m_conversion_mode==false) mfm_track = simple_raw_to_mfm(mfm_track);
         track_header.cylinder = track_n / 2;
         track_header.head     = track_n % 2;
-        track_header.length   = mfm_track.get_length();               // track length is in bit unit
+        track_header.length   = mfm_track.get_bit_length();               // track length is in bit unit
         track_header.index    = 0; //((m_conversion_mode ? m_base_prop.m_sampling_rate : m_base_prop.m_data_bit_rate) * m_base_prop.m_spindle_time_ns) / 1e9;
         if(track_header.index > track_header.length) track_header.length = track_header.index;      // safeguard
         ofs.seekp(curr_pos);

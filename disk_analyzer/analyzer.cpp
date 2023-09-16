@@ -274,7 +274,7 @@ void cmd_trim_track(size_t track_n, size_t start_byte, size_t end_byte) {
         trim_track(track_stream, track_trimmed, start_byte, end_byte);
 
         disk_img->set_track_data(trk_n, track_trimmed);
-        std::cout << "Track " << trk_n << " : Trimmed down track data from " << std::dec << track_stream.get_length() << "b to " << track_trimmed.get_length() << "b." << std::endl;
+        std::cout << "Track " << trk_n << " : Trimmed down track data from " << std::dec << track_stream.get_bit_length() << "b to " << track_trimmed.get_bit_length() << "b." << std::endl;
     }
 }
 
@@ -388,7 +388,7 @@ void cmd_read_sector(size_t cyl, size_t rcd, bool pulse_vis) {
 	}
     size_t end_pos = fdc->get_pos();
     if (end_pos < read_data.id_pos) {
-        end_pos += track_stream.get_length();       // wrap around correction
+        end_pos += track_stream.get_bit_length();       // wrap around correction
     }
     double read_time = (static_cast<double>(end_pos - read_data.id_pos)*1000.f) / g_sampling_rate;
     std::cout << "CRC DAM  RNF ----ID_POS ---DAM_POS ---END_POS ---TIME(ms) SIZE" << std::endl;
@@ -621,7 +621,7 @@ void cmd_visualize_pulse_fluctuation(size_t track_n) {
     bit_array track;
     track = disk_img->get_track_data(track_n);
 
-    size_t line_width = track.get_length() / 200;       // show the data in 400 lines
+    size_t line_width = track.get_bit_length() / 200;       // show the data in 400 lines
 
     track.set_stream_pos(0);
     double bit_cell_ref = static_cast<double>(g_sampling_rate / g_data_bit_rate);
@@ -702,8 +702,8 @@ void cmd_pulse_viewer(size_t track_n, size_t bit_pos = 0) {
     size_t key;
     size_t edit_pointer = 0;                        // pulse edit point (ofst)
 
-    if (bit_pos >= track.get_length()) {
-        bit_pos = track.get_length();
+    if (bit_pos >= track.get_bit_length()) {
+        bit_pos = track.get_bit_length();
     }
 
     hw_abst::cls();
@@ -787,7 +787,7 @@ void cmd_pulse_viewer(size_t track_n, size_t bit_pos = 0) {
             }
             break;
         case 'm':
-            if(bit_pos < track.get_length() - bit_cell - 1) {
+            if(bit_pos < track.get_bit_length() - bit_cell - 1) {
                 bit_pos += bit_cell;
                 bit_pos += align_pulse_pos(track, bit_pos, bit_cell);
             }
@@ -800,7 +800,7 @@ void cmd_pulse_viewer(size_t track_n, size_t bit_pos = 0) {
             }
             break;
         case 'o':
-            if(bit_pos < track.get_length() - bit_cell * 16 - 1) {
+            if(bit_pos < track.get_bit_length() - bit_cell * 16 - 1) {
                 bit_pos += bit_cell * 16;
                 bit_pos += align_pulse_pos(track, bit_pos, bit_cell);
             }
@@ -838,7 +838,7 @@ void cmd_pulse_viewer(size_t track_n, size_t bit_pos = 0) {
         switch(key) {
         // 1 bit pos
         case 'j': if(bit_pos >= 1) bit_pos--;                                                       break;
-        case 'k': if(bit_pos < track.get_length() - 1) bit_pos++;                                   break;
+        case 'k': if(bit_pos < track.get_bit_length() - 1) bit_pos++;                                   break;
         }
     } while(key != 'q');
 

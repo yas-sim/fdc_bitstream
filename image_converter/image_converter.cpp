@@ -8,7 +8,7 @@
 #include <algorithm>
 #include <stdlib.h>
 
-#define USE_OCV 0
+#define USE_OCV 1
 
 #if USE_OCV == 1
 #include <opencv2/opencv.hpp>
@@ -81,7 +81,7 @@ std::vector<bit_array> normalize_track(std::vector<bit_array> tracks, size_t sam
         trk = tracks[i];
         bit_array normalized;
         normalized.clear_array();
-        if(trk.get_length() > 0) {
+        if(trk.get_bit_length() > 0) {
             if (verbose) {
                 std::cout << "Track " << std::setw(3) << i << " - ";
             }
@@ -208,10 +208,13 @@ std::vector<size_t> get_pulse_dist_buf(bit_array &track_data, size_t start_pos, 
 size_t calc_dist_buf_correlation(std::vector<size_t> dist_buf0, std::vector<size_t> dist_buf1) {
     size_t len = std::min(dist_buf0.size(), dist_buf1.size());
     size_t metric = 0;
+    const size_t torelance = 3;
     for(size_t i = 0; i < len; i++) {
-        int diff = static_cast<int>(dist_buf0[i]) - static_cast<int>(dist_buf1[i]);
-        metric += diff * diff;                         // SSD
-        //metric += std::abs(diff);                    // SAD
+        size_t diff = std::abs(static_cast<int>(dist_buf0[i]) - static_cast<int>(dist_buf1[i]));
+        //metric += diff * diff * diff * diff;
+        //metric += diff * diff;           // SSD
+        metric += diff;                    // SAD
+        if(diff > torelance) metric += 1e3;
     }
     return metric;
 }
@@ -235,34 +238,49 @@ void dump(std::vector<size_t> data, size_t pos, size_t size = 0x10) {
 }
 
 #if USE_OCV == 1
-void draw_dist_buf(cv::Mat canvas, bit_array track_buf, size_t pos, size_t y_ofst=0, size_t height=16) {
+void draw_bit_buf(cv::Mat &canvas, bit_array &track_buf, int pos, size_t y_ofst=0, size_t height=16) {
     size_t width = 1920;
-    cv::Scalar col {0,0,0};
-    for(size_t x=0; x<width; x++) {
-        size_t read_pos = pos + x;
-        if(read_pos >= track_buf.size()) {
-            col = cv::Scalar(0,0,128);          // dark red
-        } else {
-            size_t val = track_buf.get(read_pos);
-            col = val == 0 ? cv::Scalar(64,0,0) : cv::Scalar(255,255,255);
-        }
-        cv::line(canvas, cv::Point(x, y_ofst), cv::Point(x, y_ofst+height), col);
+    cv::Scalar col;
+    int track_len = static_cast<int>(track_buf.get_bit_length());
+    for(int x=0; x<width; x++) {
+        int read_pos = pos + x;
+        uint8_t val = track_buf.get(read_pos);
+        if(read_pos >= track_len) col = cv::Scalar(0,0,128);
+        else if(val == 1)         col = cv::Scalar(255,255,255);
+        else if(read_pos < 0)     col = cv::Scalar(0,64,0);
+        else                      col = cv::Scalar(64,0,0);
+        cv::line(canvas, cv::Point(x, y_ofst+1), cv::Point(x, y_ofst+height-1), col);
     }
 }
 
-void visualize_track_bufs(bit_array track_data0, size_t start_pos0, bit_array track_data1, size_t start_pos1, size_t waitKey_pause=0) {
+void visualize_track_bufs(bit_array &track_data0, size_t start_pos0, bit_array &track_data1, size_t start_pos1, size_t waitKey_pause=0) {
     size_t width = 1920;
     size_t height = 16;
     cv::Mat canvas = cv::Mat::zeros(height * 2, width, CV_8UC3);
-    draw_dist_buf(canvas, track_data0, start_pos0, 0);
-    draw_dist_buf(canvas, track_data1, start_pos1, height);
+    draw_bit_buf(canvas, track_data0, start_pos0, 0);
+    draw_bit_buf(canvas, track_data1, start_pos1, height);
     cv::imshow("Distance buffers", canvas);
     cv::waitKey(waitKey_pause);
+}
+
+void visualize_track_bufs2(bit_array &track_data0, bit_array &track_data1, size_t waitKey_pause=0) {
+    size_t width = 1920;
+    size_t height = 16;
+    cv::Mat canvas = cv::Mat::zeros(height * 2, width, CV_8UC3);
+    draw_bit_buf(canvas, track_data0, -960, 0);
+    draw_bit_buf(canvas, track_data1, -960, height);
+    cv::imshow("Distance buffers2", canvas);
+    cv::waitKey(waitKey_pause);
+    //cv::waitKey(0);
 }
 #else
 void visualize_track_bufs(bit_array track_data0, size_t start_pos0, bit_array track_data1, size_t start_pos1, size_t waitKey_pause=0) {
     // NOP
 }
+void visualize_track_bufs2(bit_array track_data0, bit_array track_data1, size_t waitKey_pause=0) {
+    // NOP
+}
+
 #endif
 
 /**
@@ -277,9 +295,9 @@ void stitch_track_auto(disk_image *input_image, bool verbose) {
 
     const size_t search_range_bfr = 512;         // search range before the 2nd index hole         
     const size_t search_range_aft = 512;         // search range after the 2nd index hole
-    const size_t compare_byte_count = 168;      // bytes ((IBM(168): Gap4=80, SYNC=12, IAM=4, Gap1=50, Sync=12, IDAM=4, CHRN=4, CRC=2), (ISO(54): Gap1=32, SYNC=12, IDAM=4, CHRN=4, CRC=2))
+    const size_t compare_byte_count = 256;      // bytes ((IBM(168): Gap4=80, SYNC=12, IAM=4, Gap1=50, Sync=12, IDAM=4, CHRN=4, CRC=2), (ISO(54): Gap1=32, SYNC=12, IDAM=4, CHRN=4, CRC=2))
     const size_t bit_rate_2d = 500e3;
-    const size_t samples_per_byte = (prop.m_data_bit_rate / bit_rate_2d) * 8;
+    const size_t samples_per_byte = (prop.m_sampling_rate/prop.m_data_bit_rate) * 8;
 
     for(size_t track_num = 0; track_num < prop.m_number_of_tracks; track_num++) {
         if(verbose) {
@@ -298,14 +316,14 @@ void stitch_track_auto(disk_image *input_image, bool verbose) {
         size_t skipped_top_pos = tmp_track_data.get_stream_pos()-1;
         tmp_track_data.set_stream_pos(skipped_top_pos);                   // rewind the steam position for 1 pulse to make current position is on a '1' pulse.
 
-        size_t track_len = tmp_track_data.get_length();
+        size_t track_len = tmp_track_data.get_bit_length();
         pos_top_of_2nd_spin -= tmp_track_data.get_stream_pos();
         for(size_t count=0; count < track_len - skipped_top_pos; count++) {
             track_data.write_stream(tmp_track_data.read_stream(), /*elastic=*/true);    // Copy the rest of track data
         }
 
         // Check overlap length
-        track_len = track_data.get_length();
+        track_len = track_data.get_bit_length();
         size_t overlap_len = track_len - pos_top_of_2nd_spin;
         if(track_len <= pos_top_of_2nd_spin || overlap_len < samples_per_byte * compare_byte_count) {
             if(verbose) {
@@ -326,7 +344,7 @@ void stitch_track_auto(disk_image *input_image, bool verbose) {
                 search_end_pos = track_len - compare_byte_count * samples_per_byte;
             }
             if(verbose) {
-                std::cout << "Start=" << search_start_pos << ", End=" << search_end_pos << std::endl;
+                std::cout << "Search start=" << search_start_pos << ", End=" << search_end_pos << ", Index hole=" << pos_top_of_2nd_spin <<std::endl;
             }
 
             std::vector<size_t> dist_buf_ref = get_pulse_dist_buf(track_data, 0, compare_byte_count * 16); // reference distance buffer to compare with
@@ -345,24 +363,37 @@ void stitch_track_auto(disk_image *input_image, bool verbose) {
                 }
             }
 
+            std::cout << dist_buf_ref.size() << ", " << dist_buf.size() << std::endl;
+
             if(verbose) {
                 std::cout << "Min error=" << min_error << ", Stitch pos=" << min_offset << ", Top of 2nd spin=" << pos_top_of_2nd_spin <<std::endl;
             }
             if(verbose) {
+                dist_buf = get_pulse_dist_buf(track_data, min_offset, compare_byte_count * 16);
                 dump(dist_buf_ref, 0, 80);
                 dump(dist_buf    , 0, 80);
                 visualize_track_bufs(track_data, 0, track_data, min_offset, /*waitKey_pause=*/300);
             }
+
             // error is too large
-            if(min_error > compare_byte_count * 20) {  // reference: when compare_byte_count==180, min_error is around 500~800 when stitching succeeded.
+#if 0
+            if(min_error > dist_buf.size() * 6) {  // reference: when compare_byte_count==180, min_error is around 500~800 when stitching succeeded.
                 if(verbose) {
                     std::cout << "*** Calculated error is too large. Use calculated position of the top of 2nd spin (idx hole) from index hole period measured." << std::endl;
                 }
                 min_offset = pos_top_of_2nd_spin;
             }
-
+#endif
+            tmp_track_data = bit_array{track_data};
             track_data.resize(min_offset);                       // perform track data trimming
+
+            if(verbose) {
+                visualize_track_bufs2(tmp_track_data, track_data, /*waitKey_pause*/300);
+            }
             input_image->set_track_data(track_num, track_data);    // replace track data with trimmed one
+            if(verbose) {
+                std::cout << std::endl;
+            }
         }
     }
 #if USE_OCV == 1

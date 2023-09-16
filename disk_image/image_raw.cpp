@@ -109,7 +109,7 @@ void disk_image_raw::write(const std::string file_name) const {
     ofs << "**START" << std::endl;
     //ofs << "**DRIVE_TYPE 2D" << std::endl;
     ofs << "**SPIN_SPD " << m_base_prop.m_spindle_time_ns / 1e9 << std::endl;
-    double track_time = static_cast<double>(m_track_data[0].get_length()) / static_cast<double>(m_base_prop.m_sampling_rate);     // track time in (sec)
+    double track_time = static_cast<double>(m_track_data[0].get_bit_length()) / static_cast<double>(m_base_prop.m_sampling_rate);     // track time in (sec)
     double track_ratio = track_time / (m_base_prop.m_spindle_time_ns / 1e9);            // track time ratio to spin time 
     int overlap = static_cast<int>((track_ratio - 1.f) * 100.f);
     if(overlap < 0) overlap = 0;

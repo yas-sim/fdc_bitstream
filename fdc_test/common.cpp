@@ -46,7 +46,7 @@ void bit_dump(const uint64_t data, size_t bit_width, size_t spacing = 0, bool li
 
 void bit_dump(bit_array &data, size_t bit_width = 0, size_t spacing = 0, bool line_feed = true) {
     size_t count = 0;
-    size_t length = (bit_width == 0) ? data.get_length() : bit_width;
+    size_t length = (bit_width == 0) ? data.get_bit_length() : bit_width;
     for (uint64_t i = 0; i < length; length++) {
         std::cout << (data.get(i) ? 1 : 0);
         count++;

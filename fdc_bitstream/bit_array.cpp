@@ -17,9 +17,13 @@
  * 
  * @param buf New array (std::vector<uint8_t>)
  */
-void bit_array::set_array(std::vector<uint8_t>& buf) {
+void bit_array::set_array(std::vector<uint8_t>& buf, int bit_length) {
     m_array_data = buf;
-    m_bit_length = buf.size() * 8;
+    if(bit_length >= 0 && bit_length <= buf.size() * 8) {
+        m_bit_length = bit_length;
+    } else {
+        m_bit_length = buf.size() * 8;
+    }
 }
 
 /**
@@ -38,12 +42,24 @@ void bit_array::clear_with_0(void) {
     std::fill(m_array_data.begin(), m_array_data.end(), 0);
 }
 
+void bit_array::extend_buffer(int new_buf_size_in_bit) {
+    if(new_buf_size_in_bit <= m_bit_length) return;
+
+    size_t byte_count = to_byte_pos(new_buf_size_in_bit);
+    if(byte_count >= m_array_data.size()) {
+        m_array_data.resize(to_alloc_unit(byte_count));  // Extend the buffer if the new buffer size is larger than the preserved memory buffer size
+    }
+    fill_stream(m_bit_length, m_array_data.size()*8, 0); // clear extend part
+    m_bit_length = new_buf_size_in_bit;
+}
+
+
 /**
  * @brief Get an copy of the bit array data.
  * 
  * @return std::vector<uint8_t> Bit array data.
  */
-std::vector<uint8_t> bit_array::get_array(void) const{
+std::vector<uint8_t> bit_array::get_array(void) const {
     return m_array_data;
 }
 
@@ -62,7 +78,7 @@ void bit_array::clear_array(void) {
  * 
  * @return size_t Buffer length in bit unit.
  */
-size_t bit_array::get_length(void) const{
+size_t bit_array::get_bit_length(void) const{
     return m_bit_length;
 }
 
@@ -81,9 +97,15 @@ size_t bit_array::size(void) const {
  * @param bit_length New length in bit unit.
  */
 void bit_array::resize(size_t bit_length) {
-    size_t new_size_in_bytes = to_byte_pos(bit_length) + 1;
-    m_array_data.resize(new_size_in_bytes);
-    m_bit_length = bit_length;
+    if(bit_length > m_bit_length) {
+        extend_buffer(bit_length);
+    } else if(bit_length < m_bit_length) {
+        size_t new_size_in_bytes = to_alloc_unit(to_byte_pos(bit_length));
+        m_array_data.resize(new_size_in_bytes);
+        m_bit_length = bit_length;
+    } else {
+        // bit_length == m_bit_length. nothing to do
+    }
 }
 
 /**
@@ -105,21 +127,27 @@ void bit_array::reserve(size_t bit_length) {
  * @param index Bit position to set the data.
  * @param value Data to set.
  */
-void bit_array::set(size_t index, uint8_t value) {
+void bit_array::set(int index, uint8_t value, bool elastic) {
+    while(index < 0) {
+        index += static_cast<int>(m_bit_length);
+    }
+    if(elastic==false && index >= m_bit_length) {
+        index = index % m_bit_length;
+    }
+
     size_t  byte_pos = to_byte_pos(index);
     uint8_t bit_pos = to_bit_pos(index);
 
     if (byte_pos >= m_array_data.size()) {
-        m_array_data.resize(byte_pos + 10, 0);      // Extend the buffer
+        extend_buffer(index+1);
     }
-    if (m_bit_length <= index) {
-        m_bit_length = index + 1;
+    if(index >= m_bit_length) {
+        m_bit_length = index;
     }
 
     if (value != 0) {
         m_array_data[byte_pos] |= bit_pos;
-    }
-    else {
+    } else {
         m_array_data[byte_pos] &= ~bit_pos;
     }
 }
@@ -130,11 +158,18 @@ void bit_array::set(size_t index, uint8_t value) {
  * @param index Bit position to read.
  * @return bool Read data.
  */
-uint8_t bit_array::get(size_t index) {
+uint8_t bit_array::get(int index) {
     if(m_array_data.size() == 0) {
         m_wraparound = true;
         return 0;
     }
+    while(index < 0) {
+        index += static_cast<int>(m_bit_length);
+    }
+    if(index >= m_bit_length) {
+        index = index % m_bit_length;
+    }
+
     size_t  byte_pos = to_byte_pos(index);
     uint8_t bit_pos = to_bit_pos(index);
     uint8_t res = (m_array_data[byte_pos] & bit_pos) ? 1 : 0;
@@ -149,13 +184,22 @@ uint8_t bit_array::get(size_t index) {
  * @return true 
  * @return false 
  */
-bool bit_array::set_stream_pos(size_t position) {
+bool bit_array::set_stream_pos(int position) {
+    while(position < 0) {
+        position += static_cast<int>(m_bit_length);
+    }
+    if(position >= m_bit_length) {
+        position = position % m_bit_length;
+    }
+#if 0
     if (position < m_bit_length) {
         m_stream_pos = position;
     }
     else {
         position = m_bit_length - 1;
     }
+#endif
+    m_stream_pos = position;
     m_wraparound = false;
     return true;
 }
@@ -178,7 +222,7 @@ size_t bit_array::get_stream_pos(void) {
  * @param elastic Operation mode (false=non-elastic and ring-buffer mode. The pointer will wrap around at the end of the buffer / true=elastic, buffer will extend if pointer go over the end of the buffer )
  */
 void bit_array::write_stream(uint8_t value, bool elastic) {
-    set(m_stream_pos++, value);
+    set(m_stream_pos++, value, elastic);
     if (m_stream_pos >= m_bit_length && elastic == false) {     // reached to the end of the bit array
         m_stream_pos = 0;           // wrap around only when elastic==false
         m_wraparound = true;
@@ -191,6 +235,7 @@ void bit_array::write_stream(uint8_t value, bool elastic) {
  */
 void bit_array::advance_stream_pos(bool elastic) {
     if(m_array_data.size() == 0) {
+        m_stream_pos = 0;
         m_wraparound = true;
         return;
     }
@@ -253,9 +298,11 @@ size_t bit_array::distance_to_next_pulse(void) {
  * @param data Data to fill.
  * @param length Number of bits to fill.
  */
-void bit_array::fill_stream(uint8_t data, uint8_t length) {
-    for (size_t i = 0; i < length; i++) {
-        write_stream(data);
+void bit_array::fill_stream(int start_pos, int end_pos, uint8_t data) {
+    if(start_pos >= m_bit_length) return;
+    if(end_pos   >= m_bit_length) return;
+    for (int i = start_pos; i < end_pos; i++) {
+        set(i, data);
     }
 }
 

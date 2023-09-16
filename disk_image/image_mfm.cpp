@@ -31,10 +31,11 @@ void disk_image_mfm::read(const std::string file_name) {
         bit_array barray;
         std::vector<uint8_t> tdata;
         ifs.seekg(track_table[track_n].offset);
-        size_t read_length = track_table[track_n].length_bit / 8 + ((track_table[track_n].length_bit % 8) ? 1 : 0);
+        size_t track_len_bit = track_table[track_n].length_bit;
+        size_t read_length = track_len_bit / 8 + ((track_len_bit % 8) ? 1 : 0);
         tdata.resize(read_length);
         ifs.read(reinterpret_cast<char*>(tdata.data()), read_length);
-        barray.set_array(tdata);
+        barray.set_array(tdata, track_len_bit);
         m_track_data[track_n] = barray;
     }
     m_track_data_is_set = true;
@@ -63,7 +64,7 @@ void disk_image_mfm::write(const std::string file_name) const {
         std::vector<uint8_t> track = m_track_data[track_n].get_array();
         ofs.seekp(track_data_offset);
         ofs.write(reinterpret_cast<char*>(track.data()), track.size());
-        track_table[track_n].length_bit = m_track_data[track_n].get_length();
+        track_table[track_n].length_bit = m_track_data[track_n].get_bit_length();
         track_table[track_n].offset = track_data_offset;
 
         track_data_offset = align(track_data_offset + track.size(), 0x100);
