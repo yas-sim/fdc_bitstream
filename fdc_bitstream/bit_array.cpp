@@ -299,8 +299,9 @@ size_t bit_array::distance_to_next_pulse(void) {
  * @param length Number of bits to fill.
  */
 void bit_array::fill_stream(int start_pos, int end_pos, uint8_t data) {
-    if(start_pos >= m_bit_length) return;
-    if(end_pos   >= m_bit_length) return;
+    if(start_pos >= m_bit_length) start_pos = m_bit_length - 1;
+    if(end_pos   >= m_bit_length) end_pos   = m_bit_length - 1;
+    if(start_pos >= end_pos) return;
     for (int i = start_pos; i < end_pos; i++) {
         set(i, data);
     }
