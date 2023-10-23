@@ -6,6 +6,9 @@
 #include <fstream>
 #include <iostream>
 #include <iomanip>
+#include <array>
+
+#define RESAMPLE_COUNT  12
 
 #define MB8877_STATUS_CRC_ERROR        0x08
 #define MB8877_STATUS_RECORD_NOT_FOUND 0x10
@@ -125,22 +128,26 @@ bool disk_image_rdd::write(std::ostream &ofp) const {
                 sectorHeader[3]=id.R;
                 sectorHeader[4]=id.N;
 
+                fdc.set_pos(id.pos);
+                auto read_sect = fdc.read_sector(id.C, id.R);
+
+				bool corocoroTypeA=IsFM7CorocoroTypeA(fdc,id.pos,id.C,id.R,read_sect.crc_sts,read_sect.data);
+				bool corocoroTypeB=IsFM7CorocoroTypeB(fdc,id.pos,id.C,id.R,read_sect.crc_sts,read_sect.data);
+
+
                 if(true!=MFM)
                 {
                     sectorHeader[6]|=1;
                 }
-                // if(true==needResample)
-                //{
-                //    sectorHeader[6]|=2;
-                //}
+                if(true==corocoroTypeA || true==corocoroTypeB)
+                {
+                    sectorHeader[6]|=2;
+                }
                 // if(true==leafInTheForest)
                 //{
                 //    sectorHeader[6]|=4;
                 //}
 
-
-                fdc.set_pos(id.pos);
-                auto read_sect = fdc.read_sector(id.C, id.R);
 
                 if(read_sect.record_not_found == false) {
                     if(true==read_sect.dam_type) {
@@ -176,22 +183,85 @@ bool disk_image_rdd::write(std::ostream &ofp) const {
                 sectorHeader[0x0E]= len    &0xFF;
                 sectorHeader[0x0F]=(len>>8)&0xFF;
 
-                int resampleCount=1;
-                for(int i=0; i<resampleCount; ++i)
+                if(true!=corocoroTypeA && true!=corocoroTypeB)
                 {
-                    if(0<i)
-                    {
-                        // Randomize identified unstable bytes.
-                    }
                     ofp.write((char *)sectorHeader,16);
                     while(read_sect.data.size()<len)
                     {
                         read_sect.data.push_back(0);
                     }
                     read_sect.data.resize(len);
-
                     ofp.write((char *)read_sect.data.data(),read_sect.data.size());
                 }
+				else
+				{
+					fdc_bitstream::sector_data samples[RESAMPLE_COUNT];
+					for(double fluctuation=0.8; 0.2<fluctuation; fluctuation-=0.05)
+					{
+						bool tryAgain=false;
+						fdc.enable_fluctuator(fluctuation);
+						for(auto &s : samples)
+						{
+							fdc.set_pos(id.pos);
+							s=fdc.read_sector(id.C,id.R);
+						}
+						for(auto &s : samples)
+						{
+							if((true==corocoroTypeA && true!=CheckCorocoroTypeASignature(s.crc_sts,s.data)) ||
+							   (true==corocoroTypeB && true!=CheckCorocoroTypeBSignature(s.crc_sts,s.data)))
+							{
+								tryAgain=true;
+								break;
+							}
+						}
+						if(tryAgain!=true)
+						{
+							break;
+						}
+					}
+					if(true==corocoroTypeA)
+					{
+						for(auto &s : samples)
+						{
+							if(1024==s.data.size())
+							{
+								s.data[0x120]=rand()&255;
+								s.data[0x121]=rand()&255;
+								s.data[0x122]=rand()&255;
+								s.data[0x123]=rand()&255;
+							}
+						}
+					}
+					if(true==corocoroTypeB)
+					{
+						for(auto &s : samples)
+						{
+							if(128==s.data.size())
+							{
+								s.data[20]=rand()&255;
+								s.data[21]=rand()&255;
+								s.data[22]=rand()&255;
+								s.data[23]=rand()&255;
+								for(int i=24; i<44; ++i)
+								{
+									s.data[i]=0xF6;
+								}
+							}
+						}
+					}
+					fdc.disable_fluctuator();
+
+					for(auto &s : samples)
+					{
+	                    ofp.write((char *)sectorHeader,16);
+	                    while(s.data.size()<len)
+	                    {
+	                        s.data.push_back(0);
+	                    }
+	                    s.data.resize(len);
+	                    ofp.write((char *)s.data.data(),s.data.size());
+					}
+				}
 
                 if (!read_sect.record_not_found && !read_sect.crc_sts && !id.crc_sts) {  // no error (RNF or DT_CRC error or ID_CRC error)
                     sector_good++;
@@ -242,4 +312,177 @@ bool disk_image_rdd::write(std::ostream &ofp) const {
         std::cout << "**TOTAL RESULT(GOOD/BAD):" << total_sector_good << " " << total_sector_bad << std::endl;
     }
     std::cout.flags(flags_saved);
+}
+
+bool disk_image_rdd::IsFM7CorocoroTypeA(fdc_bitstream &fdc,uint64_t pos,unsigned char C,unsigned char H,bool crc_sts,const std::vector <uint8_t> &data) const
+{
+	if(true==CheckCorocoroTypeASignature(crc_sts,data))
+	{
+		// Signature found.  Now let's verify.
+
+		std::vector <std::array <uint8_t,4> > samples;
+		const int nRepeat=16;
+
+		// Reduce fluctuator until first 256 bytes are all 0xE5
+		for(double fluctuation=0.8; 0.2<fluctuation; fluctuation-=0.05)
+		{
+			samples.clear();
+			fdc.enable_fluctuator(fluctuation);
+			for(int i=0; i<nRepeat; ++i)
+			{
+				fdc.set_pos(pos);
+				auto sect=fdc.read_sector(C,H);
+				if(1024!=sect.data.size())
+				{
+					goto UPDATE_FLUCTUATION;
+				}
+				for(int j=0; j<256; ++j)
+				{
+					// Signature: First 256 bytes are 0xE5.
+					if(0xE5!=sect.data[j])
+					{
+						samples.clear();
+						goto UPDATE_FLUCTUATION;
+					}
+				}
+				std::array <uint8_t,4> s;
+				s[0]=sect.data[0x120];
+				s[1]=sect.data[0x121];
+				s[2]=sect.data[0x122];
+				s[3]=sect.data[0x123];
+				samples.push_back(s);
+			}
+			if(samples.size()==nRepeat)
+			{
+				break;
+			}
+		UPDATE_FLUCTUATION:
+			;
+		}
+		fdc.disable_fluctuator();
+
+		if(nRepeat!=samples.size())
+		{
+			return false;
+		}
+
+		// 4 bytes from offset $120 need to be unstable.
+		for(int i=1; i<samples.size(); ++i)
+		{
+			if(samples[0][0]!=samples[i][0] ||
+			   samples[0][1]!=samples[i][1] ||
+			   samples[0][2]!=samples[i][2] ||
+			   samples[0][3]!=samples[i][3])
+			{
+				std::cout << "Detected Corocoro Protect Type A" << std::endl;
+				return true;
+			}
+		}
+	}
+	return false;
+}
+bool disk_image_rdd::IsFM7CorocoroTypeB(fdc_bitstream &fdc,uint64_t pos,unsigned char C,unsigned char H,bool crc_sts,const std::vector <uint8_t> &data) const
+{
+	if(true==CheckCorocoroTypeBSignature(crc_sts,data))
+	{
+		// Signature found.  Now let's verify by fluctuating the VFO.
+
+		std::vector <std::array <uint8_t,4> > samples;
+		const int nRepeat=16;
+
+		// Reduce fluctuator until first 256 bytes are all 0xE5
+		for(double fluctuation=0.8; 0.2<fluctuation; fluctuation-=0.05)
+		{
+			samples.clear();
+			fdc.enable_fluctuator(fluctuation);
+			for(int i=0; i<nRepeat; ++i)
+			{
+				fdc.set_pos(pos);
+				auto sect=fdc.read_sector(C,H);
+				if(128!=sect.data.size())
+				{
+					goto UPDATE_FLUCTUATION;
+				}
+				for(int j=0; j<20; ++j)
+				{
+					// Signature: First 20 bytes are 0xF7.
+					if(0xF7!=sect.data[j])
+					{
+						samples.clear();
+						goto UPDATE_FLUCTUATION;
+					}
+				}
+				std::array <uint8_t,4> s;
+				s[0]=sect.data[20];
+				s[1]=sect.data[21];
+				s[2]=sect.data[22];
+				s[3]=sect.data[23];
+				samples.push_back(s);
+			}
+			if(samples.size()==nRepeat)
+			{
+				break;
+			}
+		UPDATE_FLUCTUATION:
+			;
+		}
+		fdc.disable_fluctuator();
+
+
+		// 4 bytes from offset $120 need to be unstable.
+		for(int i=1; i<samples.size(); ++i)
+		{
+			if(samples[0][0]!=samples[i][0] ||
+			   samples[0][1]!=samples[i][1] ||
+			   samples[0][2]!=samples[i][2] ||
+			   samples[0][3]!=samples[i][3])
+			{
+				std::cout << "Detected Corocoro Protect Type B" << std::endl;
+				return true;
+			}
+		}
+	}
+	return false;
+}
+bool disk_image_rdd::CheckCorocoroTypeASignature(bool crc_sts,const std::vector <uint8_t> &data) const
+{
+	if(true==crc_sts && 1024==data.size())
+	{
+		for(int i=0; i<256; ++i)
+		{
+			// Signature: First 256 bytes are 0xE5.
+			if(0xE5!=data[i])
+			{
+				return false;
+			}
+		}
+	}
+	return true;
+}
+bool disk_image_rdd::CheckCorocoroTypeBSignature(bool crc_sts,const std::vector <uint8_t> &data) const
+{
+	if(true==crc_sts && 128==data.size())
+	{
+		for(int i=0; i<20; ++i)
+		{
+			// Signature: First 20 bytes are 0xF7.
+			if(0xF7!=data[i])
+			{
+				return false;
+			}
+		}
+
+		// 20 bytes from offset 24 need to be 0xF6, however, often byte[24] changes.  Also byte[43] often is 0xF7.
+		// All 20 bytes may change to zero.
+		// The supplied checker will read the sector multiple times and pass if it finds 19 consecutive 0xF6 from offset 24 just once.
+		// So, first check 18 bytes from offset 25 are equal.
+		for(int i=25; i<43; ++i)
+		{
+			if(data[i]!=data[25])
+			{
+				return false;
+			}
+		}
+	}
+	return true;
 }
