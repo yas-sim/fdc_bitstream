@@ -314,7 +314,7 @@ bool disk_image_rdd::write(std::ostream &ofp) const {
     std::cout.flags(flags_saved);
 }
 
-bool disk_image_rdd::IsFM7CorocoroTypeA(fdc_bitstream &fdc,uint64_t pos,unsigned char C,unsigned char H,bool crc_sts,const std::vector <uint8_t> &data) const
+bool disk_image_rdd::IsFM7CorocoroTypeA(fdc_bitstream &fdc,uint64_t pos,unsigned char C,unsigned char R,bool crc_sts,const std::vector <uint8_t> &data) const
 {
 	if(true==CheckCorocoroTypeASignature(crc_sts,data))
 	{
@@ -331,7 +331,7 @@ bool disk_image_rdd::IsFM7CorocoroTypeA(fdc_bitstream &fdc,uint64_t pos,unsigned
 			for(int i=0; i<nRepeat; ++i)
 			{
 				fdc.set_pos(pos);
-				auto sect=fdc.read_sector(C,H);
+				auto sect=fdc.read_sector(C,R);
 				if(1024!=sect.data.size())
 				{
 					goto UPDATE_FLUCTUATION;
@@ -381,7 +381,7 @@ bool disk_image_rdd::IsFM7CorocoroTypeA(fdc_bitstream &fdc,uint64_t pos,unsigned
 	}
 	return false;
 }
-bool disk_image_rdd::IsFM7CorocoroTypeB(fdc_bitstream &fdc,uint64_t pos,unsigned char C,unsigned char H,bool crc_sts,const std::vector <uint8_t> &data) const
+bool disk_image_rdd::IsFM7CorocoroTypeB(fdc_bitstream &fdc,uint64_t pos,unsigned char C,unsigned char R,bool crc_sts,const std::vector <uint8_t> &data) const
 {
 	if(true==CheckCorocoroTypeBSignature(crc_sts,data))
 	{
@@ -398,7 +398,7 @@ bool disk_image_rdd::IsFM7CorocoroTypeB(fdc_bitstream &fdc,uint64_t pos,unsigned
 			for(int i=0; i<nRepeat; ++i)
 			{
 				fdc.set_pos(pos);
-				auto sect=fdc.read_sector(C,H);
+				auto sect=fdc.read_sector(C,R);
 				if(128!=sect.data.size())
 				{
 					goto UPDATE_FLUCTUATION;
