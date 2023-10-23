@@ -456,8 +456,9 @@ bool disk_image_rdd::CheckCorocoroTypeASignature(bool crc_sts,const std::vector 
 				return false;
 			}
 		}
+		return true;
 	}
-	return true;
+	return false;
 }
 bool disk_image_rdd::CheckCorocoroTypeBSignature(bool crc_sts,const std::vector <uint8_t> &data) const
 {
@@ -483,6 +484,7 @@ bool disk_image_rdd::CheckCorocoroTypeBSignature(bool crc_sts,const std::vector 
 				return false;
 			}
 		}
+		return true;
 	}
-	return true;
+	return false;
 }
