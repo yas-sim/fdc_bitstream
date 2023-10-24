@@ -11,7 +11,7 @@ private:
     size_t m_vfo_type;
     double m_gain_l, m_gain_h;
 public:
-    disk_image_rdd(void) : disk_image(), m_vfo_type(VFO_TYPE_DEFAULT), m_gain_l(1.f), m_gain_h(2.f) {};
+    disk_image_rdd(void) : disk_image(), m_vfo_type(VFO_TYPE_DEFAULT), m_gain_l(VFO_GAIN_L_DEFAULT), m_gain_h(VFO_GAIN_H_DEFAULT) {};
 
     void read(const std::string file_name) override;
     void read(std::istream &ifp);
