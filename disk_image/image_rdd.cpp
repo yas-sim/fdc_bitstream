@@ -23,6 +23,21 @@ static inline T Rewind(T pos)
 	return (REWIND_WIDTH<pos ? pos-REWIND_WIDTH : 0);
 }
 
+class Fluctuator_Guard
+{
+private:
+	fdc_bitstream *fdcPtr;
+public:
+	Fluctuator_Guard(fdc_bitstream &fdc)
+	{
+		fdcPtr=&fdc;
+	}
+	~Fluctuator_Guard()
+	{
+		fdcPtr->disable_fluctuator();
+	}
+};
+
 void disk_image_rdd::read(const std::string file_name) {
     std::cout << "Reading from RDD is not supported yet." << std::endl;
 }
@@ -203,6 +218,8 @@ bool disk_image_rdd::write(std::ostream &ofp) const {
                 }
 				else
 				{
+					Fluctuator_Guard guard(fdc);
+
 					fdc_bitstream::sector_data samples[RESAMPLE_COUNT];
 					for(double fluctuation=0.8; 0.2<fluctuation; fluctuation-=0.05)
 					{
@@ -257,7 +274,6 @@ bool disk_image_rdd::write(std::ostream &ofp) const {
 							}
 						}
 					}
-					fdc.disable_fluctuator();
 
 					for(auto &s : samples)
 					{
@@ -334,6 +350,8 @@ bool disk_image_rdd::IsFM7CorocoroTypeA(fdc_bitstream &fdc,uint64_t pos,unsigned
 		// Reduce fluctuator until first 256 bytes are all 0xE5
 		for(double fluctuation=0.8; 0.2<fluctuation; fluctuation-=0.05)
 		{
+			Fluctuator_Guard guard(fdc);
+
 			samples.clear();
 			fdc.enable_fluctuator(fluctuation);
 			for(int i=0; i<nRepeat; ++i)
@@ -367,7 +385,6 @@ bool disk_image_rdd::IsFM7CorocoroTypeA(fdc_bitstream &fdc,uint64_t pos,unsigned
 		UPDATE_FLUCTUATION:
 			;
 		}
-		fdc.disable_fluctuator();
 
 		if(nRepeat!=samples.size())
 		{
@@ -395,13 +412,13 @@ bool disk_image_rdd::IsFM7CorocoroTypeB(fdc_bitstream &fdc,uint64_t pos,unsigned
 	{
 		// Signature found.  Now let's verify by fluctuating the VFO.
 
-		std::vector <std::array <uint8_t,4> > samples;
 		const int nRepeat=16;
 
-		// Reduce fluctuator until first 256 bytes are all 0xE5
+		// Reduce fluctuator until first 20 bytes are all 0xF7
 		for(double fluctuation=0.8; 0.2<fluctuation; fluctuation-=0.05)
 		{
-			samples.clear();
+			Fluctuator_Guard guard(fdc);
+
 			fdc.enable_fluctuator(fluctuation);
 			for(int i=0; i<nRepeat; ++i)
 			{
@@ -411,43 +428,32 @@ bool disk_image_rdd::IsFM7CorocoroTypeB(fdc_bitstream &fdc,uint64_t pos,unsigned
 				{
 					goto UPDATE_FLUCTUATION;
 				}
+
 				for(int j=0; j<20; ++j)
 				{
 					// Signature: First 20 bytes are 0xF7.
 					if(0xF7!=sect.data[j])
 					{
-						samples.clear();
 						goto UPDATE_FLUCTUATION;
 					}
 				}
-				std::array <uint8_t,4> s;
-				s[0]=sect.data[20];
-				s[1]=sect.data[21];
-				s[2]=sect.data[22];
-				s[3]=sect.data[23];
-				samples.push_back(s);
-			}
-			if(samples.size()==nRepeat)
-			{
-				break;
-			}
-		UPDATE_FLUCTUATION:
-			;
-		}
-		fdc.disable_fluctuator();
 
+				// Ideally, for conclusive identification I want to see data[20] to data[23] changes value.
+				// However, only four bytes following stable bytes often do not fluctuate enough.
+				// Instead, see if data[25] to data[43] are all 0xF6.
+				for(int j=25; j<43; ++j)
+				{
+					if(0xF6!=sect.data[j])
+					{
+						goto UPDATE_FLUCTUATION;
+					}
+				}
 
-		// 4 bytes from offset $120 need to be unstable.
-		for(int i=1; i<samples.size(); ++i)
-		{
-			if(samples[0][0]!=samples[i][0] ||
-			   samples[0][1]!=samples[i][1] ||
-			   samples[0][2]!=samples[i][2] ||
-			   samples[0][3]!=samples[i][3])
-			{
 				std::cout << "C:" << int(C) << " H:" << int(H) << " R:" << int(R) << " Detected Corocoro Protect Type B" << std::endl;
 				return true;
 			}
+		UPDATE_FLUCTUATION:
+			;
 		}
 	}
 	return false;
