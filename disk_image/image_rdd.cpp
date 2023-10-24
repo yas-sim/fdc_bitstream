@@ -9,10 +9,19 @@
 #include <array>
 
 #define RESAMPLE_COUNT  12
+#define REWIND_WIDTH  2048
+// 25MHz sampling rate:  8 counts per pulse window, 16 pulse windows per byte, 8*16=128 counts per byte, 2048 counts makes 16 bytes.
+// 50MHz sampling rate: 16 counts per pulse window, 16 pulse windows per byte, 8*16=128 counts per byte, 2048 counts makes  8 bytes.
 
 #define MB8877_STATUS_CRC_ERROR        0x08
 #define MB8877_STATUS_RECORD_NOT_FOUND 0x10
 #define MB8877_STATUS_DELETED_DATA     0x20
+
+template <class T>
+static inline T Rewind(T pos)
+{
+	return (REWIND_WIDTH<pos ? pos-REWIND_WIDTH : 0);
+}
 
 void disk_image_rdd::read(const std::string file_name) {
     std::cout << "Reading from RDD is not supported yet." << std::endl;
@@ -98,7 +107,6 @@ bool disk_image_rdd::write(std::ostream &ofp) const {
                 continue;
             }
 
-
             for(auto id : id_list) {
                 unsigned char idMark[16]={2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
                 idMark[1]=id.C;
@@ -111,7 +119,7 @@ bool disk_image_rdd::write(std::ostream &ofp) const {
                     idMark[7]|=MB8877_STATUS_CRC_ERROR;
                 }
 
-                fdc.set_pos(id.pos);
+                fdc.set_pos(Rewind(id.pos));
                 auto read_sect = fdc.read_sector(id.C, id.R);
 
                 if(true==read_sect.record_not_found) {
@@ -128,11 +136,11 @@ bool disk_image_rdd::write(std::ostream &ofp) const {
                 sectorHeader[3]=id.R;
                 sectorHeader[4]=id.N;
 
-                fdc.set_pos(id.pos);
+                fdc.set_pos(Rewind(id.pos));
                 auto read_sect = fdc.read_sector(id.C, id.R);
 
-				bool corocoroTypeA=IsFM7CorocoroTypeA(fdc,id.pos,id.C,id.R,read_sect.crc_sts,read_sect.data);
-				bool corocoroTypeB=IsFM7CorocoroTypeB(fdc,id.pos,id.C,id.R,read_sect.crc_sts,read_sect.data);
+				bool corocoroTypeA=IsFM7CorocoroTypeA(fdc,id.pos,id.C,id.H,id.R,read_sect.crc_sts,read_sect.data);
+				bool corocoroTypeB=IsFM7CorocoroTypeB(fdc,id.pos,id.C,id.H,id.R,read_sect.crc_sts,read_sect.data);
 
 
                 if(true!=MFM)
@@ -202,7 +210,7 @@ bool disk_image_rdd::write(std::ostream &ofp) const {
 						fdc.enable_fluctuator(fluctuation);
 						for(auto &s : samples)
 						{
-							fdc.set_pos(id.pos);
+							fdc.set_pos(Rewind(id.pos));
 							s=fdc.read_sector(id.C,id.R);
 						}
 						for(auto &s : samples)
@@ -314,7 +322,7 @@ bool disk_image_rdd::write(std::ostream &ofp) const {
     std::cout.flags(flags_saved);
 }
 
-bool disk_image_rdd::IsFM7CorocoroTypeA(fdc_bitstream &fdc,uint64_t pos,unsigned char C,unsigned char R,bool crc_sts,const std::vector <uint8_t> &data) const
+bool disk_image_rdd::IsFM7CorocoroTypeA(fdc_bitstream &fdc,uint64_t pos,unsigned char C,unsigned char H,unsigned char R,bool crc_sts,const std::vector <uint8_t> &data) const
 {
 	if(true==CheckCorocoroTypeASignature(crc_sts,data))
 	{
@@ -330,7 +338,7 @@ bool disk_image_rdd::IsFM7CorocoroTypeA(fdc_bitstream &fdc,uint64_t pos,unsigned
 			fdc.enable_fluctuator(fluctuation);
 			for(int i=0; i<nRepeat; ++i)
 			{
-				fdc.set_pos(pos);
+				fdc.set_pos(Rewind(pos));
 				auto sect=fdc.read_sector(C,R);
 				if(1024!=sect.data.size())
 				{
@@ -374,14 +382,14 @@ bool disk_image_rdd::IsFM7CorocoroTypeA(fdc_bitstream &fdc,uint64_t pos,unsigned
 			   samples[0][2]!=samples[i][2] ||
 			   samples[0][3]!=samples[i][3])
 			{
-				std::cout << "Detected Corocoro Protect Type A" << std::endl;
+				std::cout << "C:" << int(C) << " H:" << int(H) << " R:" << int(R) << " Detected Corocoro Protect Type A" << std::endl;
 				return true;
 			}
 		}
 	}
 	return false;
 }
-bool disk_image_rdd::IsFM7CorocoroTypeB(fdc_bitstream &fdc,uint64_t pos,unsigned char C,unsigned char R,bool crc_sts,const std::vector <uint8_t> &data) const
+bool disk_image_rdd::IsFM7CorocoroTypeB(fdc_bitstream &fdc,uint64_t pos,unsigned char C,unsigned char H,unsigned char R,bool crc_sts,const std::vector <uint8_t> &data) const
 {
 	if(true==CheckCorocoroTypeBSignature(crc_sts,data))
 	{
@@ -397,7 +405,7 @@ bool disk_image_rdd::IsFM7CorocoroTypeB(fdc_bitstream &fdc,uint64_t pos,unsigned
 			fdc.enable_fluctuator(fluctuation);
 			for(int i=0; i<nRepeat; ++i)
 			{
-				fdc.set_pos(pos);
+				fdc.set_pos(Rewind(pos));
 				auto sect=fdc.read_sector(C,R);
 				if(128!=sect.data.size())
 				{
@@ -437,7 +445,7 @@ bool disk_image_rdd::IsFM7CorocoroTypeB(fdc_bitstream &fdc,uint64_t pos,unsigned
 			   samples[0][2]!=samples[i][2] ||
 			   samples[0][3]!=samples[i][3])
 			{
-				std::cout << "Detected Corocoro Protect Type B" << std::endl;
+				std::cout << "C:" << int(C) << " H:" << int(H) << " R:" << int(R) << " Detected Corocoro Protect Type B" << std::endl;
 				return true;
 			}
 		}
