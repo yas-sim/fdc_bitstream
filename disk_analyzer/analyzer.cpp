@@ -331,11 +331,15 @@ void cmd_read_sector(size_t cyl, size_t rcd, bool pulse_vis) {
     track_stream = disk_img->get_track_data(cyl);
     fdc->set_track_data(track_stream);
     fdc->set_pos(0);
-    if(rcd >= 1000) {   // read by sector index #
+	if(999==rcd) {
+        std::cout << "Index needs to be between 1 and the number of sectors in the track." << std::endl;
+        return;
+	}
+	else if(rcd >= 1000) {   // read by sector index #
         std::vector<fdc_bitstream::id_field> id_list = fdc->read_all_idam();   // get the list of all IDs
         size_t sct_idx = rcd - 1000;
         if (sct_idx >= id_list.size()) {
-            std::cout << "Index exceeded (the number of sectors)-1 in the track. (" << sct_idx << ">" << id_list.size()-1 << ")." << std::endl;
+            std::cout << "Index exceeded the number of sectors in the track. (" << sct_idx << ">" << id_list.size() << ")." << std::endl;
             return;
         }
         fdc_bitstream::id_field sct_id = id_list[sct_idx];
