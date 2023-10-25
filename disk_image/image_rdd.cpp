@@ -116,6 +116,8 @@ bool disk_image_rdd::write(std::ostream &ofp) const {
             fdc.set_vfo_gain_val(m_gain_l, m_gain_h);
             std::vector<fdc_bitstream::id_field> id_list = fdc.read_all_idam();
 
+			bool leafInTheForest=CheckLeafInTheForestSignature(track_n/2,track_n%2,id_list);
+
             if(0==retry && 0==id_list.size())
             {
                 // Try again.  Unformat or can be FM format.
@@ -166,10 +168,10 @@ bool disk_image_rdd::write(std::ostream &ofp) const {
                 {
                     sectorHeader[6]|=2;
                 }
-                // if(true==leafInTheForest)
-                //{
-                //    sectorHeader[6]|=4;
-                //}
+                if(true==leafInTheForest)
+                {
+                    sectorHeader[6]|=4;
+                }
 
 
                 if(read_sect.record_not_found == false) {
@@ -498,6 +500,29 @@ bool disk_image_rdd::CheckCorocoroTypeBSignature(bool crc_sts,const std::vector 
 				return false;
 			}
 		}
+		return true;
+	}
+	return false;
+}
+
+bool disk_image_rdd::CheckLeafInTheForestSignature(uint8_t C,uint8_t H,const std::vector <fdc_bitstream::id_field> &id_list) const
+{
+	// Only confirmed in Thexder and Fire Crystal as of 2023/10/24.
+	// There is a track that has 63 sectors with all same C,H,R.
+	// All but two sectors are dummy.
+
+	if(60<id_list.size())
+	{
+		for(auto id : id_list)
+		{
+			if(id.C!=id_list[0].C ||
+			   id.H!=id_list[0].H ||
+			   id.R!=id_list[0].R)
+			{
+				return false;
+			}
+		}
+		std::cout << "C:" << int(C) << " H:" << int(H) << " Detected Leaf-In-The-Forest Protect." << std::endl;
 		return true;
 	}
 	return false;

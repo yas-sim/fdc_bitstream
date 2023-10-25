@@ -5,6 +5,7 @@
 #include "bit_array.h"
 #include "image_base.h"
 #include "fdc_vfo_def.h"
+#include "fdc_bitstream.h"
 
 class disk_image_rdd : public disk_image {
 private:
@@ -25,4 +26,6 @@ public:
 
 	bool CheckCorocoroTypeASignature(bool crc_sts,const std::vector <uint8_t> &data) const;
 	bool CheckCorocoroTypeBSignature(bool crc_sts,const std::vector <uint8_t> &data) const;
+
+	bool CheckLeafInTheForestSignature(uint8_t C,uint8_t H,const std::vector <fdc_bitstream::id_field> &id_list) const;
 };
