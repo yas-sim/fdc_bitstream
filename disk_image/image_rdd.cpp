@@ -17,6 +17,10 @@
 #define MB8877_STATUS_RECORD_NOT_FOUND 0x10
 #define MB8877_STATUS_DELETED_DATA     0x20
 
+const unsigned int READ_TRACK_EX_POS=2;
+const unsigned int READ_TRACK_EX_ERR=3;
+
+
 template <class T>
 static inline T Rewind(T pos)
 {
@@ -115,6 +119,7 @@ bool disk_image_rdd::write(std::ostream &ofp) const {
             fdc.set_vfo_type(m_vfo_type);
             fdc.set_vfo_gain_val(m_gain_l, m_gain_h);
             std::vector<fdc_bitstream::id_field> id_list = fdc.read_all_idam();
+			std::vector <bool> unstable_pulses=MarkUnstablePulses(fdc,id_list);
 
 			bool leafInTheForest=CheckLeafInTheForestSignature(track_n/2,track_n%2,id_list);
 
@@ -526,4 +531,85 @@ bool disk_image_rdd::CheckLeafInTheForestSignature(uint8_t C,uint8_t H,const std
 		return true;
 	}
 	return false;
+}
+
+std::vector <bool> disk_image_rdd::MarkUnstablePulses(fdc_bitstream &fdc,const std::vector<fdc_bitstream::id_field> &id_list) const
+{
+	auto track_data=fdc.get_track_data();
+	std::vector <bool> unstable;
+	std::vector <bool> confirmed;
+
+	unstable.resize(track_data.get_bit_length());
+	confirmed.resize(track_data.get_bit_length());
+
+	auto Fill=[&](size_t start_pos,size_t end_pos,bool isUnstable)
+	{
+		if(start_pos<=end_pos)
+		{
+			for(size_t i=start_pos; i<end_pos; ++i)
+			{
+				if(true!=confirmed[i])
+				{
+					unstable[i]=isUnstable;
+					confirmed[i]=true;
+				}
+			}
+		}
+		else // Wrapped around
+		{
+			for(size_t i=start_pos; i<unstable.size(); ++i)
+			{
+				if(true!=confirmed[i])
+				{
+					unstable[i]=isUnstable;
+					confirmed[i]=true;
+				}
+			}
+			for(size_t i=0; i<end_pos; ++i)
+			{
+				if(true!=confirmed[i])
+				{
+					unstable[i]=isUnstable;
+					confirmed[i]=true;
+				}
+			}
+		}
+	};
+
+
+	fdc.disable_fluctuator();
+
+	// want to do for(auto &b : unstable)b=false;, but clang may whine.
+	for(size_t i=0; i<unstable.size(); ++i)
+	{
+		unstable[i]=false;
+		confirmed[i]=false;
+	}
+
+	// First read sectors, and all bits should be marked stable if there is no CRC error.
+	fdc.set_pos(0);
+	for(auto id : id_list)
+	{
+        fdc.set_pos(Rewind(id.pos));
+        auto read_sect = fdc.read_sector(id.C, id.R);
+        if(true==read_sect.crc_sts) // No CRC Error.  Unlikely to include an unstable bit.
+        {
+			Fill(read_sect.data_pos,read_sect.data_end_pos,false);
+		}
+	}
+
+	// Then read track and mark unstable if the error total of the two consecutive byte exceeds 96000 (worse than Pink+Red), mark as unstable.
+	auto read_track=fdc.read_track_ex();
+	for(size_t i=0; i+1<read_track.size(); ++i)
+	{
+		auto errsum=read_track[i][READ_TRACK_EX_ERR]+read_track[i+1][READ_TRACK_EX_ERR];
+		if(96000<=errsum)
+		{
+			auto start_pos=read_track[i][READ_TRACK_EX_POS];
+			auto end_pos=(i+2<read_track.size() ? read_track[i+2][READ_TRACK_EX_POS] : read_track[i+1][READ_TRACK_EX_POS]);
+			Fill(start_pos,end_pos,true);
+		}
+	}
+
+	return unstable;
 }

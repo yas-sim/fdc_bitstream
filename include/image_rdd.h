@@ -28,4 +28,6 @@ public:
 	bool CheckCorocoroTypeBSignature(bool crc_sts,const std::vector <uint8_t> &data) const;
 
 	bool CheckLeafInTheForestSignature(uint8_t C,uint8_t H,const std::vector <fdc_bitstream::id_field> &id_list) const;
+
+	std::vector <bool> MarkUnstablePulses(fdc_bitstream &fdc,const std::vector<fdc_bitstream::id_field> &id_list) const;
 };
