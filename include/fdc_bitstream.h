@@ -44,6 +44,7 @@ public:
         uint16_t    crc_val;
         bool        crc_sts;
         size_t      pos;
+        size_t      end_pos;
     };
 
     /** 

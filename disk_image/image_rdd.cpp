@@ -586,10 +586,15 @@ std::vector <bool> disk_image_rdd::MarkUnstablePulses(fdc_bitstream &fdc,const s
 		confirmed[i]=false;
 	}
 
-	// First read sectors, and all bits should be marked stable if there is no CRC error.
+	// If there is no CRC error in the ID mark, then the pulses must be marked stable.
+	// If there is no CRC error in the sector, and all pulses within the sector should be marked stable if there is no CRC error.
 	fdc.set_pos(0);
 	for(auto id : id_list)
 	{
+		if(true==id.crc_sts)
+		{
+			Fill(id.pos,id.end_pos,false);
+		}
         fdc.set_pos(Rewind(id.pos));
         auto read_sect = fdc.read_sector(id.C, id.R);
         if(true==read_sect.crc_sts) // No CRC Error.  Unlikely to include an unstable bit.
