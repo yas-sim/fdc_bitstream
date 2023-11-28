@@ -191,6 +191,13 @@ bool disk_image_rdd::write(std::ostream &ofp) const {
                 else
                 {
                     sectorHeader[5]|=MB8877_STATUS_RECORD_NOT_FOUND;
+                    // Observed in ASTEKA.  Data mark of C0 H0 R20 does not exist, therefore
+                    // record not found error.  At the same time, because IDMark was making
+                    // a CRC error, so crc error flag was also set.
+                    if(true==id.crc_sts)
+                    {
+                        sectorHeader[5]|=MB8877_STATUS_CRC_ERROR;
+                    }
                 }
 
                 auto start_pos=read_sect.data_pos;
