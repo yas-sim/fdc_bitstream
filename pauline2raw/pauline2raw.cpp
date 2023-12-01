@@ -740,6 +740,45 @@ bool PaulineToRaw::ExportRaw(std::string fName,const std::vector <HxCStream::Tra
 				int searchBytes=4;
 				size_t searchWindowSize=256; // Ad-hoc
 				iEnd=hxc.ExactCut(iStart,iEnd,16*searchBytes,searchWindowSize); // 16 pulses for one byte.
+
+				// iStart=1
+				// iEnd=40762
+				// [40756]306
+				// [40757]406
+				// [40758]289
+				// [40759]212
+				// [40760]289
+				// [40761]218
+				// [40762]393 iEnd     [0]196    <- Pauline started in the middle of the first pulse?
+				// [40763]210          [1]210    iStart
+				// [40764]293          [2]292
+				// [40765]294          [3]297
+				// [40766]212          [4]210
+				// [40767]293          [5]293
+				// [40768]207          [6]208
+				// [40769]200          [7]201
+				// [40770]295          [8]293
+				// [40771]207          [9]207
+				// [40772]198          [10]198
+				// [40773]202          [11]204
+				// [40774]200          [12]199
+				// [40775]202          [13]201
+
+				// fdc_bitstream seems to assume when wrapped around, there is no pulse at the connecting point.
+				// which makes sense, because there is no guarantee that the pulse was not cut across the index hole.
+				// However, ExactCut will cut exactly at a pulse.  In the above sample, a pulse is needed between
+				// pulse[40762] and pulse[1] when wrapped around.
+				// Therefore, it requires this trick.
+				++iEnd;
+				if(hxc.pulse.size()<=iEnd)
+				{
+					hxc.pulse.push_back(0);
+				}
+				if(iEnd<hxc.pulse.size())
+				{
+					hxc.pulse[iEnd]=hxc.pulse[iStart]/2;
+					hxc.pulse[iStart]-=hxc.pulse[iEnd];
+				}
 			}
 
 			iEnd=hxc.MakeOverlap(iStart,iEnd,overlap);

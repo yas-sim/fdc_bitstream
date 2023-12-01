@@ -24,7 +24,7 @@
 void usage(std::string cmd_name) {
     std::cout << cmd_name << "-i input_file -o output_file [-n]" << std::endl;
     std::cout << "Input file     : mfm, raw, d77, hfe, fdx" << std::endl;
-    std::cout << "Output file    : mfm, raw, d77, hfe, fdx" << std::endl;
+    std::cout << "Output file    : mfm, raw, d77, hfe, fdx, rdd" << std::endl;
     std::cout << "-n             : Normalize pulse pitch. Get statistic data of pulse-to-pulse distance \n"
                  "                 distribution in a track and align bit position with standard bit cell pitch.\n"
                  "                 This will make the disk image data easy to read." << std::endl;
@@ -47,7 +47,7 @@ std::string get_file_extension(std::string file_name) {
 }
 
 bool check_extension(std::string extension) {
-    std::vector<std::string> allowed = { "hfe", "mfm", "raw", "d77", "fdx" };
+    std::vector<std::string> allowed = { "hfe", "mfm", "raw", "d77", "rdd", "fdx" };
     bool res = false;
     for(auto it = allowed.begin(); it != allowed.end(); ++it) {
         if(*it == extension) res = true;
@@ -61,6 +61,7 @@ disk_image* create_object_by_ext(std::string ext) {
     if(ext == "raw") obj = new disk_image_raw();
     if(ext == "mfm") obj = new disk_image_mfm();
     if(ext == "d77") obj = new disk_image_d77();
+    if(ext == "rdd") obj = new disk_image_rdd();
     if(ext == "fdx") obj = new disk_image_fdx();
     return obj;
 }

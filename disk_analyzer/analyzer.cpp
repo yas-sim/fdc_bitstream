@@ -154,7 +154,7 @@ void cmd_read_track_pulse(size_t track_n,size_t byte_offset,size_t length) {
     fdc->set_pos(0);
 
     fdc->clear_wraparound();
-    for(size_t i=0; i<byte_offset+length && fdc->is_wraparound() == false; ++i) {
+    for(size_t i=0; i<byte_offset+length; ++i) {
         auto pos = fdc->get_real_pos();
         if(pos>fdc->get_track_length()) pos = 0;         // exceptional case handling
 
@@ -180,9 +180,24 @@ void cmd_read_track_pulse(size_t track_n,size_t byte_offset,size_t length) {
 			std::cout << std::hex << std::setw(2) << std::setfill('0') << int(read_data);
 			std::cout << std::dec << std::setw(10) << std::setfill(' ') << pos;
 			std::cout << "   ";
-			for(int j=pos; j<pos_end; ++j)
+			if(pos<=pos_end)
 			{
-				std::cout << (int(track_stream.get(j)) ? "#":".");
+				for(int j=pos; j<pos_end; ++j)
+				{
+					std::cout << (int(track_stream.get(j)) ? "#":".");
+				}
+			}
+			else // Wrapped around
+			{
+				for(int j=pos; j<track_stream.get_bit_length(); ++j)
+				{
+					std::cout << (int(track_stream.get(j)) ? "#":".");
+				}
+				std::cout << "W";
+				for(int j=0; j<pos_end; ++j)
+				{
+					std::cout << (int(track_stream.get(j)) ? "#":".");
+				}
 			}
 
 			std::cout << std::endl;

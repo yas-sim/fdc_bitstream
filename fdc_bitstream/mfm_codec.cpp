@@ -483,7 +483,8 @@ size_t mfm_codec::get_real_pos(void)
 	size_t int_dist = static_cast<size_t>(m_distance_to_next_pulse);
 	if(m_track.get_stream_pos() < int_dist)
 	{
-		return -1;
+		int_dist-=m_track.get_stream_pos();
+		return m_track.size()-int_dist;
 	}
 
     return m_track.get_stream_pos()-int_dist;

@@ -246,6 +246,7 @@ std::vector<fdc_bitstream::id_field> fdc_bitstream::read_all_idam(void) {
             item.crc_val = (sect_id[4] << 8) + sect_id[5];
             item.crc_sts = crc_error;
             item.pos = pos;
+            item.end_pos = m_codec.get_real_pos();
             result.push_back(item);
         }
     }

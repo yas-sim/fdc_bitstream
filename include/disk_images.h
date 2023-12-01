@@ -5,4 +5,5 @@
 #include "image_raw.h"
 #include "image_mfm.h"
 #include "image_d77.h"
+#include "image_rdd.h"
 #include "image_fdx.h"
