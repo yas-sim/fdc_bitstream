@@ -257,10 +257,11 @@ bool HxCStream::DecodePulse(const std::vector <unsigned char> &encoded,unsigned 
 void HxCStream::MarkIndexHole(void)
 {
 	indexHole.resize(pulse.size());
-	for(auto &b : indexHole)
-	{
-		b=false;
-	}
+	//for(auto &b : indexHole)
+	//{
+	//	b=false;
+	//}
+	std::fill(indexHole.begin(), indexHole.end(), false);
 
 	size_t sum=0;
 	for(size_t i=0; i<pulse.size(); ++i)
